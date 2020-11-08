@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/data/data.dart';
 import 'package:living_desire/widgets/widgets.dart';
 import '../models/models.dart';
 
@@ -13,7 +14,7 @@ class ProductsType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Products List
-    List<Product> products = [];
+    final List<Product> products = product;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
