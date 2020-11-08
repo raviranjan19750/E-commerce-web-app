@@ -1,4 +1,3 @@
-import '../config/configs.dart';
 import '../widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -26,37 +25,13 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //Logo of the website
-          Expanded(
-            child: Image(
-              image: AssetImage('assets/images/logo.jpeg'),
-            ),
-          ),
+          AppBarLogo(),
           // WebSite Name
-          Expanded(
-            child: Text(
-              Strings.websiteName,
-              style: const TextStyle(
-                color: Palette.secondaryColor,
-                fontSize: 32.0,
-                fontWeight: FontWeight.bold,
-                letterSpacing: -1.2,
-              ),
-            ),
-          ),
+          AppBarWebName(),
           //Search Bar
-          Expanded(
-            child: Container(),
-          ),
+          AppBarSearchBar(),
           // Cart
-          Expanded(
-            child: Container(
-              child: IconButton(
-                icon: Icon(Icons.shopping_cart),
-                iconSize: 30.0,
-                onPressed: () {},
-              ),
-            ),
-          ),
+          AppBarCart(),
           // User Card Login/Signup or Profile
           UserCard(),
         ],

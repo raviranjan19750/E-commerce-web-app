@@ -1,4 +1,11 @@
 export 'responsive.dart';
 export 'custom_app_bar.dart';
 export 'user_card.dart';
-export 'products_category.dart';
+export 'products_type.dart';
+export 'products_home_overview.dart';
+export 'app_bar_logo.dart';
+export 'app_bar_web_name.dart';
+export 'app_bar_search_bar.dart';
+export 'app_bar_cart.dart';
+export 'sub_app_bar.dart';
+export 'product_item.dart';
