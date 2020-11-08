@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Responsive extends StatelessWidget {
+  // Responsive Widget for mobile and website
   final Widget mobile;
   final Widget tablet;
   final Widget desktop;
@@ -11,7 +12,7 @@ class Responsive extends StatelessWidget {
     this.tablet,
     @required this.desktop,
   }) : super(key: key);
-
+  // Verifies the device specs: Mobile or Desktop
   static bool isMobile(BuildContext context) =>
       MediaQuery.of(context).size.width < 800;
 
@@ -24,11 +25,13 @@ class Responsive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Build Layout for desktop, tablet and Mobile
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth >= 1200) {
           return desktop;
         } else if (constraints.maxWidth >= 800) {
+          // TODO: Tablet View not configured yet
           return tablet ?? mobile;
         } else {
           return mobile;

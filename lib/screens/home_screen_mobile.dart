@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomeScreenMobile extends StatelessWidget {
+  // Mobile Website Home Screen
   final TrackingScrollController scrollController;
 
   const HomeScreenMobile({
@@ -10,6 +11,7 @@ class HomeScreenMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Build HomeScreen for mobile
     return Container();
   }
 }

@@ -13,7 +13,7 @@ class HomeScreenDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Dummy List Data for Products
-    // Later Connect to Firebase
+    // TODO:Later Connect to Firebase
     List<String> lproducts = ["Product 1", "Product 2", "Combos"];
     return Scaffold(
       appBar: CustomAppBar(),
@@ -62,6 +62,7 @@ class HomeScreenDesktop extends StatelessWidget {
                   ),
                 ],
               ),
+              // Products Category Body for HomeScreen
               Expanded(
                 child: Container(
                   child: ListView.builder(

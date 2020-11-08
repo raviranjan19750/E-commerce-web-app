@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 class AppConfig extends InheritedWidget {
+  // Config File for differnt Builds development and Production
   final String appTitle;
   final String buildFlavor;
   final Widget child;
@@ -11,6 +12,7 @@ class AppConfig extends InheritedWidget {
       @required this.appTitle,
       @required this.buildFlavor});
 
+  //Extending Inherited Widget for differnt Builds
   static AppConfig of(BuildContext context) {
     return context.inheritFromWidgetOfExactType(AppConfig);
   }

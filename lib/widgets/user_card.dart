@@ -6,6 +6,7 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Configure with firebase user login/signup
     return Container(
+      // Login Button
       child: RaisedButton(
         onPressed: () {},
         child: Text(Strings.loginText),

@@ -7,6 +7,7 @@ void main() {
   var configuredApp = AppConfig(
     appTitle: "Flutter Flavors",
     buildFlavor: "Production",
+    // MyApp widget from main.dart
     child: MyApp(),
   );
   return runApp(configuredApp);
