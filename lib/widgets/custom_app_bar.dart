@@ -1,10 +1,14 @@
 import '../widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   // AppBar has a preferred Size, need to extend Preferred Size widget
   Size get preferredSize => const Size.fromHeight(65.0);
+  @override
+  _CustomAppBarState createState() => _CustomAppBarState();
+}
 
+class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(

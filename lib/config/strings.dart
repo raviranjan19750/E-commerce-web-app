@@ -6,4 +6,5 @@ class Strings {
   static const String forOffices = "For Offices";
   static const String forProperty = "For Property";
   static const String forHome = "For Home";
+  static const String searchBar = "Search for Products";
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 
-class HomeScreenDesktop extends StatelessWidget {
+class HomeScreenDesktop extends StatefulWidget {
   final TrackingScrollController scrollController;
 
   const HomeScreenDesktop({
@@ -9,6 +9,11 @@ class HomeScreenDesktop extends StatelessWidget {
     @required this.scrollController,
   }) : super(key: key);
 
+  @override
+  _HomeScreenDesktopState createState() => _HomeScreenDesktopState();
+}
+
+class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
   @override
   Widget build(BuildContext context) {
     //TODO: Can Change the App Bar to sliver app bar,
