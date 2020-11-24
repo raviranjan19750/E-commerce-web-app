@@ -1,11 +1,12 @@
 import 'package:living_desire/widgets/app_bar/app_bar_wishlist.dart';
+import 'package:living_desire/widgets/app_bar/middle_app_bar.dart';
 
 import '../widgets.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   // AppBar has a preferred Size, need to extend Preferred Size widget
-  Size get preferredSize => const Size.fromHeight(120.0);
+  Size get preferredSize => const Size.fromHeight(160.0);
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
 }
@@ -50,6 +51,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
             ],
           ),
         ),
+        MiddleAppBar(),
         SubAppBar()
       ],
     );

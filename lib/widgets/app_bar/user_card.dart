@@ -20,6 +20,13 @@ class UserCard extends StatelessWidget {
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
 
+          boxShadow:  [
+            BoxShadow(
+                color: Colors.black12,
+                blurRadius: 12.0,
+                offset: Offset(0,0.75)
+            ),
+          ],
           color: Palette.secondaryColor,
           borderRadius: BorderRadius.circular(4),
 
