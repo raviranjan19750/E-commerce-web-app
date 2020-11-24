@@ -17,3 +17,5 @@ final List<Product> product = [
   Product(name: 'Product Item 5'),
   Product(name: 'Product Item 6'),
 ];
+
+final List<Order> order = [];
