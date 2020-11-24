@@ -26,7 +26,7 @@ class AppBarWishlist extends StatelessWidget {
               children: [
 
                 Badge(
-                  badgeContent: Text('10',style: TextStyle(color: Colors.white,fontSize: 12),),
+                  badgeContent: Text('0',style: TextStyle(color: Colors.white,fontSize: 12),),
                   badgeColor: Palette.secondaryColor,
                   child: Icon(Icons.favorite_border),
                 ),
