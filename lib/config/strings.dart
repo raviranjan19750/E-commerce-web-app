@@ -7,4 +7,10 @@ class Strings {
   static const String forProperty = "For Property";
   static const String forHome = "For Home";
   static const String searchBar = "Search for Products";
+  static const String myWishlist = "My Wishlist";
+  static const String myOrders = "My Orders";
+  static const String myCart = "My Cart";
+  static const String manageAddresses = "Manage Addresses";
+  static const String normalOrders = "Normal Orders";
+  static const String customOrders = "Customize Orders";
 }

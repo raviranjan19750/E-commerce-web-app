@@ -5,3 +5,4 @@ export 'home_screen/home_screen_desktop.dart';
 export 'order_screen/order_screen.dart';
 export 'order_screen/order_screen_desktop.dart';
 export 'order_screen/order_screen_mobile.dart';
+export 'order_screen/order_nav_screen.dart';
