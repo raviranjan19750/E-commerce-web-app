@@ -17,7 +17,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.only(left: 16,right: 16,top: 8),
 
           width: double.infinity,
           decoration: BoxDecoration(
@@ -47,7 +47,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
               AppBarWishlist(),
               // User Card Login/Signup or Profile
-              UserCard(),
+              UserCard(isLoggedIn: false,
+              ),
             ],
           ),
         ),

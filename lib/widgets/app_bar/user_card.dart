@@ -15,7 +15,7 @@ class UserCard extends StatelessWidget {
     await showMenu(
 
       context: context,
-      position: RelativeRect.fromLTRB(offset.dx - 16, offset.dy + 16, 0, 0),
+      position: RelativeRect.fromLTRB(offset.dx , offset.dy + 16, 64, 0),
       items: [
         PopupMenuItem(
           child: Text("My Account"),
@@ -129,7 +129,7 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Configure with firebase user login/signup
 
-    return returnView(true,context);
+    return returnView(isLoggedIn,context);
 
   }
 }
