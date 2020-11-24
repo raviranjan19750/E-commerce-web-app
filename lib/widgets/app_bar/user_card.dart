@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../config/configs.dart';
 
+
 class UserCard extends StatelessWidget {
 
   bool isLoggedIn;
@@ -10,7 +11,33 @@ class UserCard extends StatelessWidget {
 
   UserCard({this.isLoggedIn,this.userNNme,this.phoneNumber});
 
-  Container returnView(bool isLoggedIn){
+  void _showPopupMenu(BuildContext context,Offset offset) async {
+    await showMenu(
+
+      context: context,
+      position: RelativeRect.fromLTRB(offset.dx - 16, offset.dy + 16, 0, 0),
+      items: [
+        PopupMenuItem(
+          child: Text("My Account"),
+        ),
+        PopupMenuItem(
+          child: Text("My Orders"),
+        ),
+        PopupMenuItem(
+          child: Text("My Cart"),
+        ),
+        PopupMenuItem(
+          child: Text("My Wishlist"),
+        ),
+        PopupMenuItem(
+          child: Text("Sign Out"),
+        ),
+      ],
+      elevation: 8.0,
+    );
+  }
+
+  Container returnView(bool isLoggedIn,BuildContext context){
 
     if(isLoggedIn){
 
@@ -33,38 +60,42 @@ class UserCard extends StatelessWidget {
         ),
 
         child: InkWell(
-
           onTap: (){},
-          child: Row(
 
-            children: [
-              Column(
+          child: GestureDetector(
 
-                crossAxisAlignment: CrossAxisAlignment.start,
+            onTapDown: (TapDownDetails details){_showPopupMenu(context,details.globalPosition);},
+            child: Row(
 
-                children: [
+              children: [
+                Column(
 
-                  Text('Login as Vardaan Chakraborty',style: TextStyle(color: Palette.primaryColor),),
-                  Text('8617878497',style: TextStyle(color: Palette.primaryColor),),
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
-                ],
-              ),
-              
-              Container(
+                  children: [
 
-                margin: EdgeInsets.only(left: 16),
+                    Text('Login as Vardaan Chakraborty',style: TextStyle(color: Palette.primaryColor),),
+                    Text('8617878497',style: TextStyle(color: Palette.primaryColor),),
 
-                child: Icon(
-                    Icons.arrow_drop_down,
-                    color: Palette.primaryColor,
-                    size: 48,
-
+                  ],
                 ),
-              )
 
-            ],
+                Container(
+
+                  margin: EdgeInsets.only(left: 16),
+
+                  child: Icon(
+                      Icons.arrow_drop_down,
+                      color: Palette.primaryColor,
+                      size: 48,
+
+                  ),
+                )
+
+              ],
+            ),
+
           ),
-
         ),
 
       );
@@ -98,7 +129,7 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Configure with firebase user login/signup
 
-    return returnView(true);
+    return returnView(true,context);
 
   }
 }
