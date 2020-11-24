@@ -1,3 +1,5 @@
+import 'package:badges/badges.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 
@@ -23,15 +25,14 @@ class AppBarWishlist extends StatelessWidget {
 
               children: [
 
-                Icon(
-
-                  Icons.favorite_border,
-                  color: Palette.secondaryColor,
-
+                Badge(
+                  badgeContent: Text('10',style: TextStyle(color: Colors.white,fontSize: 12),),
+                  badgeColor: Palette.secondaryColor,
+                  child: Icon(Icons.favorite_border),
                 ),
 
 
-                Text('  Wishlist',
+                Text('     Wishlist',
 
                   style: TextStyle(color: Palette.secondaryColor),
 

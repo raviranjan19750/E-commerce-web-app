@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:badges/badges.dart';
 
 class AppBarCart extends StatelessWidget {
   // App Bar Cart
@@ -23,15 +25,14 @@ class AppBarCart extends StatelessWidget {
 
             children: [
 
-              Icon(
-
-                Icons.shopping_cart_outlined,
-                color: Palette.secondaryColor,
-
+              Badge(
+                badgeContent: Text('3',style: TextStyle(color: Colors.white,fontSize: 12),),
+                badgeColor: Palette.secondaryColor,
+                child: Icon(Icons.shopping_cart_outlined),
               ),
 
 
-              Text('  Cart',
+              Text('   Cart',
 
                 style: TextStyle(color: Palette.secondaryColor),
 
