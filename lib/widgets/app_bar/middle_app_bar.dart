@@ -12,7 +12,7 @@ class MiddleAppBar extends StatelessWidget{
 
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 4),
-      height: 40,
+      height: 48,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
