@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/data/data.dart';
@@ -17,46 +19,30 @@ class ProductsType extends StatelessWidget {
     // Products List
     final List<Product> products = product;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         Container(
+          margin: EdgeInsets.only(top: 24.0),
           child: Divider(
-            color: Colors.black54,
+            color: Colors.black,
             thickness: 0.5,
           ),
         ),
-
-        ClipPath(
-          clipper: BackgroundClipper(),
-          child:  Container(
-
-            width: 100,
-            height: 50,
-            color: Palette.maroon,
-
-            child: Text(productType.type),
-          ),
-        ),
-
-        FlatButton(
-          onPressed: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(productType.type),
-              const SizedBox(
-                width: 10.0,
-              ),
-              Icon(Icons.arrow_forward_ios),
-            ],
-          ),
-        ),
-
         Container(
-          height: MediaQuery.of(context).size.height*0.28,
-
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Palette.maroon,
+          ),
+          child: Text(
+            productType.type,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.4,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -72,25 +58,3 @@ class ProductsType extends StatelessWidget {
     );
   }
 }
-
-class BackgroundClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    // TODO: implement getClip
-    var roundnessFactor = 50.0;
-    var path = Path();
-
-
-    return path;
-
-    throw UnimplementedError();
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
-    return true;
-   // throw UnimplementedError();
-  }
-}
-
