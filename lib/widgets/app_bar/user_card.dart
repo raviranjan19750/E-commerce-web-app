@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../config/configs.dart';
+import '../../config/configs.dart';
 
 class UserCard extends StatelessWidget {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/widgets.dart';
+import '../../widgets/widgets.dart';
 
 class HomeScreenDesktop extends StatefulWidget {
   final TrackingScrollController scrollController;

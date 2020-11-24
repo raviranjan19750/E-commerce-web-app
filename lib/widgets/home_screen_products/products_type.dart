@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/widgets/widgets.dart';
-import '../models/models.dart';
+import '../../models/models.dart';
 
 class ProductsType extends StatelessWidget {
   final ProductType productType;

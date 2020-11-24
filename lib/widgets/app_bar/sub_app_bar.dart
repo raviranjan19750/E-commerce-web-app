@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:living_desire/widgets/sub_app_bar_button.dart';
-import '../config/configs.dart';
+import 'package:living_desire/widgets/app_bar/sub_app_bar_button.dart';
+import '../../config/configs.dart';
 
 // Might Need to Change Class name
 class SubAppBar extends StatelessWidget {

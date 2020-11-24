@@ -1,6 +1,6 @@
-import '../config/configs.dart';
-import '../widgets/widgets.dart';
-import './screens.dart';
+import '../../config/configs.dart';
+import '../../widgets/widgets.dart';
+import '../screens.dart';
 import 'package:flutter/material.dart';
 
 // Extends Stateful widget for mobile and desktop app

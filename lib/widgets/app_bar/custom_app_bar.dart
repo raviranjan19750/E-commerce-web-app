@@ -1,4 +1,4 @@
-import '../widgets/widgets.dart';
+import '../widgets.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
