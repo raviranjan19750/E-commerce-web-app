@@ -30,16 +30,30 @@ class _AppBarSearchBarState extends State<AppBarSearchBar> {
   Widget build(BuildContext context) {
     return Expanded(
       // Search Bar
-      child: TextField(
-        controller: _searchController,
-        decoration: InputDecoration(
-          hintText: Strings.searchBar,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide(
-              color: Colors.amber,
-              style: BorderStyle.solid,
-            ),
+      child: Container(
+
+        padding: EdgeInsets.only(left: 16,right: 8),
+
+        decoration: BoxDecoration(
+
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(4),
+
+
+          
+        ),
+        
+        child: TextField(
+
+          textAlignVertical: TextAlignVertical.center,
+          cursorColor: Palette.secondaryColor,
+          controller: _searchController,
+
+          decoration: InputDecoration(
+            suffixIcon: Icon(Icons.search),
+            hintText: Strings.searchBar,
+            focusColor: Palette.secondaryColor,
+            border: InputBorder.none
           ),
         ),
       ),

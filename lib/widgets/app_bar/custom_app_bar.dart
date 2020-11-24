@@ -1,9 +1,11 @@
+import 'package:living_desire/widgets/app_bar/app_bar_wishlist.dart';
+
 import '../widgets.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   // AppBar has a preferred Size, need to extend Preferred Size widget
-  Size get preferredSize => const Size.fromHeight(65.0);
+  Size get preferredSize => const Size.fromHeight(80.0);
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
 }
@@ -12,7 +14,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -26,8 +28,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+        crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
+
           //Logo of the website
           AppBarLogo(),
           // WebSite Name
@@ -36,6 +41,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
           AppBarSearchBar(),
           // Cart
           AppBarCart(),
+
+          AppBarWishlist(),
           // User Card Login/Signup or Profile
           UserCard(),
         ],
