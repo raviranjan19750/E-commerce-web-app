@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vertical_tabs/vertical_tabs.dart';
 import '../../config/configs.dart';
+import '../../widgets/widgets.dart';
 
 class OrderNavScreen extends StatefulWidget {
   final TrackingScrollController scrollController;
@@ -78,13 +79,13 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
           ),
         ),
       ],
-      contents: <Widget>[
-        Container(),
-        Container(),
-        Container(),
-        Container(),
-        Container(),
-        Container(),
+      contents: [
+        WishlistContainer(),
+        NormalOrdersContainer(),
+        NormalOrdersContainer(),
+        CustomOrdersContainer(),
+        CartContainer(),
+        ManageAddressesContainer(),
       ],
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ManageAddresses extends StatelessWidget {
+class ManageAddressesContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();
