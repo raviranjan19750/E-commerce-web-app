@@ -28,7 +28,6 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
         child: Container(
           child: Column(
             children: [
-              SubAppBar(),
               // Products Category Body for HomeScreen
               ProductsHomeOverview(),
             ],

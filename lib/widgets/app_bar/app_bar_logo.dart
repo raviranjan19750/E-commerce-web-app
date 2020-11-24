@@ -6,6 +6,8 @@ class AppBarLogo extends StatelessWidget {
     return Container(
       child: Image(
         image: AssetImage('assets/images/logo.jpeg'),
+        width: 48,
+        height: 48,
       ),
     );
   }

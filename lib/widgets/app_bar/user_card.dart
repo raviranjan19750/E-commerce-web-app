@@ -16,7 +16,7 @@ class UserCard extends StatelessWidget {
 
       return Container(
 
-        padding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
 
