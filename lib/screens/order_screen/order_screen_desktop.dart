@@ -15,6 +15,6 @@ class OrderScreenDesktop extends StatefulWidget {
 class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold();
   }
 }
