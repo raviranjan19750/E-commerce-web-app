@@ -4,6 +4,7 @@ import '../../config/configs.dart';
 import '../../widgets/widgets.dart';
 
 class OrderNavScreen extends StatefulWidget {
+  // Navigate between different option e.g. Cart, wishlist, manage addresses
   final TrackingScrollController scrollController;
 
   const OrderNavScreen({Key key, this.scrollController}) : super(key: key);
@@ -15,9 +16,11 @@ class OrderNavScreen extends StatefulWidget {
 class _OrderNavScreenState extends State<OrderNavScreen> {
   @override
   Widget build(BuildContext context) {
+    // Vertical tab bar for different widgets
     return VerticalTabs(
       tabsWidth: 200,
       tabs: <Tab>[
+        // Wishlist Tab
         Tab(
           child: Container(
             child: Row(
@@ -28,6 +31,8 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
             ),
           ),
         ),
+        // My Orders Tab
+
         Tab(
           child: Container(
             child: Row(
@@ -38,6 +43,8 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
             ),
           ),
         ),
+        // Normal Orders Tab
+
         Tab(
           child: Container(
             child: Row(
@@ -48,6 +55,7 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
             ),
           ),
         ),
+        // Custom Orders Tab
         Tab(
           child: Container(
             child: Row(
@@ -58,6 +66,7 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
             ),
           ),
         ),
+        // My Cart Tab
         Tab(
           child: Container(
             child: Row(
@@ -68,6 +77,7 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
             ),
           ),
         ),
+        // Manage Addresss Tab
         Tab(
           child: Container(
             child: Row(
@@ -80,6 +90,7 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
         ),
       ],
       contents: [
+        // Widgets of different options
         WishlistContainer(),
         NormalOrdersContainer(),
         NormalOrdersContainer(),

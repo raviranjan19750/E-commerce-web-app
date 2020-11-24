@@ -3,6 +3,7 @@ import '../screens.dart';
 import '../../widgets/widgets.dart';
 
 class OrderScreenDesktop extends StatefulWidget {
+  // Desktop Website Order Screen
   final TrackingScrollController scrollController;
 
   const OrderScreenDesktop({
