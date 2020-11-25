@@ -13,7 +13,7 @@ class Order {
   final double status;
   final String shipmentID;
   final String courierProvider;
-  final Address address;
+  final ContactInformation contactInformation;
 
   // List of tracking data of different ordered products
   final List<Tracking> tacking;
@@ -23,7 +23,7 @@ class Order {
   const Order({
     this.shipmentID,
     this.courierProvider,
-    this.address,
+    this.contactInformation,
     @required this.datePlaced,
     @required this.orderedProducts,
     @required this.expectedDeliveryDate,

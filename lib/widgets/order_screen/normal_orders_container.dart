@@ -11,7 +11,6 @@ class NormalOrdersContainer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        color: Colors.black12,
         width: double.infinity,
         height: double.infinity,
         child: ListView.builder(

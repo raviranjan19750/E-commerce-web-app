@@ -44,7 +44,7 @@ class _OrderItemState extends State<OrderItem> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(widget.order.orderID),
+                                Text('Order ID:' + widget.order.orderID),
                                 Text(
                                     '${widget.order.orderedProducts[0].orderPrice}'),
                               ],
@@ -55,9 +55,13 @@ class _OrderItemState extends State<OrderItem> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(widget.order.datePlaced),
-                                Text(widget.order.address.name),
-                                Text(widget.order.address.addressLine),
+                                Text('Placed On:' + widget.order.datePlaced),
+                                Text('Delivery Address:' +
+                                    widget.order.contactInformation.name +
+                                    widget
+                                        .order.contactInformation.addressLine),
+                                Text('Phone Number' +
+                                    widget.order.contactInformation.phone),
                                 //Phone Number
                               ],
                             ),

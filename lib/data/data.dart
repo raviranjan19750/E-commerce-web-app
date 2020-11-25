@@ -42,6 +42,31 @@ final List<Product> product = [
       currentPrice: 2000,
       previousPrice: 1500,
       discount: 36),
+  Product(
+      name: 'Product Item 7',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 8',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 9',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 10',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 11',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
 ];
 
 final List<Order> order = [
@@ -54,9 +79,10 @@ final List<Order> order = [
         orderPrice: 345,
       ),
     ],
-    address: Address(
+    contactInformation: ContactInformation(
       name: 'Shan',
       addressLine: 'sdjbksolsnl',
+      phone: '93886836',
     ),
     expectedDeliveryDate: DateTime(2020, 2, 2, 2),
     deliveryDate: DateTime(2020, 3, 3, 3),
@@ -79,9 +105,10 @@ final List<Order> order = [
         orderPrice: 345,
       ),
     ],
-    address: Address(
+    contactInformation: ContactInformation(
       name: 'Shan',
       addressLine: 'sdjbksolsnl',
+      phone: '93886836',
     ),
     expectedDeliveryDate: DateTime(2020, 2, 2, 2),
     deliveryDate: DateTime(2020, 3, 3, 3),
@@ -104,9 +131,10 @@ final List<Order> order = [
         orderPrice: 345,
       ),
     ],
-    address: Address(
+    contactInformation: ContactInformation(
       name: 'Shan',
       addressLine: 'sdjbksolsnl',
+      phone: '93886836',
     ),
     expectedDeliveryDate: DateTime(2020, 2, 2, 2),
     deliveryDate: DateTime(2020, 3, 3, 3),

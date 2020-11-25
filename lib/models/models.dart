@@ -4,3 +4,4 @@ export 'order.dart';
 export 'ordered_product.dart';
 export 'tracking.dart';
 export 'address.dart';
+export 'contact_information.dart';
