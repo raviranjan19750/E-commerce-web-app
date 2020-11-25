@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/widgets/widgets.dart';
 import '../../models/models.dart';
@@ -16,24 +19,30 @@ class ProductsType extends StatelessWidget {
     // Products List
     final List<Product> products = product;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FlatButton(
-          onPressed: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(productType.type),
-              const SizedBox(
-                width: 10.0,
-              ),
-              Icon(Icons.arrow_forward_ios),
-            ],
+        Container(
+          margin: EdgeInsets.only(top: 24.0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.5,
           ),
         ),
         Container(
-          height: 100.0,
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Palette.maroon,
+          ),
+          child: Text(
+            productType.type,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.4,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
