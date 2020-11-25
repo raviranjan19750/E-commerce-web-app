@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/data/data.dart';
 import '../../models/models.dart';
 import 'package:expandable/expandable.dart';
+import 'package:rating_bar/rating_bar.dart';
 
 class OrderItem extends StatefulWidget {
   final Order order;
@@ -124,6 +125,17 @@ class _OrderItemState extends State<OrderItem> {
                                         //   type: StepperType.horizontal,
                                         // ),
                                         // Rate and Review
+                                        Container(
+                                          child: RatingBar(
+                                            onRatingChanged: (rating) {},
+                                            filledIcon: Icons.star,
+                                            emptyIcon: Icons.star_border,
+                                            isHalfAllowed: false,
+                                            filledColor: Colors.yellow,
+                                            emptyColor: Colors.black12,
+                                            size: 20,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
