@@ -5,9 +5,9 @@ class OrderedProduct {
   final double price;
   final double orderPrice;
 
-  OrderedProduct(
+  const OrderedProduct({
     @required this.productId,
     @required this.price,
     @required this.orderPrice,
-  );
+  });
 }

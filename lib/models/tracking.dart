@@ -5,9 +5,9 @@ class Tracking {
   final DateTime date;
   final String comments;
 
-  Tracking(
-    this.status,
-    this.date,
-    this.comments,
-  );
+  const Tracking({
+    @required this.status,
+    @required this.date,
+    @required this.comments,
+  });
 }

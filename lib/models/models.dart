@@ -3,3 +3,4 @@ export 'product_type.dart';
 export 'order.dart';
 export 'ordered_product.dart';
 export 'tracking.dart';
+export 'address.dart';

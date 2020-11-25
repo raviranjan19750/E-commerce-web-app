@@ -20,7 +20,7 @@ class Order {
   //final Payment payment;
   final String orderID;
 
-  const Order(
+  const Order({
     @required this.datePlaced,
     @required this.orderedProducts,
     @required this.expectedDeliveryDate,
@@ -28,5 +28,5 @@ class Order {
     @required this.status,
     @required this.tacking,
     @required this.orderID,
-  );
+  });
 }

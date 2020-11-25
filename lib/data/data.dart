@@ -1,4 +1,6 @@
 // Dummy Data later from firebase
+import 'dart:html';
+
 import '../models/models.dart';
 
 final List<ProductType> productsType = [
@@ -19,3 +21,21 @@ final List<Product> product = [
 ];
 
 final List<Order> order = [];
+
+final List<Address> address = [
+  Address(
+      addressLine: 'nsdkvnldsno',
+      isPrimary: true,
+      name: 'Shan',
+      pincode: '49235'),
+  Address(
+      addressLine: 'nsdkvnldsno',
+      isPrimary: false,
+      name: 'Shan',
+      pincode: '49235'),
+  Address(
+      addressLine: 'nsdkvnldsno',
+      isPrimary: false,
+      name: 'Shan',
+      pincode: '49235'),
+];

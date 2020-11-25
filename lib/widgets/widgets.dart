@@ -15,3 +15,4 @@ export 'order_screen/manage_addresses_container.dart';
 export 'order_screen/normal_orders_container.dart';
 export 'order_screen/wishlist_container.dart';
 export 'order_screen/order_item.dart';
+export 'order_screen/address_container.dart';

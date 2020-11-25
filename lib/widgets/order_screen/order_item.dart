@@ -76,6 +76,10 @@ class _OrderItemState extends State<OrderItem> {
                             ],
                           ),
                         ),
+                        Divider(
+                          color: Colors.black,
+                          thickness: 2,
+                        ),
                         Container(
                           child: Row(
                             children: [
