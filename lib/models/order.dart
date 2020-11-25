@@ -11,9 +11,9 @@ class Order {
   final DateTime expectedDeliveryDate;
   final DateTime deliveryDate;
   final double status;
-  //final String shipmentID;
-  //final String courierProvider;
-  //final Address address;
+  final String shipmentID;
+  final String courierProvider;
+  final Address address;
 
   // List of tracking data of different ordered products
   final List<Tracking> tacking;
@@ -21,6 +21,9 @@ class Order {
   final String orderID;
 
   const Order({
+    this.shipmentID,
+    this.courierProvider,
+    this.address,
     @required this.datePlaced,
     @required this.orderedProducts,
     @required this.expectedDeliveryDate,

@@ -18,13 +18,22 @@ class ManageAddressesContainer extends StatelessWidget {
           itemBuilder: (context, index) {
             if (index == 0) {
               // Add Address Container
-              return Container(
-                child: Center(
-                  child: Column(
-                    children: [
-                      Icon(Icons.add),
-                      Text('Add Address'),
-                    ],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 2.0,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Icon(Icons.add),
+                        Text('Add Address'),
+                      ],
+                    ),
                   ),
                 ),
               );

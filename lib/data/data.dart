@@ -12,16 +12,115 @@ final List<ProductType> productsType = [
 ];
 
 final List<Product> product = [
-  Product(name: 'Product Item 1', currentPrice:  2000, previousPrice:  1500, discount: 36),
-  Product(name: 'Product Item 2', currentPrice:  2000, previousPrice:  1500, discount: 36),
-  Product(name: 'Product Item 3', currentPrice:  2000, previousPrice:  1500, discount: 36),
-  Product(name: 'Product Item 4', currentPrice:  2000, previousPrice:  1500, discount: 36),
-  Product(name: 'Product Item 5', currentPrice:  2000, previousPrice:  1500, discount: 36),
-  Product(name: 'Product Item 6', currentPrice:  2000, previousPrice:  1500, discount: 36),
-
+  Product(
+      name: 'Product Item 1',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 2',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 3',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 4',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 5',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
+  Product(
+      name: 'Product Item 6',
+      currentPrice: 2000,
+      previousPrice: 1500,
+      discount: 36),
 ];
 
-final List<Order> order = [];
+final List<Order> order = [
+  Order(
+    datePlaced: '13121997',
+    orderedProducts: [
+      OrderedProduct(
+        productId: 'dssdbfdg',
+        price: 456,
+        orderPrice: 345,
+      ),
+    ],
+    address: Address(
+      name: 'Shan',
+      addressLine: 'sdjbksolsnl',
+    ),
+    expectedDeliveryDate: DateTime(2020, 2, 2, 2),
+    deliveryDate: DateTime(2020, 3, 3, 3),
+    status: 101,
+    tacking: [
+      Tracking(
+        status: 101,
+        date: DateTime(2020, 4, 4, 4),
+        comments: 'jbdvsknlsj',
+      ),
+    ],
+    orderID: 'gcholdsvj',
+  ),
+  Order(
+    datePlaced: '13121997',
+    orderedProducts: [
+      OrderedProduct(
+        productId: 'dssdbfdg',
+        price: 456,
+        orderPrice: 345,
+      ),
+    ],
+    address: Address(
+      name: 'Shan',
+      addressLine: 'sdjbksolsnl',
+    ),
+    expectedDeliveryDate: DateTime(2020, 2, 2, 2),
+    deliveryDate: DateTime(2020, 3, 3, 3),
+    status: 101,
+    tacking: [
+      Tracking(
+        status: 101,
+        date: DateTime(2020, 4, 4, 4),
+        comments: 'jbdvsknlsj',
+      ),
+    ],
+    orderID: 'gcholdsvj',
+  ),
+  Order(
+    datePlaced: '13121997',
+    orderedProducts: [
+      OrderedProduct(
+        productId: 'dssdbfdg',
+        price: 456,
+        orderPrice: 345,
+      ),
+    ],
+    address: Address(
+      name: 'Shan',
+      addressLine: 'sdjbksolsnl',
+    ),
+    expectedDeliveryDate: DateTime(2020, 2, 2, 2),
+    deliveryDate: DateTime(2020, 3, 3, 3),
+    status: 101,
+    tacking: [
+      Tracking(
+        status: 101,
+        date: DateTime(2020, 4, 4, 4),
+        comments: 'jbdvsknlsj',
+      ),
+    ],
+    orderID: 'gcholdsvj',
+  ),
+];
 
 final List<Address> address = [
   Address(

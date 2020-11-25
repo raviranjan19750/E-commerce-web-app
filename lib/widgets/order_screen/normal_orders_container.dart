@@ -11,27 +11,41 @@ class NormalOrdersContainer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        color: Colors.black12,
         width: double.infinity,
-        child: Column(
-          children: [
-            const Divider(
-              color: Colors.black,
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                bottom: 10.0,
-              ),
-              child: ListView.builder(
-                itemCount: orders.length,
-                itemBuilder: (context, index) {
-                  return OrderItem();
-                },
-              ),
-            ),
-          ],
+        height: double.infinity,
+        child: ListView.builder(
+          itemCount: orders.length,
+          itemBuilder: (context, index) {
+            return OrderItem(
+              order: orders[index],
+            );
+          },
         ),
+
+        // child: Row(
+        //   children: [
+        //     const Divider(
+        //       color: Colors.black,
+        //       height: 10,
+        //     ),
+        //     Padding(
+        //       padding: const EdgeInsets.only(
+        //         top: 10.0,
+        //         bottom: 10.0,
+        //       ),
+        //       child: ListView.builder(
+        //         itemCount: orders.length,
+        //         itemBuilder: (context, index) {
+        //           return Text(orders[index].orderID);
+        //           // return OrderItem(
+        //           //   order: orders[index],
+        //           // );
+        //         },
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
