@@ -12,13 +12,32 @@ class ManageAddressesContainer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        child: ListView.builder(
-          itemCount: addresses.length,
+        width: double.infinity,
+        child: GridView.builder(
+          itemCount: addresses.length + 1,
           itemBuilder: (context, index) {
-            return AddressContainer(
-              address: addresses[index],
-            );
+            if (index == 0) {
+              // Add Address Container
+              return Container(
+                child: Center(
+                  child: Column(
+                    children: [
+                      Icon(Icons.add),
+                      Text('Add Address'),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              // Already Added Address Container
+              return AddressContainer(
+                address: addresses[index - 1],
+              );
+            }
           },
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+          ),
         ),
       ),
     );
