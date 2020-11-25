@@ -28,13 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         // Using Responsive widget show mobile and desktop website
-        body: Responsive(
-          //Mobile Website
-          mobile: HomeScreenMobile(scrollController: trackingScrollController),
-          // Desktop Website
-          desktop:
-              HomeScreenDesktop(scrollController: trackingScrollController),
-        ),
+        body: HomeScreenDesktop(scrollController: trackingScrollController),
       ),
     );
   }
