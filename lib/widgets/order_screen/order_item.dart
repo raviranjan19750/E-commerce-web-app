@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/data/data.dart';
 import '../../models/models.dart';
+import 'package:expandable/expandable.dart';
 
 class OrderItem extends StatefulWidget {
   final Order order;
@@ -28,48 +29,112 @@ class _OrderItemState extends State<OrderItem> {
               child: Text(' product Image'),
             ),
             Expanded(
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(widget.order.orderedProducts[0].productId),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Order ID:' + widget.order.orderID),
-                                Text(
-                                    '${widget.order.orderedProducts[0].orderPrice}'),
-                              ],
+              child: ExpandableNotifier(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(widget.order.orderedProducts[0].productId),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Order ID:' + widget.order.orderID),
+                                  Text(
+                                      '${widget.order.orderedProducts[0].orderPrice}'),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 8.0,
+                                          // Color of the the Product
+                                          backgroundColor: Colors.black,
+                                        ),
+                                        // Size of the product from product id
+                                        //Text('Size:'+widget.order.orderedProducts[0].size)
+                                        Text(
+                                            'Quantity: ${widget.order.orderedProducts.length}'),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        FlatButton(
+                                          child: Text('View More'),
+                                          onPressed: () {},
+                                        ),
+                                        FlatButton(
+                                          child: Text('Need Help?'),
+                                          onPressed: () {},
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Placed On:' + widget.order.datePlaced),
-                                Text('Delivery Address:' +
-                                    widget.order.contactInformation.name +
-                                    widget
-                                        .order.contactInformation.addressLine),
-                                Text('Phone Number' +
-                                    widget.order.contactInformation.phone),
-                                //Phone Number
-                              ],
+                            Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Placed On:' + widget.order.datePlaced),
+                                  Text('Delivery Address:' +
+                                      widget.order.contactInformation.name +
+                                      widget.order.contactInformation
+                                          .addressLine),
+                                  //Phone Number
+                                  Text('Phone Number' +
+                                      widget.order.contactInformation.phone),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        // Stepper(
+                                        //   steps: <Step>[
+                                        //     Step(
+                                        //       title: Text(
+                                        //           '${widget.order.tracking[0].status}'),
+                                        //       content: Text(widget
+                                        //           .order.tracking[0].date
+                                        //           .toString()),
+                                        //     ),
+                                        //     Step(
+                                        //       title: Text(
+                                        //           '${widget.order.tracking[0].status}'),
+                                        //       content: Text(widget
+                                        //           .order.tracking[0].date
+                                        //           .toString()),
+                                        //     ),
+                                        //     Step(
+                                        //       title: Text(
+                                        //           '${widget.order.tracking[0].status}'),
+                                        //       content: Text(widget
+                                        //           .order.tracking[0].date
+                                        //           .toString()),
+                                        //     ),
+                                        //   ],
+                                        //   type: StepperType.horizontal,
+                                        // ),
+                                        // Rate and Review
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

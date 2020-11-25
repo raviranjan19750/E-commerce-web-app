@@ -16,7 +16,7 @@ class Order {
   final ContactInformation contactInformation;
 
   // List of tracking data of different ordered products
-  final List<Tracking> tacking;
+  final List<Tracking> tracking;
   //final Payment payment;
   final String orderID;
 
@@ -29,7 +29,7 @@ class Order {
     @required this.expectedDeliveryDate,
     @required this.deliveryDate,
     @required this.status,
-    @required this.tacking,
+    @required this.tracking,
     @required this.orderID,
   });
 }

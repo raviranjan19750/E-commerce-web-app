@@ -18,6 +18,7 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
   Widget build(BuildContext context) {
     // Vertical tab bar for different widgets
     return VerticalTabs(
+      disabledChangePageFromContentView: true,
       tabsWidth: 200,
       tabs: <Tab>[
         // Wishlist Tab
