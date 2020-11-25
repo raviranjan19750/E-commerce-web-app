@@ -19,75 +19,93 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
     // Vertical tab bar for different widgets
     return VerticalTabs(
       disabledChangePageFromContentView: true,
+      selectedTabBackgroundColor: Colors.black,
+      tabTextStyle: TextStyle(color: Colors.black),
+      indicatorColor: Colors.white,
+      indicatorSide: IndicatorSide.end,
+      indicatorWidth: 20.0,
+      contentScrollAxis: Axis.vertical,
+      selectedTabTextStyle: TextStyle(
+        color: Colors.white,
+      ),
       tabsWidth: 200,
       tabs: <Tab>[
         // Wishlist Tab
         Tab(
-          child: Container(
-            child: Row(
-              children: [
-                Text(Strings.myWishlist),
-                Icon(Icons.arrow_right),
-              ],
-            ),
-          ),
+          text: Strings.myWishlist,
+
+          // child: Container(
+          //   child: Row(
+          //     children: [
+          //       Text(
+          //         Strings.myWishlist,
+          //       ),
+          //       Icon(Icons.arrow_right),
+          //     ],
+          //   ),
+          // ),
         ),
         // My Orders Tab
-
         Tab(
-          child: Container(
-            child: Row(
-              children: [
-                Text(Strings.myOrders),
-                Icon(Icons.arrow_right),
-              ],
-            ),
-          ),
+          text: Strings.myOrders,
+
+          // child: Container(
+          //   child: Row(
+          //     children: [
+          //       Text(Strings.myOrders),
+          //       Icon(Icons.arrow_right),
+          //     ],
+          //   ),
+          // ),
         ),
         // Normal Orders Tab
 
         Tab(
-          child: Container(
-            child: Row(
-              children: [
-                Text(Strings.normalOrders),
-                Icon(Icons.arrow_right),
-              ],
-            ),
-          ),
+          text: Strings.normalOrders,
+          // child: Container(
+          //   child: Row(
+          //     children: [
+          //       Text(Strings.normalOrders),
+          //       Icon(Icons.arrow_right),
+          //     ],
+          //   ),
+          // ),
         ),
         // Custom Orders Tab
         Tab(
-          child: Container(
-            child: Row(
-              children: [
-                Text(Strings.customOrders),
-                Icon(Icons.arrow_right),
-              ],
-            ),
-          ),
+          text: Strings.customOrders,
+          // child: Container(
+          //   child: Row(
+          //     children: [
+          //       Text(Strings.customOrders),
+          //       Icon(Icons.arrow_right),
+          //     ],
+          //   ),
+          // ),
         ),
         // My Cart Tab
         Tab(
-          child: Container(
-            child: Row(
-              children: [
-                Text(Strings.myCart),
-                Icon(Icons.arrow_right),
-              ],
-            ),
-          ),
+          text: Strings.myCart,
+          // child: Container(
+          //   child: Row(
+          //     children: [
+          //       Text(Strings.myCart),
+          //       Icon(Icons.arrow_right),
+          //     ],
+          //   ),
+          //),
         ),
         // Manage Addresss Tab
         Tab(
-          child: Container(
-            child: Row(
-              children: [
-                Text(Strings.manageAddresses),
-                Icon(Icons.arrow_right),
-              ],
-            ),
-          ),
+          text: Strings.manageAddresses,
+          // child: Container(
+          //   child: Row(
+          //     children: [
+          //       Text(Strings.manageAddresses),
+          //       Icon(Icons.arrow_right),
+          //     ],
+          //   ),
+          // ),
         ),
       ],
       contents: [
