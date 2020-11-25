@@ -4,6 +4,8 @@ import '../../models/models.dart';
 import 'package:expandable/expandable.dart';
 import 'package:rating_bar/rating_bar.dart';
 
+import '../widgets.dart';
+
 class OrderItem extends StatefulWidget {
   final Order order;
 
@@ -98,44 +100,10 @@ class _OrderItemState extends State<OrderItem> {
                                   Container(
                                     child: Row(
                                       children: [
-                                        // Stepper(
-                                        //   steps: <Step>[
-                                        //     Step(
-                                        //       title: Text(
-                                        //           '${widget.order.tracking[0].status}'),
-                                        //       content: Text(widget
-                                        //           .order.tracking[0].date
-                                        //           .toString()),
-                                        //     ),
-                                        //     Step(
-                                        //       title: Text(
-                                        //           '${widget.order.tracking[0].status}'),
-                                        //       content: Text(widget
-                                        //           .order.tracking[0].date
-                                        //           .toString()),
-                                        //     ),
-                                        //     Step(
-                                        //       title: Text(
-                                        //           '${widget.order.tracking[0].status}'),
-                                        //       content: Text(widget
-                                        //           .order.tracking[0].date
-                                        //           .toString()),
-                                        //     ),
-                                        //   ],
-                                        //   type: StepperType.horizontal,
-                                        // ),
+                                        // Tracking Bar
+                                        // TrackingStatusBar(),
                                         // Rate and Review
-                                        Container(
-                                          child: RatingBar(
-                                            onRatingChanged: (rating) {},
-                                            filledIcon: Icons.star,
-                                            emptyIcon: Icons.star_border,
-                                            isHalfAllowed: false,
-                                            filledColor: Colors.yellow,
-                                            emptyColor: Colors.black12,
-                                            size: 20,
-                                          ),
-                                        ),
+                                        RatingContainer(),
                                       ],
                                     ),
                                   ),
