@@ -10,19 +10,28 @@ class OrderPlacedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: [
-          Text(Strings.orderPlaced),
-          Container(
-            child: ListView.builder(
-              itemCount: order.orderedProducts.length,
-              itemBuilder: (context, index) {
-                return OrderPlacedItem(
-                    orderedProduct: order.orderedProducts[index]);
-              },
+      child: Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(Strings.orderPlaced),
+            Expanded(
+              child: Container(
+                child: ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: order.orderedProducts.length,
+                  itemBuilder: (context, index) {
+                    return OrderPlacedItem(
+                        orderedProduct: order.orderedProducts[index]);
+                  },
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

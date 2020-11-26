@@ -77,6 +77,31 @@ final List<Order> order = [
         productId: 'dssdbfdg',
         price: 456,
         orderPrice: 345,
+        quantity: 2,
+      ),
+      OrderedProduct(
+        productId: 'dssdbfdg',
+        price: 456,
+        orderPrice: 345,
+        quantity: 2,
+      ),
+      OrderedProduct(
+        productId: 'dssdbfdg',
+        price: 456,
+        orderPrice: 345,
+        quantity: 2,
+      ),
+      OrderedProduct(
+        productId: 'dssdbfdg',
+        price: 456,
+        orderPrice: 345,
+        quantity: 2,
+      ),
+      OrderedProduct(
+        productId: 'dssdbfdg',
+        price: 456,
+        orderPrice: 345,
+        quantity: 2,
       ),
     ],
     contactInformation: ContactInformation(

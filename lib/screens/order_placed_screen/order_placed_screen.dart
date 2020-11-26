@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../screens.dart';
 import '../../widgets/widgets.dart';
+import '../../models/models.dart';
+import '../../data/data.dart';
 
 class OrderPlacedScreen extends StatefulWidget {
   @override
@@ -11,6 +13,10 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
   // TrackingScrollController added for tracking scroll cursor
   final TrackingScrollController trackingScrollController =
       TrackingScrollController();
+  //TODO: Later Get Order From Cart Place Order
+  final Order orders = order[0];
+
+  //_OrderPlacedScreenState(this.order,);
 
   @override
   void dispose() {
@@ -31,7 +37,9 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
               scrollController: trackingScrollController),
           // Desktop Website
           desktop: OrderPlacedScreenDesktop(
-              scrollController: trackingScrollController),
+            scrollController: trackingScrollController,
+            order: orders,
+          ),
         ),
       ),
     );
