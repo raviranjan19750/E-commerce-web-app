@@ -7,4 +7,7 @@ class Strings {
   static const String forProperty = "For Property";
   static const String forHome = "For Home";
   static const String searchBar = "Search for Products";
+  static const String addToCart = "Add To Cart";
+  static const String buyNow = "Buy Now";
+
 }
