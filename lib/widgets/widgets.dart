@@ -18,3 +18,4 @@ export 'order_screen/order_item.dart';
 export 'order_screen/address_container.dart';
 export 'order_screen/rating_container.dart';
 export 'order_screen/tracking_status_bar.dart';
+export 'order_screen/cart_item.dart';

@@ -7,3 +7,4 @@ export 'address.dart';
 export 'contact_information.dart';
 export 'review.dart';
 export 'rating.dart';
+export 'cart.dart';

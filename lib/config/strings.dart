@@ -26,4 +26,5 @@ class Strings {
   static const String ordered = "Ordered";
   static const String shipped = "Shipped";
   static const String delivered = "Delivered";
+  static const String deliveringTo = "Delivering To";
 }

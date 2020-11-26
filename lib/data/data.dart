@@ -168,6 +168,39 @@ final List<Address> address = [
       pincode: '49235'),
 ];
 
+final List<Cart> cart = [
+  Cart(
+    dateAdded: DateTime(2020, 3, 5, 6),
+    productID: 'bsdbls',
+    quantity: 20,
+  ),
+  Cart(
+    dateAdded: DateTime(2020, 3, 5, 6),
+    productID: 'bsdbls',
+    quantity: 20,
+  ),
+  Cart(
+    dateAdded: DateTime(2020, 3, 5, 6),
+    productID: 'bsdbls',
+    quantity: 20,
+  ),
+  Cart(
+    dateAdded: DateTime(2020, 3, 5, 6),
+    productID: 'bsdbls',
+    quantity: 20,
+  ),
+  Cart(
+    dateAdded: DateTime(2020, 3, 5, 6),
+    productID: 'bsdbls',
+    quantity: 20,
+  ),
+  Cart(
+    dateAdded: DateTime(2020, 3, 5, 6),
+    productID: 'bsdbls',
+    quantity: 20,
+  ),
+];
+
 final List<Rating> rating = [
   Rating(
     orderID: 'gcholdsvj',
