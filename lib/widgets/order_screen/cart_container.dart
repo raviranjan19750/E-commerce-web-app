@@ -54,10 +54,8 @@ class CartContainer extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            width: 100,
-            color: Colors.red,
-          ),
+          //TODO: Cart Total
+          CartTotal(),
         ],
       ),
     );
