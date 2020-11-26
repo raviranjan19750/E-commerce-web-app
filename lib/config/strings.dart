@@ -36,4 +36,5 @@ class Strings {
   static const String total = "Total";
   static const String placeOrder = "Place Order";
   static const String selectAddressNextStep = "Select Address on Next Step";
+  static const String orderPlaced = "Order Placed";
 }

@@ -20,3 +20,6 @@ export 'order_screen/rating_container.dart';
 export 'order_screen/tracking_status_bar.dart';
 export 'order_screen/cart_item.dart';
 export 'order_screen/cart_total.dart';
+export 'order_placed_screen/order_placed_container.dart';
+export 'order_placed_screen/order_placed_status_container.dart';
+export 'order_placed_screen/order_placed_item.dart';
