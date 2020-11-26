@@ -167,3 +167,69 @@ final List<Address> address = [
       name: 'Shan',
       pincode: '49235'),
 ];
+
+final List<Rating> rating = [
+  Rating(
+    orderID: 'gcholdsvj',
+    rating: 4.0,
+    reviews: [
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+    ],
+  ),
+  Rating(
+    orderID: 'gcholdsvj',
+    rating: 4.0,
+    reviews: [
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+    ],
+  ),
+  Rating(
+    orderID: 'gcholdsvj',
+    rating: 4.0,
+    reviews: [
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+      Review(
+        productID: 'nksdvnlns',
+        rating: 3.0,
+        review: 'bksdbvknl',
+      ),
+    ],
+  ),
+];
