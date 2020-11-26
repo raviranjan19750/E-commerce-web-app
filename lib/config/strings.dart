@@ -37,4 +37,6 @@ class Strings {
   static const String placeOrder = "Place Order";
   static const String selectAddressNextStep = "Select Address on Next Step";
   static const String orderPlaced = "Order Placed";
+  static const String addToCart = "Add To Cart";
+  static const String buyNow = "Buy Now";
 }
