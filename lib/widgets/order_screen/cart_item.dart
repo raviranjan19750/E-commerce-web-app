@@ -59,6 +59,8 @@ class _CartItemState extends State<CartItem> {
                 Text('Product Image'),
                 Container(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         child: Row(

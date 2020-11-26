@@ -38,17 +38,17 @@ class CartContainer extends StatelessWidget {
                         },
                       ),
                     ),
-                    // width: double.infinity,
-                    // height: double.infinity,
-                    // child: ListView.builder(
-                    //   itemCount: carts.length,
-                    //   itemBuilder: (BuildContext context, int index) {
-                    //     return Container();
-                    //     // return CartItem(
-                    //     //   cart: carts[index],
-                    //     // );
-                    //   },
-                    // ),
+                  ),
+                  // Subtotal Container
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(Strings.subTotal + ' (total no. of products)'),
+                        Text('Subtotal Amount'),
+                      ],
+                    ),
                   ),
                 ],
               ),

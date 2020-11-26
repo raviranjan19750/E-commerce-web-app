@@ -17,7 +17,7 @@ class Strings {
   static const String quantity = "Quantity";
   static const String viewMore = "View More";
   static const String needHelp = "Need Help?";
-  static const String placedOn = "Need Help?";
+  static const String placedOn = "Placed On";
   static const String deliveryAddress = "Delivery Address";
   static const String phoneNumber = "Phone Number";
   static const String rate = "Rate & Review";
@@ -27,4 +27,13 @@ class Strings {
   static const String shipped = "Shipped";
   static const String delivered = "Delivered";
   static const String deliveringTo = "Delivering To";
+  static const String subTotal = "Subtotal";
+  static const String purchaseProtection = "100 % Purchase Protection";
+  static const String orignalProducts = "Orignal Products";
+  static const String securePayments = "Secure Payments";
+  static const String deliveryCharges = "Delivery Charges";
+  static const String discount = "Discount";
+  static const String total = "Total";
+  static const String placeOrder = "Place Order";
+  static const String selectAddressNextStep = "Select Address on Next Step";
 }

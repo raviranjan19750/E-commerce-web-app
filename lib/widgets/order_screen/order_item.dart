@@ -27,6 +27,8 @@ class _OrderItemState extends State<OrderItem> {
       child: Container(
         width: double.infinity,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Product Image
             Container(
