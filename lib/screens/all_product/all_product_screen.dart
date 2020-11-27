@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
+import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'dart:math' as math;
 
 import 'package:living_desire/screens/all_product/product_widgets.dart';
@@ -32,47 +33,31 @@ class AllProductScreen extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Flexible(
+                    Expanded(
                       flex: 1,
-                      fit: FlexFit.tight,
                       child: Container(
-                        padding: EdgeInsets.only(right: 20),
-                        child: Column(
-                          children: [
-                            FilterCard(),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            FilterCard(),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            FilterCard(),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            FilterCard(),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            FilterCard(),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            FilterCard()
-                          ],
+                        decoration: BoxDecoration(
+                          border: Border(
+                            right: BorderSide(width: 1.0, color: Colors.grey),
+                            // top: BorderSide(width: 1.0, color: Colors.grey),
+                          ),
+                        ),
+                        child: BlocBuilder<FilterBloc, FilterState>(
+                          builder: (context, state) {
+                            return Column(
+                              children: state.filters.map((e) => FilterCard(filters: e)).toList(),
+                            );
+                          }
                         ),
                       ),
                     ),
-                    Flexible(
+                    Expanded(
                       flex: 4,
-                      fit: FlexFit.tight,
                       child: BlocBuilder<AllProductBloc, AllProductState>(
                         builder: (context, state) {
                           if (state is LoadingAllProduct) {
                             return CircularProgressIndicator();
                           } else if (state is SuccessLoadingAllProduct) {
-
                             if (state.productList.isEmpty) {
                               return Center(
                                 child: Text("No Product To Display"),
@@ -80,11 +65,17 @@ class AllProductScreen extends StatelessWidget {
                             }
 
                             return Container(
-                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.all(0),
+                              padding: EdgeInsets.only(top: 30, left: 30),
+                              decoration: BoxDecoration(
+                                border: Border(top: BorderSide(width: 1, color: Colors.grey))
+                              ),
                               child: Wrap(
                                 spacing: 12,
                                 runSpacing: 20,
-                                children: state.productList.map((e) => ProductCard(product: e)).toList(),
+                                children: state.productList
+                                    .map((e) => ProductCard(product: e))
+                                    .toList(),
                               ),
                             );
                           }

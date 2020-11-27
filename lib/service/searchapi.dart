@@ -86,6 +86,53 @@ class SearchApi {
     }
     return result;
   }
+
+  Future<List<FilterTag>> getAllCategoryTags() async {
+    final Map<String, dynamic> aggregation = Map();
+
+    final Map<String, dynamic> sizeAggregation = Map();
+    sizeAggregation.putIfAbsent("terms", () => _getTerms("size"));
+    aggregation.putIfAbsent("size-aggr", () => sizeAggregation);
+
+    final Map<String, dynamic> colorAggregation = Map();
+    colorAggregation.putIfAbsent("terms", () => _getTerms("color"));
+    aggregation.putIfAbsent("color-aggr", () => colorAggregation);
+
+    final searchResult = await client.search(
+        index: "product", limit: 0, aggregations: aggregation);
+    List<FilterTag> tag = List();
+    final sizeresult = searchResult.aggregations['size-aggr'];
+    FilterTag sizetag = FilterTag("SIZE", description: "Size");
+    sizeresult.buckets.forEach((element) {
+      sizetag.addChild(FilterCategoryChild(
+          element.key.toString(),
+          element.key.toString() + " (" + element.docCount.toString() + ")",
+          false));
+    });
+    tag.add(sizetag);
+    final colorresult = searchResult.aggregations['color-aggr'];
+    FilterTag colortag = FilterTag("COLOR", description: "Color");
+    colorresult.buckets.forEach((element) {
+      colortag.addChild(FilterCategoryChild(
+          element.key.toString(),
+          element.key.toString() + " (" + element.docCount.toString() + ")",
+          false));
+    });
+    tag.add(colortag);
+    return tag;
+  }
+
+  Map<String, dynamic> _getTerms(String fieldName, {size = 100}) {
+    final Map<String, dynamic> terms = Map();
+    terms.putIfAbsent("field", () => fieldName);
+    terms.putIfAbsent("size", () => size);
+    Map<String, dynamic> order = Map();
+    order.putIfAbsent("_count", () => "desc");
+
+    terms.putIfAbsent("order", () => order);
+
+    return terms;
+  }
 }
 
 // void main() async {

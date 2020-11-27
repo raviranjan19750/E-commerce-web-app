@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
+import 'package:living_desire/bloc/filter/filter_bloc.dart';
 
 import '../../config/configs.dart';
 import '../../widgets/widgets.dart';
@@ -36,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
         BlocProvider(
             create: (context) =>
                 AllProductBloc(searchApi: RepositoryProvider.of(context))
-                  ..add(InitializeLoadingProduct()))
+                  ..add(InitializeLoadingProduct())),
+        BlocProvider(create: (context) => FilterBloc(searchApi: RepositoryProvider.of(context))..add(InitializeDummyFilter()))
       ],
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
