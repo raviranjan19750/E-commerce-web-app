@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-class OrderPlacedScreenMobile extends StatelessWidget {
+class SelectAddressScreenMobile extends StatelessWidget {
   // Mobile Website Order Placed Screen
   final TrackingScrollController scrollController;
 
-  const OrderPlacedScreenMobile({
+  const SelectAddressScreenMobile({
     Key key,
-    @required this.scrollController,
+    this.scrollController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Build Order Placed Screen for mobile
     return Container();
   }
 }

@@ -3,7 +3,7 @@ import '../../widgets/widgets.dart';
 import '../../models/models.dart';
 
 class OrderPlacedScreenDesktop extends StatelessWidget {
-  // Mobile Website Order Placed Screen
+  // Desktop Website Order Placed Screen
   final TrackingScrollController scrollController;
   final Order order;
 

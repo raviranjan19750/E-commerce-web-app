@@ -4,16 +4,14 @@ class NewAddressFormField extends StatelessWidget {
   final String hintText;
   final Function validator;
   final Function onSaved;
-  final bool isPassword;
-  final bool isEmail;
 
   NewAddressFormField({
     this.hintText,
     this.validator,
     this.onSaved,
-    this.isPassword = false,
-    this.isEmail = false,
   });
+
+  // Form Field for new Addresses
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +25,8 @@ class NewAddressFormField extends StatelessWidget {
           filled: true,
           fillColor: Colors.grey[200],
         ),
-        obscureText: isPassword ? true : false,
         validator: validator,
         onSaved: onSaved,
-        keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
       ),
     );
   }
