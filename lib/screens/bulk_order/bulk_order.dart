@@ -13,25 +13,28 @@ class BulkOrder extends StatelessWidget{
 
       appBar: CustomAppBar(),
 
-      body: Container(
+      body: SingleChildScrollView(
 
-        padding: EdgeInsets.only(left: 32,right: 32),
+        child: Container(
 
-        child: Column(
+          padding: EdgeInsets.only(left: 32,right: 32),
 
-          crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
 
-          children: [
+            crossAxisAlignment: CrossAxisAlignment.start,
 
-            Text('Order in Bulk',style: TextStyle(fontSize: 32 , fontWeight: FontWeight.bold),),
+            children: [
 
-            StepOneBlock(),
+              Text('Order in Bulk',style: TextStyle(fontSize: 32 , fontWeight: FontWeight.bold),),
+
+              StepOneBlock(),
 
 
-          ],
+            ],
+
+          ),
 
         ),
-
       ),
 
     );

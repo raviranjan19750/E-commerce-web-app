@@ -1,85 +1,176 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_item.dart';
+import 'package:provider/provider.dart';
 
 class StepOneBlock extends StatelessWidget{
+
+  bool init = false;
+
   @override
   Widget build(BuildContext context) {
 
-    return Column(
+    return ChangeNotifierProvider(
+        lazy: false,
+        create: (context) => BulkOrderProvider(),
+        child: Consumer<BulkOrderProvider>(
+          builder: (BuildContext context, BulkOrderProvider value, Widget child) {
 
-      children: [
+            if (!init) {
+              Provider.of<BulkOrderProvider>(context, listen: false);
+              init = true;
+            }
 
+            return Visibility(
 
-        Container(
+              visible: value.stepOneDone,
 
-          width: double.infinity,
+              child: InkWell(
 
-          padding: EdgeInsets.all(16),
+                onTap: (){
 
-          decoration: BoxDecoration(
+                  value.onStepOneReverse();
 
-            color: Palette.secondaryColor,
+                },
 
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0, 2),
-                blurRadius: 4.0,
-              )],
+                child: Container(
 
-          ),
+                  width: double.infinity,
 
-          margin: EdgeInsets.only(top: 32),
+                  padding: EdgeInsets.all(16),
 
-          child: Text('Select Item',style: TextStyle(color: Colors.white),),
+                  decoration: BoxDecoration(
 
-        ),
+                    color: Palette.secondaryColor,
 
-        Container(
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0, 2),
+                        blurRadius: 4.0,
+                      )],
 
-          width: double.infinity,
-          height: 240,
+                  ),
 
-          padding: EdgeInsets.all(16),
+                  margin: EdgeInsets.only(top: 32),
 
-          decoration: BoxDecoration(
+                  child: Row(
+                    children: [
 
-            color: Colors.white,
+                      Image(image: AssetImage('assets/images/logo.jpeg'),width: 80,height: 80,),
 
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0, 2),
-                blurRadius: 4.0,
-              )],
+                      Container( margin: EdgeInsets.only(left: 16),child: Text('Selected Item',style: TextStyle(color: Colors.white,fontSize: 24),)),
+                    ],
+                  ),
 
-          ),
+                ),
+              ),
 
+              replacement: Column(
 
-          child: ListView.builder(
-
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: 7,
-              itemBuilder:
-                  (BuildContext context, int index) {
-                return Container(
-
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-
-                  child: BulkOrderItem(),
-                );
-              })
-          ,
+                children: [
 
 
+                  Container(
 
-        ),
+                    width: double.infinity,
 
-      ],
+                    padding: EdgeInsets.all(16),
 
-    );
+                    decoration: BoxDecoration(
+
+                      color: Palette.secondaryColor,
+
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0, 2),
+                          blurRadius: 4.0,
+                        )],
+
+                    ),
+
+                    margin: EdgeInsets.only(top: 32),
+
+                    child: Text('Select Item',style: TextStyle(color: Colors.white,fontSize: 24),),
+
+                  ),
+
+                  Container(
+
+                    width: double.infinity,
+                    height: 240,
+
+                    padding: EdgeInsets.all(16),
+
+                    decoration: BoxDecoration(
+
+                      color: Colors.white,
+
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0, 2),
+                          blurRadius: 4.0,
+                        )],
+
+                    ),
+
+
+                    child: ListView.builder(
+
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 7,
+                        itemBuilder:
+                            (BuildContext context, int index) {
+                          return Container(
+
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+
+                            child: BulkOrderItem(),
+                          );
+                        }),
+
+
+
+                  ),
+
+                  Container(
+
+                    margin: EdgeInsets.only(top: 16),
+
+                    alignment: Alignment.centerLeft,
+
+                    child: RaisedButton(
+
+                      padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
+
+                      onPressed: (){
+
+                        value.onStepOneDone();
+
+                      },
+
+                      color: Palette.secondaryColor,
+
+                      child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 24),),
+
+                    ),
+                  ),
+
+
+
+                ],
+
+              ),
+
+            );
+          },
+        ));
+
+
 
   }
 
