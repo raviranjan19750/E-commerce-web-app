@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasError) {
           return ErrorScreen();
         }
-
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
