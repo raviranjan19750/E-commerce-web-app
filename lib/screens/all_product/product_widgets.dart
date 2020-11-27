@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/models/models.dart';
 
 class ProductCard extends StatefulWidget {
+  final Product product;
+  // @TODO Add Assert
+  const ProductCard({Key key, this.product})
+      : assert(product != null),
+        super(key: key);
+
   @override
   _ProductCardState createState() => _ProductCardState();
 }
@@ -24,21 +31,30 @@ class _ProductCardState extends State<ProductCard> {
         });
       },
       child: Card(
-        elevation: _elevation,
-        child: Stack(
-          children: [
-            Container(
-              height: 200,
-              width: 150,
-            ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: ProductWishlistButton(),
-            )
-          ],
-        ),
-      ),
+          elevation: _elevation,
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 280,
+                    width: 200,
+                    child: Image.network(
+                      widget.product.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: ProductWishlistButton(),
+                  )
+                ],
+              ),
+              Text(widget.product.discountPrice.toString()),
+              Text(widget.product.retailPrice.toString(), style: TextStyle(),)
+            ],
+          )),
     );
   }
 }
@@ -92,7 +108,9 @@ class FilterCheckBox extends StatelessWidget {
               onChanged: onChanged,
             ),
           ),
-          SizedBox(width: 10,),
+          SizedBox(
+            width: 10,
+          ),
           Text(this.filterLabel)
         ],
       ),
@@ -130,7 +148,15 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
             _wishHover = false;
           });
         },
-        child: _wishHover ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_border_outlined, color: Colors.red,),
+        child: _wishHover
+            ? Icon(
+                Icons.favorite,
+                color: Colors.red,
+              )
+            : Icon(
+                Icons.favorite_border_outlined,
+                color: Colors.red,
+              ),
       ),
     );
   }
@@ -142,7 +168,6 @@ class FilterDropDown extends StatefulWidget {
 }
 
 class _FilterDropDownState extends State<FilterDropDown> {
-
   int _value = 1;
 
   @override
@@ -159,14 +184,8 @@ class _FilterDropDownState extends State<FilterDropDown> {
               child: Text("Price: Low To High"),
               value: 2,
             ),
-            DropdownMenuItem(
-                child: Text("Price: High To Low"),
-                value: 3
-            ),
-            DropdownMenuItem(
-                child: Text("Avg Customer Review"),
-                value: 4
-            ),
+            DropdownMenuItem(child: Text("Price: High To Low"), value: 3),
+            DropdownMenuItem(child: Text("Avg Customer Review"), value: 4),
           ],
           onChanged: (value) {
             setState(() {

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
 
 import '../../config/configs.dart';
@@ -29,7 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => SearchBloc(searchApi: RepositoryProvider.of(context)))
+        BlocProvider(
+            create: (context) =>
+                SearchBloc(searchApi: RepositoryProvider.of(context))),
+        BlocProvider(
+            create: (context) =>
+                AllProductBloc(searchApi: RepositoryProvider.of(context))
+                  ..add(InitializeLoadingProduct()))
       ],
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),

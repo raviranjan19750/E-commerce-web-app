@@ -44,9 +44,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
 
     try {
-      var suggestions = await searchApi.getSuggestion(event.term);
-      print(suggestions);
-      yield SearchState.success(suggestions);
+      // var suggestions = await searchApi.getSuggestion(event.term);
+      // print(suggestions);
+      // yield SearchState.success(suggestions);
+      yield const SearchState.failure();
     } on Exception {
       print("Failed");
       yield const SearchState.failure();

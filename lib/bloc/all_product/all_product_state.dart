@@ -1,24 +1,16 @@
 part of 'all_product_bloc.dart';
 
 @immutable
-abstract class AllProductState {
-  Map<String, List<FilterCriteria>> map = new HashMap();
+abstract class AllProductState {}
 
-  void reset() {
-    map = new HashMap();
-  }
+class AllProductInitial extends AllProductState {}
+
+class LoadingAllProduct extends AllProductState {}
+
+class SuccessLoadingAllProduct extends AllProductState {
+  final List<Product> productList;
+
+  SuccessLoadingAllProduct(this.productList);
 }
 
-class AllProductInitial extends AllProductState {
-
-}
-
-class DummyProducts extends AllProductState {
-
-}
-
-class FilterCriteria {
-  final String title;
-  final bool selected;
-  FilterCriteria(this.title, {this.selected = false});
-}
+class FailureLoadingProduct extends AllProductState {}

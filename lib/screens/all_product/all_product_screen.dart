@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'dart:math' as math;
 
 import 'package:living_desire/screens/all_product/product_widgets.dart';
-
 
 class AllProductScreen extends StatelessWidget {
   @override
@@ -21,7 +22,10 @@ class AllProductScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Filters", style: TextStyle(fontWeight: FontWeight.w600),),
+                    Text(
+                      "Filters",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
                     FilterDropDown()
                   ],
                 ),
@@ -63,42 +67,29 @@ class AllProductScreen extends StatelessWidget {
                     Flexible(
                       flex: 4,
                       fit: FlexFit.tight,
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Wrap(
-                          spacing: 12,
-                          runSpacing: 20,
-                          children: [
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard(),
-                            ProductCard()
-                          ],
-                        ),
+                      child: BlocBuilder<AllProductBloc, AllProductState>(
+                        builder: (context, state) {
+                          if (state is LoadingAllProduct) {
+                            return CircularProgressIndicator();
+                          } else if (state is SuccessLoadingAllProduct) {
+
+                            if (state.productList.isEmpty) {
+                              return Center(
+                                child: Text("No Product To Display"),
+                              );
+                            }
+
+                            return Container(
+                              padding: EdgeInsets.all(10),
+                              child: Wrap(
+                                spacing: 12,
+                                runSpacing: 20,
+                                children: state.productList.map((e) => ProductCard(product: e)).toList(),
+                              ),
+                            );
+                          }
+                          return Container();
+                        },
                       ),
                     )
                   ],
@@ -111,4 +102,3 @@ class AllProductScreen extends StatelessWidget {
     );
   }
 }
-

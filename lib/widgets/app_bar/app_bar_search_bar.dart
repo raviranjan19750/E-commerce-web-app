@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/bloc/bloc.dart';
 
@@ -19,6 +20,10 @@ class AppBarSearchBar extends StatelessWidget {
             textAlignVertical: TextAlignVertical.center,
             onChanged: (val) {
               context.read<SearchBloc>().add(SearchTermChanged(val));
+            },
+            onSubmitted: (val) {
+              BlocProvider.of<AllProductBloc>(context).add(LoadAllProductWithSearchParams(filterText: val));
+              print("String SUbmitted");
             },
             cursorColor: Palette.secondaryColor,
             decoration: InputDecoration(

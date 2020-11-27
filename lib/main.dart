@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
+import 'package:living_desire/service/searchapi.dart';
 import './config/configs.dart';
 import './screens/screens.dart';
 
@@ -32,7 +34,15 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: AllProductScreen(),
+            home: MultiRepositoryProvider(
+              providers: [
+                RepositoryProvider(
+                  create: (context) => SearchApi(),
+                )
+              ],
+              child: HomeScreen(),
+
+            ),
           );
         }
 

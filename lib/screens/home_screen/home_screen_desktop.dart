@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
+import 'package:living_desire/service/searchapi.dart';
 import '../../widgets/widgets.dart';
 
 class HomeScreenDesktop extends StatefulWidget {

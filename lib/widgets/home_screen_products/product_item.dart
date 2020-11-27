@@ -23,7 +23,7 @@ class ProductItem extends StatelessWidget {
           child: Column(
             children: [
               // Add Product Image from firebase
-              Text(product.name),
+              Text("product na,e"),
               Text('price'),
               // Add other Information
             ],
