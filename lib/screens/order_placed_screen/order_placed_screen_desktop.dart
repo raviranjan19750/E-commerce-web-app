@@ -18,18 +18,16 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
     // TODO: Build OrderPlacedScreen for desktop
     return Scaffold(
       appBar: CustomAppBar(),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        controller: scrollController,
-        child: Container(
-          child: Row(
-            children: [
-              OrderPlacedContainer(
-                order: order,
-              ),
-              OrderPlacedStatusContainer(),
-            ],
-          ),
+      body: Container(
+        child: Row(
+          children: [
+            OrderPlacedContainer(
+              order: order,
+            ),
+            OrderPlacedStatusContainer(
+              order: order,
+            ),
+          ],
         ),
       ),
     );

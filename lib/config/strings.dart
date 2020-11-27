@@ -41,4 +41,9 @@ class Strings {
   static const String buyNow = "Buy Now";
   static const String size = "Size";
   static const String qty = "Qty";
+  static const String downloadInvoice = "Download Invoice";
+  static const String continueShopping = "Continue Shopping";
+  static const String addNewAddress = "ADD NEW ADDRESS";
+  static const String add = "ADD";
+  static const String cancel = "CANCEL";
 }

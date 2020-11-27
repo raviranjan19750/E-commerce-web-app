@@ -1,3 +1,5 @@
+import 'dart:html';
+import '../../config/configs.dart';
 import 'package:flutter/material.dart';
 import '../../models/models.dart';
 import '../../data/data.dart';
@@ -7,6 +9,7 @@ class ManageAddressesContainer extends StatelessWidget {
   // Manage Address Container
 
   final List<Address> addresses = address;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,8 +30,19 @@ class ManageAddressesContainer extends StatelessWidget {
                       style: BorderStyle.solid,
                     ),
                   ),
-                  child: Center(
+                  child: InkWell(
+                    onTap: () {
+                      // Dialog Box
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return NewAddressDialogBox();
+                        },
+                      );
+                    },
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.add),
                         Text('Add Address'),
