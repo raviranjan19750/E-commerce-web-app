@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/screens/all_product/all_product_screen.dart';
 import '../../widgets/widgets.dart';
 
 class HomeScreenDesktop extends StatefulWidget {
@@ -25,15 +26,15 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
           vertical: 8.0,
           horizontal: 16.0,
         ),
-        child: Container(
-          child: Column(
-            children: [
-              SubAppBar(),
-              // Products Category Body for HomeScreen
-              ProductsHomeOverview(),
-            ],
-          ),
-        ),
+        child: AllProductScreen(),
+        // child: Container(
+        //   child: Column(
+        //     children: [
+        //       // Products Category Body for HomeScreen
+        //       ProductsHomeOverview(),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }

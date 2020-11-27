@@ -1,3 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/bloc.dart';
+
 import '../../config/configs.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
@@ -24,11 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        // Using Responsive widget show mobile and desktop website
-        body: HomeScreenDesktop(scrollController: trackingScrollController),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SearchBloc(searchApi: RepositoryProvider.of(context)))
+      ],
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: HomeScreenDesktop(scrollController: trackingScrollController),
       ),
     );
   }

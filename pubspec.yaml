@@ -26,6 +26,14 @@ dependencies:
   firebase_core: "0.5.2"
   flutter_bloc: ^6.1.1
   equatable: ^1.2.5
+  rxdart: ^0.24.0
+  http:
+#  provider: ^4.3.2+2
+#  bloc: ^6.1.0
+  badges: ^1.1.4
+  elastic_client: ^0.2.0
+  universal_io: ^1.0.1
+
 
 
 
