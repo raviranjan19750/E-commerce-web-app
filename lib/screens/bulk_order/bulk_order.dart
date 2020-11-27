@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/screens/bulk_order/step_one_block.dart';
+import 'package:living_desire/screens/bulk_order/step_two_block.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
 
 class BulkOrder extends StatelessWidget{
@@ -28,6 +29,8 @@ class BulkOrder extends StatelessWidget{
               Text('Order in Bulk',style: TextStyle(fontSize: 32 , fontWeight: FontWeight.bold),),
 
               StepOneBlock(),
+
+              StepTwoBlock(),
 
 
             ],
