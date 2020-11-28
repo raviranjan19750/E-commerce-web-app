@@ -4,56 +4,83 @@ import 'package:living_desire/widgets/app_bar/middle_app_bar.dart';
 import '../widgets.dart';
 import 'package:flutter/material.dart';
 
+
+
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
+  
+  double size;
+  bool visibleMiddleAppBar;
+  bool visibleSubAppBar;
+  
+  CustomAppBar({this.size,this.visibleMiddleAppBar,this.visibleSubAppBar});
+  
   // AppBar has a preferred Size, need to extend Preferred Size widget
-  Size get preferredSize => const Size.fromHeight(160.0);
+  Size get preferredSize =>  Size.fromHeight(size);
   @override
-  _CustomAppBarState createState() => _CustomAppBarState();
+  _CustomAppBarState createState() => _CustomAppBarState(size: size,visibleMiddleAppBar: visibleMiddleAppBar,visibleSubAppBar: visibleSubAppBar);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+
+  double size;
+  bool visibleMiddleAppBar;
+  bool visibleSubAppBar;
+
+  _CustomAppBarState({this.size,this.visibleMiddleAppBar,this.visibleSubAppBar});
+  
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      // clipBehavior: Clip.none,
       children: [
-        Container(
-          padding: const EdgeInsets.only(left: 16,right: 16,top: 8),
+        Column(
+          children: [
+            Container(
+              padding:  EdgeInsets.only(left: 16,right: 16,top: 8),
 
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0, 2),
-                blurRadius: 4.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0, 2),
+                    blurRadius: 4.0,
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Row(
+              child: Row(
 
-            crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
 
-            children: [
+                children: [
 
-              //Logo of the website
-              AppBarLogo(),
-              // WebSite Name
-              AppBarWebName(),
-              //Search Bar
-              AppBarSearchBar(),
-              // Cart
-              AppBarCart(),
+                  //Logo of the website
+                  AppBarLogo(),
+                  // WebSite Name
+                  AppBarWebName(),
+                  //Search Bar
+                  Expanded(child: AppBarSearchBar()),
+                  // Cart
+                  AppBarCart(),
 
-              AppBarWishlist(),
-              // User Card Login/Signup or Profile
-              UserCard(isLoggedIn: false,
+                  AppBarWishlist(),
+                  // User Card Login/Signup or Profile
+                  UserCard(isLoggedIn: false,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Visibility(
+                visible: visibleMiddleAppBar,
+                child: MiddleAppBar())
+          ],
         ),
-        MiddleAppBar(),
-        SubAppBar()
+        Positioned(
+          right: 0,
+          bottom: -23,
+          child: Visibility(visible : visibleSubAppBar,child: SubAppBar()),
+        ),
       ],
     );
   }

@@ -34,6 +34,8 @@ class _AppBarSearchBarState extends State<AppBarSearchBar> {
 
         padding: EdgeInsets.only(left: 16,right: 8),
 
+        margin: EdgeInsets.only(bottom: 8),
+
         decoration: BoxDecoration(
 
           color: Colors.grey[200],

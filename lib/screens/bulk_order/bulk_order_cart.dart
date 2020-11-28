@@ -8,11 +8,9 @@ class BulkOrderCart extends StatelessWidget{
 
     return Container(
 
-      alignment: Alignment.topRight,
-
       margin: EdgeInsets.only(left:32),
 
-      height: 420,
+      height: 25,
       width: 360,
 
       decoration: BoxDecoration(
