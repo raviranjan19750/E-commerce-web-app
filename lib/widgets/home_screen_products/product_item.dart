@@ -17,7 +17,6 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 8.0),
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
       child: FlatButton(
         onPressed: () {
           //Navigator.of(context).pushNamed(routeName);
