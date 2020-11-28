@@ -11,50 +11,52 @@ class NewAddressDialogBox extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.35,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ADD NEW ADDRESS TEXT
-              Text(Strings.addNewAddress),
-              // TODO:Form
-              NewAddressForm(),
-              // Submit Button
-              Container(
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      // Cancel Button
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          Strings.cancel,
-                          style: TextStyle(color: Colors.black),
+          child: Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ADD NEW ADDRESS TEXT
+                Text(Strings.addNewAddress),
+                // TODO:Form
+                NewAddressForm(),
+                // Submit Button
+                Container(
+                  child: Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        // Cancel Button
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            Strings.cancel,
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Palette.secondaryColor,
-                      ),
-                      // Add Button
-                      child: InkWell(
-                        onTap: () {},
-                        child: Text(
-                          Strings.add,
-                          style: TextStyle(color: Colors.white),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Palette.secondaryColor,
+                        ),
+                        // Add Button
+                        child: InkWell(
+                          onTap: () {},
+                          child: Text(
+                            Strings.add,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

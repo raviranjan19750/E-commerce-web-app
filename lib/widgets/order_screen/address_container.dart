@@ -20,44 +20,46 @@ class AddressContainer extends StatelessWidget {
             style: BorderStyle.solid,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            address.isPrimary
-                ? Container(
-                    child: Text('Default:'),
-                  )
-                : SizedBox.shrink(),
-            address.isPrimary ? Divider() : SizedBox.shrink(),
-            Text(address.name),
-            Text(address.addressLine),
-            Text(address.pincode),
-            Container(
-              child: Row(
-                children: [
-                  FlatButton(
-                    child: Text('Edit'),
-                    onPressed: () {},
-                  ),
-                  const Divider(
-                    thickness: 3,
-                  ),
-                  FlatButton(
-                    child: Text('Delete'),
-                    onPressed: () {},
-                  ),
-                  address.isPrimary ? SizedBox.shrink() : const Divider(),
-                  address.isPrimary
-                      ? SizedBox.shrink()
-                      : FlatButton(
-                          child: Text('Set as Default'),
-                          onPressed: () {},
-                        ),
-                ],
-              ),
-            )
-          ],
+        child: Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              address.isPrimary
+                  ? Container(
+                      child: Text('Default:'),
+                    )
+                  : SizedBox.shrink(),
+              address.isPrimary ? Divider() : SizedBox.shrink(),
+              Text(address.name),
+              Text(address.addressLine),
+              Text(address.pincode),
+              Container(
+                child: Row(
+                  children: [
+                    FlatButton(
+                      child: Text('Edit'),
+                      onPressed: () {},
+                    ),
+                    const Divider(
+                      thickness: 3,
+                    ),
+                    FlatButton(
+                      child: Text('Delete'),
+                      onPressed: () {},
+                    ),
+                    address.isPrimary ? SizedBox.shrink() : const Divider(),
+                    address.isPrimary
+                        ? SizedBox.shrink()
+                        : FlatButton(
+                            child: Text('Set as Default'),
+                            onPressed: () {},
+                          ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -13,59 +13,72 @@ final List<ProductType> productsType = [
 
 final List<Product> product = [
   Product(
-      name: 'Product Item 1',
-      currentPrice: 2000,
-      previousPrice: 1500,
-      discount: 36),
+    name: 'Product Item 1',
+    currentPrice: 2000,
+    previousPrice: 1500,
+    discount: 36,
+    imageUrl: 'https://picsum.photos/200/300',
+  ),
   Product(
-      name: 'Product Item 2',
-      currentPrice: 2000,
-      previousPrice: 1500,
-      discount: 36),
+    name: 'Product Item 2',
+    currentPrice: 2000,
+    previousPrice: 1500,
+    discount: 36,
+    imageUrl: 'https://picsum.photos/200/300',
+  ),
   Product(
       name: 'Product Item 3',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
   Product(
       name: 'Product Item 4',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
   Product(
       name: 'Product Item 5',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
   Product(
       name: 'Product Item 6',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
   Product(
       name: 'Product Item 7',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
   Product(
       name: 'Product Item 8',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
   Product(
       name: 'Product Item 9',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
   Product(
       name: 'Product Item 10',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
   Product(
       name: 'Product Item 11',
       currentPrice: 2000,
       previousPrice: 1500,
+      imageUrl: 'https://picsum.photos/200/300',
       discount: 36),
 ];
 

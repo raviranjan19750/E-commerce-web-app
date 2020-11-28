@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/widgets.dart';
 
 class SelectAddressScreenDesktop extends StatelessWidget {
   final TrackingScrollController scrollController;
@@ -7,6 +8,16 @@ class SelectAddressScreenDesktop extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: CustomAppBar(),
+      body: Container(
+        child: Row(
+          children: [
+            SelectAddressContainer(),
+            CartTotal(),
+          ],
+        ),
+      ),
+    );
   }
 }

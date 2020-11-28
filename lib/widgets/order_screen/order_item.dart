@@ -52,70 +52,75 @@ class _OrderItemState extends State<OrderItem> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(Strings.orderID + widget.order.orderID),
-                                  Text(
-                                      '${widget.order.orderedProducts[0].orderPrice}'),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 8.0,
-                                          // Color of the the Product
-                                          backgroundColor: Colors.black,
-                                        ),
-                                        // Size of the product from product id
-                                        //Text('Size:'+widget.order.orderedProducts[0].size)
-                                        Text(Strings.quantity +
-                                            '${widget.order.orderedProducts.length}'),
-                                      ],
+                              child: Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        Strings.orderID + widget.order.orderID),
+                                    Text(
+                                        '${widget.order.orderedProducts[0].orderPrice}'),
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 8.0,
+                                            // Color of the the Product
+                                            backgroundColor: Colors.black,
+                                          ),
+                                          // Size of the product from product id
+                                          //Text('Size:'+widget.order.orderedProducts[0].size)
+                                          Text(Strings.quantity +
+                                              '${widget.order.orderedProducts.length}'),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        FlatButton(
-                                          child: Text(Strings.viewMore),
-                                          onPressed: () {},
-                                        ),
-                                        FlatButton(
-                                          child: Text(Strings.needHelp),
-                                          onPressed: () {},
-                                        )
-                                      ],
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          FlatButton(
+                                            child: Text(Strings.viewMore),
+                                            onPressed: () {},
+                                          ),
+                                          FlatButton(
+                                            child: Text(Strings.needHelp),
+                                            onPressed: () {},
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(Strings.placedOn +
-                                      widget.order.datePlaced),
-                                  Text(Strings.deliveryAddress +
-                                      widget.order.contactInformation.name +
-                                      widget.order.contactInformation
-                                          .addressLine),
-                                  //Phone Number
-                                  Text(Strings.phoneNumber +
-                                      widget.order.contactInformation.phone),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        // Tracking Bar
-                                        TrackingStatusBar(),
-                                        // Rate and Review
-                                        RatingContainer(),
-                                      ],
+                              child: Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(Strings.placedOn +
+                                        widget.order.datePlaced),
+                                    Text(Strings.deliveryAddress +
+                                        widget.order.contactInformation.name +
+                                        widget.order.contactInformation
+                                            .addressLine),
+                                    //Phone Number
+                                    Text(Strings.phoneNumber +
+                                        widget.order.contactInformation.phone),
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          // Tracking Bar
+                                          TrackingStatusBar(),
+                                          // Rate and Review
+                                          RatingContainer(),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],

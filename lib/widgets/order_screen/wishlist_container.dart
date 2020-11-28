@@ -10,15 +10,19 @@ class WishlistContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // Grid View to display different Products
-      child: GridView.builder(
-        itemCount: wishlistProducts.length,
-        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5,
+      child: Expanded(
+        child: GridView.builder(
+          itemCount: wishlistProducts.length,
+          gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 5,
+            childAspectRatio: MediaQuery.of(context).size.width /
+                (MediaQuery.of(context).size.height / 0.3),
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            // Display a product Item
+            return WishlistProductItem(product: wishlistProducts[index]);
+          },
         ),
-        itemBuilder: (BuildContext context, int index) {
-          // Display a product Item
-          return ProductItem(product: wishlistProducts[index]);
-        },
       ),
     );
   }

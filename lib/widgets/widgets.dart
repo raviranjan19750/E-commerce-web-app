@@ -26,3 +26,5 @@ export 'order_placed_screen/order_placed_item.dart';
 export 'order_screen/new_address_dialog_box.dart';
 export 'order_screen/new_address_form.dart';
 export 'order_screen/new_address_form_field.dart';
+export 'order_screen/wishlist_product_item.dart';
+export 'select_address_screen/select_address_container.dart';

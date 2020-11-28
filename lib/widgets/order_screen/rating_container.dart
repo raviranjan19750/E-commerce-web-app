@@ -90,85 +90,162 @@ class _RatingContainerState extends State<RatingContainer> {
                             // Review Container For differnt Products
                             Expanded(
                               child: Container(
-                                child: ListView.builder(
-                                  //TODO: Get Review Based on the order id
-                                  // Match the order id to the review
-                                  itemCount: ratings[0].reviews.length,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Divider(
-                                            color: Colors.black,
-                                            thickness: 0.5,
-                                          ),
-                                          // Product Name
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 10.0,
-                                                horizontal: 12.0),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              color: Palette.maroon,
+                                child: Column(
+                                  children: [
+                                    //TODO: Get Review Based on the order id
+                                    // Match the order id to the review
+                                    ...ratings[0].reviews.map((e) {
+                                      return Container(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Divider(
+                                              color: Colors.black,
+                                              thickness: 0.5,
                                             ),
-                                            child: Text(
-                                              //TODO: Get Product Name from productID
-                                              ratings[0]
-                                                  .reviews[index]
-                                                  .productID,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                                color: Colors.white,
+                                            // Product Name
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10.0,
+                                                  horizontal: 12.0),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.rectangle,
+                                                color: Palette.maroon,
+                                              ),
+                                              child: Text(
+                                                //TODO: Get Product Name from productID
+                                                e.productID,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Container(
-                                            child: Row(
-                                              children: [
-                                                //TODO: Product Image
-                                                Text('Product Image'),
-                                                Container(
-                                                  child: Column(
-                                                    children: [
-                                                      RatingBar(
-                                                        //TODO: Get correct Rating based on product ID
-                                                        initialRating:
-                                                            ratings[0]
-                                                                .reviews[index]
-                                                                .rating,
-                                                        onRatingChanged:
-                                                            (rating) {},
-                                                        filledIcon: Icons.star,
-                                                        emptyIcon:
-                                                            Icons.star_border,
-                                                        isHalfAllowed: false,
-                                                        filledColor:
-                                                            Colors.yellow,
-                                                        emptyColor:
-                                                            Colors.black12,
-                                                        size: 40,
-                                                      ),
+                                            Container(
+                                              child: Row(
+                                                children: [
+                                                  //TODO: Product Image
+                                                  Text('Product Image'),
+                                                  Container(
+                                                    child: Column(
+                                                      children: [
+                                                        RatingBar(
+                                                          //TODO: Get correct Rating based on product ID
+                                                          initialRating:
+                                                              e.rating,
+                                                          onRatingChanged:
+                                                              (rating) {},
+                                                          filledIcon:
+                                                              Icons.star,
+                                                          emptyIcon:
+                                                              Icons.star_border,
+                                                          isHalfAllowed: false,
+                                                          filledColor:
+                                                              Colors.yellow,
+                                                          emptyColor:
+                                                              Colors.black12,
+                                                          size: 40,
+                                                        ),
 
-                                                      // TextField(
-                                                      //   controller:
-                                                      //       _reviewController,
-                                                      // ),
-                                                    ],
+                                                        // TextField(
+                                                        //   controller:
+                                                        //       _reviewController,
+                                                        // ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                  ],
                                 ),
+                                // child: ListView.builder(
+                                //   //TODO: Get Review Based on the order id
+                                //   // Match the order id to the review
+                                //   itemCount: ratings[0].reviews.length,
+                                //   itemBuilder: (context, index) {
+                                //     return Container(
+                                //       child: Column(
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.start,
+                                //         crossAxisAlignment:
+                                //             CrossAxisAlignment.start,
+                                //         children: [
+                                //           Divider(
+                                //             color: Colors.black,
+                                //             thickness: 0.5,
+                                //           ),
+                                //           // Product Name
+                                //           Container(
+                                //             padding: EdgeInsets.symmetric(
+                                //                 vertical: 10.0,
+                                //                 horizontal: 12.0),
+                                //             decoration: BoxDecoration(
+                                //               shape: BoxShape.rectangle,
+                                //               color: Palette.maroon,
+                                //             ),
+                                //             child: Text(
+                                //               //TODO: Get Product Name from productID
+                                //               ratings[0]
+                                //                   .reviews[index]
+                                //                   .productID,
+                                //               style: TextStyle(
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 16,
+                                //                 color: Colors.white,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           Container(
+                                //             child: Row(
+                                //               children: [
+                                //                 //TODO: Product Image
+                                //                 Text('Product Image'),
+                                //                 Container(
+                                //                   child: Column(
+                                //                     children: [
+                                //                       RatingBar(
+                                //                         //TODO: Get correct Rating based on product ID
+                                //                         initialRating:
+                                //                             ratings[0]
+                                //                                 .reviews[index]
+                                //                                 .rating,
+                                //                         onRatingChanged:
+                                //                             (rating) {},
+                                //                         filledIcon: Icons.star,
+                                //                         emptyIcon:
+                                //                             Icons.star_border,
+                                //                         isHalfAllowed: false,
+                                //                         filledColor:
+                                //                             Colors.yellow,
+                                //                         emptyColor:
+                                //                             Colors.black12,
+                                //                         size: 40,
+                                //                       ),
+
+                                //                       // TextField(
+                                //                       //   controller:
+                                //                       //       _reviewController,
+                                //                       // ),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     );
+                                //   },
+                                // ),
                               ),
                             ),
                             // Submit Button

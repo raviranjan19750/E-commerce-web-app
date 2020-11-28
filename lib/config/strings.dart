@@ -46,4 +46,5 @@ class Strings {
   static const String addNewAddress = "ADD NEW ADDRESS";
   static const String add = "ADD";
   static const String cancel = "CANCEL";
+  static const String changeAddress = "Change Address";
 }

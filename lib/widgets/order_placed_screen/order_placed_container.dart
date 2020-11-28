@@ -28,15 +28,24 @@ class OrderPlacedContainer extends StatelessWidget {
               Text(Strings.orderPlaced),
               Expanded(
                 child: Container(
-                  child: ListView.builder(
-                    // shrinkWrap: true,
-                    // physics: const NeverScrollableScrollPhysics(),
-                    itemCount: order.orderedProducts.length,
-                    itemBuilder: (context, index) {
-                      return OrderPlacedItem(
-                          orderedProduct: order.orderedProducts[index]);
-                    },
+                  child: Column(
+                    children: [
+                      ...order.orderedProducts.map((e) {
+                        return OrderPlacedItem(
+                          orderedProduct: e,
+                        );
+                      }),
+                    ],
                   ),
+                  // child: ListView.builder(
+                  //   // shrinkWrap: true,
+                  //   // physics: const NeverScrollableScrollPhysics(),
+                  //   itemCount: order.orderedProducts.length,
+                  //   itemBuilder: (context, index) {
+                  //     return OrderPlacedItem(
+                  //         orderedProduct: order.orderedProducts[index]);
+                  //   },
+                  // ),
                 ),
               ),
               // Total Price of the products

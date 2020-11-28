@@ -8,6 +8,7 @@ class CartContainer extends StatelessWidget {
   // Cart Widget
   @override
   Widget build(BuildContext context) {
+    print('Cart Container');
     //TODO: Get The cart of the same user
     final List<Cart> carts = cart;
     // Match the Product to the Product ID in cart
@@ -29,14 +30,23 @@ class CartContainer extends StatelessWidget {
                   Text(Strings.deliveringTo),
                   Container(
                     child: Expanded(
-                      child: ListView.builder(
-                        itemCount: carts.length,
-                        itemBuilder: (context, index) {
-                          return CartItem(
-                            cart: carts[index],
-                          );
-                        },
+                      child: Column(
+                        children: [
+                          ...carts.map(
+                            (e) => CartItem(
+                              cart: e,
+                            ),
+                          ),
+                        ],
                       ),
+                      // child: ListView.builder(
+                      //   itemCount: carts.length,
+                      //   itemBuilder: (context, index) {
+                      //     return CartItem(
+                      //       cart: carts[index],
+                      //     );
+                      //   },
+                      // ),
                     ),
                   ),
                   // Subtotal Container

@@ -49,99 +49,100 @@ class _CartItemState extends State<CartItem> {
       discount: 34,
     );
     return Container(
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            child: Row(
-              children: [
-                // Product Image
-                Text('Product Image'),
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Text(product.name),
-                            Text(product.currentPrice.toString()),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            //TODO: Color of the product
-                            CircleAvatar(
-                              backgroundColor: Colors.black,
+      child: Expanded(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              child: Row(
+                children: [
+                  // Product Image
+                  Text('Product Image'),
+                  Container(
+                    child: Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Row(
+                              children: [
+                                Text(product.name),
+                                Text(product.currentPrice.toString()),
+                              ],
                             ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            DropdownButton<String>(
-                              // Size of the product
-                              value: 'S',
-                              icon: Icon(Icons.arrow_drop_down),
-                              iconSize: 12,
-                              elevation: 5,
-                              style: TextStyle(color: Colors.black),
-                              onChanged: (String newValue) {},
-                              // Get Size variants
-                              items: <String>[
-                                'S',
-                                'M',
-                                'L',
-                                'XL'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                //TODO: Color of the product
+                                CircleAvatar(
+                                  backgroundColor: Colors.black,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                DropdownButton<String>(
+                                  // Size of the product
+                                  value: 'S',
+                                  icon: Icon(Icons.arrow_drop_down),
+                                  iconSize: 12,
+                                  elevation: 5,
+                                  style: TextStyle(color: Colors.black),
+                                  onChanged: (String newValue) {},
+                                  // Get Size variants
+                                  items: <String>['S', 'M', 'L', 'XL']
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
 
-                            // Quantity Button
-                            _decrementButton(widget.cart.quantity),
-                            Text(
-                              '${widget.cart.quantity}',
-                              style: TextStyle(fontSize: 16.0),
+                                // Quantity Button
+                                _decrementButton(widget.cart.quantity),
+                                Text(
+                                  '${widget.cart.quantity}',
+                                  style: TextStyle(fontSize: 16.0),
+                                ),
+                                _incrementButton(widget.cart.quantity),
+                              ],
                             ),
-                            _incrementButton(widget.cart.quantity),
-                          ],
-                        ),
+                          ),
+                          // Old Price
+                          Text(
+                            'Old Proce',
+                          ),
+                          // New Price
+                          Text('New Price'),
+                          // Discount
+                          Text('You saved...'),
+                          // Remove from Cart
+                          FlatButton(
+                            onPressed: () {},
+                            child: Text('Remove from Cart'),
+                          ),
+                        ],
                       ),
-                      // Old Price
-                      Text(
-                        'Old Proce',
-                      ),
-                      // New Price
-                      Text('New Price'),
-                      // Discount
-                      Text('You saved...'),
-                      // Remove from Cart
-                      FlatButton(
-                        onPressed: () {},
-                        child: Text('Remove from Cart'),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Divider(
-            thickness: 0.5,
-            color: Colors.black,
-          ),
-        ],
+            SizedBox(
+              height: 25,
+            ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.black,
+            ),
+          ],
+        ),
       ),
     );
   }

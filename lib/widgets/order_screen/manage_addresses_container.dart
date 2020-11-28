@@ -40,13 +40,15 @@ class ManageAddressesContainer extends StatelessWidget {
                         },
                       );
                     },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add),
-                        Text('Add Address'),
-                      ],
+                    child: Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add),
+                          Text('Add Address'),
+                        ],
+                      ),
                     ),
                   ),
                 ),
