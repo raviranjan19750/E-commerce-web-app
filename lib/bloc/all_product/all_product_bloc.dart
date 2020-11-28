@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
 import 'package:living_desire/models/models.dart';
@@ -25,15 +24,33 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       yield* _mapLoadingAllProduct();
     } else if (event is LoadAllProductWithSearchParams) {
       yield* _mapLoadingFilteredProduct(event);
+    } else if (event is LoadNextProduct) {
+      yield* _mapLoadNextProduct(state, event);
     }
   }
+
+
+  Stream<AllProductState> _mapLoadNextProduct(AllProductState state, LoadNextProduct event) async* {
+    if (state is SuccessLoadingAllProduct) {
+       final List<Product> previousList = state.productList;
+       int limit = state.limit;
+       int offset = state.offset + limit;
+       List<Product> newProduct = await searchApi.getAllProducts(limit: limit, offset: offset);
+       List<Product> finalList = List();
+       finalList.addAll(previousList);
+       finalList.addAll(newProduct);
+       print(finalList);
+       yield SuccessLoadingAllProduct(finalList, limit: limit, offset: offset);
+    }
+  }
+
 
   Stream<AllProductState> _mapLoadingAllProduct() async* {
     yield LoadingAllProduct();
     try {
       // searchApi
-      final product = await searchApi.getAllProducts();
-      yield SuccessLoadingAllProduct(product);
+      final product = await searchApi.getAllProducts(offset: 0, limit: 20);
+      yield SuccessLoadingAllProduct(product, limit: 20, offset: 0);
     } catch (e) {
       yield FailureLoadingProduct();
     }
@@ -45,11 +62,11 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       // searchApi
       var product;
       if (event.filterText != null && event.filterText.isNotEmpty) {
-        product = await searchApi.getFilteredProduct(event.filterText);
+        product = await searchApi.getFilteredProduct(event.filterText, offset: 0, limit: 20);
       } else {
-        product = await searchApi.getAllProducts();
+        product = await searchApi.getAllProducts(limit: 20, offset: 0);
       }
-      yield SuccessLoadingAllProduct(product);
+      yield SuccessLoadingAllProduct(product, offset: 0, limit: 20);
     } catch (e) {
       yield FailureLoadingProduct();
     }

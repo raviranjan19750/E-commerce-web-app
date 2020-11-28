@@ -17,7 +17,6 @@ class ProductCard extends StatefulWidget {
 
 class _ProductCardState extends State<ProductCard> {
   double _elevation = 0;
-  double _size = 1;
   @override
   String formatTitle(String title) {
     int len = 20;
@@ -38,18 +37,17 @@ class _ProductCardState extends State<ProductCard> {
       onEnter: (event) {
         setState(() {
           _elevation = 20;
-          _size = 1.12;
         });
       },
       onExit: (event) {
         setState(() {
           _elevation = 0;
-          _size = 1;
         });
       },
       child: Card(
           elevation: _elevation,
           child: Container(
+            // height: 300,
             width: 200,
             child: Column(
               children: [
@@ -80,7 +78,8 @@ class _ProductCardState extends State<ProductCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        formatTitle(widget.product.title),
+                        widget.product.title,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(

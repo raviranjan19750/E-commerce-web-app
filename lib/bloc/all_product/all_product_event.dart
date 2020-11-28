@@ -10,3 +10,5 @@ class LoadAllProductWithSearchParams extends AllProductEvent {
 
   LoadAllProductWithSearchParams({ this.filterText });
 }
+
+class LoadNextProduct extends AllProductEvent {}

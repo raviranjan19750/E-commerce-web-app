@@ -45,14 +45,15 @@ class SearchApi {
   //   return result;
   // }
 
-  Future<List<Product>> getFilteredProduct(String title) async {
+  Future<List<Product>> getFilteredProduct(String title, {int limit, int offset}) async {
     final Map<String, dynamic> query = Map();
 
+    // query.putIfAbsent("size", () => 30);
     Map<String, dynamic> matches = Map();
     matches.putIfAbsent("title", () => title);
 
     query.putIfAbsent("match", () => matches);
-    final searchResult = await client.search(index: "product", query: query);
+    final searchResult = await client.search(index: "product", query: query, limit: limit, offset: offset);
     final hits = searchResult.hits;
     List<Product> result = List();
     for (var hit in hits) {
@@ -69,8 +70,8 @@ class SearchApi {
     return result;
   }
 
-  Future<List<Product>> getAllProducts() async {
-    final searchResult = await client.search(index: "product");
+  Future<List<Product>> getAllProducts({int limit, int offset}) async {
+    final searchResult = await client.search(index: "product", limit: limit, offset: offset);
     final hits = searchResult.hits;
     List<Product> result = List();
     for (var hit in hits) {
