@@ -17,15 +17,18 @@ class BulkOrder extends StatelessWidget{
 
       appBar: CustomAppBar(),
 
-      body: SingleChildScrollView(
+      body: Row(
 
-        child: Container(
+        children: [
 
-          padding: EdgeInsets.only(left: 32,right: 32,bottom: 64),
+          Expanded(
 
-          child: Row(
-            children: [
-              Expanded(
+            child: Container(
+
+              padding: EdgeInsets.only(left: 32,right: 32,bottom: 64),
+
+              child: SingleChildScrollView(
+
                 child: Column(
 
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,11 +106,10 @@ class BulkOrder extends StatelessWidget{
 
                 ),
               ),
-              BulkOrderCart()
-            ],
+            ),
           ),
-
-        ),
+          Container(height: double.infinity ,child: BulkOrderCart())
+        ],
       ),
 
     );
