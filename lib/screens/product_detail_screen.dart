@@ -70,6 +70,7 @@ class ProductDetailStatelessScreen extends StatelessWidget {
       appBar: CustomAppBar(),
 
       body: SingleChildScrollView(
+
         physics: ScrollPhysics(),
 
         child: Container(
@@ -268,12 +269,17 @@ class ProductDetailStatelessScreen extends StatelessWidget {
                                           keyboardType: TextInputType.number,
                                           maxLength: 6,
                                           onChanged: (val) {},
+                                          cursorColor: Colors.black,
+
                                           decoration: InputDecoration(
                                             labelText: 'Check Availability',
                                             focusColor: Colors.grey,
                                             hoverColor: Colors.grey,
                                             fillColor: Colors.grey,
                                             border: InputBorder.none,
+                                              labelStyle: TextStyle(
+                                                color: Colors.black54
+                                              ),
                                               focusedBorder: InputBorder.none,
                                               enabledBorder: InputBorder.none,
                                               errorBorder: InputBorder.none,
@@ -501,6 +507,7 @@ class ProductDetailStatelessScreen extends StatelessWidget {
                     ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: products.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ProductItem(
@@ -533,6 +540,7 @@ class ProductDetailStatelessScreen extends StatelessWidget {
                     ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: products.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ProductItem(
