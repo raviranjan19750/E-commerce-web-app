@@ -15,7 +15,7 @@ class BulkOrder extends StatelessWidget{
 
     return Scaffold(
 
-      appBar: CustomAppBar(size: 80,visibleSubAppBar: false,visibleMiddleAppBar: false,),
+      //appBar: CustomAppBar(size: 160,visibleSubAppBar: false,visibleMiddleAppBar: false,),
 
       body: Row(
 
@@ -25,7 +25,7 @@ class BulkOrder extends StatelessWidget{
 
             child: Container(
 
-              padding: EdgeInsets.only(left: 32,right: 32,bottom: 64),
+              padding: EdgeInsets.only(left: 32,right: 32),
 
               child: SingleChildScrollView(
 
@@ -51,7 +51,7 @@ class BulkOrder extends StatelessWidget{
 
                         Container(
 
-                          margin: EdgeInsets.only(top: 16),
+                          margin: EdgeInsets.only(top: 16,bottom: 64),
 
                           decoration: BoxDecoration(
 
@@ -78,7 +78,7 @@ class BulkOrder extends StatelessWidget{
 
                         Container(
 
-                          margin: EdgeInsets.only(top: 16,left: 32),
+                          margin: EdgeInsets.only(top: 16,left: 32,bottom: 64),
 
                           alignment: Alignment.centerLeft,
 
