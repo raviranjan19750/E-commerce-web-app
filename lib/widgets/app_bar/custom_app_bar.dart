@@ -71,15 +71,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 ],
               ),
             ),
-            Visibility(
-                visible: visibleMiddleAppBar,
-                child: MiddleAppBar())
+
+            (visibleMiddleAppBar)?MiddleAppBar():Container()
           ],
         ),
         Positioned(
           right: 0,
           bottom: -23,
-          child: Visibility(visible : visibleSubAppBar,child: SubAppBar()),
+          child: (visibleSubAppBar)?SubAppBar():Container()
         ),
       ],
     );
