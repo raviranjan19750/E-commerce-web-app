@@ -13,27 +13,26 @@ class NormalOrdersContainer extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        child: Expanded(
-          child: Column(
-            children: [
-              ...orders.map(
-                (e) => OrderItem(
-                  order: e,
-                ),
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            ...orders.map(
+              (e) => Container(),
+              // (e) => OrderItem(
+              //   order: e,
+              // ),
+            ),
+          ],
         ),
-        // child: ListView.builder(
-        //   itemCount: orders.length,
-        //   itemBuilder: (context, index) {
-        //     // Order Item
-        //     return OrderItem(
-        //       order: orders[index],
-        //     );
-        //   },
-        // ),
       ),
+      // child: ListView.builder(
+      //   itemCount: orders.length,
+      //   itemBuilder: (context, index) {
+      //     // Order Item
+      //     return OrderItem(
+      //       order: orders[index],
+      //     );
+      //   },
+      // ),
     );
   }
 }

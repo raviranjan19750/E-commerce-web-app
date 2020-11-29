@@ -47,4 +47,6 @@ class Strings {
   static const String add = "ADD";
   static const String cancel = "CANCEL";
   static const String changeAddress = "Change Address";
+  static const String shipTo = "Ship to";
+  static const String proceedToPay = "Proceed To Pay";
 }

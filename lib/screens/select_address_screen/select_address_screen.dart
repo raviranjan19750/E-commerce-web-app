@@ -5,6 +5,13 @@ import '../../widgets/widgets.dart';
 import '../screens.dart';
 
 class SelectAddressScreen extends StatefulWidget {
+  final List<Cart> cart;
+
+  SelectAddressScreen({
+    Key key,
+    this.cart,
+  }) : super(key: key);
+
   @override
   _SelectAddressScreenState createState() => _SelectAddressScreenState();
 }
@@ -34,6 +41,7 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
           // Desktop Website
           desktop: SelectAddressScreenDesktop(
             scrollController: trackingScrollController,
+            cart: widget.cart,
           ),
         ),
       ),

@@ -84,7 +84,7 @@ final List<Product> product = [
 
 final List<Order> order = [
   Order(
-    datePlaced: '13121997',
+    placedDate: '13121997',
     orderedProducts: [
       OrderedProduct(
         productId: 'dssdbfdg',
@@ -135,9 +135,10 @@ final List<Order> order = [
     orderID: 'gcholdsvj',
   ),
   Order(
-    datePlaced: '13121997',
+    placedDate: '13121997',
     orderedProducts: [
       OrderedProduct(
+        quantity: 10,
         productId: 'dssdbfdg',
         price: 456,
         orderPrice: 345,
@@ -161,9 +162,10 @@ final List<Order> order = [
     orderID: 'gcholdsvj',
   ),
   Order(
-    datePlaced: '13121997',
+    placedDate: '13121997',
     orderedProducts: [
       OrderedProduct(
+        quantity: 20,
         productId: 'dssdbfdg',
         price: 456,
         orderPrice: 345,
