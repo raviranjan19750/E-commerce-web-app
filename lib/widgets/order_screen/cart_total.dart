@@ -9,146 +9,144 @@ class CartTotal extends StatelessWidget {
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Expanded(
-          child: Column(
-            children: [
-              // 100% Purchase Protection Container
-              Container(
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.grey,
-                    ),
-                    Container(
-                      color: Colors.grey[20],
-                      child: Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              Strings.purchaseProtection,
-                              softWrap: true,
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '${Strings.orignalProducts} | ${Strings.securePayments}',
-                              softWrap: true,
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.green,
-                              ),
-                            ),
-                          ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 100% Purchase Protection Container
+            Container(
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.grey,
+                  ),
+                  Container(
+                    color: Colors.grey[20],
+                    child: Column(
+                      children: [
+                        Text(
+                          Strings.purchaseProtection,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
+                        Text(
+                          '${Strings.orignalProducts} | ${Strings.securePayments}',
+                          softWrap: true,
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 20,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(Strings.subTotal + ' (total no. of products)'),
+                  Text('Subatotal Amount'),
+                ],
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(Strings.subTotal + ' (total no. of products)'),
-                    Text('Subatotal Amount'),
-                  ],
-                ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(Strings.deliveryCharges),
+                  Text('Delivery Charges'),
+                ],
               ),
-              SizedBox(
-                height: 15,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(Strings.discount),
+                  Text('Discount'),
+                ],
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(Strings.deliveryCharges),
-                    Text('Delivery Charges'),
-                  ],
-                ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Divider(
+              color: Colors.black,
+              thickness: 0.3,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(Strings.total),
+                  Text('Total'),
+                ],
               ),
-              SizedBox(
-                height: 10,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Palette.secondaryColor,
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(Strings.discount),
-                    Text('Discount'),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Divider(
-                color: Colors.black,
-                thickness: 0.3,
-              ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(Strings.total),
-                    Text('Total'),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Palette.secondaryColor,
-                ),
-                // Place Order Button
-                child: InkWell(
-                  onTap: () {},
-                  child: Text(
-                    Strings.placeOrder,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
+              // Place Order Button
+              child: InkWell(
+                onTap: () {},
+                child: Text(
+                  Strings.placeOrder,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
                   ),
                 ),
               ),
-              Text(
-                Strings.selectAddressNextStep,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.black45,
-                ),
+            ),
+            Text(
+              Strings.selectAddressNextStep,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.black45,
               ),
-              SizedBox(
-                height: 25,
-              ),
-              Container(
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        Strings.needHelp,
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                        ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Container(
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: Text(
+                      Strings.needHelp,
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

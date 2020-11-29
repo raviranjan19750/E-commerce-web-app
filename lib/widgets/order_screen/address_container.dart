@@ -20,7 +20,9 @@ class AddressContainer extends StatelessWidget {
             style: BorderStyle.solid,
           ),
         ),
-        child: Expanded(
+        width: 300,
+        height: 300,
+        child: Card(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

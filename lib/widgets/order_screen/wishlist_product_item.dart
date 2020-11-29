@@ -10,19 +10,20 @@ class WishlistProductItem extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: Expanded(
+    print('Wishlist product Item');
+    return Container(
+      height: 400,
+      width: 300,
+      child: Card(
+        elevation: 2,
         child: Column(
           children: [
             Stack(
               children: [
-                Expanded(
-                  child: Container(
-                    child: Image.network(
-                      product.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
+                Container(
+                  child: Image.network(
+                    product.imageUrl,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Positioned(
