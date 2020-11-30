@@ -6,43 +6,12 @@ import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
 
 class BulkOrderQuotation extends StatelessWidget{
 
-  Widget checkIcon() => Padding(
-    padding: EdgeInsets.only(bottom: 16, top: 8),
-    child: Icon(
-      Icons.check_circle,
-      color: Colors.green,
-    ),
-  );
-
-  Widget cancelIcon() => Padding(
-    padding: const EdgeInsets.only(bottom: 16, top: 8),
-    child: Icon(
-      Icons.cancel,
-      color: Colors.red,
-    ),
-  );
-
-  Widget coloredBox(Widget child, {bool top = false, bool bottom = false}) =>
-      Container(
-        decoration: BoxDecoration(
-            border: Border(
-                top: BorderSide(
-                    color: top ? Colors.blue.shade900 : Colors.transparent,
-                    width: 2),
-                bottom: BorderSide(
-                    color: bottom ? Colors.blue.shade900 : Colors.transparent,
-                    width: 2),
-                left: BorderSide(color: Colors.blue.shade900, width: 2),
-                right: BorderSide(color: Colors.blue.shade900, width: 2))),
-        child: child,
-      );
-
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
 
-      //appBar: CustomAppBar(size: 112,visibleSubAppBar: true,visibleMiddleAppBar: true,),
+      appBar: CustomAppBar(size: 112,visibleSubAppBar: true,visibleMiddleAppBar: true,),
 
       body: SingleChildScrollView(
 
