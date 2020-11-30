@@ -1,6 +1,8 @@
+import 'dart:html';
 import 'package:flutter/material.dart';
 import '../../config/configs.dart';
 import '../../models/models.dart';
+import '../widgets.dart';
 
 class SelectAddressCartTotal extends StatelessWidget {
   final List<Cart> cart;
@@ -109,22 +111,10 @@ class SelectAddressCartTotal extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Palette.secondaryColor,
-              ),
-              // Place Order Button
-              child: InkWell(
-                onTap: () {},
-                child: Text(
-                  Strings.proceedToPay,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
+
+            // Proceed To Pay Button
+            ProceedToPayButton(
+              cart: cart,
             ),
 
             SizedBox(

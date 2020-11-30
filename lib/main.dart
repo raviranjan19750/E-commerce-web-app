@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:living_desire/screens/product_detail_screen.dart';
 import './config/configs.dart';
 import './screens/screens.dart';
 
