@@ -9,10 +9,6 @@ class SubAppBar extends StatelessWidget {
     return Row(
       children: [
 
-        Expanded(
-          child: Container(),
-        ),
-
         Container(
           padding: EdgeInsets.only(left: 24,bottom: 4),
           decoration: BoxDecoration(

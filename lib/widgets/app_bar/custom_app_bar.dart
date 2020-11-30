@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   
-  double size;
-  bool visibleMiddleAppBar;
-  bool visibleSubAppBar;
+  double size = 160;
+  bool visibleMiddleAppBar = true;
+  bool visibleSubAppBar = true;
   
   CustomAppBar({this.size,this.visibleMiddleAppBar,this.visibleSubAppBar});
   
@@ -31,7 +31,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      // clipBehavior: Clip.none,
+      clipBehavior: Clip.none,
       children: [
         Column(
           children: [
@@ -72,13 +72,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
               ),
             ),
 
-            (visibleMiddleAppBar)?MiddleAppBar():Container()
+            MiddleAppBar()
           ],
         ),
         Positioned(
           right: 0,
-          bottom: -23,
-          child: (visibleSubAppBar)?SubAppBar():Container()
+          bottom: -32,
+          child: SubAppBar()
         ),
       ],
     );
