@@ -42,7 +42,7 @@ class OrderPlacedItem extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(products.name),
-                                Text(orderedProduct.orderPrice.toString()),
+                                Text(orderedProduct.discountPrice.toString()),
                               ],
                             ),
                           ),

@@ -16,7 +16,7 @@ class OrderNavScreen extends StatefulWidget {
 class _OrderNavScreenState extends State<OrderNavScreen> {
   @override
   Widget build(BuildContext context) {
-    // Vertical tab bar for different widgets
+    //Vertical tab bar for different widgets
     return VerticalTabs(
       disabledChangePageFromContentView: true,
       selectedTabBackgroundColor: Colors.black,
@@ -124,4 +124,72 @@ class _OrderNavScreenState extends State<OrderNavScreen> {
       ],
     );
   }
+  // var navigationTree = new List<Widget>();
+  // initState(){
+
+  // }
+  // int selectedIndex = 0;
+  // return Container(
+  //   child: Row(
+  //     mainAxisAlignment: MainAxisAlignment.start,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       // Buttons List
+  //       Column(
+  //         mainAxisAlignment: MainAxisAlignment.start,
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Container(
+  //             width: MediaQuery.of(context).size.width * 0.1,
+  //             color: selectedIndex == 0 ? Colors.black : Colors.white,
+  //             child: InkWell(
+  //               child: Text(Strings.myWishlist),
+  //               onTap: () {
+  //                 setState(() {
+  //                   selectedIndex = 0;
+  //                 });
+  //               },
+  //             ),
+  //           ),
+  //           Container(
+  //             width: MediaQuery.of(context).size.width * 0.1,
+  //             color: selectedIndex == 1 ? Colors.black : Colors.white,
+  //             child: InkWell(
+  //               child: Text(Strings.myOrders),
+  //               onTap: () {
+  //                 setState(() {
+  //                   selectedIndex = 1;
+  //                 });
+  //               },
+  //             ),
+  //           ),
+  //           Container(
+  //             width: MediaQuery.of(context).size.width * 0.1,
+  //             color: selectedIndex == 2 ? Colors.black : Colors.white,
+  //             child: InkWell(
+  //               child: Text(Strings.myCart),
+  //               onTap: () {
+  //                 setState(() {
+  //                   selectedIndex = 2;
+  //                 });
+  //               },
+  //             ),
+  //           ),
+  //           Container(
+  //             width: MediaQuery.of(context).size.width * 0.1,
+  //             color: selectedIndex == 3 ? Colors.black : Colors.white,
+  //             child: InkWell(
+  //               child: Text(Strings.manageAddresses),
+  //               onTap: () {
+  //                 setState(() {
+  //                   selectedIndex = 3;
+  //                 });
+  //               },
+  //             ),
+  //           ),
+  //         ],
+  //       )
+  //     ],
+  //   ),
+  // );
 }

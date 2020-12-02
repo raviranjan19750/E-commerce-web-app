@@ -43,7 +43,7 @@ class _OrderTitleAddressState extends State<OrderTitleAddress> {
 
     // We create the tooltip on the first use
     tooltip = SuperTooltip(
-      popupDirection: TooltipDirection.left,
+      popupDirection: TooltipDirection.down,
       arrowTipDistance: 15.0,
       arrowBaseWidth: 40.0,
       arrowLength: 40.0,
@@ -59,6 +59,7 @@ class _OrderTitleAddressState extends State<OrderTitleAddress> {
           child: Padding(
         padding: const EdgeInsets.only(top: 20.0),
         child: Text(
+          // Address Details
           "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
           "sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, "
           "sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. ",

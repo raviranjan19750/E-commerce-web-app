@@ -87,34 +87,11 @@ final List<Order> order = [
     placedDate: '13121997',
     orderedProducts: [
       OrderedProduct(
-        productId: 'dssdbfdg',
-        price: 456,
-        orderPrice: 345,
+        productID: 'dssdbfdg',
+        sellingPrice: 456,
         quantity: 2,
-      ),
-      OrderedProduct(
-        productId: 'dssdbfdg',
-        price: 456,
-        orderPrice: 345,
-        quantity: 2,
-      ),
-      OrderedProduct(
-        productId: 'dssdbfdg',
-        price: 456,
-        orderPrice: 345,
-        quantity: 2,
-      ),
-      OrderedProduct(
-        productId: 'dssdbfdg',
-        price: 456,
-        orderPrice: 345,
-        quantity: 2,
-      ),
-      OrderedProduct(
-        productId: 'dssdbfdg',
-        price: 456,
-        orderPrice: 345,
-        quantity: 2,
+        variantID: 'nksdvnl',
+        discountPrice: 345,
       ),
     ],
     contactInformation: ContactInformation(
@@ -139,9 +116,10 @@ final List<Order> order = [
     orderedProducts: [
       OrderedProduct(
         quantity: 10,
-        productId: 'dssdbfdg',
-        price: 456,
-        orderPrice: 345,
+        productID: 'dssdbfdg',
+        sellingPrice: 456,
+        discountPrice: 345,
+        variantID: 'bksbkjs',
       ),
     ],
     contactInformation: ContactInformation(
@@ -166,9 +144,10 @@ final List<Order> order = [
     orderedProducts: [
       OrderedProduct(
         quantity: 20,
-        productId: 'dssdbfdg',
-        price: 456,
-        orderPrice: 345,
+        productID: 'dssdbfdg',
+        sellingPrice: 456,
+        discountPrice: 345,
+        variantID: 'bsdlblk',
       ),
     ],
     contactInformation: ContactInformation(

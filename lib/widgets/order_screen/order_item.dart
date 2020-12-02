@@ -24,18 +24,23 @@ class _OrderItemState extends State<OrderItem> {
         top: 8.0,
         bottom: 8.0,
       ),
-      child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            OrderTitleContainer(
-              order: widget.order,
-            ),
-            ...widget.order.orderedProducts.map(
-              (e) => OrderProductItem(),
-            ),
-          ],
+      child: Container(
+        width: double.infinity,
+        child: Card(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              OrderTitleContainer(
+                order: widget.order,
+              ),
+              ...widget.order.orderedProducts.map(
+                (e) => OrderProductItem(
+                  orderedProduct: e,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       // child: Container(

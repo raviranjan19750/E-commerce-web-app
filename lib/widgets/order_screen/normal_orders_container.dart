@@ -15,24 +15,15 @@ class NormalOrdersContainer extends StatelessWidget {
         height: double.infinity,
         child: Column(
           children: [
+            //
             ...orders.map(
-              (e) => Container(),
-              // (e) => OrderItem(
-              //   order: e,
-              // ),
+              (orderItem) => OrderItem(
+                order: orderItem,
+              ),
             ),
           ],
         ),
       ),
-      // child: ListView.builder(
-      //   itemCount: orders.length,
-      //   itemBuilder: (context, index) {
-      //     // Order Item
-      //     return OrderItem(
-      //       order: orders[index],
-      //     );
-      //   },
-      // ),
     );
   }
 }

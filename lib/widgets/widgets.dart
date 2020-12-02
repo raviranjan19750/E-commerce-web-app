@@ -35,3 +35,4 @@ export 'order_screen/order_product_item.dart';
 export 'order_screen/order_title_address.dart';
 export 'select_address_screen/select_address_cart_total.dart';
 export 'select_address_screen/proceed_to_pay_button.dart';
+export 'order_screen/order_title_delivery_status.dart';

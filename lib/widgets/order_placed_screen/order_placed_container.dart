@@ -12,7 +12,7 @@ class OrderPlacedContainer extends StatelessWidget {
     // Total Product Price
     double total = 0;
     for (int i = 0; i < order.orderedProducts.length; i++) {
-      total = total + order.orderedProducts[i].orderPrice;
+      total = total + order.orderedProducts[i].discountPrice;
     }
     return Container(
       child: Expanded(

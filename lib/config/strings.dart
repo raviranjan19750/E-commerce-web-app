@@ -49,4 +49,7 @@ class Strings {
   static const String changeAddress = "Change Address";
   static const String shipTo = "Ship to";
   static const String proceedToPay = "Proceed To Pay";
+  static const String deliveryStatus = "Delivery Status";
+  static const String invoice = "Invoice";
+  static const String buyAgain = "Buy Again";
 }
