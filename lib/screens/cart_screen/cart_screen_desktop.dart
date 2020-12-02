@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
-import '../screens.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
-class OrderScreenDesktop extends StatefulWidget {
-  // Desktop Website Order Screen
+class CartScreenDesktop extends StatefulWidget {
   final TrackingScrollController scrollController;
 
-  const OrderScreenDesktop({
+  const CartScreenDesktop({
     Key key,
     this.scrollController,
   }) : super(key: key);
 
   @override
-  _OrderScreenDesktopState createState() => _OrderScreenDesktopState();
+  _CartScreenDesktopState createState() => _CartScreenDesktopState();
 }
 
-class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
+class _CartScreenDesktopState extends State<CartScreenDesktop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body:
-
-          // Order Navigation screen between differnt widgets
-          // child: OrderNavScreen(
-          //   scrollController: widget.scrollController,
-          // ),
-          Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Row(
@@ -72,7 +64,7 @@ class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.18,
                     height: 60,
-                    color: Colors.black,
+                    color: Colors.white,
                     child: InkWell(
                       onTap: () {},
                       child: Padding(
@@ -84,7 +76,7 @@ class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
                             Text(
                               Strings.myOrders,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 16,
                               ),
                             ),
@@ -102,7 +94,7 @@ class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.18,
                     height: 60,
-                    color: Colors.white,
+                    color: Colors.black,
                     child: InkWell(
                       onTap: () {},
                       child: Padding(
@@ -114,7 +106,7 @@ class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
                             Text(
                               Strings.myCart,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 16,
                               ),
                             ),
@@ -160,7 +152,7 @@ class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
                   ),
                 ],
               ),
-              Expanded(child: NormalOrdersContainer()),
+              Expanded(child: CartContainer()),
             ],
           ),
         ),

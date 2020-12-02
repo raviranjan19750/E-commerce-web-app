@@ -15,10 +15,12 @@ class CartContainer extends StatelessWidget {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CartListContainer(
-            carts: carts,
+          Expanded(
+            child: CartListContainer(
+              carts: carts,
+            ),
           ),
           CartTotal(),
         ],

@@ -50,7 +50,8 @@ class RazorPayWeb extends StatelessWidget {
           "image": "https://example.com/your_logo",
           "order_id": "${orderData["razorpayOrderID"]}",
           "handler": function (response){
-             window.parent.postMessage("SUCCESS","*");      //2 
+             window.parent.postMessage("SUCCESS","*"); 
+                  //2 
              alert(response.razorpay_payment_id);
              alert(response.razorpay_order_id);
              alert(response.razorpay_signature)    

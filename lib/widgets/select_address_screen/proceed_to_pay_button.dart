@@ -38,6 +38,7 @@ class ProceedToPayButton extends StatelessWidget {
             );
             final results = await callable(data).then((value) {
               print('Razor Pay Payment' + value.data.toString());
+              // Catch Error Handling
 
               return showDialog(
                 context: context,
