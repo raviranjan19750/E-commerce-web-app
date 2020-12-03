@@ -9,7 +9,7 @@ class AuthenticationRepository {
   }) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
   Future<ConfirmationResult> loginWithPhoneNumber(String phone) async {
-    return await _firebaseAuth.signInWithPhoneNumber(phone, RecaptchaVerifier());
+    return await _firebaseAuth.signInWithPhoneNumber("+91" + phone);
   }
 
   Future<firebase_auth.UserCredential> verifyOTP(String verification, firebase_auth.ConfirmationResult result) async {

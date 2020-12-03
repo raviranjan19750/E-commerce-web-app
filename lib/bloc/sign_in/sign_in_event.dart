@@ -11,7 +11,6 @@ class SendOTP extends SignInEvent {
 
 class VerifyOTP extends SignInEvent {
   final String verificationCode;
-
   VerifyOTP({@required this.verificationCode }) : assert(verificationCode != null);
 }
 

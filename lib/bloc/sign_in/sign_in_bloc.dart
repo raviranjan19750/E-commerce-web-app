@@ -11,6 +11,8 @@ part 'sign_in_state.dart';
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
   final AuthenticationRepository authService;
+  ConfirmationResult result;
+
 
   SignInBloc({this.authService}) :
         assert(authService != null),
@@ -30,7 +32,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Stream<SignInState> _sendOtp(SendOTP event) async* {
     yield SendingOTP();
     try {
-      ConfirmationResult result = await authService.loginWithPhoneNumber(event.phoneNumber);
+      result = await authService.loginWithPhoneNumber(event.phoneNumber);
       yield OTPSentToUser();
     } catch (e) {
       print(e);
@@ -41,8 +43,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Stream<SignInState> _verifyingOtp(VerifyOTP event) async* {
     yield VerifyingOTP();
     try {
-      await Future.delayed(Duration(seconds: 5));
-      yield VerificationSuccess();
+      if (result != null) {
+        UserCredential credential = await result.confirm(event.verificationCode);
+        yield VerificationSuccess();
+      } else {
+        throw Exception();
+      }
     } catch (e) {
       yield VerificationFailure();
       await Future.delayed(Duration(seconds: 2));
