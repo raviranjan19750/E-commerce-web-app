@@ -28,11 +28,6 @@ class _ProductCardState extends State<ProductCard> {
   }
 
   Widget build(BuildContext context) {
-    double discount = 0;
-    discount = (widget.product.retailPrice - widget.product.discountPrice) /
-        widget.product.retailPrice *
-        100;
-
     return MouseRegion(
       onEnter: (event) {
         setState(() {
@@ -47,80 +42,97 @@ class _ProductCardState extends State<ProductCard> {
       child: Card(
           elevation: _elevation,
           child: Container(
-            // height: 300,
             width: 200,
-            child: Column(
-              children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      height: 280,
-                      child: Image.network(
-                        widget.product.imageUrl,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: ProductWishlistButton(),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      child: _AddToCartButton(),
-                    )
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.product.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "₹" + widget.product.discountPrice.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "₹" + widget.product.retailPrice.toString(),
-                            style: TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                color: Colors.grey),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          if (discount > 0)
-                            Text(
-                              discount.toStringAsPrecision(2) + "% Off",
-                              style: TextStyle(color: Colors.green),
-                            )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child: ProductCardContent(product: widget.product,)
           )),
     );
   }
 }
+
+class ProductCardContent extends StatelessWidget {
+
+  final Product product;
+
+  const ProductCardContent({Key key, this.product}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    double discount = 0;
+    discount = (product.retailPrice - product.discountPrice) /
+        product.retailPrice * 100;
+
+    return Column(
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              height: 280,
+              child: Image.network(
+                product.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              right: 0,
+              top: 0,
+              child: ProductWishlistButton(),
+            ),
+            Positioned(
+              bottom: 0,
+              child: _AddToCartButton(),
+            )
+          ],
+        ),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                product.title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 2,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "₹" + product.discountPrice.toString(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "₹" + product.retailPrice.toString(),
+                    style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.grey),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  if (discount > 0)
+                    Text(
+                      discount.toStringAsPrecision(2) + "% Off",
+                      style: TextStyle(color: Colors.green),
+                    )
+                ],
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 
 class FilterCard extends StatefulWidget {
   final FilterTag filters;

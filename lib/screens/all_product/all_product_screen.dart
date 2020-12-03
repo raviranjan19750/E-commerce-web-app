@@ -7,6 +7,7 @@ import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'dart:math' as math;
 
 import 'package:living_desire/screens/all_product/product_widgets.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AllProductScreen extends StatelessWidget {
   final scrollPhysics = ScrollPhysics();
@@ -63,7 +64,25 @@ class AllProductScreen extends StatelessWidget {
                       child: BlocBuilder<AllProductBloc, AllProductState>(
                         builder: (context, state) {
                           if (state is LoadingAllProduct) {
-                            return CircularProgressIndicator();
+                            return Container(
+                                margin: EdgeInsets.all(0),
+                                padding: EdgeInsets.only(top: 30, left: 30),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        top: BorderSide(
+                                            width: 1, color: Colors.grey))),
+                                child: Wrap(
+                                  alignment: WrapAlignment.spaceBetween,
+                                  children: [
+                                    LoadingCard(),
+                                    LoadingCard(),
+                                    LoadingCard(),
+                                    LoadingCard(),
+                                    LoadingCard(),
+                                    LoadingCard(),
+                                    LoadingCard()
+                                  ],
+                                ));
                           } else if (state is SuccessLoadingAllProduct) {
                             scrollController.addListener(() {
                               if (scrollController.position.atEdge) {
@@ -92,12 +111,23 @@ class AllProductScreen extends StatelessWidget {
                                     border: Border(
                                         top: BorderSide(
                                             width: 1, color: Colors.grey))),
-                                child: Wrap(
-                                  alignment: WrapAlignment.spaceBetween,
+                                child: GridView.count(
+                                  childAspectRatio: 0.7,
+                                   primary: true,
+                                   shrinkWrap: true,
+                                    crossAxisCount: 4,
                                   children: state.productList
-                                      .map((e) => ProductCard(product: e))
-                                      .toList(),
-                                ));
+                                        .map((e) => ProductCard(product: e))
+                                        .toList(),
+                                ),
+
+                                // Wrap(
+                                //   alignment: WrapAlignment.spaceBetween,
+                                //   children: state.productList
+                                //       .map((e) => ProductCard(product: e))
+                                //       .toList(),
+                                // ),
+                            );
                           }
                           return Container();
                         },
@@ -111,5 +141,12 @@ class AllProductScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class LoadingCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return LinearProgressIndicator();
   }
 }
