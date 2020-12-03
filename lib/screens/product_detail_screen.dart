@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/product.dart';
@@ -15,6 +17,8 @@ import 'package:living_desire/widgets/nextListHover.dart';
 import 'package:living_desire/widgets/productTypeBar.dart';
 import 'package:living_desire/widgets/wishListWidget.dart';
 import 'package:provider/provider.dart';
+
+// ignore: must_be_immutable
 
 // ignore: must_be_immutable
 class ProductDetailScreen extends StatelessWidget {
@@ -44,9 +48,7 @@ class ProductDetailScreen extends StatelessWidget {
 class ProductDetailStatelessScreen extends StatelessWidget {
   final ProductDetailModel productDetail;
 
-
   const ProductDetailStatelessScreen({Key key, this.productDetail}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -569,6 +571,40 @@ class ProductDetailStatelessScreen extends StatelessWidget {
 
     throw UnimplementedError();
   }
+}
+
+
+
+
+
+
+class ProductDescription extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+
+    return BlocBuilder<ProductDetailBloc, ProductDetailState>(
+        // ignore: missing_return
+        builder: (context,state) {
+
+          if(state is ProductDetailLoading) {
+
+            return CircularProgressIndicator();
+
+          }else if (state is ProductDetailLoadingSuccessful) {
+
+            return ProductDetailStatelessScreen();
+
+          }else {
+            return Container();
+          }
+
+        }
+
+    ) ;
+
+  }
+
 }
 
 
