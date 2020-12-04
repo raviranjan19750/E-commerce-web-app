@@ -18,7 +18,7 @@ class ProductsType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Products List
-    final List<Product> products = product;
+    final List<Product> products = List();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,

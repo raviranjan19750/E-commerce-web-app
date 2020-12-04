@@ -1,3 +1,8 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
+import 'package:living_desire/bloc/bloc.dart';
+import 'package:living_desire/bloc/filter/filter_bloc.dart';
+
 import '../../config/configs.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
@@ -24,17 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        // Using Responsive widget show mobile and desktop website
-        body: Responsive(
-          //Mobile Website
-          mobile: HomeScreenMobile(scrollController: trackingScrollController),
-          // Desktop Website
-          desktop:
-              HomeScreenDesktop(scrollController: trackingScrollController),
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) =>
+                SearchBloc(searchApi: RepositoryProvider.of(context))),
+        BlocProvider(
+            create: (context) =>
+                AllProductBloc(searchApi: RepositoryProvider.of(context))
+                  ..add(InitializeLoadingProduct())),
+        BlocProvider(create: (context) => FilterBloc(searchApi: RepositoryProvider.of(context))..add(InitializeDummyFilter()))
+      ],
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: HomeScreenDesktop(scrollController: trackingScrollController),
       ),
     );
   }

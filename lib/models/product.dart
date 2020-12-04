@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 
 class Product {
   // Model For Product
-  final String name ;
-  final int currentPrice ;
-  final int previousPrice ;
-  final int discount ;
+  final String title;
+  final String imageUrl;
+  final double discountPrice;
+  final double retailPrice;
+  final String size;
+  final String color;
 
-  const Product({
-    @required this.name,
-    @required this.currentPrice,
-    @required this.previousPrice,
-    @required this.discount,
-
-  });
-
+  Product({this.title, this.imageUrl, this.discountPrice, this.retailPrice, this.size, this.color});
 
 }
