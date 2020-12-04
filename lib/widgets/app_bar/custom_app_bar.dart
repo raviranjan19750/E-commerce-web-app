@@ -36,7 +36,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         Column(
           children: [
             Container(
-              padding:  EdgeInsets.only(left: 16,right: 16,top: 8),
+              padding:  EdgeInsets.only(left: 16,right: 16,top: 8,bottom: 8),
 
               width: double.infinity,
               decoration: BoxDecoration(
@@ -72,13 +72,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
               ),
             ),
 
-            MiddleAppBar()
+            Visibility(visible : visibleMiddleAppBar ,child: MiddleAppBar())
           ],
         ),
         Positioned(
           right: 0,
           bottom: -32,
-          child: SubAppBar()
+          child: Visibility(visible:visibleSubAppBar,child: SubAppBar())
         ),
       ],
     );

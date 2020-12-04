@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/searchapi.dart';
@@ -44,8 +45,11 @@ class MyApp extends StatelessWidget {
             BlocProvider(
                 create: (context) =>
                     SignInBloc(authService: RepositoryProvider.of(context))),
+            BlocProvider(
+                create: (context) =>
+                    SearchBloc(searchApi: RepositoryProvider.of(context))),
           ],
-          child: LoginScreen(),
+          child: MyOrder(),
         ),
       ),
     );
