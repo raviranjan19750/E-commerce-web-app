@@ -44,10 +44,9 @@ class _CartItemState extends State<CartItem> {
     print('cart item');
     // Match the Product according to the Product ID in cart
     final Product product = Product(
-      name: 'ksvlnl',
-      currentPrice: 34345,
-      previousPrice: 3245,
-      discount: 34,
+      title : 'ksvlnl',
+      retailPrice: 34345,
+      discountPrice: 3245,
     );
     return Column(
       children: [
@@ -65,8 +64,8 @@ class _CartItemState extends State<CartItem> {
                       Container(
                         child: Row(
                           children: [
-                            Text(product.name),
-                            Text(product.currentPrice.toString()),
+                            Text(product.title),
+                            Text(product.retailPrice.toString()),
                           ],
                         ),
                       ),

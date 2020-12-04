@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/palette.dart';
 import '../../models/models.dart';
 
 class ProductItem extends StatelessWidget {
@@ -34,7 +35,7 @@ class ProductItem extends StatelessWidget {
                 padding: EdgeInsets.only(
                     left: 0.0, top: 12.0, right: 0.0, bottom: 0.0),
                 child: Text(
-                  product.name,
+                  product.title,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 16),
                 ),
@@ -47,7 +48,7 @@ class ProductItem extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        product.currentPrice.toString(),
+                        product.retailPrice.toString(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -56,7 +57,7 @@ class ProductItem extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
                       child: Text(
-                        product.previousPrice.toString(),
+                        product.retailPrice.toString(),
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
@@ -66,7 +67,7 @@ class ProductItem extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        product.discount.toString() + "% Off",
+                        product.discountPrice.toString() + "% Off",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,

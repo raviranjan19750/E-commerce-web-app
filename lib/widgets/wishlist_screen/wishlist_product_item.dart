@@ -37,9 +37,10 @@ class WishlistProductItem extends StatelessWidget {
                 )
               ],
             ),
-            Text(product.previousPrice.toString()),
+            Text(product.retailPrice.toString()),
+
             Text(
-              product.currentPrice.toString(),
+              product.retailPrice.toString(),
             )
           ],
         ),

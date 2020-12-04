@@ -9,4 +9,6 @@ class ProductDetailModel with ChangeNotifier{
   ProductVariants productVariants;
   Products products;
 
+  void getAuthID() {}
+
 }
