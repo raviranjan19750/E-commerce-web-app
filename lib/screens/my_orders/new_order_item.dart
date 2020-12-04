@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:living_desire/config/palette.dart';
 
 
@@ -41,23 +42,7 @@ class NewOrderItem extends StatelessWidget{
 
                   children: [
 
-                    Row(
-                      children: [
-                        Expanded(child: Container(child: Text('Classic Filled Bean Bag with Beans',style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),)),
-                        Container(
-
-                          margin: EdgeInsets.only(left: 48,right: 32),
-
-                          child: InkWell(
-
-                            onTap: (){},
-
-                            child: Text('Need Help ?',style: TextStyle(decoration: TextDecoration.underline),),
-
-                          ),
-                        ),
-                      ],
-                    ),
+                    Container(child: Text('Classic Filled Bean Bag with Beans',style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),),
 
                     Column(
 
@@ -176,6 +161,56 @@ class NewOrderItem extends StatelessWidget{
               ),
 
             ),
+
+            Container(
+
+              margin: EdgeInsets.only(left: 64),
+
+              child: Column(
+
+                children: [
+
+                  Container(
+
+                    margin: EdgeInsets.only(left: 48,right: 32,bottom: 64),
+
+                    child: InkWell(
+
+                      onTap: (){},
+
+                      child: Text('Need Help ?',style: TextStyle(decoration: TextDecoration.underline),),
+
+                    ),
+                  ),
+
+                  InkWell(
+                    onTap: (){},
+
+                    child: RatingBar.builder(
+                      initialRating: 1,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 24,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
+                    ),
+                  ),
+
+                  Container(margin:EdgeInsets.only(top: 8),child: Text('Rate & Review',style: TextStyle(decoration:TextDecoration.underline,color: Colors.orange,fontSize: 16,fontWeight: FontWeight.w700),))
+
+                ],
+
+              ),
+
+            )
 
           ],
 
