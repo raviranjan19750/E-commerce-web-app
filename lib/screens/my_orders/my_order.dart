@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/screens/my_orders/my_order_item.dart';
+import 'package:living_desire/screens/my_orders/new_my_order_item.dart';
 
 class MyOrder extends StatelessWidget{
 
@@ -50,7 +51,7 @@ class MyOrder extends StatelessWidget{
 
                     padding: EdgeInsets.symmetric(horizontal: 16),
 
-                    child: MyOrderItem(),
+                    child: NewMyOrderItem(),
                   );
                 }),
           ),
