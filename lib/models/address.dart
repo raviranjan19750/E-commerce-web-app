@@ -6,6 +6,7 @@ class Address {
   final Geolocation location;
   final bool isPrimary;
   final String name;
+  final String phone;
 
   const Address({
     this.addressLine,
@@ -13,5 +14,6 @@ class Address {
     this.location,
     this.isPrimary,
     this.name,
+    this.phone,
   });
 }

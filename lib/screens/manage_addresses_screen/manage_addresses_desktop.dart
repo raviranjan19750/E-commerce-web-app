@@ -19,13 +19,7 @@ class _ManageAddressesScreenDesktopState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body:
-
-          // Order Navigation screen between differnt widgets
-          // child: OrderNavScreen(
-          //   scrollController: widget.scrollController,
-          // ),
-          Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Row(

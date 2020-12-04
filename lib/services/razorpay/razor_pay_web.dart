@@ -1,9 +1,9 @@
 import 'dart:html';
 import 'dart:ui' as ui;
 //conditional import
-import './ui_fake.dart' if (dart.library.html) 'dart:ui' as ui;
+import 'ui_fake.dart' if (dart.library.html) 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import '../models/models.dart';
+import '../../models/models.dart';
 import 'dart:js' as js;
 
 class RazorPayWeb extends StatelessWidget {
