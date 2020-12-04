@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/screens/my_orders/my_bulk_order_item.dart';
 import 'package:living_desire/screens/my_orders/my_order_item.dart';
 
-class MyOrder extends StatelessWidget{
+class MyBulkOrder extends StatelessWidget{
 
 
   @override
@@ -35,7 +36,7 @@ class MyOrder extends StatelessWidget{
 
             padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
 
-            child: Text('10 Items',style: TextStyle(color: Colors.white,fontSize: 20),),
+            child: Text('5 Orders',style: TextStyle(color: Colors.white,fontSize: 20),),
 
           ),
 
@@ -43,14 +44,14 @@ class MyOrder extends StatelessWidget{
 
             child: ListView.builder(
 
-                itemCount: 7,
+                itemCount: 5,
                 itemBuilder:
                     (BuildContext context, int index) {
                   return Container(
 
                     padding: EdgeInsets.symmetric(horizontal: 16),
 
-                    child: MyOrderItem(),
+                    child: MyBulkOrderItem(),
                   );
                 }),
           ),

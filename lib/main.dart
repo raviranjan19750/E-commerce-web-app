@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_quotation.dart';
+import 'package:living_desire/screens/my_orders/my_bulk_order.dart';
 import 'package:living_desire/screens/my_orders/my_order.dart';
 import './config/configs.dart';
 import './screens/screens.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: MyOrder(),
+            home: MyBulkOrder(),
           );
         }
 
