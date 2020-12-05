@@ -42,12 +42,6 @@ class InitailizeAppService extends StatelessWidget {
           BlocProvider(
               create: (context) =>
                   SearchBloc(searchApi: RepositoryProvider.of(context))),
-          BlocProvider(
-              create: (context) =>
-                  FilterBloc(searchApi: RepositoryProvider.of(context))),
-          BlocProvider(
-              create: (context) =>
-                  AllProductBloc(searchApi: RepositoryProvider.of(context)))
         ],
         child: child,
       ),
