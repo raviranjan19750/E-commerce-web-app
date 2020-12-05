@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/bloc/bloc.dart';
+import 'package:living_desire/routes.dart';
 
 class AppBarSearchBar extends StatelessWidget {
   @override
@@ -22,8 +23,8 @@ class AppBarSearchBar extends StatelessWidget {
               context.read<SearchBloc>().add(SearchTermChanged(val));
             },
             onSubmitted: (val) {
-              BlocProvider.of<AllProductBloc>(context).add(LoadAllProductWithSearchParams(filterText: val));
               print("String SUbmitted");
+              Navigator.pushNamed(context, RoutesConfiguration.SEARCH_ALL_PRODUCT, arguments: val);
             },
             cursorColor: Palette.secondaryColor,
             decoration: InputDecoration(

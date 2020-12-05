@@ -17,7 +17,8 @@ class RoutesConfiguration {
       case HOME_PAGE:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case SEARCH_ALL_PRODUCT:
-        return MaterialPageRoute(builder: (_) => AllProductScreen());
+        var searchFilter = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => AllProductScreen(searchFilter: searchFilter,));
       case PRODUCT_DETAIL:
         return MaterialPageRoute(builder: (_) => ProductDetailScreen());
       case BULK_ORDER:

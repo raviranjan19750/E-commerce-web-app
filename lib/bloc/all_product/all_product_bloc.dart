@@ -49,7 +49,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
     yield LoadingAllProduct();
     try {
       // searchApi
-      await Future.delayed(Duration(seconds: 5));
+      // await Future.delayed(Duration(seconds: 5));
       final product = await searchApi.getAllProducts(offset: 0, limit: 20);
       yield SuccessLoadingAllProduct(product, limit: 20, offset: 0);
     } catch (e) {
