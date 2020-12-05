@@ -29,21 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-            create: (context) =>
-                SearchBloc(searchApi: RepositoryProvider.of(context))),
-        BlocProvider(
-            create: (context) =>
-                AllProductBloc(searchApi: RepositoryProvider.of(context))
-                  ..add(InitializeLoadingProduct())),
-        BlocProvider(create: (context) => FilterBloc(searchApi: RepositoryProvider.of(context))..add(InitializeDummyFilter()))
-      ],
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: HomeScreenDesktop(scrollController: trackingScrollController),
-      ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: HomeScreenDesktop(scrollController: trackingScrollController),
     );
   }
 }

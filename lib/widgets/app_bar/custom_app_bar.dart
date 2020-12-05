@@ -12,7 +12,7 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   bool visibleMiddleAppBar = true;
   bool visibleSubAppBar = true;
   
-  CustomAppBar({this.size,this.visibleMiddleAppBar,this.visibleSubAppBar});
+  CustomAppBar({this.size = 160, this.visibleMiddleAppBar = true,this.visibleSubAppBar = true});
   
   // AppBar has a preferred Size, need to extend Preferred Size widget
   Size get preferredSize =>  Size.fromHeight(size);

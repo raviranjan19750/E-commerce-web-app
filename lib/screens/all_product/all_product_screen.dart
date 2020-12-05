@@ -15,6 +15,7 @@ class AllProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<AllProductBloc>(context).add(InitializeLoadingProduct());
     return Scaffold(
       body: Align(
         alignment: Alignment.topCenter,
