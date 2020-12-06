@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/data/data.dart';
@@ -45,10 +47,12 @@ class ProductDetailScreen extends StatelessWidget {
   }
 }
 
+
 class ProductDetailStatelessScreen extends StatelessWidget {
   final ProductDetailModel productDetail;
 
   const ProductDetailStatelessScreen({Key key, this.productDetail}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +119,9 @@ class ProductDetailStatelessScreen extends StatelessWidget {
                             height: 30,
                             color: Palette.lightGrey,
                             child: IconButton(
+                              onPressed: (){
+
+                              },
                               icon: Icon(Icons.keyboard_arrow_down),
                               color: Colors.black,
                             ),

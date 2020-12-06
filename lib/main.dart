@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/routes.dart';
+import 'package:living_desire/screens/ProductDetailScreen/ProductDetailScreeen.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/searchapi.dart';
 import './config/configs.dart';
@@ -32,7 +34,10 @@ class InitailizeAppService extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => SearchApi(),
-        )
+        ),
+        RepositoryProvider(
+            create:(context)=> ProductRepository()
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -61,7 +66,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        onGenerateRoute: RoutesConfiguration.onGenerateRoute,
+        //onGenerateRoute: RoutesConfiguration.onGenerateRoute,
+        home: ProductDetailScreen(),
       ),
     );
   }
