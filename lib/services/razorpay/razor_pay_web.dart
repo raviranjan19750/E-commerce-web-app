@@ -19,6 +19,9 @@ class RazorPayWeb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('razor pay');
+    var razorpayPaymentID = '';
+    var razorpayOrderID = '';
+    var razorpaySignature = '';
 
     ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
       IFrameElement element = IFrameElement();
@@ -30,9 +33,18 @@ class RazorPayWeb extends StatelessWidget {
           Navigator.pop(context);
         } else if (element.data == 'SUCCESS') {
           print('PAYMENT SUCCESSFULL!!!!!!!');
+        } else if (element.data.toString().contains('pay_id')) {
+          razorpayPaymentID = element.data.toString().substring(6);
+
+          print(razorpayPaymentID);
+        } else if (element.data.toString().contains('order_id')) {
+          razorpayOrderID = element.data.toString().substring(8);
+          print(razorpayOrderID);
+        } else if (element.data.toString().contains('sign')) {
+          razorpaySignature = element.data.toString().substring(4);
+          print(razorpaySignature);
         }
       });
-
       element.requestFullscreen();
       //element.src = 'assets/razorpay/payment.html';
       element.srcdoc = """<!DOCTYPE html><html>
@@ -52,9 +64,10 @@ class RazorPayWeb extends StatelessWidget {
           "handler": function (response){
              window.parent.postMessage("SUCCESS","*"); 
                   //2 
-             alert(response.razorpay_payment_id);
-             alert(response.razorpay_order_id);
-             alert(response.razorpay_signature)    
+             window.parent.postMessage("pay_id"+response.razorpay_payment_id);
+             window.parent.postMessage("order_id"+response.razorpay_order_id);
+             window.parent.postMessage("sign"+response.razorpay_signature);   
+             
           },    
           "prefill": {        
              "name": "Gaurav Kumar",        
@@ -70,6 +83,7 @@ class RazorPayWeb extends StatelessWidget {
           },
           "modal": {
             "ondismiss": function(){
+
                window.parent.postMessage("MODAL_CLOSED","*");   //3
             }
           }
