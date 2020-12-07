@@ -12,7 +12,7 @@ class ProductRepository {
 
   Future<Products> getProductDetails({String productID}) async {
     try {
-      var productData = await productsCollectionReference.document(productID).get();
+      var productData = await productsCollectionReference.doc(productID).get();
       return Products.fromMap(productData.data());
     } catch (e) {
         print(e.toString());
@@ -22,15 +22,12 @@ class ProductRepository {
   }
 
 
-  Future<List<ProductVariants>> getProductVariantsDetail({String productID}) async {
+  Future<List<ProductVariants>> getProductVariantsDetail({String productID}) async  {
     try {
       var productVariantDetailsData =
-          await productsCollectionReference.getDocuments();
-      if (productVariantDetailsData.documents.isNotEmpty) {
-        return productVariantDetailsData.documents
-            .map((snapshot) => ProductVariants.fromMap(snapshot.data()))
-            .where((mappedItem) => mappedItem.productID == productID)
-            .toList();
+          await productVariantsCollectionReference.where("productID", isEqualTo: productID).get();
+      if (productVariantDetailsData.docs.isNotEmpty) {
+        return productVariantDetailsData.docs.map((snapshot) => ProductVariants.fromMap(snapshot.data())).toList();
       }
     } catch (e) {
 

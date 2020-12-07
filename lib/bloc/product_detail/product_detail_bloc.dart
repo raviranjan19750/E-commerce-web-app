@@ -53,7 +53,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       //await Future.delayed(Duration(seconds: 2));
 
       var productDetail = await productRepository.getProductDetails(productID: "0IeSrbsqqxiqwELq4Qqm");
-      List<ProductVariants> productVariantDetail = await productRepository.getProductVariantDetails(productID: "0IeSrbsqqxiqwELq4Qqm");
+      List<ProductVariants> productVariantDetail = await productRepository.getProductVariantsDetail(productID: "0IeSrbsqqxiqwELq4Qqm");
 
       yield ProductDetailLoadingSuccessful(products, productVariants);
     } catch (e) {
