@@ -15,9 +15,7 @@ final List<ProductType> productsType = [
   ProductType(type: 'Product 5'),
 ];
 
-final List<Product> product = [
-
-];
+final List<Product> product = [];
 
 final List<Order> order = [
   Order(
@@ -108,20 +106,11 @@ final List<Order> order = [
 
 final List<Address> address = [
   Address(
-      addressLine: 'nsdkvnldsno',
-      isPrimary: true,
-      name: 'Shan',
-      pincode: '49235'),
+      address: 'nsdkvnldsno', isPrimary: true, name: 'Shan', pincode: '49235'),
   Address(
-      addressLine: 'nsdkvnldsno',
-      isPrimary: false,
-      name: 'Shan',
-      pincode: '49235'),
+      address: 'nsdkvnldsno', isPrimary: false, name: 'Shan', pincode: '49235'),
   Address(
-      addressLine: 'nsdkvnldsno',
-      isPrimary: false,
-      name: 'Shan',
-      pincode: '49235'),
+      address: 'nsdkvnldsno', isPrimary: false, name: 'Shan', pincode: '49235'),
 ];
 
 final List<Cart> cart = [
@@ -229,9 +218,7 @@ final List<Color> itemColors = [
   Colors.brown,
   Colors.yellow,
   Colors.red
-
 ];
-
 
 final List<String> productItemDescriptions = [
   "Pack Contents – 1 Bean Bag Cover without beans",
@@ -240,5 +227,4 @@ final List<String> productItemDescriptions = [
   "Product Dimensions: Length (127 cm)",
   "Width (127 cm)",
   "Height (117 cm)",
-
 ];

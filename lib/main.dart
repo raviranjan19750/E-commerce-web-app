@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/DBHandler/address_repository.dart';
 import 'package:living_desire/bloc/bloc.dart';
+import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/screens/screens.dart';
@@ -34,7 +36,10 @@ class InitailizeAppService extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => SearchApi(),
-        )
+        ),
+        RepositoryProvider(
+          create: (context) => AddresssRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -44,6 +49,7 @@ class InitailizeAppService extends StatelessWidget {
           BlocProvider(
               create: (context) =>
                   SearchBloc(searchApi: RepositoryProvider.of(context))),
+          BlocProvider(create: (context) => ManageAddressesBloc()),
         ],
         child: child,
       ),

@@ -35,7 +35,7 @@ class AddressContainer extends StatelessWidget {
                   : SizedBox.shrink(),
               address.isPrimary ? Divider() : SizedBox.shrink(),
               Text(address.name),
-              Text(address.addressLine),
+              Text(address.address),
               Text(address.pincode),
               Container(
                 child: Row(

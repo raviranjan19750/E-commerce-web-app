@@ -1,5 +1,8 @@
 import 'dart:developer';
 import 'dart:html';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
+
 import '../../config/configs.dart';
 import 'package:flutter/material.dart';
 import '../../models/models.dart';
@@ -47,21 +50,30 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
     // });
 
     print('Manage Address Container');
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        child: Wrap(
-          children: [
-            AddAddressContainer(),
-            ...addresses.map((e) {
-              print('Address:' + e.toString());
-              return AddressContainer(
-                address: e,
-              );
-            }),
-          ],
-        ),
-      ),
-    );
+    return BlocBuilder<ManageAddressesBloc, ManageAddresesState>(
+        builder: (context, state) {
+      if (state is AddressDetailLoading) {
+        return CircularProgressIndicator();
+      } else if (state is AddressDetailLoadingSuccessful) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            child: Wrap(
+              children: [
+                AddAddressContainer(),
+                ...state.addresses.map((address) {
+                  print('Address:' + address.toString());
+                  return AddressContainer(
+                    address: address,
+                  );
+                }),
+              ],
+            ),
+          ),
+        );
+      } else {
+        return Container();
+      }
+    });
   }
 }

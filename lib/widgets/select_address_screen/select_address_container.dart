@@ -41,7 +41,7 @@ class SelectAddressContainer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(address[0].name),
-                      Text(address[0].addressLine),
+                      Text(address[0].address),
                       Text(address[0].pincode),
                       Container(
                         child: Row(
@@ -102,7 +102,7 @@ class SelectAddressContainer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(address[index].name),
-                                Text(address[index].addressLine),
+                                Text(address[index].address),
                                 Text(address[index].pincode),
                                 Container(
                                   child: Row(
