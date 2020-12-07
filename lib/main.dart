@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/routes.dart';
+import 'package:living_desire/screens/screens.dart';
 import 'package:living_desire/screens/select_address_screen/select_address_screen.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/searchapi.dart';
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SelectAddressScreen(),
+        home: ManageAddressesScreen(),
         //onGenerateRoute: RoutesConfiguration.onGenerateRoute,
       ),
     );
