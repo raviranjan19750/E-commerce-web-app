@@ -28,7 +28,7 @@ class AddressContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              address.isPrimary
+              address.isPrimary == true
                   ? Container(
                       child: Text('Default:'),
                     )

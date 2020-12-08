@@ -24,7 +24,7 @@ class _ManageAddressesScreenDesktopState
         BlocProvider(
             create: (context) => ManageAddressesBloc(
                 addresssRepository: RepositoryProvider.of(context))
-              ..add(LoadAllAddresses('sampleAuthID1'))),
+              ..add(LoadAllAddresses('id1'))),
       ],
       child: Scaffold(
         appBar: CustomAppBar(),

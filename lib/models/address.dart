@@ -29,4 +29,26 @@ class Address {
       location: data['location'],
     );
   }
+
+  factory Address.fromJson(Map<String, dynamic> data) {
+    if (data == null) return null;
+    print(data.toString());
+    var address = {
+      'name': data['data']['name'],
+      'address': data['data']['address'],
+      'phone': data['data']['phone'],
+      'isPrimary': data['data']['isPrimary'],
+      'pincode': data['data']['pincode'],
+      'location': data['data']['location'],
+    };
+    print(address.toString());
+    return Address(
+      name: data['data']['name'],
+      address: data['data']['address'],
+      phone: data['data']['phone'],
+      isPrimary: data['data']['isPrimary'],
+      pincode: data['data']['pincode'],
+      location: data['data']['location'],
+    );
+  }
 }
