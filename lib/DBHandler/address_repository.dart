@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 import 'package:living_desire/models/models.dart';
 
 class AddresssRepository {
   final CollectionReference addressCollectionReference =
       FirebaseFirestore.instance.collection('addresses');
 
-  Future<List<Address>> getAddressDetails({String authID}) async {
+  Future<List<Address>> getAddressDetails(String authID) async {
     try {
       print('Firebase query');
       var addressDetailsData = await addressCollectionReference
           .where('authID', isEqualTo: authID)
+          .orderBy('isPrimary', descending: true)
           .get();
       print(addressDetailsData.toString());
 
@@ -19,9 +19,7 @@ class AddresssRepository {
           print(snapshot.data().toString());
           return Address.fromMap(snapshot.data());
         }).toList();
-      } else {
-        return null;
-      }
+      } else {}
     } catch (e) {
       print(e.toString());
       throw Exception(e);

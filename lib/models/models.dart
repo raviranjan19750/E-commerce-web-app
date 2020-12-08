@@ -9,3 +9,4 @@ export 'review.dart';
 export 'rating.dart';
 export 'cart.dart';
 export 'filtertags.dart';
+export 'wishlist.dart';

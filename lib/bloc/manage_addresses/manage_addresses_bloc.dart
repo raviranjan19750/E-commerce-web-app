@@ -1,11 +1,14 @@
 import 'package:bloc/bloc.dart';
+import 'package:living_desire/DBHandler/address_repository.dart';
 import 'package:living_desire/models/models.dart';
 part 'manage_addresses_event.dart';
 part 'manage_addresses_state.dart';
 
 class ManageAddressesBloc
     extends Bloc<ManageAddressesEvent, ManageAddresesState> {
-  ManageAddressesBloc() : super(AddressDetailInitial());
+  final AddresssRepository addresssRepository;
+  ManageAddressesBloc({this.addresssRepository})
+      : super(AddressDetailInitial());
 
   @override
   Stream<ManageAddresesState> mapEventToState(
@@ -15,20 +18,18 @@ class ManageAddressesBloc
     if (event is LoadAllAddresses) {
       yield* loadAddressDetail(event);
     }
-    throw UnimplementedError();
   }
-}
 
-Stream<ManageAddresesState> loadAddressDetail(LoadAllAddresses event) async* {
-  List<Address> addresses;
+  Stream<ManageAddresesState> loadAddressDetail(LoadAllAddresses event) async* {
+    yield AddressDetailLoading();
 
-  yield AddressDetailLoading();
+    try {
+      List<Address> addresses =
+          await addresssRepository.getAddressDetails(event.authID);
 
-  try {
-    await Future.delayed(Duration(seconds: 2));
-
-    yield AddressDetailLoadingSuccessful(addresses);
-  } catch (e) {
-    yield AddressDetailLoadingFailure();
+      yield AddressDetailLoadingSuccessful(addresses);
+    } catch (e) {
+      yield AddressDetailLoadingFailure();
+    }
   }
 }

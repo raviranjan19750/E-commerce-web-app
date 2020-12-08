@@ -49,7 +49,6 @@ class InitailizeAppService extends StatelessWidget {
           BlocProvider(
               create: (context) =>
                   SearchBloc(searchApi: RepositoryProvider.of(context))),
-          BlocProvider(create: (context) => ManageAddressesBloc()),
         ],
         child: child,
       ),
@@ -69,8 +68,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ManageAddressesScreen(),
-        //onGenerateRoute: RoutesConfiguration.onGenerateRoute,
+        //home: ManageAddressesScreen(),
+        onGenerateRoute: RoutesConfiguration.onGenerateRoute,
       ),
     );
   }

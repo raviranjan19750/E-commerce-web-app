@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
@@ -17,20 +19,28 @@ class _ManageAddressesScreenDesktopState
     extends State<ManageAddressesScreenDesktop> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ButtonList(
-                isManageAddressesSelected: true,
-              ),
-              Expanded(child: ManageAddressesContainer()),
-            ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => ManageAddressesBloc(
+                addresssRepository: RepositoryProvider.of(context))
+              ..add(LoadAllAddresses('sampleAuthID1'))),
+      ],
+      child: Scaffold(
+        appBar: CustomAppBar(),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ButtonList(
+                  isManageAddressesSelected: true,
+                ),
+                Expanded(child: ManageAddressesContainer()),
+              ],
+            ),
           ),
         ),
       ),
