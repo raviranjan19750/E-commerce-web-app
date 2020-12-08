@@ -11,7 +11,7 @@ class ProductDetailLoading extends ProductDetailState {}
 class ProductDetailLoadingSuccessful extends ProductDetailState {
 
   final Products products;
-  final ProductVariants productVariants;
+  final List<ProductVariants> productVariants;
 
   ProductDetailLoadingSuccessful(this.products, this.productVariants);
 

@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
-import 'package:living_desire/config/palette.dart';
-import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/product.dart';
 import 'package:living_desire/models/product_type.dart';
-import 'package:living_desire/models/product_variants.dart';
-import 'package:living_desire/models/products.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailDescriptionsAndImage.dart';
-import 'package:living_desire/screens/product_detail_screen.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
-import 'package:living_desire/widgets/bullet.dart';
-import 'package:living_desire/widgets/customButtonWidgets.dart';
 import 'package:living_desire/widgets/home_screen_products/product_item.dart';
 import 'package:living_desire/widgets/nextListHover.dart';
 import 'package:living_desire/widgets/productTypeBar.dart';
-import 'package:living_desire/widgets/wishListWidget.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   @override
@@ -52,7 +43,9 @@ class ProductDetail extends StatelessWidget {
     bool decreaseButtonHover = false;
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        size: 112,
+      ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: Container(

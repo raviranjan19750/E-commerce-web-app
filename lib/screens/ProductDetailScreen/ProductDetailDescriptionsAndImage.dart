@@ -5,8 +5,11 @@ import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/data/data.dart';
+import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
+import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductSizeDropdownWidget.dart';
+import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
 import 'package:living_desire/widgets/bullet.dart';
-import 'package:living_desire/widgets/customButtonWidgets.dart';
+
 import 'package:living_desire/widgets/wishListWidget.dart';
 
 class ProductDetailDescriptionAndImage extends StatelessWidget {
@@ -14,10 +17,15 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
   final List<Color> itemColor = itemColors;
   final List<String> itemDescriptions = productItemDescriptions;
 
-  int itemQuantity = 0;
-
   @override
   Widget build(BuildContext context) {
+
+    double imageWidth = MediaQuery.of(context).size.width * 0.26;
+    double imageHeight = MediaQuery.of(context).size.height * 0.62;
+
+    double imageListWidth = MediaQuery.of(context).size.width*0.06;
+    double imageListHeight = MediaQuery.of(context).size.height*0.55;
+
     return BlocBuilder<ProductDetailBloc, ProductDetailState>(
 // ignore: missing_return
         builder: (context, state) {
@@ -33,10 +41,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.06,
+                        width: imageListWidth,
                         height: 30,
                         color: Palette.lightGrey,
                         child: IconButton(
@@ -46,24 +51,31 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.06,
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.45,
-                        margin: EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 0.0),
+                        width: imageListWidth,
+                        height: imageListHeight,
+                        margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
                         color: Palette.lightGrey,
                         alignment: Alignment.center,
+                        child:  ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: state.productVariants[0].images.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+
+                              child: (state.productVariants[0].images[index] != null)?Image.network(state.productVariants[0].images[index].toString()) : Text(
+                              state.productVariants[0].images[index],
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black),
+                            ),
+
+                            );
+                          },
+                        ),
                       ),
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.06,
+                        width:imageListWidth,
                         height: 30,
                         color: Palette.lightGrey,
                         child: IconButton(
@@ -82,21 +94,17 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                     children: [
                       // enlarged image
                       Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.55,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.22,
+                        height: imageHeight,
+                        width:imageWidth,
                         decoration: new BoxDecoration(
                           color: Palette.lightGrey,
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: (state.productVariants[0].images[0] != null)?NetworkImage(state.productVariants[0].images[0].toString()) : NetworkImage(""),
+                          )
                         ),
                         child: Stack(
                           children: [
-                            Placeholder(),
-
                             Positioned(
                               right: 0,
                               top: 0,
@@ -114,14 +122,11 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
+                      ) ,
 
 // action buttons
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.22,
+                        width: imageWidth,
                         height: 50,
                         margin: EdgeInsets.only(left: 0.0, top: 8.0),
                         child: Row(
@@ -173,7 +178,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          "Classic Filled Bean Bags",
+                          state.products.name,
                           style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -183,7 +188,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(top: 16.0),
                         child: Text(
-                          "Rs 2000",
+                          "₹ " + state.productVariants[0].sellingPrice.toString(),
                           style: TextStyle(
                               color: Colors.grey[400],
                               decoration: TextDecoration.lineThrough,
@@ -192,7 +197,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                       ),
                       Container(
                         child: Text(
-                          "Rs 2000",
+                          "₹ " + state.productVariants[0].discountPrice.toString(),
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -201,7 +206,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                       ),
                       Container(
                         child: Text(
-                          "You save Rs 50",
+                          "You save ₹ " + (state.productVariants[0].sellingPrice-state.productVariants[0].discountPrice).toString(),
                           style: TextStyle(
                               color: Colors.grey[500],
                               fontWeight: FontWeight.w500,
@@ -311,10 +316,40 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
 // setting size and quantity button
                             Container(
                               margin: EdgeInsets.only(top: 8.0),
+
                               child: Row(
                                 children: [
 //dropdown menu for sizes
-                                  Container(),
+                                  Container(
+
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 0.5,
+                                        )),
+                                    height: 40,
+                                    padding: EdgeInsets.only(left: 8.0),
+                                    child: Row(
+                                      children: [
+
+                                        Container(
+
+                                          child: Text(
+                                            Strings.size + ": ",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                        ),
+
+                                        ProductSizeDropdown()
+                                      ],
+                                    ),
+                                  ),
+
+                                  SizedBox(width: 12),
 
                                   Container(
                                     decoration: BoxDecoration(
@@ -325,36 +360,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                         )),
                                     child: Row(
                                       children: [
-                                        Container(
-                                          child: IconButton(
-                                            onPressed: () {},
-                                            iconSize: 14,
-                                            highlightColor: Colors.transparent,
-                                            splashColor: Colors.transparent,
-                                            icon: Icon(Icons.remove),
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8.0, vertical: 0.0),
-                                          child: Text(
-                                            itemQuantity.toString(),
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black),
-                                          ),
-                                        ),
-                                        Container(
-                                          child: IconButton(
-                                            onPressed: () {},
-                                            iconSize: 14,
-                                            highlightColor: Colors.transparent,
-                                            splashColor: Colors.transparent,
-                                            icon: Icon(Icons.add),
-                                            color: Colors.grey,
-                                          ),
-                                        ),
+                                       ProductQuantityCount(),
                                       ],
                                     ),
                                   ),
@@ -363,9 +369,18 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                             ),
 
 //customize logo button
-                            Container(
-                              height: 50,
-                              width: 200,
+                            state.products.isCustomizable? Container(
+                              height: 45,
+                              width: 220,
+                              margin: EdgeInsets.only(top: 12.0),
+                              child: CustomWidgetButton(
+                                onPressed: () {},
+                                text: Strings.customizeWithLogo,
+                              ),
+                            ) : Container(
+                              height: 45,
+                              width: 220,
+                              color: Colors.brown,
                               margin: EdgeInsets.only(top: 12.0),
                               child: CustomWidgetButton(
                                 onPressed: () {},
@@ -375,6 +390,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
 
                             Container(
                               margin: EdgeInsets.only(top: 20.0),
+
                               child: Text(
                                 Strings.description,
                                 style: TextStyle(
@@ -394,7 +410,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                               child: ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: itemDescriptions.length,
+                                itemCount: state.products.description.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -407,7 +423,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       ),
                                       Flexible(
                                         child: Text(
-                                          itemDescriptions[index],
+                                          state.products.description[index],
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black),

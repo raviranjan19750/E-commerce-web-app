@@ -22,40 +22,19 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   Stream<ProductDetailState> mapEventToState(
     ProductDetailEvent event,
   ) async* {
-    // TODO: implement mapEventToState
     if (event is LoadProductDetail) {
       yield* loadProductDetail(event);
     }
   }
 
   Stream<ProductDetailState> loadProductDetail(LoadProductDetail event) async* {
-    Products products = new Products();
-
-    ProductVariants productVariants = new ProductVariants(
-      manufacturingPrice: 25.0,
-      sellingPrice: 100.0,
-      discountPrice: 10.0,
-      size: "small",
-      colour: "Blue",
-      productID: "ProductID",
-      variantID: "VariantID",
-      isAvailable: true,
-      images: [
-        "https://ii2.pepperfry.com/media/catalog/product/x/l/236x260/xl-[kids]-classic-leatherette-kids-filled-bean-bag-in-brown-colour-by-can-xl-[kids]-classic-leathere-ecw5ij.jpg",
-        "https://ii2.pepperfry.com/media/catalog/product/x/l/236x260/xl-[kids]-classic-leatherette-kids-filled-bean-bag-in-brown-colour-by-can-xl-[kids]-classic-leathere-ecw5ij.jpg",
-        "https://ii1.pepperfry.com/media/catalog/product/c/l/236x260/classic-style-xxxl-bean-bag-filled-with-beans-in-neon-green-colour-by-sattva-classic-style-xxxl-bean-ojqije.jpg"
-      ],
-    );
-
     yield ProductDetailLoading();
 
     try {
-      //await Future.delayed(Duration(seconds: 2));
-
       var productDetail = await productRepository.getProductDetails(productID: "0IeSrbsqqxiqwELq4Qqm");
       List<ProductVariants> productVariantDetail = await productRepository.getProductVariantsDetail(productID: "0IeSrbsqqxiqwELq4Qqm");
 
-      yield ProductDetailLoadingSuccessful(products, productVariants);
+      yield ProductDetailLoadingSuccessful(productDetail, productVariantDetail);
     } catch (e) {
       yield ProductDetailLoadingFailure();
     }

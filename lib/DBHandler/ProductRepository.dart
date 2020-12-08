@@ -11,47 +11,18 @@ class ProductRepository {
       Firestore.instance.collection('productVariants');
 
   Future<Products> getProductDetails({String productID}) async {
-    try {
-      var productData = await productsCollectionReference.doc(productID).get();
-      return Products.fromMap(productData.data());
-    } catch (e) {
-        print(e.toString());
-        throw Exception(e);
-
-    }
+    var productData = await productsCollectionReference.doc(productID).get();
+    return Products.fromMap(productData.data());
   }
 
 
+  // ignore: missing_return
   Future<List<ProductVariants>> getProductVariantsDetail({String productID}) async  {
-    try {
-      var productVariantDetailsData =
-          await productVariantsCollectionReference.where("productID", isEqualTo: productID).get();
-      if (productVariantDetailsData.docs.isNotEmpty) {
-        return productVariantDetailsData.docs.map((snapshot) => ProductVariants.fromMap(snapshot.data())).toList();
-      }
-    } catch (e) {
 
-      print(e.toString());
-      throw Exception(e);
+    var productVariantDetailsData = await productVariantsCollectionReference.where("productID", isEqualTo: productID).get();
+    return productVariantDetailsData.docs.map((snapshot) => ProductVariants.fromMap(snapshot.data())).toList();
 
-    }
   }
 
-// static Stream<DocumentSnapshot> getProductDetails({String productID}) {
-//   // ignore: deprecated_member_use
-//   return Firestore.instance
-//       .collection("products")
-//       // ignore: deprecated_member_use
-//       .document(productID)
-//       .snapshots();
-// }
-//
-// static Stream<QuerySnapshot> getProductVariantsDetails({String productID}) {
-//   // ignore: deprecated_member_use
-//   return Firestore.instance
-//       .collection("productVariants")
-//       .where("productID" == productID)
-//       .snapshots();
-// }
 
 }
