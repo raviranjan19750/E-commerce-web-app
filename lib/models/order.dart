@@ -33,4 +33,11 @@ class Order {
     @required this.tracking,
     @required this.orderID,
   });
+
+  factory Order.fromJson(Map<String, dynamic> data) {
+    if (data == null) return null;
+    print(data.toString());
+
+    return Order();
+  }
 }

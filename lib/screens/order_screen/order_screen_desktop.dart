@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/normal_order/normal_order_bloc.dart';
 import '../screens.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
@@ -19,20 +21,28 @@ class OrderScreenDesktop extends StatefulWidget {
 class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ButtonList(
-                isMyOrderSelected: true,
-              ),
-              Expanded(child: NormalOrdersContainer()),
-            ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => NormalOrderBloc(
+                normalOrderRepository: RepositoryProvider.of(context))
+              ..add(LoadAllNormalOrders('id1'))),
+      ],
+      child: Scaffold(
+        appBar: CustomAppBar(),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ButtonList(
+                  isMyOrderSelected: true,
+                ),
+                Expanded(child: NormalOrdersContainer()),
+              ],
+            ),
           ),
         ),
       ),
