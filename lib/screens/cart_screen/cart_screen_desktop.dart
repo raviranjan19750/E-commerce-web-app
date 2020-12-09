@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
@@ -17,20 +19,28 @@ class CartScreenDesktop extends StatefulWidget {
 class _CartScreenDesktopState extends State<CartScreenDesktop> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ButtonList(
-                isMyCartSelected: true,
-              ),
-              Expanded(child: CartContainer()),
-            ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) =>
+                CartBloc(cartRepository: RepositoryProvider.of(context))
+                  ..add(LoadAllCart('id1'))),
+      ],
+      child: Scaffold(
+        appBar: CustomAppBar(),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ButtonList(
+                  isMyCartSelected: true,
+                ),
+                Expanded(child: CartContainer()),
+              ],
+            ),
           ),
         ),
       ),
