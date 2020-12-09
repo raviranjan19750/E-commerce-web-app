@@ -10,10 +10,9 @@ class ProductDetailLoading extends ProductDetailState {}
 // ignore: must_be_immutable
 class ProductDetailLoadingSuccessful extends ProductDetailState {
 
-  final Products products;
-  final List<ProductVariants> productVariants;
+  final ProductDetail productDetail;
 
-  ProductDetailLoadingSuccessful(this.products, this.productVariants);
+  ProductDetailLoadingSuccessful(this.productDetail);
 
 }
 

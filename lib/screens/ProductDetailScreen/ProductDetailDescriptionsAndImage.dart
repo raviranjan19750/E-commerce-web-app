@@ -5,6 +5,8 @@ import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/data/data.dart';
+import 'package:living_desire/models/StringToHexColor.dart';
+import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductSizeDropdownWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
@@ -26,6 +28,8 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
     double imageListWidth = MediaQuery.of(context).size.width*0.06;
     double imageListHeight = MediaQuery.of(context).size.height*0.55;
 
+    int selectedImageIndex = 0;
+
     return BlocBuilder<ProductDetailBloc, ProductDetailState>(
 // ignore: missing_return
         builder: (context, state) {
@@ -36,138 +40,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // list of images
-                Container(
-                  margin: EdgeInsets.only(left: 32.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: imageListWidth,
-                        height: 30,
-                        color: Palette.lightGrey,
-                        child: IconButton(
-                          alignment: Alignment.center,
-                          icon: Icon(Icons.keyboard_arrow_up),
-                          color: Colors.black,
-                        ),
-                      ),
-                      Container(
-                        width: imageListWidth,
-                        height: imageListHeight,
-                        margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
-                        color: Palette.lightGrey,
-                        alignment: Alignment.center,
-                        child:  ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: state.productVariants[0].images.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-
-                              child: (state.productVariants[0].images[index] != null)?Image.network(state.productVariants[0].images[index].toString()) : Text(
-                              state.productVariants[0].images[index],
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black),
-                            ),
-
-                            );
-                          },
-                        ),
-                      ),
-                      Container(
-                        width:imageListWidth,
-                        height: 30,
-                        color: Palette.lightGrey,
-                        child: IconButton(
-                          icon: Icon(Icons.keyboard_arrow_down),
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // main product image(enlarged view)
-                Container(
-                  margin: EdgeInsets.only(left: 32.0),
-                  child: Column(
-                    children: [
-                      // enlarged image
-                      Container(
-                        height: imageHeight,
-                        width:imageWidth,
-                        decoration: new BoxDecoration(
-                          color: Palette.lightGrey,
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: (state.productVariants[0].images[0] != null)?NetworkImage(state.productVariants[0].images[0].toString()) : NetworkImage(""),
-                          )
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Container(
-                                padding: EdgeInsets.all(8.0),
-                                child: Card(
-                                  elevation: 4.0,
-                                  clipBehavior: Clip.antiAlias,
-                                  shape: CircleBorder(),
-                                  child: CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      child: ProductWishlistButton()),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ) ,
-
-// action buttons
-                      Container(
-                        width: imageWidth,
-                        height: 50,
-                        margin: EdgeInsets.only(left: 0.0, top: 8.0),
-                        child: Row(
-                          children: [
-//add to cart button
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                height: double.infinity,
-                                child: CustomWidgetButton(
-                                  onPressed: () {},
-                                  text: Strings.addToCart,
-                                ),
-                              ),
-                            ),
-
-                            SizedBox(
-                              width: 10,
-                            ),
-// buy now button
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                padding: EdgeInsets.only(right: 0.0),
-                                child: Container(
-                                  height: double.infinity,
-                                  child: CustomWidgetButton(
-                                    onPressed: () {},
-                                    backGroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    text: Strings.buyNow,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+               ProductDetailEnlargeImage(imageURL: state.productDetail.images),
 
                 // description of product
                 Container(
@@ -178,7 +51,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          state.products.name,
+                          state.productDetail.productName,
                           style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -188,7 +61,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(top: 16.0),
                         child: Text(
-                          "₹ " + state.productVariants[0].sellingPrice.toString(),
+                          "₹ " + state.productDetail.sellingPrice.toString(),
                           style: TextStyle(
                               color: Colors.grey[400],
                               decoration: TextDecoration.lineThrough,
@@ -197,7 +70,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                       ),
                       Container(
                         child: Text(
-                          "₹ " + state.productVariants[0].discountPrice.toString(),
+                          "₹ " + state.productDetail.discountPrice.toString(),
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -206,7 +79,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                       ),
                       Container(
                         child: Text(
-                          "You save ₹ " + (state.productVariants[0].sellingPrice-state.productVariants[0].discountPrice).toString(),
+                          "You save ₹ " + (state.productDetail.sellingPrice-state.productDetail.discountPrice).toString(),
                           style: TextStyle(
                               color: Colors.grey[500],
                               fontWeight: FontWeight.w500,
@@ -369,7 +242,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                             ),
 
 //customize logo button
-                            state.products.isCustomizable? Container(
+                            state.productDetail.isCustomizable? Container(
                               height: 45,
                               width: 220,
                               margin: EdgeInsets.only(top: 12.0),
@@ -410,12 +283,11 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                               child: ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: state.products.description.length,
+                                itemCount: state.productDetail.description.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Bullets(),
                                       Container(
@@ -423,7 +295,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       ),
                                       Flexible(
                                         child: Text(
-                                          state.products.description[index],
+                                          state.productDetail.description[index],
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black),

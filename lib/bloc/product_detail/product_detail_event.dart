@@ -6,8 +6,9 @@ abstract class ProductDetailEvent {}
 class LoadProductDetail extends ProductDetailEvent{
 
   final String productID;
+  final String variantID;
 
-  LoadProductDetail(this.productID);
+  LoadProductDetail(this.productID, this.variantID);
 
 }
 

@@ -16,7 +16,7 @@ class ProductDetailScreen extends StatelessWidget {
     return MultiBlocProvider(providers: [
       BlocProvider(
         create: (context) => ProductDetailBloc(
-            productRepository: RepositoryProvider.of(context))..add(LoadProductDetail("IeSrbsqqxiqwELq4Qqm")),
+            productRepository: RepositoryProvider.of(context))..add(LoadProductDetail("0IeSrbsqqxiqwELq4Qqm", "0LSDZLNUdmWQZohaIQCw")),
       )
     ], child: ProductDetail());
   }
