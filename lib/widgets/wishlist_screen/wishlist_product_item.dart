@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/models/models.dart';
 
 class WishlistProductItem extends StatelessWidget {
-  final Product product;
+  final Wishlist product;
 
   const WishlistProductItem({
     Key key,
@@ -37,10 +37,9 @@ class WishlistProductItem extends StatelessWidget {
                 )
               ],
             ),
-            Text(product.retailPrice.toString()),
-
+            Text(product.sellingPrice.toString()),
             Text(
-              product.retailPrice.toString(),
+              product.discountPrice.toString(),
             )
           ],
         ),

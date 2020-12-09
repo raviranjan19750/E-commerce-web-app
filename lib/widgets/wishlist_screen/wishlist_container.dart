@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
 import '../../data/data.dart';
 import '../../models/models.dart';
 import '../widgets.dart';
@@ -9,29 +11,27 @@ class WishlistContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Wishlist Container');
-    return Container(
-      // Grid View to display different Products
-      child: Wrap(
-        children: [
-          ...wishlistProducts.map(
-            (e) => WishlistProductItem(
-              product: e,
+    return BlocBuilder<WishlistBloc, WishlistState>(
+      builder: (context, state) {
+        if (state is WishlistDetailLoading) {
+          return CircularProgressIndicator();
+        } else if (state is WishlistDetailLoadingSuccessful) {
+          return Container(
+            // Grid View to display different Products
+            child: Wrap(
+              children: [
+                ...state.wishlist.map(
+                  (e) => WishlistProductItem(
+                    product: e,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-      // child: GridView.builder(
-      //   itemCount: wishlistProducts.length,
-      //   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-      //     crossAxisCount: 5,
-      //     childAspectRatio: MediaQuery.of(context).size.width /
-      //         (MediaQuery.of(context).size.height / 0.3),
-      //   ),
-      //   itemBuilder: (BuildContext context, int index) {
-      //     // Display a product Item
-      //     return WishlistProductItem(product: wishlistProducts[index]);
-      //   },
-      // ),
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 }

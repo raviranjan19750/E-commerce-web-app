@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import '../widgets.dart';
 
 class AddAddressContainer extends StatelessWidget {
@@ -22,6 +24,15 @@ class AddAddressContainer extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
+                  // BlocBuilder<ManageAddressesBloc, ManageAddresesState>(
+                  //     builder: (context, state) {
+                  //   if (state is AddressDetailLoading) {
+                  //     return CircularProgressIndicator();
+                  //   } else if (state is AddAddressDetailLoadingSuccesfull) {
+                  //     return NewAddressDialogBox();
+                  //   }
+                  //   return Container();
+                  // });
                   return NewAddressDialogBox();
                 },
               );

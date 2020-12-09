@@ -14,3 +14,9 @@ class AddressDetailLoadingSuccessful extends ManageAddresesState {
 }
 
 class AddressDetailLoadingFailure extends ManageAddresesState {}
+
+class AddAddressDetailLoading extends ManageAddresesState {}
+
+class AddAddressDetailLoadingSuccesfull extends ManageAddresesState {}
+
+class AddAddressDetailLoadingFailure extends ManageAddresesState {}

@@ -11,3 +11,9 @@ class LoadAllAddresses extends ManageAddressesEvent {
     this.authID,
   );
 }
+
+class AddAddress extends ManageAddressesEvent {
+  final String authID;
+
+  AddAddress(this.authID);
+}

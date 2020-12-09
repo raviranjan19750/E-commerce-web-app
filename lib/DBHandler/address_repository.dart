@@ -1,12 +1,10 @@
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
 
 class AddresssRepository {
-  final CollectionReference addressCollectionReference =
-      FirebaseFirestore.instance.collection('addresses');
+  // final CollectionReference addressCollectionReference =
+  //     FirebaseFirestore.instance.collection('addresses');
 
   Future<List<Address>> getAddressDetails(String authID) async {
     //   try {

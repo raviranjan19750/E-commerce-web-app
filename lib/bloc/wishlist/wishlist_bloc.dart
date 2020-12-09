@@ -22,8 +22,8 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     yield WishlistDetailLoading();
 
     try {
-      List<Wishlist> wishlist;
-      //=await addresssRepository.getAddressDetails(event.authID);
+      List<Wishlist> wishlist =
+          await wishlistRepository.getWishlistDetails(event.authID);
 
       yield WishlistDetailLoadingSuccessful(wishlist);
     } catch (e) {

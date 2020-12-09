@@ -1,6 +1,7 @@
 import 'dart:html';
 
 class Address {
+  final String key;
   final String address;
   final String pincode;
   final Geolocation location;
@@ -9,6 +10,7 @@ class Address {
   final String phone;
 
   const Address({
+    this.key,
     this.address,
     this.pincode,
     this.location,
@@ -17,23 +19,24 @@ class Address {
     this.phone,
   });
 
-  static Address fromMap(Map<String, dynamic> data) {
-    if (data == null) return null;
+  // static Address fromMap(Map<String, dynamic> data) {
+  //   if (data == null) return null;
 
-    return Address(
-      name: data['name'],
-      address: data['address'],
-      phone: data['phone'],
-      isPrimary: data['isPrimary'],
-      pincode: data['pincode'],
-      location: data['location'],
-    );
-  }
+  //   return Address(
+  //     name: data['name'],
+  //     address: data['address'],
+  //     phone: data['phone'],
+  //     isPrimary: data['isPrimary'],
+  //     pincode: data['pincode'],
+  //     location: data['location'],
+  //   );
+  // }
 
   factory Address.fromJson(Map<String, dynamic> data) {
     if (data == null) return null;
     print(data.toString());
     var address = {
+      'key': data['id'],
       'name': data['data']['name'],
       'address': data['data']['address'],
       'phone': data['data']['phone'],
@@ -43,6 +46,7 @@ class Address {
     };
     print(address.toString());
     return Address(
+      key: data['id'],
       name: data['data']['name'],
       address: data['data']['address'],
       phone: data['data']['phone'],
