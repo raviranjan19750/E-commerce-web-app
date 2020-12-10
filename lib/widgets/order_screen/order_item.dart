@@ -10,7 +10,10 @@ import '../widgets.dart';
 class OrderItem extends StatefulWidget {
   final Order order;
 
-  const OrderItem({Key key, this.order}) : super(key: key);
+  const OrderItem({
+    Key key,
+    this.order,
+  }) : super(key: key);
 
   @override
   _OrderItemState createState() => _OrderItemState();
@@ -43,116 +46,6 @@ class _OrderItemState extends State<OrderItem> {
           ),
         ),
       ),
-      // child: Container(
-      //   width: double.infinity,
-      //   child: Row(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     mainAxisAlignment: MainAxisAlignment.start,
-      //     children: [
-      //       // Product Image
-      //       Container(
-      //         color: Colors.pink,
-      //         width: 120,
-      //         child: Text(' product Image'),
-      //       ),
-      //       Expanded(
-      //         //TODO: Expandable widget
-      //         child: ExpandableNotifier(
-      //           child: Container(
-      //             child: Column(
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               mainAxisAlignment: MainAxisAlignment.start,
-      //               children: [
-      //                 // Product Name : Get From productID
-      //                 Text(widget.order.orderedProducts[0].productId),
-      //                 Container(
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     crossAxisAlignment: CrossAxisAlignment.start,
-      //                     children: [
-      //                       Container(
-      //                         child: Expanded(
-      //                           child: Column(
-      //                             mainAxisAlignment: MainAxisAlignment.start,
-      //                             crossAxisAlignment: CrossAxisAlignment.start,
-      //                             children: [
-      //                               Text(
-      //                                   Strings.orderID + widget.order.orderID),
-      //                               Text(
-      //                                   '${widget.order.orderedProducts[0].orderPrice}'),
-      //                               Container(
-      //                                 child: Row(
-      //                                   children: [
-      //                                     CircleAvatar(
-      //                                       radius: 8.0,
-      //                                       // Color of the the Product
-      //                                       backgroundColor: Colors.black,
-      //                                     ),
-      //                                     // Size of the product from product id
-      //                                     //Text('Size:'+widget.order.orderedProducts[0].size)
-      //                                     Text(Strings.quantity +
-      //                                         '${widget.order.orderedProducts.length}'),
-      //                                   ],
-      //                                 ),
-      //                               ),
-      //                               Container(
-      //                                 child: Row(
-      //                                   children: [
-      //                                     FlatButton(
-      //                                       child: Text(Strings.viewMore),
-      //                                       onPressed: () {},
-      //                                     ),
-      //                                     FlatButton(
-      //                                       child: Text(Strings.needHelp),
-      //                                       onPressed: () {},
-      //                                     )
-      //                                   ],
-      //                                 ),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                         ),
-      //                       ),
-      //                       Container(
-      //                         child: Expanded(
-      //                           child: Column(
-      //                             mainAxisAlignment: MainAxisAlignment.start,
-      //                             crossAxisAlignment: CrossAxisAlignment.start,
-      //                             children: [
-      //                               Text(Strings.placedOn +
-      //                                   widget.order.datePlaced),
-      //                               Text(Strings.deliveryAddress +
-      //                                   widget.order.contactInformation.name +
-      //                                   widget.order.contactInformation
-      //                                       .addressLine),
-      //                               //Phone Number
-      //                               Text(Strings.phoneNumber +
-      //                                   widget.order.contactInformation.phone),
-      //                               Container(
-      //                                 child: Row(
-      //                                   children: [
-      //                                     // Tracking Bar
-      //                                     TrackingStatusBar(),
-      //                                     // Rate and Review
-      //                                     RatingContainer(),
-      //                                   ],
-      //                                 ),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

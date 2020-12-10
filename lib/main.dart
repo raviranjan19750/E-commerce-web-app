@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/DBHandler/DBHandler.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
@@ -40,6 +41,15 @@ class InitailizeAppService extends StatelessWidget {
         RepositoryProvider(
           create: (context) => AddresssRepository(),
         ),
+        RepositoryProvider(
+          create: (context) => WishlistRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => NormalOrderRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => CartRepository(),
+        )
       ],
       child: MultiBlocProvider(
         providers: [

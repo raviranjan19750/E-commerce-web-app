@@ -33,7 +33,7 @@ class OrderTitleContainer extends StatelessWidget {
                 Text(
                   Strings.placedOn,
                 ),
-                Text(order.placedDate),
+                Text(order.placedDate.toString()),
               ],
             ),
             // Total Proce of Order

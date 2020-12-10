@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
 
@@ -6,8 +7,8 @@ class NormalOrderRepository {
   Future<List<Order>> getNormalOrderDetails(String authID) async {
     try {
       print('Sending Cart Http Request');
-      final response = await http.get(
-          'https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageOrder/${authID}');
+      final response = await http
+          .get(FunctionConfig.host + 'manageOrders/normal-list/${authID}');
       if (response.statusCode == 200) {
         print('Http Get request sucessfull');
         print(jsonDecode(response.body).toString());
@@ -18,7 +19,7 @@ class NormalOrderRepository {
         print('Http Request Failed');
       }
     } catch (e) {
-      print(e.toString());
+      print('Function Error:' + e.toString());
       throw Exception(e);
     }
   }

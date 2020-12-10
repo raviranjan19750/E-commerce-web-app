@@ -19,19 +19,6 @@ class Address {
     this.phone,
   });
 
-  // static Address fromMap(Map<String, dynamic> data) {
-  //   if (data == null) return null;
-
-  //   return Address(
-  //     name: data['name'],
-  //     address: data['address'],
-  //     phone: data['phone'],
-  //     isPrimary: data['isPrimary'],
-  //     pincode: data['pincode'],
-  //     location: data['location'],
-  //   );
-  // }
-
   factory Address.fromJson(Map<String, dynamic> data) {
     if (data == null) return null;
     print(data.toString());

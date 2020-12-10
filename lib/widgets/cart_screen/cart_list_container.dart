@@ -11,6 +11,8 @@ class CartListContainer extends StatelessWidget {
     this.carts,
   }) : super(key: key);
 
+  String getCartTotal(List<Cart> cart) {}
+
   @override
   Widget build(BuildContext context) {
     print('Cart List Container');

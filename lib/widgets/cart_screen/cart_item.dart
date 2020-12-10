@@ -43,11 +43,7 @@ class _CartItemState extends State<CartItem> {
   Widget build(BuildContext context) {
     print('cart item');
     // Match the Product according to the Product ID in cart
-    final Product product = Product(
-      title : 'ksvlnl',
-      retailPrice: 34345,
-      discountPrice: 3245,
-    );
+    print(widget.cart.name.toString());
     return Column(
       children: [
         Container(
@@ -64,8 +60,8 @@ class _CartItemState extends State<CartItem> {
                       Container(
                         child: Row(
                           children: [
-                            Text(product.title),
-                            Text(product.retailPrice.toString()),
+                            Text(widget.cart.name.toString()),
+                            Text(widget.cart.discountPrice.toString()),
                           ],
                         ),
                       ),
@@ -79,27 +75,7 @@ class _CartItemState extends State<CartItem> {
                             SizedBox(
                               width: 15,
                             ),
-                            DropdownButton<String>(
-                              // Size of the product
-                              value: 'S',
-                              icon: Icon(Icons.arrow_drop_down),
-                              iconSize: 12,
-                              elevation: 5,
-                              style: TextStyle(color: Colors.black),
-                              onChanged: (String newValue) {},
-                              // Get Size variants
-                              items: <String>[
-                                'S',
-                                'M',
-                                'L',
-                                'XL'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
+                            Text(widget.cart.size),
                             SizedBox(
                               width: 15,
                             ),
@@ -116,12 +92,14 @@ class _CartItemState extends State<CartItem> {
                       ),
                       // Old Price
                       Text(
-                        'Old Proce',
+                        widget.cart.sellingPrice.toString(),
                       ),
                       // New Price
-                      Text('New Price'),
+                      Text(widget.cart.discountPrice.toString()),
                       // Discount
-                      Text('You saved...'),
+                      Text('You saved ' +
+                          (widget.cart.sellingPrice - widget.cart.discountPrice)
+                              .toString()),
                       // Remove from Cart
                       FlatButton(
                         onPressed: () {},

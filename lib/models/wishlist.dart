@@ -5,7 +5,7 @@ class Wishlist {
   final DateTime dateAdded;
   final String imageUrl;
   final double sellingPrice;
-  final String discountPrice;
+  final double discountPrice;
   final String name;
 
   Wishlist({
@@ -35,7 +35,7 @@ class Wishlist {
       key: data['id'],
       productID: data['data']['productID'],
       variantID: data['data']['variantID'],
-      imageUrl: data['data']['imageUrl'],
+      imageUrl: data['data']['imageURL'],
       discountPrice: data['data']['discountPrice'],
       name: data['data']['name'],
       sellingPrice: data['data']['sellingPrice'],

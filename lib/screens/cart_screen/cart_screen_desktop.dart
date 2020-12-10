@@ -28,19 +28,16 @@ class _CartScreenDesktopState extends State<CartScreenDesktop> {
       ],
       child: Scaffold(
         appBar: CustomAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ButtonList(
-                  isMyCartSelected: true,
-                ),
-                Expanded(child: CartContainer()),
-              ],
-            ),
+        body: SingleChildScrollView(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ButtonList(
+                isMyCartSelected: true,
+              ),
+              Expanded(child: CartContainer()),
+            ],
           ),
         ),
       ),

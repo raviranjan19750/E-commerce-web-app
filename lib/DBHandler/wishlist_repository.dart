@@ -7,7 +7,7 @@ class WishlistRepository {
     try {
       print('Sending Wishlist Http Request');
       final response = await http.get(
-          'https://us-central1-livingdesire-2107-dev.cloudfunctions.net/managewishlist/${authID}');
+          'https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageWishlist/${authID}');
       if (response.statusCode == 200) {
         print('Http Get request sucessfull');
         print(jsonDecode(response.body).toString());

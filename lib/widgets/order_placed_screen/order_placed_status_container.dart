@@ -15,11 +15,9 @@ class OrderPlacedStatusContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(Strings.deliveryAddress +
-                order.contactInformation.name +
-                order.contactInformation.addressLine),
+            Text(Strings.deliveryAddress + order.name + order.address),
             //Phone Number
-            Text(Strings.phoneNumber + order.contactInformation.phone),
+            Text(Strings.phoneNumber + order.phone),
             TrackingStatusBar(),
             Container(
               padding: EdgeInsets.all(8),

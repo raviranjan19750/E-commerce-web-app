@@ -26,6 +26,8 @@ class NormalOrdersContainer extends StatelessWidget {
               ),
             ),
           );
+        } else {
+          return Container();
         }
       },
     );
