@@ -26,7 +26,7 @@ class Strings {
   static const String ordered = "Ordered";
   static const String shipped = "Shipped";
   static const String delivered = "Delivered";
-  static const String deliveringTo = "Delivering To";
+  static const String deliveringTo = "Delivering To : ";
   static const String subTotal = "Subtotal";
   static const String purchaseProtection = "100 % Purchase Protection";
   static const String orignalProducts = "Orignal Products";
@@ -58,4 +58,5 @@ class Strings {
   static const String deliveryStatus = "Delivery Status";
   static const String invoice = "Invoice";
   static const String buyAgain = "Buy Again";
+  static const String rupeesSymbol = "₹ ";
 }

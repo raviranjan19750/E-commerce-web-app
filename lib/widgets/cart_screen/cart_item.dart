@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:living_desire/widgets/widgets.dart';
 
 class CartItem extends StatefulWidget {
   final Cart cart;
@@ -13,32 +15,6 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
-  Widget _incrementButton(index) {
-    return RaisedButton(
-      child: Icon(
-        Icons.add,
-        color: Colors.black,
-        size: 16,
-      ),
-      color: Colors.white,
-      onPressed: () {},
-    );
-  }
-
-  Widget _decrementButton(double index) {
-    return RaisedButton(
-      onPressed: () {},
-      child: Text(
-        '-',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 16,
-        ),
-      ),
-      color: Colors.white,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     print('cart item');
@@ -59,9 +35,21 @@ class _CartItemState extends State<CartItem> {
                     children: [
                       Container(
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(widget.cart.name.toString()),
-                            Text(widget.cart.discountPrice.toString()),
+                            Text(
+                              widget.cart.name.toString(),
+                              style: TextStyle(
+                                fontSize: 24,
+                              ),
+                            ),
+                            Text(
+                              Strings.rupeesSymbol +
+                                  widget.cart.discountPrice.toString(),
+                              style: TextStyle(
+                                fontSize: 24,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -81,12 +69,21 @@ class _CartItemState extends State<CartItem> {
                             ),
 
                             // Quantity Button
-                            _decrementButton(widget.cart.quantity),
-                            Text(
-                              '${widget.cart.quantity}',
-                              style: TextStyle(fontSize: 16.0),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 0.5,
+                                  )),
+                              child: Row(
+                                children: [
+                                  CartItemCount(
+                                    quantity: widget.cart.quantity,
+                                  ),
+                                ],
+                              ),
                             ),
-                            _incrementButton(widget.cart.quantity),
                           ],
                         ),
                       ),

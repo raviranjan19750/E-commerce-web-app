@@ -19,18 +19,21 @@ class CartContainer extends StatelessWidget {
         if (state is CartDetailLoading) {
           return CircularProgressIndicator();
         } else if (state is CartDetailLoadingSuccessful) {
-          return Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: CartListContainer(
-                    carts: state.cart,
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: CartListContainer(
+                      carts: state.cart,
+                    ),
                   ),
-                ),
-                CartTotal(),
-              ],
+                  CartTotal(),
+                ],
+              ),
             ),
           );
         } else {

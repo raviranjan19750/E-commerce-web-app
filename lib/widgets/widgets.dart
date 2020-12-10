@@ -37,3 +37,4 @@ export 'select_address_screen/select_address_cart_total.dart';
 export 'select_address_screen/proceed_to_pay_button.dart';
 export 'order_screen/order_title_delivery_status.dart';
 export 'button_list.dart';
+export 'cart_screen/cart_item_count.dart';

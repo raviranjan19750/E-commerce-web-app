@@ -20,7 +20,27 @@ class CartListContainer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(Strings.deliveringTo),
+        Row(
+          children: [
+            Text(
+              Strings.deliveringTo,
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 14,
+              ),
+            ),
+            //TODO: Get Pincode
+            Text(
+              'Pincode',
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
         ...carts.map(
           (e) => CartItem(
             cart: e,
