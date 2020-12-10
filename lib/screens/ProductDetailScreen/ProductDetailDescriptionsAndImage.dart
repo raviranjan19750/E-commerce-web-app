@@ -22,13 +22,6 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    double imageWidth = MediaQuery.of(context).size.width * 0.26;
-    double imageHeight = MediaQuery.of(context).size.height * 0.62;
-
-    double imageListWidth = MediaQuery.of(context).size.width*0.06;
-    double imageListHeight = MediaQuery.of(context).size.height*0.55;
-
-    int selectedImageIndex = 0;
 
     return BlocBuilder<ProductDetailBloc, ProductDetailState>(
 // ignore: missing_return
@@ -217,7 +210,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                           ),
                                         ),
 
-                                        ProductSizeDropdown()
+                                        ProductSizeDropdown(productSizeList: state.productDetail.sizeOptions,)
                                       ],
                                     ),
                                   ),

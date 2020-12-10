@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/palette.dart';
@@ -20,10 +19,18 @@ class ProductDetailEnlargeImage extends StatefulWidget {
 
 class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
+  int selectedImageIndex ;
+  int selectedColorIndex;
+  int selectedSizeIndex;
+  String selectedURI;
 
-
-  int selectedIndex = 0;
-  String selectedURI = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    selectedImageIndex = 0;
+    selectedURI = widget.imageURL[0];
+    super.initState();
+  }
 
 
   @override
@@ -70,8 +77,8 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
                       onTap: () {
                         setState(() {
-                          selectedIndex = index;
-                          selectedURI = widget.imageURL[selectedIndex].toString();
+                          selectedImageIndex = index;
+                          selectedURI = widget.imageURL[selectedImageIndex].toString();
                         });
 
                       },
