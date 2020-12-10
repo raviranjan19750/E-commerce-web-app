@@ -44,7 +44,6 @@ class Strings {
   static const String notAvailable = "Not Available";
   static const String customizeWithLogo = "Customize With Logo";
   static const String description = "Descriptions";
-
   static const String size = "Size";
   static const String qty = "Qty";
   static const String downloadInvoice = "Download Invoice";
@@ -59,4 +58,6 @@ class Strings {
   static const String invoice = "Invoice";
   static const String buyAgain = "Buy Again";
   static const String rupeesSymbol = "₹ ";
+  static const String youSaved = "You saved ";
+  static const String removeCart = "Remove From Cart";
 }

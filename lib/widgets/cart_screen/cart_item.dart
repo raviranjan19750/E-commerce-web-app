@@ -57,8 +57,18 @@ class _CartItemState extends State<CartItem> {
                         child: Row(
                           children: [
                             //TODO: Color of the product
-                            CircleAvatar(
-                              backgroundColor: Colors.black,
+                            Container(
+                              padding: EdgeInsets.all(4.0),
+                              margin: EdgeInsets.only(left: 6.0),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      width: 0.5, color: Colors.black)),
+                              child: CircleAvatar(
+                                radius: 10,
+                                backgroundColor: Colors.blue,
+                              ),
                             ),
                             SizedBox(
                               width: 15,
@@ -94,13 +104,16 @@ class _CartItemState extends State<CartItem> {
                       // New Price
                       Text(widget.cart.discountPrice.toString()),
                       // Discount
-                      Text('You saved ' +
+                      Text(Strings.youSaved +
+                          Strings.rupeesSymbol +
                           (widget.cart.sellingPrice - widget.cart.discountPrice)
                               .toString()),
                       // Remove from Cart
                       FlatButton(
                         onPressed: () {},
-                        child: Text('Remove from Cart'),
+                        child: Text(
+                          Strings.removeCart,
+                        ),
                       ),
                     ],
                   ),
