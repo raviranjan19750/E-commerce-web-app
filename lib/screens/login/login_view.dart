@@ -8,50 +8,59 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Center(
-        child: Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-          height: 500,
-          width: 700,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  color: Colors.black,
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Text(
-                          "LOGIN",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              wordSpacing: 2),
-                        ),
-                        padding: EdgeInsets.all(12),
-                      ),
-                      LoginStepper(),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.all(60),
-                  child: LoginWithPhoneWidget(),
-                ),
-              ),
-            ],
-          ),
-        ),
+        child: LoginScreenWidget(),
       ),
     );
   }
 }
+
+class LoginScreenWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      height: 500,
+      width: 700,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.black,
+              child: Column(
+                children: [
+                  Container(
+                    child: Text(
+                      "LOGIN",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          wordSpacing: 2),
+                    ),
+                    padding: EdgeInsets.all(12),
+                  ),
+                  LoginStepper(),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(60),
+              child: LoginWithPhoneWidget(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
 class LoginWithPhoneWidget extends StatefulWidget {
   @override

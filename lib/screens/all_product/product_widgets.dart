@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
+import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
 import 'package:living_desire/models/models.dart';
 
 class ProductCard extends StatefulWidget {
@@ -17,16 +18,8 @@ class ProductCard extends StatefulWidget {
 
 class _ProductCardState extends State<ProductCard> {
   double _elevation = 0;
+  
   @override
-  String formatTitle(String title) {
-    int len = 20;
-    if (title.length < len) {
-      return title;
-    } else {
-      return title.substring(0, len) + "...";
-    }
-  }
-
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (event) {
@@ -42,25 +35,25 @@ class _ProductCardState extends State<ProductCard> {
       child: Card(
           elevation: _elevation,
           child: Container(
-            width: 200,
-            child: ProductCardContent(product: widget.product,)
-          )),
+              width: 200,
+              child: ProductCardContent(
+                product: widget.product,
+              ))),
     );
   }
 }
 
 class ProductCardContent extends StatelessWidget {
-
   final Product product;
 
   const ProductCardContent({Key key, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     double discount = 0;
     discount = (product.retailPrice - product.discountPrice) /
-        product.retailPrice * 100;
+        product.retailPrice *
+        100;
 
     return Column(
       children: [
@@ -77,7 +70,7 @@ class ProductCardContent extends StatelessWidget {
             Positioned(
               right: 0,
               top: 0,
-              child: ProductWishlistButton(),
+              child: ProductWishlistButton(productId: product.title),
             ),
             Positioned(
               bottom: 0,
@@ -103,8 +96,7 @@ class ProductCardContent extends StatelessWidget {
                   Text(
                     "₹" + product.discountPrice.toString(),
                     style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87),
+                        fontWeight: FontWeight.w500, color: Colors.black87),
                   ),
                   SizedBox(
                     width: 10,
@@ -132,7 +124,6 @@ class ProductCardContent extends StatelessWidget {
     );
   }
 }
-
 
 class FilterCard extends StatefulWidget {
   final FilterTag filters;
@@ -211,7 +202,8 @@ class _FilterCardState extends State<FilterCard> {
                       })
               ]),
             ),
-          if (!isLongerList && widget.filters.filterChilds.length > widget.maxFiltersToShow)
+          if (!isLongerList &&
+              widget.filters.filterChilds.length > widget.maxFiltersToShow)
             RichText(
               text: TextSpan(children: [
                 TextSpan(
@@ -269,6 +261,10 @@ class FilterCheckBox extends StatelessWidget {
 }
 
 class ProductWishlistButton extends StatefulWidget {
+  final String productId;
+
+  const ProductWishlistButton({Key key, this.productId}) : super(key: key);
+
   @override
   _ProductWishlistButtonState createState() => _ProductWishlistButtonState();
 }
@@ -284,33 +280,50 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool isProductInWishList = BlocProvider.of<WishlistBloc>(context)
+        .state
+        .contains(widget.productId);
+
     return Container(
       padding: EdgeInsets.all(6.0),
       child: MouseRegion(
         onEnter: (event) {
           setState(() {
-            _wishHover = true;
+            _wishHover = !isProductInWishList;
           });
         },
         onExit: (event) {
           setState(() {
-            _wishHover = false;
+            _wishHover = isProductInWishList;
           });
         },
         child: _wishHover
-            ? CircleAvatar(
-                backgroundColor: Colors.white.withAlpha(200),
-                child: Icon(
-                  Icons.favorite,
-                  color: Colors.red,
+            ? GestureDetector(
+                onTap: () {
+                  BlocProvider.of<WishlistBloc>(context)
+                      .add(AddToWishList(widget.productId));
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.white.withAlpha(200),
+                  child: Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                  ),
                 ),
               )
-            : CircleAvatar(
-                radius: 17.0,
-                backgroundColor: Colors.white.withAlpha(200),
-                child: Icon(
-                  Icons.favorite_border_outlined,
-                  color: Colors.red,
+            : GestureDetector(
+                onTap: () {
+                  BlocProvider.of<WishlistBloc>(context)
+                      .add(RemoveFromWishList(widget.productId));
+                },
+                child: CircleAvatar(
+                  radius: 17.0,
+                  backgroundColor: Colors.white.withAlpha(200),
+                  child: Icon(
+                    Icons.favorite_border_outlined,
+                    color: Colors.red,
+                  ),
                 ),
               ),
       ),

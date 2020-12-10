@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:living_desire/screens/login/login_view.dart';
 import '../../config/configs.dart';
 
 
@@ -112,8 +113,13 @@ class UserCard extends StatelessWidget {
         ),
         // Login Button
         child: InkWell(
-          onTap: () {},
-
+          onTap: () {
+            showDialog(
+              builder: (context) {
+                return LoginScreen();
+              }, context: context
+            );
+          },
           child: Text(Strings.loginText,
             style: TextStyle(color: Colors.white),
 

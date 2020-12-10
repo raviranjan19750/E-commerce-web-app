@@ -11,6 +11,7 @@ import 'package:living_desire/service/searchapi.dart';
 import './config/configs.dart';
 import 'bloc/all_product/all_product_bloc.dart';
 import 'bloc/filter/filter_bloc.dart';
+import 'bloc/wishlist/wishlist_bloc.dart';
 
 void main() async {
   final FirebaseApp _initialization = await Firebase.initializeApp();
@@ -36,6 +37,7 @@ class InitailizeAppService extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => WishlistBloc()),
           BlocProvider(
               create: (context) =>
                   SignInBloc(authService: RepositoryProvider.of(context))),
