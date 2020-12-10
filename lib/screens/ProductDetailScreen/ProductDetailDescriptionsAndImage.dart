@@ -5,14 +5,12 @@ import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/data/data.dart';
-import 'package:living_desire/models/StringToHexColor.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductSizeDropdownWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
 import 'package:living_desire/widgets/bullet.dart';
 
-import 'package:living_desire/widgets/wishListWidget.dart';
 
 class ProductDetailDescriptionAndImage extends StatelessWidget {
 
@@ -71,13 +69,19 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        child: Text(
+                        child: (state.productDetail.isAvailable) ? Text(
                           "You save ₹ " + (state.productDetail.sellingPrice-state.productDetail.discountPrice).toString(),
                           style: TextStyle(
                               color: Colors.grey[500],
                               fontWeight: FontWeight.w500,
                               fontSize: 18),
-                        ),
+                        ) : Text(
+                          Strings.outOfStock,
+                          style: TextStyle(
+                              color: Colors.red[500],
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18),
+                        ) ,
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 16.0),
@@ -102,7 +106,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       onChanged: (val) {},
                                       cursorColor: Colors.black,
                                       decoration: InputDecoration(
-                                          labelText: 'Check Availability',
+                                          labelText: Strings.checkAvailability,
                                           focusColor: Colors.grey,
                                           hoverColor: Colors.grey,
                                           fillColor: Colors.grey,
@@ -115,11 +119,16 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                           disabledBorder: InputBorder.none,
                                           counterText: "")),
                                 ),
-                                Text(
-                                  Strings.check,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
+                                InkWell(
+                                  onTap: () {
+
+                                  },
+                                  child: Text(
+                                    Strings.check,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                 )
                               ],
@@ -210,7 +219,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                           ),
                                         ),
 
-                                        ProductSizeDropdown(productSizeList: state.productDetail.sizeOptions,)
+                                        ProductSizeDropdown(productSizeList: state.productDetail.sizeOptions,productColor: "Blue", productID:"0IeSrbsqqxiqwELq4Qqm", productSize: state.productDetail.size,),
                                       ],
                                     ),
                                   ),

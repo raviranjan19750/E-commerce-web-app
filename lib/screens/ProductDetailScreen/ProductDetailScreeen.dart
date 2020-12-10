@@ -38,9 +38,6 @@ class ProductDetail extends StatelessWidget {
         MediaQuery.of(context).size.height * 0.4;
     final double itemCardHeight = MediaQuery.of(context).size.height * 0.20;
     final double descriptionWidth = MediaQuery.of(context).size.width * 0.4;
-    int itemQuantity = 0;
-    bool increaseButtonHover = false;
-    bool decreaseButtonHover = false;
 
     return Scaffold(
       appBar: CustomAppBar(

@@ -23,11 +23,9 @@ class ProductRepository {
       "colour" : color
     };
 
-    var uri = Uri.https('us-central1-livingdesire-2107-dev.cloudfunctions.net', '/manageProducts/details/$productID', params);
-    var response = await http.get(uri);
+    var response = await http.post("http://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProducts/details/$productID", body: params);
     Map<String, dynamic> map = jsonDecode(response.body);
     return ProductDetail.fromJson(map);
-
 
   }
 

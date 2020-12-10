@@ -1,12 +1,18 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
+import 'package:living_desire/data/data.dart';
 
 class ProductSizeDropdown extends StatefulWidget {
 
   final List<String> productSizeList;
+  final String productColor;
+  final String productID;
+  final String productSize;
 
-  const ProductSizeDropdown({Key key, this.productSizeList}) :  super(key: key);
+  const ProductSizeDropdown({Key key, this.productSizeList, this.productColor, this.productID,  this.productSize}) :  super(key: key);
 
 
   @override
@@ -23,7 +29,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
     // TODO: implement initState
     super.initState();
 
-    dropdownValue = widget.productSizeList.first;
+    dropdownValue = widget.productSize;
 
   }
 
@@ -31,6 +37,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
 
     setState(() {
       holder = dropdownValue ;
+      // royte
     });
   }
 
@@ -44,6 +51,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
            onChanged: (value) {
              setState(() {
                dropdownValue = value;
+               BlocProvider.of<ProductDetailBloc>(context).add(LoadProductVariantDetail(widget.productID, widget.productColor, dropdownValue));
              });
            },
 

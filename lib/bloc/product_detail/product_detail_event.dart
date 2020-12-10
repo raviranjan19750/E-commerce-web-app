@@ -12,6 +12,17 @@ class LoadProductDetail extends ProductDetailEvent{
 
 }
 
+class LoadProductVariantDetail extends ProductDetailEvent{
+
+  final String productID;
+  final String color;
+  final String size;
+
+  LoadProductVariantDetail(this.productID, this.color, this.size);
+
+
+}
+
 // add cart
 // buy now
 // customize with logo

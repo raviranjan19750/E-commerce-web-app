@@ -58,4 +58,6 @@ class Strings {
   static const String deliveryStatus = "Delivery Status";
   static const String invoice = "Invoice";
   static const String buyAgain = "Buy Again";
+  static const String outOfStock = "Out of stock";
+  static const String checkAvailability = "Check Availability";
 }

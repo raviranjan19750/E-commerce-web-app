@@ -25,6 +25,8 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   ) async* {
     if (event is LoadProductDetail) {
       yield* loadProductDetail(event);
+    }else if (event is LoadProductVariantDetail) {
+      yield* loadProductVariantDetail(event);
     }
   }
 
@@ -33,7 +35,6 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
 
     try {
       var productDescription = await productRepository.getProductVariantDescription(productID:"0Kw7a5E2AMQ8jJM6a7C0", variantID: "02nnXgCzOjVHRarIPIrf");
-     // var productImageSizeDescription = await productRepository.getProductVariantSizeColorDescription(productID: "0IeSrbsqqxiqwELq4Qqm", color: "Blue", size: "L");
       yield ProductDetailLoadingSuccessful(productDescription);
 
     } catch (e) {
@@ -41,4 +42,31 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       yield ProductDetailLoadingFailure();
     }
   }
+
+  Stream<ProductDetailState> loadProductVariantDetail(LoadProductVariantDetail event) async* {
+
+    yield ProductDetailLoading();
+
+    try{
+      var productImageSizeDescription = await productRepository.getProductVariantSizeColorDescription(productID: "0IeSrbsqqxiqwELq4Qqm", color: "Blue", size: "XXL");
+      yield ProductDetailLoadingSuccessful(productImageSizeDescription);
+    }catch(e) {
+      print(e.toString());
+      yield ProductDetailLoadingFailure();
+    }
+
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
