@@ -10,6 +10,9 @@ import 'bulk_order_cart.dart';
 
 class BulkOrder extends StatelessWidget{
 
+  final String productType, productSubType, color, size ;
+
+  const BulkOrder({this.productType, this.productSubType, this.color, this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class BulkOrder extends StatelessWidget{
 
                     Text('Order in Bulk',style: TextStyle(fontSize: 32 , fontWeight: FontWeight.bold),),
 
-                    StepOneBlock(),
+                    StepOneBlock(productType: productType,productSubType: productSubType,),
 
                     StepTwoBlock(),
 

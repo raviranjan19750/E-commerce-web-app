@@ -6,6 +6,10 @@ import 'package:provider/provider.dart';
 
 class StepOneBlock extends StatelessWidget{
 
+  final String productType, productSubType;
+      
+  StepOneBlock({this.productType,this.productSubType});
+  
   bool init = false;
 
   @override
@@ -18,7 +22,7 @@ class StepOneBlock extends StatelessWidget{
           builder: (BuildContext context, BulkOrderProvider value, Widget child) {
 
             if (!init) {
-              Provider.of<BulkOrderProvider>(context, listen: false);
+              Provider.of<BulkOrderProvider>(context, listen: false).initStepOne(productType, productSubType);
               init = true;
             }
 
@@ -125,16 +129,104 @@ class StepOneBlock extends StatelessWidget{
                         itemCount: 7,
                         itemBuilder:
                             (BuildContext context, int index) {
-                          return Container(
+                          return InkWell(
 
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            onTap: (){
 
-                            child: BulkOrderItem(),
+                              value.onProductTypeSelected();
+
+                              print("called");
+
+                            },
+
+                            child: Container(
+
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+
+                              child: BulkOrderItem(),
+                            ),
                           );
                         }),
 
 
 
+                  ),
+
+                  Visibility(
+
+                    visible: value.productTypeSelected,
+
+                    child: Container(
+
+                      decoration: BoxDecoration(
+
+                        color: Colors.white,
+
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0, 2),
+                            blurRadius: 4.0,
+                          )],
+
+                      ),
+
+                      child: Column(
+
+                        children: [
+
+                          Container(
+                            
+                            margin: EdgeInsets.only(left: 16,top: 8,bottom: 8),
+                            
+                            width:double.infinity ,
+                            alignment: Alignment.centerLeft,
+                            child: Text('Select Sub Type',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),),
+
+                          GridView.builder(
+                            shrinkWrap: true,
+                            itemCount: 8,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 6,
+
+                                childAspectRatio: MediaQuery.of(context).size.width /
+                                  (MediaQuery.of(context).size.height / 2),
+
+                            ),
+
+                                  itemBuilder: (BuildContext context, int index) {
+
+                                    return InkWell(
+
+                                      onTap: (){},
+
+                                      child: new Container(
+
+                                        alignment: Alignment.center,
+
+                                        margin: EdgeInsets.all(8),
+
+                                        decoration: BoxDecoration(
+
+                                          border: Border.all(color: Palette.secondaryColor),
+
+                                          borderRadius: BorderRadius.circular(4),
+
+                                          color: Colors.white
+
+                                        ),
+
+                                        child: Text('SubType',style: TextStyle(fontSize: 16),),
+
+                                      ),
+                                    );
+
+                              },
+                          ),
+                        ]
+                      ),
+
+                    ),
                   ),
 
                   Container(

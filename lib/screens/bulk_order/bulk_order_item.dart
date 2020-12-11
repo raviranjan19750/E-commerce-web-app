@@ -21,35 +21,17 @@ class BulkOrderItem extends StatelessWidget{
               init = true;
             }
 
-            return MouseRegion(
+            return Card(
 
-              onEnter: (event) {
-                value.onEnter();
-              },
-              onExit: (event) {
-               value.onExit();
-              },
+              elevation: value.elevation,
+              color: Palette.secondaryColor,
 
-
-              onHover: (PointerHoverEvent event){},
-
-              child: InkWell(
-
-                onTap: (){},
-
-                child: Card(
-
-                  elevation: value.elevation,
-                  color: Palette.secondaryColor,
-
-                  child: Image(
-                    image: AssetImage('assets/images/logo.jpeg'),
-                    width: 150 * value.size,
-                    height: 200 * value.size,
-                  ),
-
-                ),
+              child: Image(
+                image: AssetImage('assets/images/logo.jpeg'),
+                width: 150 * value.size,
+                height: 200 * value.size,
               ),
+
             );
 
           },

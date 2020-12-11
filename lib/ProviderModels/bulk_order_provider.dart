@@ -9,6 +9,29 @@ class BulkOrderProvider with ChangeNotifier{
 
   bool stepOneDone = false;
 
+  bool productTypeSelected = false;
+
+  void initStepOne(String productType, String productSubType){
+
+    if(productType == null || productType.isEmpty){
+
+      stepOneDone = false;
+    }
+    else{
+
+      stepOneDone = true;
+
+    }
+
+  }
+
+  void onProductTypeSelected(){
+
+    productTypeSelected = true;
+    notifyListeners();
+
+  }
+
   void onEnter(){
       elevation = 20;
       size = 1.1;
