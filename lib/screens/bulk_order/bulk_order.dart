@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/screens/bulk_order/step_one_block.dart';
 import 'package:living_desire/screens/bulk_order/step_three_block.dart';
@@ -113,7 +114,6 @@ class BulkOrder extends StatelessWidget{
       ),
 
     );
-
 
   }
 
