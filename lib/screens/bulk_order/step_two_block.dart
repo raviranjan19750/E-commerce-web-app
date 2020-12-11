@@ -59,7 +59,7 @@ class StepTwoBlock extends StatelessWidget{
 
                 Visibility(
 
-                  visible: false,
+                  visible: true,
 
                   child: Column(
                     children: [
@@ -215,7 +215,25 @@ class StepTwoBlock extends StatelessWidget{
                                         ),
                                       ),
 
-                                      Text(' 32 ',style: TextStyle(color: Palette.secondaryColor),),
+                                      Container(
+                                        width: 36,
+
+                                        child: TextField(
+
+                                          textAlign: TextAlign.center,
+
+                                          controller: TextEditingController()..text = '50',
+
+                                          onChanged: (value){},
+
+                                          decoration: InputDecoration(
+
+                                            border: InputBorder.none
+
+                                          ),
+
+                                        ),
+                                      ),
 
                                       IconButton(
 
