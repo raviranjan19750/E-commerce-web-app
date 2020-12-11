@@ -64,7 +64,9 @@ class StepOneBlock extends StatelessWidget{
 
                       Image(image: AssetImage('assets/images/logo.jpeg'),width: 80,height: 80,),
 
-                      Container( margin: EdgeInsets.only(left: 16),child: Text('Selected Item',style: TextStyle(color: Colors.white,fontSize: 24),)),
+                      Container( margin: EdgeInsets.only(left: 16),child: Text('Bean Bags',style: TextStyle(color: Colors.white,fontSize: 24),)),
+
+                      Container( margin: EdgeInsets.only(left: 16),child: Text('Sofa',style: TextStyle(color: Colors.white,fontSize: 24),)),
                     ],
                   ),
 
@@ -229,26 +231,31 @@ class StepOneBlock extends StatelessWidget{
                     ),
                   ),
 
-                  Container(
+                  Visibility(
 
-                    margin: EdgeInsets.only(top: 16),
+                    visible: value.productTypeSelected,
 
-                    alignment: Alignment.centerLeft,
+                    child: Container(
 
-                    child: RaisedButton(
+                      margin: EdgeInsets.only(top: 16),
 
-                      padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
+                      alignment: Alignment.centerLeft,
 
-                      onPressed: (){
+                      child: RaisedButton(
 
-                        value.onStepOneDone();
+                        padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
 
-                      },
+                        onPressed: (){
 
-                      color: Palette.secondaryColor,
+                          value.onStepOneDone();
 
-                      child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 24),),
+                        },
 
+                        color: Palette.secondaryColor,
+
+                        child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 24),),
+
+                      ),
                     ),
                   ),
 
