@@ -12,7 +12,9 @@ import 'package:living_desire/widgets/footer/footer.dart';
 class AllProductScreen extends StatelessWidget {
   final String searchFilter;
 
-  const AllProductScreen({Key key, this.searchFilter}) : super(key: key);
+  AllProductScreen({Key key, this.searchFilter}) : super(key: key);
+
+  final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +41,9 @@ class AllProductScreen extends StatelessWidget {
           size: 120,
         ),
         body: ListView(
+          controller: _controller,
           shrinkWrap: true,
-          primary: true,
+          // primary: true,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +55,27 @@ class AllProductScreen extends StatelessWidget {
                 FilterDropDown()
               ],
             ),
-            BuildAllProductView(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Filters",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                FilterDropDown()
+              ],
+            ),
+            AllProductScreenBuilder(
+              parentScrollController: _controller,
+            ),
+            BlocBuilder<AllProductBloc, AllProductState>(
+                builder: (_, state) {
+                  if (state is LoadingNextProduct) {
+                    return LinearProgressIndicator();
+                  }
+                  return Container();
+                }),
+            Footer()
           ],
         ),
       ),
@@ -61,67 +84,48 @@ class AllProductScreen extends StatelessWidget {
 }
 
 class AllProductScreenBuilder extends StatelessWidget {
+  final ScrollController parentScrollController;
+
+  const AllProductScreenBuilder({Key key, this.parentScrollController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      // appBar: CustomAppBar(
-      //   size: 120,
-      // ),
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return [];
-      },
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.85,
-          ),
-          child: ListView(
-            controller: PrimaryScrollController.of(context),
-            shrinkWrap: true,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Filters",
-                    style: TextStyle(fontWeight: FontWeight.w600),
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.85,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(width: 1.0, color: Colors.grey),
+                    // top: BorderSide(width: 1.0, color: Colors.grey),
                   ),
-                  FilterDropDown()
-                ],
+                ),
+                child: BlocBuilder<FilterBloc, FilterState>(
+                    builder: (context, state) {
+                  return Column(
+                    children: state.filters
+                        .map((e) => FilterCard(filters: e))
+                        .toList(),
+                  );
+                }),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          right: BorderSide(width: 1.0, color: Colors.grey),
-                          // top: BorderSide(width: 1.0, color: Colors.grey),
-                        ),
-                      ),
-                      child: BlocBuilder<FilterBloc, FilterState>(
-                          builder: (context, state) {
-                        return Column(
-                          children: state.filters
-                              .map((e) => FilterCard(filters: e))
-                              .toList(),
-                        );
-                      }),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: BuildAllProductView(),
-                  )
-                ],
+            ),
+            Expanded(
+              flex: 4,
+              child: BuildAllProductView(
+                parentController: parentScrollController,
               ),
-              Footer()
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
@@ -142,9 +146,7 @@ class ProductLoadingView extends StatelessWidget {
         margin: EdgeInsets.all(0),
         padding: EdgeInsets.only(top: 30, left: 30),
         decoration: BoxDecoration(
-            border: Border(
-                top: BorderSide(
-                    width: 1, color: Colors.grey))),
+            border: Border(top: BorderSide(width: 1, color: Colors.grey))),
         child: Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: [
@@ -168,9 +170,19 @@ class SuccessfullyLoadedProductView extends StatelessWidget {
 }
 
 class BuildAllProductView extends StatelessWidget {
+  final ScrollController parentController;
+
+  const BuildAllProductView({Key key, this.parentController}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context1) {
     return BlocBuilder<AllProductBloc, AllProductState>(
+      buildWhen: (prev, current) {
+        if (current is LoadingNextProduct) {
+          return false;
+        }
+        return true;
+      },
       builder: (context, state) {
         if (state is LoadingAllProduct) {
           return ProductLoadingView();
@@ -181,19 +193,26 @@ class BuildAllProductView extends StatelessWidget {
             );
           }
 
+          parentController.addListener(() {
+            if (parentController.position.extentAfter < 300) {
+              print("loading more product");
+              BlocProvider.of<AllProductBloc>(context).add(LoadNextProduct());
+            }
+          });
+
+          print('Priary Scroll Controller is ${parentController}');
+
           return Container(
             margin: EdgeInsets.all(0),
             padding: EdgeInsets.only(top: 30, left: 30),
             decoration: BoxDecoration(
-                border: Border(
-                    top: BorderSide(
-                        width: 1, color: Colors.grey))),
-            child: ListView.builder(
-              controller: PrimaryScrollController.of(context),
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: state.productList.length,
-              itemBuilder: (_, index) => ProductCard(product: state.productList[index]),
+                border: Border(top: BorderSide(width: 1, color: Colors.grey))),
+            child: Wrap(
+              runSpacing: 5,
+              spacing: 5,
+              children: state.productList
+                  .map((e) => ProductCard(product: e))
+                  .toList(),
             ),
           );
         }
@@ -202,7 +221,6 @@ class BuildAllProductView extends StatelessWidget {
     );
   }
 }
-
 
 class LoadingCard extends StatelessWidget {
   @override

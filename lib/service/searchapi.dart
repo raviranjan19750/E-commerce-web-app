@@ -8,7 +8,7 @@ import 'CustomHttpsTransport.dart';
 
 class SearchApi {
   // curl -XGET "http://es01:9200/catalogue/_search" -H 'Content-Type: application/json' -d'{  "query": {    "query_string": {      "default_field": "description",      "query": "A*"    }  },  "aggs": {    "auto_complete": {      "terms": {        "field": "description.keyword",        "size": 10      }    }  }}'
-  final String SEARCH_URL = "http://localhost:9200";
+  final String SEARCH_URL = "http://192.168.0.194:9200";
 
   Client client;
 

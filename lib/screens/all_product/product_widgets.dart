@@ -5,41 +5,21 @@ import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
 import 'package:living_desire/models/models.dart';
 
-class ProductCard extends StatefulWidget {
+class ProductCard extends StatelessWidget {
+
   final Product product;
-  // @TODO Add Assert
-  const ProductCard({Key key, this.product})
-      : assert(product != null),
-        super(key: key);
 
-  @override
-  _ProductCardState createState() => _ProductCardState();
-}
+  const ProductCard({Key key, this.product}) : super(key: key);
 
-class _ProductCardState extends State<ProductCard> {
-  double _elevation = 0;
-  
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (event) {
-        setState(() {
-          _elevation = 20;
-        });
-      },
-      onExit: (event) {
-        setState(() {
-          _elevation = 0;
-        });
-      },
-      child: Card(
-          elevation: _elevation,
-          child: Container(
-              width: 200,
-              child: ProductCardContent(
-                product: widget.product,
-              ))),
-    );
+    return Card(
+        elevation: 5,
+        child: Container(
+            width: 200,
+            child: ProductCardContent(
+              product: product,
+            )));
   }
 }
 

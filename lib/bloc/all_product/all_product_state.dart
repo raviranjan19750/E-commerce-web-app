@@ -16,3 +16,5 @@ class SuccessLoadingAllProduct extends AllProductState {
 }
 
 class FailureLoadingProduct extends AllProductState {}
+
+class LoadingNextProduct extends AllProductState{}
