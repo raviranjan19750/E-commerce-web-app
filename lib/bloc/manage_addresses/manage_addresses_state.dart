@@ -38,3 +38,7 @@ class DefaultAddressDetailLoading extends ManageAddresesState {}
 class DefaultAddressDetailLoadingSuccesfull extends ManageAddresesState {}
 
 class DefaultAddressDetailLoadingFailure extends ManageAddresesState {}
+
+class ManageDialogueState extends ManageAddresesState {}
+
+class LaunchAddNewAddressDialogueState extends ManageDialogueState {}

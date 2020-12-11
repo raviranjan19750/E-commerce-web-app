@@ -4,6 +4,12 @@ import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import '../widgets.dart';
 
 class AddAddressContainer extends StatelessWidget {
+
+  void addNewAddress(context, newAddress) {
+    BlocProvider.of<ManageAddressesBloc>(context)
+        .add(newAddress);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,13 +26,8 @@ class AddAddressContainer extends StatelessWidget {
         child: Card(
           child: InkWell(
             onTap: () {
-              // Dialog Box
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return NewAddressDialogBox();
-                },
-              );
+              BlocProvider.of<ManageAddressesBloc>(context)
+                  .add(LoadAddAddressDialogueEvent());
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

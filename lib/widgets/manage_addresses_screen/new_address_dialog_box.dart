@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import 'package:living_desire/widgets/widgets.dart';
 import '../../config/configs.dart';
 
-class NewAddressDialogBox extends StatefulWidget {
-  @override
-  _NewAddressDialogBoxState createState() => _NewAddressDialogBoxState();
-}
+class NewAddressDialogBox extends StatelessWidget {
 
-class _NewAddressDialogBoxState extends State<NewAddressDialogBox> {
+  final Function onAddNewButton;
+
+  const NewAddressDialogBox({Key key, this.onAddNewButton}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -26,7 +24,7 @@ class _NewAddressDialogBoxState extends State<NewAddressDialogBox> {
                 // ADD NEW ADDRESS TEXT
                 Text(Strings.addNewAddress),
                 // TODO:Form
-                NewAddressForm(),
+                NewAddressForm(onAddNewAddress: onAddNewButton,),
                 // Submit Button
               ],
             ),

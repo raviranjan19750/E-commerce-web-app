@@ -50,30 +50,54 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
     // });
 
     print('Manage Address Container');
-    return BlocBuilder<ManageAddressesBloc, ManageAddresesState>(
-        builder: (context, state) {
-      if (state is AddressDetailLoading) {
-        return CircularProgressIndicator();
-      } else if (state is AddressDetailLoadingSuccessful) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            child: Wrap(
-              children: [
-                AddAddressContainer(),
-                ...state.addresses.map((address) {
-                  print('Address:' + address.toString());
-                  return AddressContainer(
-                    address: address,
-                  );
-                }),
-              ],
+    return BlocConsumer<ManageAddressesBloc, ManageAddresesState>(
+      listener: (context, state) {
+        if (state is LaunchAddNewAddressDialogueState) {
+          showDialog(
+            context: context,
+            builder: (BuildContext buildContext) {
+              return NewAddressDialogBox(
+                onAddNewButton: (val) => {
+                  BlocProvider.of<ManageAddressesBloc>(context).add(val)
+                },
+              );
+            },
+          );
+        }
+
+      },
+      buildWhen: (prev, curr) {
+        if (curr is ManageDialogueState) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+
+      builder: (context, state) {
+        if (state is AddressDetailLoading) {
+          return CircularProgressIndicator();
+        } else if (state is AddressDetailLoadingSuccessful) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              child: Wrap(
+                children: [
+                  AddAddressContainer(),
+                  ...state.addresses.map((address) {
+                    print('Address:' + address.toString());
+                    return AddressContainer(
+                      address: address,
+                    );
+                  }),
+                ],
+              ),
             ),
-          ),
-        );
-      } else {
-        return Container();
-      }
-    });
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 }

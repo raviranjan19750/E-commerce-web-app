@@ -19,6 +19,8 @@ class ManageAddressesBloc
       yield* loadAddressDetail(event);
     } else if (event is AddAddress) {
       yield* addAddressDetails(event);
+    } else if (event is LoadAddAddressDialogueEvent) {
+      yield LaunchAddNewAddressDialogueState();
     }
   }
 

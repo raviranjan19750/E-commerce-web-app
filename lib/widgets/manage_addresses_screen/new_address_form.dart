@@ -5,6 +5,11 @@ import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/widgets/widgets.dart';
 
 class NewAddressForm extends StatefulWidget {
+
+  final Function onAddNewAddress;
+
+  const NewAddressForm({Key key, this.onAddNewAddress}) : super(key: key);
+
   @override
   _NewAddressFormState createState() => _NewAddressFormState();
 }
@@ -136,15 +141,14 @@ class _NewAddressFormState extends State<NewAddressForm> {
                     // Add Button
                     child: InkWell(
                       onTap: () {
-                        BlocProvider.of<ManageAddressesBloc>(context)
-                            .add(AddAddress(
+                        print('Adding new Address');
+                        widget.onAddNewAddress(AddAddress(
                           authID: "id1",
                           address: address,
                           name: name,
                           phone: phone,
                           pincode: pincode,
                         ));
-                        // });
                         Navigator.of(context).pop();
                       },
                       child: Text(

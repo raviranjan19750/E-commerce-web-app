@@ -63,3 +63,7 @@ class DefaultAddress extends ManageAddressesEvent {
     this.authID,
   });
 }
+
+class AddressDialogueEvent extends ManageAddressesEvent {}
+
+class LoadAddAddressDialogueEvent extends AddressDialogueEvent {}
