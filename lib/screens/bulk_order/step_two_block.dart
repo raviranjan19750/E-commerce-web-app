@@ -215,24 +215,28 @@ class StepTwoBlock extends StatelessWidget{
                                         ),
                                       ),
 
+
                                       Container(
                                         width: 36,
 
-                                        child: TextField(
+                                        child: TextFormField(
 
                                           textAlign: TextAlign.center,
+                                          autofocus: false,
+                                          initialValue: '50',
 
-                                          controller: TextEditingController()..text = '50',
+                                          onChanged: (value){
 
-                                          onChanged: (value){},
+
+                                          },
 
                                           decoration: InputDecoration(
 
                                             border: InputBorder.none
 
                                           ),
-
                                         ),
+
                                       ),
 
                                       IconButton(
