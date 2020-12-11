@@ -4,11 +4,13 @@ class NewAddressFormField extends StatelessWidget {
   final String hintText;
   final Function validator;
   final Function onSaved;
+  final Function onChanged;
 
   NewAddressFormField({
     this.hintText,
     this.validator,
     this.onSaved,
+    this.onChanged,
   });
 
   // Form Field for new Addresses
@@ -27,6 +29,7 @@ class NewAddressFormField extends StatelessWidget {
         ),
         validator: validator,
         onSaved: onSaved,
+        onChanged: onChanged,
       ),
     );
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/widgets/widgets.dart';
 
 class NewAddressForm extends StatefulWidget {
@@ -8,6 +11,26 @@ class NewAddressForm extends StatefulWidget {
 
 class _NewAddressFormState extends State<NewAddressForm> {
   final _formKey = GlobalKey<FormState>();
+  String name;
+  String address;
+  String phone;
+  String pincode;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    name = '';
+    address = '';
+    phone = '';
+    pincode = '';
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +52,9 @@ class _NewAddressFormState extends State<NewAddressForm> {
                   return null;
                 },
                 onSaved: (String value) {},
+                onChanged: (String value) {
+                  name = value;
+                },
               ),
             ),
             // mobile Field
@@ -44,6 +70,9 @@ class _NewAddressFormState extends State<NewAddressForm> {
                   return null;
                 },
                 onSaved: (String value) {},
+                onChanged: (String value) {
+                  phone = value;
+                },
               ),
             ),
             // Address Field
@@ -59,6 +88,9 @@ class _NewAddressFormState extends State<NewAddressForm> {
                   return null;
                 },
                 onSaved: (String value) {},
+                onChanged: (String value) {
+                  address = value;
+                },
               ),
             ),
             // Pincode Field
@@ -74,6 +106,54 @@ class _NewAddressFormState extends State<NewAddressForm> {
                   return null;
                 },
                 onSaved: (String value) {},
+                onChanged: (String value) {
+                  pincode = value;
+                },
+              ),
+            ),
+            Container(
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    // Cancel Button
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        Strings.cancel,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Palette.secondaryColor,
+                    ),
+                    // Add Button
+                    child: InkWell(
+                      onTap: () {
+                        BlocProvider.of<ManageAddressesBloc>(context)
+                            .add(AddAddress(
+                          authID: "id1",
+                          address: address,
+                          name: name,
+                          phone: phone,
+                          pincode: pincode,
+                        ));
+                        // });
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        Strings.add,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             )
           ],

@@ -11,3 +11,23 @@ class LoadAllWishlist extends WishlistEvent {
     this.authID,
   );
 }
+
+class AddWishlist extends WishlistEvent {
+  final String authID;
+  final String productID;
+  final String variantID;
+
+  AddWishlist({
+    this.authID,
+    this.productID,
+    this.variantID,
+  });
+}
+
+class DeleteWishlist extends WishlistEvent {
+  final String key;
+
+  DeleteWishlist({
+    this.key,
+  });
+}

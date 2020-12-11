@@ -18,6 +18,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
+  // Load All Cart Detail
   Stream<CartState> loadCartDetail(LoadAllCart event) async* {
     yield CartDetailLoading();
 
@@ -27,6 +28,35 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield CartDetailLoadingSuccessful(cart);
     } catch (e) {
       yield CartDetailLoadingFailure();
+    }
+  }
+
+  // Delete a Cart Detail
+  Stream<CartState> deleteCartDetail(DeleteCart event) async* {
+    yield DeleteCartDetailLoading();
+
+    try {
+      await cartRepository.deleteCartDetails(event.key);
+
+      yield DeleteCartDetailLoadingSuccessful();
+    } catch (e) {
+      yield DeleteCartDetailLoadingFailure();
+    }
+  }
+
+  // Change quantity of a Cart Detail
+  Stream<CartState> changeQuantityCartDetail(ChangeQuantityCart event) async* {
+    yield ChangeQuantityCartDetailLoading();
+
+    try {
+      await cartRepository.changeQuantityCartDetails(
+        event.key,
+        event.quantity,
+      );
+
+      yield ChangeQuantityCartDetailLoadingSuccessful();
+    } catch (e) {
+      yield ChangeQuantityCartDetailLoadingFailure();
     }
   }
 }

@@ -1,44 +1,112 @@
 import 'dart:convert';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
+import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
 
 class AddresssRepository {
-  // final CollectionReference addressCollectionReference =
-  //     FirebaseFirestore.instance.collection('addresses');
+  // Get Address Details
 
   Future<List<Address>> getAddressDetails(String authID) async {
-    //   try {
-    //     print('Firebase query');
-    //     var addressDetailsData = await addressCollectionReference
-    //         .where('authID', isEqualTo: authID)
-    //         .orderBy('isPrimary', descending: true)
-    //         .get();
-    //     print(addressDetailsData.toString());
-
-    //     if (addressDetailsData.docs.isNotEmpty) {
-    //       return addressDetailsData.docs.map<Address>((snapshot) {
-    //         print(snapshot.data().toString());
-    //         return Address.fromMap(snapshot.data());
-    //       }).toList();
-    //     } else {}
-    //   } catch (e) {
-    //     print(e.toString());
-    //     throw Exception(e);
-    //   }
-    // }
     try {
-      print('Sending Http Request');
-      final response = await http.get(
-          'https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageAddress/list/${authID}');
+      final response =
+          await http.get(FunctionConfig.host + 'manageAddress/list/${authID}');
       if (response.statusCode == 200) {
-        print('Http Get request sucessfull');
-        print(jsonDecode(response.body).toString());
         return (jsonDecode(response.body) as List)
             .map((i) => Address.fromJson(i))
             .toList();
-      } else {
-        print('Http Request Failed');
       }
+    } catch (e) {
+      print(e.toString());
+      throw Exception(e);
+    }
+  }
+
+  // Add Address Details
+  Future<void> addAddressDetails(
+    String authID,
+    String address,
+    String pincode,
+    String phone,
+    String name,
+  ) async {
+    try {
+      var params = {
+        "address": address,
+        "pincode": pincode,
+        "phone": phone,
+        "name": name,
+      };
+      final request = await http.post(
+          FunctionConfig.host + 'manageAddress/add/${authID}',
+          body: params);
+      if (request.statusCode == 200) {
+        print('Http Get request sucessfull');
+      } else {}
+    } catch (e) {
+      print(e.toString());
+      throw Exception(e);
+    }
+  }
+
+  //Edit/ Update Address Details
+  Future<void> updateAddressDetails(
+    String key,
+    String address,
+    String pincode,
+    String phone,
+    String name,
+  ) async {
+    try {
+      var params = {
+        "address": address,
+        "pincode": pincode,
+        "phone": phone,
+        "name": name,
+      };
+      final request = await http.put(
+          FunctionConfig.host + 'manageAddress/update/${key}',
+          body: params);
+      if (request.statusCode == 200) {
+        print('Http Get request sucessfull');
+      } else {}
+    } catch (e) {
+      print(e.toString());
+      throw Exception(e);
+    }
+  }
+
+  //Set as default Address Details
+  Future<void> defaultAddressDetails(
+    String key,
+    String authID,
+  ) async {
+    try {
+      final request = await http.put(
+        FunctionConfig.host + 'manageAddress/default/${authID}/${key}',
+      );
+      if (request.statusCode == 200) {
+        print('Http Get request sucessfull');
+      } else {}
+    } catch (e) {
+      print(e.toString());
+      throw Exception(e);
+    }
+  }
+
+  //Delete Address Details
+  Future<void> deleteAddressDetails(
+    String key,
+    String authID,
+  ) async {
+    try {
+      final request = await http.delete(
+        FunctionConfig.host + 'manageAddress/delete/${authID}/${key}',
+      );
+      if (request.statusCode == 200) {
+        print('Http Get request sucessfull');
+      } else {}
     } catch (e) {
       print(e.toString());
       throw Exception(e);

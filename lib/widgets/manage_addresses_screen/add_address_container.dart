@@ -24,15 +24,6 @@ class AddAddressContainer extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  // BlocBuilder<ManageAddressesBloc, ManageAddresesState>(
-                  //     builder: (context, state) {
-                  //   if (state is AddressDetailLoading) {
-                  //     return CircularProgressIndicator();
-                  //   } else if (state is AddAddressDetailLoadingSuccesfull) {
-                  //     return NewAddressDialogBox();
-                  //   }
-                  //   return Container();
-                  // });
                   return NewAddressDialogBox();
                 },
               );

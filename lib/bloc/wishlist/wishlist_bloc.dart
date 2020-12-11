@@ -18,6 +18,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     }
   }
 
+  // Load Wishlist Detail
   Stream<WishlistState> loadWishlistDetail(LoadAllWishlist event) async* {
     yield WishlistDetailLoading();
 
@@ -28,6 +29,38 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       yield WishlistDetailLoadingSuccessful(wishlist);
     } catch (e) {
       yield WishlistDetailLoadingFailure();
+    }
+  }
+
+  // Add Wishlist Detail
+  Stream<WishlistState> addWishlistDetail(AddWishlist event) async* {
+    yield AddWishlistDetailLoading();
+
+    try {
+      await wishlistRepository.addWishlistDetails(
+        event.authID,
+        event.productID,
+        event.variantID,
+      );
+
+      yield AddWishlistDetailLoadingSuccessful();
+    } catch (e) {
+      yield AddWishlistDetailLoadingFailure();
+    }
+  }
+
+  //Delete a wishlist
+  Stream<WishlistState> deleteWishlistDetail(DeleteWishlist event) async* {
+    yield DeleteWishlistDetailLoading();
+
+    try {
+      await wishlistRepository.deleteWishlistDetails(
+        event.key,
+      );
+
+      yield DeleteWishlistDetailLoadingSuccessful();
+    } catch (e) {
+      yield DeleteWishlistDetailLoadingFailure();
     }
   }
 }

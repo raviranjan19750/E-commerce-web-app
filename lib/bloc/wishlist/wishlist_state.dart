@@ -14,3 +14,15 @@ class WishlistDetailLoadingSuccessful extends WishlistState {
 }
 
 class WishlistDetailLoadingFailure extends WishlistState {}
+
+class AddWishlistDetailLoading extends WishlistState {}
+
+class AddWishlistDetailLoadingSuccessful extends WishlistState {}
+
+class AddWishlistDetailLoadingFailure extends WishlistState {}
+
+class DeleteWishlistDetailLoading extends WishlistState {}
+
+class DeleteWishlistDetailLoadingSuccessful extends WishlistState {}
+
+class DeleteWishlistDetailLoadingFailure extends WishlistState {}

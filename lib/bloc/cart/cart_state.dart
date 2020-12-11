@@ -14,3 +14,15 @@ class CartDetailLoadingSuccessful extends CartState {
 }
 
 class CartDetailLoadingFailure extends CartState {}
+
+class DeleteCartDetailLoading extends CartState {}
+
+class DeleteCartDetailLoadingSuccessful extends CartState {}
+
+class DeleteCartDetailLoadingFailure extends CartState {}
+
+class ChangeQuantityCartDetailLoading extends CartState {}
+
+class ChangeQuantityCartDetailLoadingSuccessful extends CartState {}
+
+class ChangeQuantityCartDetailLoadingFailure extends CartState {}

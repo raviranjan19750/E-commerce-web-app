@@ -11,3 +11,21 @@ class LoadAllCart extends CartEvent {
     this.authID,
   );
 }
+
+class ChangeQuantityCart extends CartEvent {
+  final String key;
+  final double quantity;
+
+  ChangeQuantityCart(
+    this.key,
+    this.quantity,
+  );
+}
+
+class DeleteCart extends CartEvent {
+  final String key;
+
+  DeleteCart(
+    this.key,
+  );
+}

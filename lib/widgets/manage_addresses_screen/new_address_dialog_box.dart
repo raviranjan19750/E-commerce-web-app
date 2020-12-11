@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import 'package:living_desire/widgets/widgets.dart';
 import '../../config/configs.dart';
 
-class NewAddressDialogBox extends StatelessWidget {
+class NewAddressDialogBox extends StatefulWidget {
+  @override
+  _NewAddressDialogBoxState createState() => _NewAddressDialogBoxState();
+}
+
+class _NewAddressDialogBoxState extends State<NewAddressDialogBox> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -21,40 +28,6 @@ class NewAddressDialogBox extends StatelessWidget {
                 // TODO:Form
                 NewAddressForm(),
                 // Submit Button
-                Container(
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        // Cancel Button
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            Strings.cancel,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Palette.secondaryColor,
-                        ),
-                        // Add Button
-                        child: InkWell(
-                          onTap: () {},
-                          child: Text(
-                            Strings.add,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),

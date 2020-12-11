@@ -20,3 +20,21 @@ class AddAddressDetailLoading extends ManageAddresesState {}
 class AddAddressDetailLoadingSuccesfull extends ManageAddresesState {}
 
 class AddAddressDetailLoadingFailure extends ManageAddresesState {}
+
+class UpdateAddressDetailLoading extends ManageAddresesState {}
+
+class UpdateAddressDetailLoadingSuccesfull extends ManageAddresesState {}
+
+class UpdateAddressDetailLoadingFailure extends ManageAddresesState {}
+
+class DeleteAddressDetailLoading extends ManageAddresesState {}
+
+class DeleteAddressDetailLoadingSuccesfull extends ManageAddresesState {}
+
+class DeleteAddressDetailLoadingFailure extends ManageAddresesState {}
+
+class DefaultAddressDetailLoading extends ManageAddresesState {}
+
+class DefaultAddressDetailLoadingSuccesfull extends ManageAddresesState {}
+
+class DefaultAddressDetailLoadingFailure extends ManageAddresesState {}

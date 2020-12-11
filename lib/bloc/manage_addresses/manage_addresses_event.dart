@@ -14,6 +14,52 @@ class LoadAllAddresses extends ManageAddressesEvent {
 
 class AddAddress extends ManageAddressesEvent {
   final String authID;
+  final String name;
+  final String phone;
+  final String address;
+  final String pincode;
 
-  AddAddress(this.authID);
+  AddAddress({
+    this.authID,
+    this.name,
+    this.phone,
+    this.address,
+    this.pincode,
+  });
+}
+
+class UpdateAddress extends ManageAddressesEvent {
+  final String key;
+  final String name;
+  final String phone;
+  final String address;
+  final String pincode;
+
+  UpdateAddress({
+    this.key,
+    this.name,
+    this.phone,
+    this.address,
+    this.pincode,
+  });
+}
+
+class DeleteAddress extends ManageAddressesEvent {
+  final String key;
+  final String authID;
+
+  DeleteAddress({
+    this.key,
+    this.authID,
+  });
+}
+
+class DefaultAddress extends ManageAddressesEvent {
+  final String key;
+  final String authID;
+
+  DefaultAddress({
+    this.key,
+    this.authID,
+  });
 }

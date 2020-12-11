@@ -22,21 +22,88 @@ class ManageAddressesBloc
     }
   }
 
+  //Load All Address Details
   Stream<ManageAddresesState> loadAddressDetail(LoadAllAddresses event) async* {
     yield AddressDetailLoading();
 
     try {
       List<Address> addresses =
           await addresssRepository.getAddressDetails(event.authID);
-
+      // var response = await addresssRepository.addAddressDetails(
+      //   event.authID,
+      //   "event.address",
+      //   "event.pincode",
+      //   "event.phone",
+      //   "event.name",
+      // );
       yield AddressDetailLoadingSuccessful(addresses);
     } catch (e) {
+      print(e.toString());
       yield AddressDetailLoadingFailure();
     }
   }
 
+  //Add an Address Detail
   Stream<ManageAddresesState> addAddressDetails(AddAddress event) async* {
     yield AddAddressDetailLoading();
-    yield AddAddressDetailLoadingSuccesfull();
+    try {
+      await addresssRepository.addAddressDetails(
+        event.authID,
+        event.address,
+        event.pincode,
+        event.phone,
+        event.name,
+      );
+
+      yield* loadAddressDetail(LoadAllAddresses(event.authID));
+    } catch (e) {
+      yield AddAddressDetailLoadingFailure();
+    }
+  }
+
+  // Update an Address Detail
+  Stream<ManageAddresesState> updateAddressDetails(UpdateAddress event) async* {
+    yield UpdateAddressDetailLoading();
+    try {
+      await addresssRepository.updateAddressDetails(
+        event.key,
+        event.address,
+        event.pincode,
+        event.phone,
+        event.name,
+      );
+      yield UpdateAddressDetailLoadingSuccesfull();
+    } catch (e) {
+      yield UpdateAddressDetailLoadingFailure();
+    }
+  }
+
+  // Delete an Address Detail
+  Stream<ManageAddresesState> deleteAddressDetails(DeleteAddress event) async* {
+    yield DeleteAddressDetailLoading();
+    try {
+      await addresssRepository.deleteAddressDetails(
+        event.key,
+        event.authID,
+      );
+      yield DeleteAddressDetailLoadingSuccesfull();
+    } catch (e) {
+      yield DeleteAddressDetailLoadingFailure();
+    }
+  }
+
+  //Set an Address Detail as Default
+  Stream<ManageAddresesState> defaultAddressDetails(
+      DefaultAddress event) async* {
+    yield DefaultAddressDetailLoading();
+    try {
+      await addresssRepository.defaultAddressDetails(
+        event.key,
+        event.authID,
+      );
+      yield DefaultAddressDetailLoadingSuccesfull();
+    } catch (e) {
+      yield DefaultAddressDetailLoadingFailure();
+    }
   }
 }
