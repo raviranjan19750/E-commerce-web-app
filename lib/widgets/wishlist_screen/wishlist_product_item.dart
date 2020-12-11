@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/wishlist/wishlist_bloc.dart';
 
 class WishlistProductItem extends StatelessWidget {
   final Wishlist product;
@@ -32,7 +34,16 @@ class WishlistProductItem extends StatelessWidget {
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 15,
-                    child: Icon(Icons.close),
+                    child: IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        BlocProvider.of<WishlistBloc>(context)
+                            .add(DeleteWishlist(
+                          authID: "id1",
+                          key: product.key,
+                        ));
+                      },
+                    ),
                   ),
                 )
               ],

@@ -15,6 +15,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     // TODO: implement mapEventToState
     if (event is LoadAllCart) {
       yield* loadCartDetail(event);
+    } else if (event is DeleteCart) {
+      yield* deleteCartDetail(event);
     }
   }
 
@@ -38,7 +40,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     try {
       await cartRepository.deleteCartDetails(event.key);
 
-      yield DeleteCartDetailLoadingSuccessful();
+      yield* loadCartDetail(LoadAllCart(event.authID));
     } catch (e) {
       yield DeleteCartDetailLoadingFailure();
     }

@@ -26,8 +26,10 @@ class AddWishlist extends WishlistEvent {
 
 class DeleteWishlist extends WishlistEvent {
   final String key;
+  final String authID;
 
   DeleteWishlist({
     this.key,
+    this.authID,
   });
 }

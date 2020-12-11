@@ -24,8 +24,10 @@ class ChangeQuantityCart extends CartEvent {
 
 class DeleteCart extends CartEvent {
   final String key;
+  final String authID;
 
   DeleteCart(
     this.key,
+    this.authID,
   );
 }

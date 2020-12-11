@@ -21,6 +21,10 @@ class ManageAddressesBloc
       yield* addAddressDetails(event);
     } else if (event is LoadAddAddressDialogueEvent) {
       yield LaunchAddNewAddressDialogueState();
+    } else if (event is DeleteAddress) {
+      yield* deleteAddressDetails(event);
+    } else if (event is DefaultAddress) {
+      yield* defaultAddressDetails(event);
     }
   }
 
@@ -88,7 +92,7 @@ class ManageAddressesBloc
         event.key,
         event.authID,
       );
-      yield DeleteAddressDetailLoadingSuccesfull();
+      yield* loadAddressDetail(LoadAllAddresses(event.authID));
     } catch (e) {
       yield DeleteAddressDetailLoadingFailure();
     }
@@ -103,7 +107,7 @@ class ManageAddressesBloc
         event.key,
         event.authID,
       );
-      yield DefaultAddressDetailLoadingSuccesfull();
+      yield* loadAddressDetail(LoadAllAddresses(event.authID));
     } catch (e) {
       yield DefaultAddressDetailLoadingFailure();
     }

@@ -15,6 +15,8 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     // TODO: implement mapEventToState
     if (event is LoadAllWishlist) {
       yield* loadWishlistDetail(event);
+    } else if (event is DeleteWishlist) {
+      yield* deleteWishlistDetail(event);
     }
   }
 
@@ -58,7 +60,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
         event.key,
       );
 
-      yield DeleteWishlistDetailLoadingSuccessful();
+      yield* loadWishlistDetail(LoadAllWishlist(event.authID));
     } catch (e) {
       yield DeleteWishlistDetailLoadingFailure();
     }

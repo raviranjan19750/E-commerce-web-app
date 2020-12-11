@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/widgets/widgets.dart';
+import '../../bloc/cart/cart_bloc.dart';
 
 class CartItem extends StatefulWidget {
   final Cart cart;
@@ -110,7 +113,10 @@ class _CartItemState extends State<CartItem> {
                               .toString()),
                       // Remove from Cart
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          BlocProvider.of<CartBloc>(context)
+                              .add(DeleteCart(widget.cart.key, "id1"));
+                        },
                         child: Text(
                           Strings.removeCart,
                         ),
