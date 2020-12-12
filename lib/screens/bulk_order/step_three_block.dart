@@ -78,14 +78,22 @@ class StepThreeBlock extends StatelessWidget{
 
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: 5,
+                        itemCount: value.logos.length + 1,
                         itemBuilder:
                             (BuildContext context, int index) {
                           return InkWell(
 
-                              onTap: (){},
+                              onTap: (){
 
-                              child: UploadLogo(index: index,size: 5,)
+                                if(index == value.logos.length){
+
+                                    value.getImage();
+
+                                }
+
+                              },
+
+                              child: UploadLogo(index: index,size: value.logos.length + 1,logos: value.logos,value: value,)
                           );
                         })
 
