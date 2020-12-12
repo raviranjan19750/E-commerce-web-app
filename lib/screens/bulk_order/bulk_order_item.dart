@@ -6,36 +6,28 @@ import 'package:provider/provider.dart';
 
 class BulkOrderItem extends StatelessWidget{
 
-  bool init = false;
+  BulkOrderProvider value;
+
+  int index;
+
+
+  BulkOrderItem({this.value,this.index});
 
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider(
-        lazy: false,
-        create: (context) => BulkOrderProvider(),
-        child: Consumer<BulkOrderProvider>(
-          builder: (BuildContext context, BulkOrderProvider value, Widget child) {
-            if (!init) {
-              Provider.of<BulkOrderProvider>(context, listen: false);
-              init = true;
-            }
+    return Card(
 
-            return Card(
+      elevation: value.elevation,
+      color: (index == value.selectedType ) ? Palette.secondaryColor : Colors.grey[500],
 
-              elevation: value.elevation,
-              color: Palette.secondaryColor,
+      child: Image(
+        image: AssetImage('assets/images/logo.jpeg'),
+        width: 150 * value.size,
+        height: 200 * value.size,
+      ),
 
-              child: Image(
-                image: AssetImage('assets/images/logo.jpeg'),
-                width: 150 * value.size,
-                height: 200 * value.size,
-              ),
-
-            );
-
-          },
-        ));
+    );
   }
 
 

@@ -4,7 +4,11 @@ import 'package:living_desire/config/palette.dart';
 import 'package:provider/provider.dart';
 
 class StepTwoBlock extends StatelessWidget{
-  bool init = false;
+
+
+  BulkOrderProvider value;
+
+  StepTwoBlock({this.value});
 
   List <String> spinnerItems = [
     'One',
@@ -17,287 +21,327 @@ class StepTwoBlock extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider(
-        lazy: false,
-        create: (context) => BulkOrderProvider(),
-        child: Consumer<BulkOrderProvider>(
-          builder: (BuildContext context, BulkOrderProvider value, Widget child) {
+    return  Column(
 
-            if (!init) {
-              Provider.of<BulkOrderProvider>(context, listen: false);
-              init = true;
-            }
+      children: [
 
-            return Column(
+        Container(
 
-              children: [
+          width: double.infinity,
 
-                Container(
+          padding: EdgeInsets.all(16),
 
-                  width: double.infinity,
+          decoration: BoxDecoration(
 
-                  padding: EdgeInsets.all(16),
+            color: Palette.secondaryColor,
 
-                  decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0, 2),
+                blurRadius: 4.0,
+              )],
 
-                    color: Palette.secondaryColor,
+          ),
 
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(0, 2),
-                        blurRadius: 4.0,
-                      )],
+          margin: EdgeInsets.only(top: 32),
 
-                  ),
+          child: Text('Select Customization',style: TextStyle(color: Colors.white,fontSize: 24),),
 
-                  margin: EdgeInsets.only(top: 32),
+        ),
 
-                  child: Text('Select Customization',style: TextStyle(color: Colors.white,fontSize: 24),),
+        Visibility(
+
+          visible: value.stepOneDone && !value.stepTwoDone,
+
+          child: Column(
+
+            children: [
+
+              Container(
+
+                width: double.infinity,
+
+                padding: EdgeInsets.all(16),
+
+                decoration: BoxDecoration(
+
+                  color: Colors.white,
+
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      offset: Offset(0, 2),
+                      blurRadius: 4.0,
+                    )],
 
                 ),
 
-                Visibility(
-
-                  visible: true,
-
-                  child: Column(
-                    children: [
-                      Container(
-
-                        width: double.infinity,
-
-                        padding: EdgeInsets.all(16),
-
-                        decoration: BoxDecoration(
-
-                          color: Colors.white,
-
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              offset: Offset(0, 2),
-                              blurRadius: 4.0,
-                            )],
-
-                        ),
-
-                        child: Column(
+                child: Column(
 
 
-                          children: [
+                  children: [
 
-                            Container(
+                    Container(
 
-                              height: 80,
+                      height: 80,
 
-                              child: Row(
+                      child: Row(
 
-                                children: [
+                        children: [
 
-                                  Text('Select Color : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18),),
+                          Text('Select Color : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18),),
 
-                                  ListView.builder(
+                          ListView.builder(
 
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: 15,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return InkWell(
-
-                                          onTap: (){},
-
-                                          child: Container(
-
-                                            margin: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                                            width: 32.0,
-                                            height: 32.0,
-                                            decoration: new BoxDecoration(
-                                              color: Colors.redAccent,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                        );
-                                      })
-
-                                ],
-
-                              ),
-                            ),
-
-                            Row(
-
-                              children: [
-
-                                InkWell(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 15,
+                              itemBuilder:
+                                  (BuildContext context, int index) {
+                                return InkWell(
 
                                   onTap: (){},
 
                                   child: Container(
 
-
-                                    decoration: BoxDecoration(
-
-                                      border: Border.all(color: Palette.secondaryColor),
-
-                                      borderRadius: BorderRadius.circular(4),
-
-                                      color: Colors.white,
-
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          offset: Offset(0, 2),
-                                          blurRadius: 4.0,
-                                        )],
-
+                                    margin: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                                    width: 32.0,
+                                    height: 32.0,
+                                    decoration: new BoxDecoration(
+                                      color: Colors.redAccent,
+                                      shape: BoxShape.circle,
                                     ),
-                                    padding: EdgeInsets.all(8),
-
-                                    child: Row(
-
-                                      children: [
-
-                                        Text('  Size : s',style: TextStyle(color: Palette.secondaryColor),),
-
-                                        Padding(
-                                          padding: EdgeInsets.all(8),
-
-                                          child: Icon(
-                                            Icons.arrow_drop_down,
-
-                                          ),
-                                        )
-
-                                      ],
-
-                                    ),
-
                                   ),
-                                ),
+                                );
+                              })
 
-                                Container(
+                        ],
 
-                                  margin: EdgeInsets.only(left: 32),
-                                  decoration: BoxDecoration(
+                      ),
+                    ),
 
-                                    border: Border.all(color: Palette.secondaryColor),
+                    Row(
 
-                                    borderRadius: BorderRadius.circular(4),
+                      children: [
 
-                                    color: Colors.white,
+                        InkWell(
 
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        offset: Offset(0, 2),
-                                        blurRadius: 4.0,
-                                      )],
+                          onTap: (){},
 
-                                  ),
+                          child: Container(
+
+
+                            decoration: BoxDecoration(
+
+                              border: Border.all(color: Palette.secondaryColor),
+
+                              borderRadius: BorderRadius.circular(4),
+
+                              color: Colors.white,
+
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  offset: Offset(0, 2),
+                                  blurRadius: 4.0,
+                                )],
+
+                            ),
+                            padding: EdgeInsets.all(8),
+
+                            child: Row(
+
+                              children: [
+
+                                Text('  Size : s',style: TextStyle(color: Palette.secondaryColor),),
+
+                                Padding(
                                   padding: EdgeInsets.all(8),
 
-                                  child: Row(
-
-                                    children: [
-
-                                      Text('  Qty : ',style: TextStyle(color: Palette.secondaryColor),),
-
-                                      IconButton(
-
-                                        onPressed: (){},
-
-                                        icon: Icon(
-
-                                          Icons.remove,
-
-                                        ),
-                                      ),
-
-
-                                      Container(
-                                        width: 36,
-
-                                        child: TextFormField(
-
-                                          textAlign: TextAlign.center,
-                                          autofocus: false,
-                                          initialValue: '50',
-
-                                          onChanged: (value){
-
-
-                                          },
-
-                                          decoration: InputDecoration(
-
-                                            border: InputBorder.none
-
-                                          ),
-                                        ),
-
-                                      ),
-
-                                      IconButton(
-
-                                        onPressed: (){},
-
-                                        icon: Icon(
-
-                                          Icons.add,
-
-                                        ),
-                                      ),
-
-                                    ],
+                                  child: Icon(
+                                    Icons.arrow_drop_down,
 
                                   ),
-
                                 )
 
                               ],
 
-                            )
-                          ],
+                            ),
+
+                          ),
                         ),
 
-                      ),
+                        Container(
 
-                      Container(
+                          margin: EdgeInsets.only(left: 32),
+                          decoration: BoxDecoration(
 
-                        margin: EdgeInsets.only(top: 16,bottom: 16),
+                            border: Border.all(color: Palette.secondaryColor),
 
-                        alignment: Alignment.centerLeft,
+                            borderRadius: BorderRadius.circular(4),
 
-                        child: RaisedButton(
+                            color: Colors.white,
 
-                          padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(0, 2),
+                                blurRadius: 4.0,
+                              )],
 
-                          onPressed: (){
+                          ),
+                          padding: EdgeInsets.all(8),
+
+                          child: Row(
+
+                            children: [
+
+                              Text('  Qty : ',style: TextStyle(color: Palette.secondaryColor),),
+
+                              IconButton(
+
+                                onPressed: (){},
+
+                                icon: Icon(
+
+                                  Icons.remove,
+
+                                ),
+                              ),
 
 
+                              Container(
+                                width: 36,
 
-                          },
+                                child: TextFormField(
 
-                          color: Palette.secondaryColor,
+                                  textAlign: TextAlign.center,
+                                  autofocus: false,
+                                  initialValue: '50',
 
-                          child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 24),),
+                                  onChanged: (value){
 
-                        ),
-                      ),
-                    ],
+
+                                  },
+
+                                  decoration: InputDecoration(
+
+                                      border: InputBorder.none
+
+                                  ),
+                                ),
+
+                              ),
+
+                              IconButton(
+
+                                onPressed: (){},
+
+                                icon: Icon(
+
+                                  Icons.add,
+
+                                ),
+                              ),
+
+                            ],
+
+                          ),
+
+                        )
+
+                      ],
+
+                    )
+                  ],
+                ),
+
+              ),
+
+              Container(
+
+                margin: EdgeInsets.only(top: 16,bottom: 16),
+
+                alignment: Alignment.centerLeft,
+
+                child: RaisedButton(
+
+                  padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
+
+                  onPressed: (){
+
+                      value.onStepTwoDone();
+
+                  },
+
+                  color: Palette.secondaryColor,
+
+                  child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 24),),
+
+                ),
+              ),
+            ],
+          ),
+
+        ),
+
+        Visibility(
+
+          visible: value.stepTwoDone,
+
+          child: Container(
+
+            width: double.infinity,
+
+            padding: EdgeInsets.all(16),
+
+            decoration: BoxDecoration(
+
+              color: Palette.secondaryColor,
+
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0, 2),
+                  blurRadius: 4.0,
+                )],
+
+            ),
+
+            child: Container(
+
+              height: 80,
+
+              child: Row(
+
+                children: [
+
+                  Text('Color : ',style: TextStyle(color: Colors.white,fontSize: 18),),
+
+                  Container(
+
+                    margin: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                    width: 32.0,
+                    height: 32.0,
+                    decoration: new BoxDecoration(
+                      color: Colors.redAccent,
+                      shape: BoxShape.circle,
+                    ),
                   ),
 
-                  replacement: Container(
+                  Container(
 
-                    width: double.infinity,
 
-                    padding: EdgeInsets.all(16),
+                    margin: EdgeInsets.only(left: 16),
 
                     decoration: BoxDecoration(
 
-                      color: Palette.secondaryColor,
+                      border: Border.all(color: Palette.secondaryColor),
+
+                      borderRadius: BorderRadius.circular(4),
+
+                      color: Colors.white,
 
                       boxShadow: const [
                         BoxShadow(
@@ -307,111 +351,58 @@ class StepTwoBlock extends StatelessWidget{
                         )],
 
                     ),
+                    padding: EdgeInsets.all(8),
 
-                    child: Column(
-
-
-                      children: [
-
-                        Container(
-
-                          height: 80,
-
-                          child: Row(
-
-                            children: [
-
-                              Text('Color : ',style: TextStyle(color: Colors.white,fontSize: 18),),
-
-                              Container(
-
-                                margin: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                                width: 32.0,
-                                height: 32.0,
-                                decoration: new BoxDecoration(
-                                  color: Colors.redAccent,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-
-                              Container(
-
-
-                                margin: EdgeInsets.only(left: 16),
-
-                                decoration: BoxDecoration(
-
-                                  border: Border.all(color: Palette.secondaryColor),
-
-                                  borderRadius: BorderRadius.circular(4),
-
-                                  color: Colors.white,
-
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      offset: Offset(0, 2),
-                                      blurRadius: 4.0,
-                                    )],
-
-                                ),
-                                padding: EdgeInsets.all(8),
-
-                                child: Text('Size : s',style: TextStyle(color: Palette.secondaryColor),),
-
-                              ),
-
-                              Container(
-
-                                margin: EdgeInsets.only(left: 32),
-                                decoration: BoxDecoration(
-
-                                  border: Border.all(color: Palette.secondaryColor),
-
-                                  borderRadius: BorderRadius.circular(4),
-
-                                  color: Colors.white,
-
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      offset: Offset(0, 2),
-                                      blurRadius: 4.0,
-                                    )],
-
-                                ),
-                                padding: EdgeInsets.all(8),
-
-                                child: Row(
-
-                                  children: [
-
-                                    Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor),),
-
-                                    Text(' 32 ',style: TextStyle(color: Palette.secondaryColor),),
-
-
-                                  ],
-
-                                ),
-
-                              )
-
-                            ],
-
-                          ),
-                        ),
-
-                      ],
-                    ),
+                    child: Text('Size : s',style: TextStyle(color: Palette.secondaryColor),),
 
                   ),
 
-                )
-              ],
-            );
-          },
-        ));
+                  Container(
+
+                    margin: EdgeInsets.only(left: 32),
+                    decoration: BoxDecoration(
+
+                      border: Border.all(color: Palette.secondaryColor),
+
+                      borderRadius: BorderRadius.circular(4),
+
+                      color: Colors.white,
+
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0, 2),
+                          blurRadius: 4.0,
+                        )],
+
+                    ),
+                    padding: EdgeInsets.all(8),
+
+                    child: Row(
+
+                      children: [
+
+                        Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor),),
+
+                        Text(' 32 ',style: TextStyle(color: Palette.secondaryColor),),
+
+
+                      ],
+
+                    ),
+
+                  )
+
+                ],
+
+              ),
+            ),
+
+          ),
+
+        )
+      ],
+    );
 
   }
 

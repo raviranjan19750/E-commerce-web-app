@@ -12,7 +12,15 @@ class BulkOrderProvider with ChangeNotifier{
 
   bool stepOneDone = false;
 
+  bool stepTwoDone = false;
+
+
   bool productTypeSelected = false;
+
+  bool productSubTypeSelected = false;
+
+  int selectedType = -1;
+  int selectedSubType = -1;
 
   List<Image> logos = new List<Image>();
 
@@ -30,9 +38,18 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
-  void onProductTypeSelected(){
+  void onProductTypeSelected(int index){
 
     productTypeSelected = true;
+    selectedType = index;
+    notifyListeners();
+
+  }
+
+  void onProductSubTypeSelected(int index){
+
+    productSubTypeSelected = true;
+    selectedSubType = index;
     notifyListeners();
 
   }
@@ -73,6 +90,14 @@ class BulkOrderProvider with ChangeNotifier{
   void onStepOneDone(){
 
       stepOneDone = true;
+
+      notifyListeners();
+
+  }
+
+  void onStepTwoDone(){
+
+      stepTwoDone = true;
       notifyListeners();
 
   }
