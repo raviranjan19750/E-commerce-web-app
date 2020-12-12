@@ -5,8 +5,10 @@ class NewAddressFormField extends StatelessWidget {
   final Function validator;
   final Function onSaved;
   final Function onChanged;
+  final String initialValue;
 
   NewAddressFormField({
+    this.initialValue,
     this.hintText,
     this.validator,
     this.onSaved,
@@ -27,6 +29,7 @@ class NewAddressFormField extends StatelessWidget {
           filled: true,
           fillColor: Colors.grey[200],
         ),
+        initialValue: initialValue,
         validator: validator,
         onSaved: onSaved,
         onChanged: onChanged,

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/bloc/cart/cart_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartItemCount extends StatefulWidget {
-  final double quantity;
+  final int quantity;
+  final String documentID;
 
   const CartItemCount({
     Key key,
+    this.documentID,
     this.quantity,
   }) : super(key: key);
   @override
@@ -12,7 +16,7 @@ class CartItemCount extends StatefulWidget {
 }
 
 class _CartItemCountState extends State<CartItemCount> {
-  int itemQuantityCount = 0;
+  int itemQuantityCount;
 
   int incrementItemQuantity(int count) {
     return ++count;
@@ -27,6 +31,13 @@ class _CartItemCountState extends State<CartItemCount> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    itemQuantityCount = widget.quantity;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
@@ -36,6 +47,11 @@ class _CartItemCountState extends State<CartItemCount> {
               setState(() {
                 itemQuantityCount = decrementItemQuantity(itemQuantityCount);
               });
+              BlocProvider.of<CartBloc>(context).add(ChangeQuantityCart(
+                widget.documentID,
+                itemQuantityCount,
+                "id1",
+              ));
             },
             iconSize: 14,
             highlightColor: Colors.transparent,
@@ -57,6 +73,11 @@ class _CartItemCountState extends State<CartItemCount> {
               setState(() {
                 itemQuantityCount = incrementItemQuantity(itemQuantityCount);
               });
+              BlocProvider.of<CartBloc>(context).add(ChangeQuantityCart(
+                widget.documentID,
+                itemQuantityCount,
+                "id1",
+              ));
             },
             iconSize: 14,
             highlightColor: Colors.transparent,

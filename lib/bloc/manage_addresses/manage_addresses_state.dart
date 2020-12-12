@@ -42,3 +42,9 @@ class DefaultAddressDetailLoadingFailure extends ManageAddresesState {}
 class ManageDialogueState extends ManageAddresesState {}
 
 class LaunchAddNewAddressDialogueState extends ManageDialogueState {}
+
+class LaunchEditAddressDialogueState extends ManageDialogueState {
+  final Address address;
+
+  LaunchEditAddressDialogueState(this.address);
+}

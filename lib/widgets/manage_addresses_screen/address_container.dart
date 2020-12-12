@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/manage_addresses/manage_addresses_bloc.dart';
 import '../../models/models.dart';
+import '../widgets.dart';
 
 class AddressContainer extends StatelessWidget {
   final Address address;
@@ -44,7 +45,10 @@ class AddressContainer extends StatelessWidget {
                   children: [
                     FlatButton(
                       child: Text('Edit'),
-                      onPressed: () {},
+                      onPressed: () {
+                        BlocProvider.of<ManageAddressesBloc>(context).add(
+                            LoadEditAddressDialogueEvent(address: address));
+                      },
                     ),
                     const Divider(
                       thickness: 3,

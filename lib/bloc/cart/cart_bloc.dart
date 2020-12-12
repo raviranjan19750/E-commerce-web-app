@@ -17,6 +17,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield* loadCartDetail(event);
     } else if (event is DeleteCart) {
       yield* deleteCartDetail(event);
+    } else if (event is ChangeQuantityCart) {
+      yield* changeQuantityCartDetail(event);
     }
   }
 
@@ -56,7 +58,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         event.quantity,
       );
 
-      yield ChangeQuantityCartDetailLoadingSuccessful();
+      yield* loadCartDetail(LoadAllCart(event.authID));
     } catch (e) {
       yield ChangeQuantityCartDetailLoadingFailure();
     }

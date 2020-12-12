@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/models/models.dart';
 import 'package:living_desire/widgets/widgets.dart';
 import '../../config/configs.dart';
 
 class NewAddressDialogBox extends StatelessWidget {
+  final Function onActionButton;
+  final bool isAddAddress;
+  final bool isEditAddress;
+  final Address address;
 
-  final Function onAddNewButton;
-
-  const NewAddressDialogBox({Key key, this.onAddNewButton}) : super(key: key);
+  const NewAddressDialogBox({
+    Key key,
+    this.onActionButton,
+    this.address,
+    this.isAddAddress = false,
+    this.isEditAddress = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +31,19 @@ class NewAddressDialogBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // ADD NEW ADDRESS TEXT
-                Text(Strings.addNewAddress),
+
+                isAddAddress ? Text(Strings.addNewAddress) : SizedBox.shrink(),
+
+                // Edit Address text
+
+                isEditAddress ? Text(Strings.updateAddress) : SizedBox.shrink(),
                 // TODO:Form
-                NewAddressForm(onAddNewAddress: onAddNewButton,),
+                NewAddressForm(
+                  address: address,
+                  isAddAddress: isAddAddress,
+                  isEditAddress: isEditAddress,
+                  onActionAddress: onActionButton,
+                ),
                 // Submit Button
               ],
             ),

@@ -60,4 +60,6 @@ class Strings {
   static const String rupeesSymbol = "₹ ";
   static const String youSaved = "You saved ";
   static const String removeCart = "Remove From Cart";
+  static const String updateAddress = "UPDATE ADDRERSS";
+  static const String update = "UPDATE";
 }

@@ -6,7 +6,7 @@ class Cart {
   final String variantID;
   final String productID;
   final String productType;
-  final double quantity;
+  final int quantity;
   final double manufacturingPrice;
   final double discountPrice;
   final bool isAvailable;

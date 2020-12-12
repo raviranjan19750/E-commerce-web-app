@@ -27,20 +27,23 @@ class CartRepository {
   //Change Quantity Cart Details
   Future<void> changeQuantityCartDetails(
     String key,
-    double quantity,
+    var quantity,
   ) async {
     try {
-      var params = {
+      var data = {
         "quantity": quantity,
       };
-      final response = await http.put(
-        FunctionConfig.host + 'manageCart/normal/${key}',
-        body: params,
-      );
-      if (response.statusCode == 200) {
-        print('Http Get request sucessfull');
+
+      print(jsonEncode(data));
+
+      final request = await http.put(
+          FunctionConfig.host + 'manageCart/normal/' + key,
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(data));
+      if (request.statusCode == 200) {
+        print(request.body);
       } else {
-        print('Http Request Failed');
+        print(request.body);
       }
     } catch (e) {
       print(e.toString());
@@ -53,10 +56,10 @@ class CartRepository {
     String key,
   ) async {
     try {
-      final response = await http.delete(
+      final request = await http.delete(
         FunctionConfig.host + 'manageCart/normal/${key}',
       );
-      if (response.statusCode == 200) {
+      if (request.statusCode == 200) {
         print('Http Get request sucessfull');
       } else {
         print('Http Request Failed');

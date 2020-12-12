@@ -14,11 +14,13 @@ class LoadAllCart extends CartEvent {
 
 class ChangeQuantityCart extends CartEvent {
   final String key;
-  final double quantity;
+  final int quantity;
+  final String authID;
 
   ChangeQuantityCart(
     this.key,
     this.quantity,
+    this.authID,
   );
 }
 

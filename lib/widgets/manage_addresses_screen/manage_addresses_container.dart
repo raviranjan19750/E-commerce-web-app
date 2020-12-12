@@ -21,33 +21,7 @@ class ManageAddressesContainer extends StatefulWidget {
 class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
   @override
   Widget build(BuildContext context) {
-    List<Address> addresses = address;
-
-    // FirebaseFirestore firestore = FirebaseFirestore.instance;
-    // addresses = [];
-    // //firestore query
-    // print("firestore query");
-    // firestore
-    //     .collection("addresses")
-    //     .where("authID", isEqualTo: "sampleAuthID1")
-    //     .get()
-    //     .then((value) {
-    //   print(value.toString());
-    //   for (int i = 0; i < value.docs.length; i++) {
-    //     print("firestore query address result : " +
-    //         value.docs[i].data().toString());
-    //     addresses.add(Address(
-    //       addressLine: value.docs[i].data()["address"],
-    //       isPrimary: value.docs[i].data()["isPrimary"],
-    //       name: value.docs[i].data()["name"],
-    //       pincode: value.docs[i].data()["pincode"],
-    //       phone: value.docs[i].data()["phone"] ?? '',
-    //     ));
-    //     print(addresses[i].name.toString());
-    //   }
-    // }).catchError((error) {
-    //   print('Firestore Error' + error);
-    // });
+    Address address;
 
     print('Manage Address Container');
     return BlocConsumer<ManageAddressesBloc, ManageAddresesState>(
@@ -57,14 +31,24 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
             context: context,
             builder: (BuildContext buildContext) {
               return NewAddressDialogBox(
-                onAddNewButton: (val) => {
-                  BlocProvider.of<ManageAddressesBloc>(context).add(val)
-                },
+                isAddAddress: true,
+                onActionButton: (val) =>
+                    {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
               );
             },
           );
+        } else if (state is LaunchEditAddressDialogueState) {
+          showDialog(
+              context: context,
+              builder: (BuildContext buildContext) {
+                return NewAddressDialogBox(
+                  isEditAddress: true,
+                  address: state.address,
+                  onActionButton: (val) =>
+                      {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
+                );
+              });
         }
-
       },
       buildWhen: (prev, curr) {
         if (curr is ManageDialogueState) {
@@ -73,7 +57,6 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
           return true;
         }
       },
-
       builder: (context, state) {
         if (state is AddressDetailLoading) {
           return CircularProgressIndicator();

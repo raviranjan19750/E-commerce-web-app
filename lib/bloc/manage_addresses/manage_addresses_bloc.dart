@@ -25,6 +25,10 @@ class ManageAddressesBloc
       yield* deleteAddressDetails(event);
     } else if (event is DefaultAddress) {
       yield* defaultAddressDetails(event);
+    } else if (event is UpdateAddress) {
+      yield* updateAddressDetails(event);
+    } else if (event is LoadEditAddressDialogueEvent) {
+      yield LaunchEditAddressDialogueState(event.address);
     }
   }
 
@@ -78,7 +82,7 @@ class ManageAddressesBloc
         event.phone,
         event.name,
       );
-      yield UpdateAddressDetailLoadingSuccesfull();
+      yield* loadAddressDetail(LoadAllAddresses(event.authID));
     } catch (e) {
       yield UpdateAddressDetailLoadingFailure();
     }

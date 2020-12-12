@@ -30,6 +30,7 @@ class AddAddress extends ManageAddressesEvent {
 
 class UpdateAddress extends ManageAddressesEvent {
   final String key;
+  final String authID;
   final String name;
   final String phone;
   final String address;
@@ -38,6 +39,7 @@ class UpdateAddress extends ManageAddressesEvent {
   UpdateAddress({
     this.key,
     this.name,
+    this.authID,
     this.phone,
     this.address,
     this.pincode,
@@ -67,3 +69,9 @@ class DefaultAddress extends ManageAddressesEvent {
 class AddressDialogueEvent extends ManageAddressesEvent {}
 
 class LoadAddAddressDialogueEvent extends AddressDialogueEvent {}
+
+class LoadEditAddressDialogueEvent extends AddressDialogueEvent {
+  final Address address;
+
+  LoadEditAddressDialogueEvent({this.address});
+}

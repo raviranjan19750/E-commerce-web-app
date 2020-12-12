@@ -93,6 +93,7 @@ class _CartItemState extends State<CartItem> {
                                 children: [
                                   CartItemCount(
                                     quantity: widget.cart.quantity,
+                                    documentID: widget.cart.key,
                                   ),
                                 ],
                               ),
