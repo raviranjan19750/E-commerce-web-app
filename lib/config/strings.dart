@@ -60,4 +60,5 @@ class Strings {
   static const String buyAgain = "Buy Again";
   static const String outOfStock = "Out of stock";
   static const String checkAvailability = "Check Availability";
+  static const String invalidPincode = "Invalid Pincode";
 }

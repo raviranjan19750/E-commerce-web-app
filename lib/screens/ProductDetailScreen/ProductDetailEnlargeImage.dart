@@ -36,7 +36,6 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
   @override
   Widget build(BuildContext context) {
 
-
     double imageWidth = MediaQuery.of(context).size.width * 0.26;
     double imageHeight = MediaQuery.of(context).size.height * 0.62;
 

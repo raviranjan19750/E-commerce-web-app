@@ -20,8 +20,8 @@ class LoadProductVariantDetail extends ProductDetailEvent{
 
   LoadProductVariantDetail(this.productID, this.color, this.size);
 
-
 }
+
 
 // add cart
 // buy now

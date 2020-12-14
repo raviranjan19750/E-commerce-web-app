@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:living_desire/models/CheckProductAvailability.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,6 +28,27 @@ class ProductRepository {
     var response = await http.post("http://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProducts/details/$productID", body: params);
     Map<String, dynamic> map = jsonDecode(response.body);
     return ProductDetail.fromJson(map);
+
+  }
+
+  Future<CheckProductAvailability> checkProductAvailability ({String pincode, String productID, String warehouseID}) async {
+
+    Map<String, dynamic> data = {
+      "pincode": pincode,
+      "productID" : productID,
+      "warehouseID" : warehouseID,
+    };
+
+    HttpsCallable callable = FirebaseFunctions.instance.httpsCallable("checkPincodeAvailability");
+
+    var result  = await callable(data).then((value) {
+     var map = jsonDecode(value.data);
+     return CheckProductAvailability.fromJson(map);
+
+    });
+
+
+
 
   }
 

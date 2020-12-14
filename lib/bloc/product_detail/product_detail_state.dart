@@ -19,30 +19,9 @@ class ProductDetailLoadingSuccessful extends ProductDetailState {
 class ProductDetailLoadingFailure extends ProductDetailState {}
 
 
-// // checking loading of enlarged image of product
-// class ProductDetailImageLoading extends ProductDetailState{}
-//
-// class ProductDetailImageLoadingSuccessful extends ProductDetailState{}
-//
-// class ProductDetailImageLoadingFailure extends ProductDetailState{}
-
-// use loading widget google
-
-
-// checking image list of product
-// class ProductDetailImageListLoading extends ProductDetailState{}
-//
-// class ProductDetailImageListLoadingSuccessful extends ProductDetailState{}
-//
-// class ProductDetailImageListLoadingFailure extends ProductDetailState{}
 
 
 // check availability of product
-class ProductDetailAvailabilityChecking extends ProductDetailState{}
-
-class ProductDetailAvailabilityCheckingSuccessful extends ProductDetailState{}
-
-class ProductDetailAvailabilityCheckingFailure extends ProductDetailState{}
 
 
 

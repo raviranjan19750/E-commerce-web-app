@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:living_desire/DBHandler/ProductRepository.dart';
+import 'package:living_desire/models/CheckProductAvailability.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/product_variants.dart';
 import 'package:living_desire/models/products.dart';
@@ -14,6 +15,7 @@ part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   final ProductRepository productRepository;
+
 
   ProductDetailBloc({this.productRepository})
       : assert(productRepository != null),
@@ -35,6 +37,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
 
     try {
       var productDescription = await productRepository.getProductVariantDescription(productID:"0Kw7a5E2AMQ8jJM6a7C0", variantID: "02nnXgCzOjVHRarIPIrf");
+     // var availability = await productRepository.checkProductAvailability(pincode: "110042", productID: "0IeSrbsqqxiqwELq4Qqm", warehouseID: "temp_id");
       yield ProductDetailLoadingSuccessful(productDescription);
 
     } catch (e) {
@@ -44,7 +47,6 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   }
 
   Stream<ProductDetailState> loadProductVariantDetail(LoadProductVariantDetail event) async* {
-
     yield ProductDetailLoading();
 
     try{
@@ -56,6 +58,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     }
 
   }
+
 
 }
 

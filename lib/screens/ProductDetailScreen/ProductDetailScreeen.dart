@@ -17,7 +17,8 @@ class ProductDetailScreen extends StatelessWidget {
       BlocProvider(
         create: (context) => ProductDetailBloc(
             productRepository: RepositoryProvider.of(context))..add(LoadProductDetail("0IeSrbsqqxiqwELq4Qqm", "0LSDZLNUdmWQZohaIQCw")),
-      )
+      ),
+
     ], child: ProductDetail());
   }
 }

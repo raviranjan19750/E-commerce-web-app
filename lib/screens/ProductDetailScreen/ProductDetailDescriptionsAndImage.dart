@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
-import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/data/data.dart';
+import 'package:living_desire/screens/ProductDetailScreen/ProductAvailablity.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductSizeDropdownWidget.dart';
@@ -89,70 +89,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.location_pin,
-                                  color: Colors.black,
-                                ),
-                                Container(
-                                  width: 120,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 8.0, vertical: 0.0),
-                                  child: TextFormField(
-                                      keyboardType: TextInputType.number,
-                                      maxLength: 6,
-                                      onChanged: (val) {},
-                                      cursorColor: Colors.black,
-                                      decoration: InputDecoration(
-                                          labelText: Strings.checkAvailability,
-                                          focusColor: Colors.grey,
-                                          hoverColor: Colors.grey,
-                                          fillColor: Colors.grey,
-                                          border: InputBorder.none,
-                                          labelStyle: TextStyle(
-                                              color: Colors.black54),
-                                          focusedBorder: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          disabledBorder: InputBorder.none,
-                                          counterText: "")),
-                                ),
-                                InkWell(
-                                  onTap: () {
-
-                                  },
-                                  child: Text(
-                                    Strings.check,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-
-                            Container(
-                              width: 220,
-                              padding: EdgeInsets.all(0.0),
-                              margin: EdgeInsets.all(0.0),
-                              child: Divider(
-                                thickness: 1.0,
-                                height: 0.0,
-                                color: Colors.black,
-                              ),
-                            ),
-
-                            Text(
-                              Strings.available.toUpperCase(),
-                              style: TextStyle(
-                                  color: Palette.green,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 14),
-                            ),
-
+                           ProductAvailability(productID: state.productDetail.productID, wareHouseID: "temp_id",),
 //list of color
 //todo Set lst of color
                             Container(
