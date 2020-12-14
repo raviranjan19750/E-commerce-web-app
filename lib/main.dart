@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         title: Strings.websiteName,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.grey,
         ),
         onGenerateRoute: RoutesConfiguration.onGenerateRoute,
       ),

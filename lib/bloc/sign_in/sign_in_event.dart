@@ -11,7 +11,16 @@ class SendOTP extends SignInEvent {
 
 class VerifyOTP extends SignInEvent {
   final String verificationCode;
-  VerifyOTP({@required this.verificationCode }) : assert(verificationCode != null);
+  VerifyOTP({@required this.verificationCode})
+      : assert(verificationCode != null);
+}
+
+class ResendOTP extends SignInEvent {
+  ResendOTP();
+}
+
+class LoginStatus extends SignInEvent {
+  LoginStatus();
 }
 
 class SignOut extends SignInEvent {}

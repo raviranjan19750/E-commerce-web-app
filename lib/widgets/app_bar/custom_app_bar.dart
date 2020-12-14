@@ -1,3 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
+import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/widgets/app_bar/app_bar_wishlist.dart';
 import 'package:living_desire/widgets/app_bar/middle_app_bar.dart';
 
@@ -10,7 +13,7 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   bool visibleSubAppBar = true;
 
   CustomAppBar(
-      {this.size = 160,
+      {this.size = 112,
       this.visibleMiddleAppBar = true,
       this.visibleSubAppBar = true});
 
@@ -69,7 +72,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   AppBarWishlist(),
                   // User Card Login/Signup or Profile
                   UserCard(
-                    isLoggedIn: false,
+                    isLoggedIn: BlocProvider.of<SignInBloc>(context).isSignedIn,
                   ),
                 ],
               ),
