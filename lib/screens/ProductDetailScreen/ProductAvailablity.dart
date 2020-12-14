@@ -125,7 +125,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                     ),
                   ),
 
-                  if(state.checkProductAvailability.responseCode == "200")
+                  if(state.checkProductAvailability.responseCode == 200)
                     Text(
                       Strings.available.toUpperCase(),
                       style: TextStyle(
@@ -133,7 +133,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                           fontWeight: FontWeight.normal,
                           fontSize: 14),
                     )
-                  else if(state.checkProductAvailability.responseCode == "402")
+                  else if(state.checkProductAvailability.responseCode == 402)
                     Text(
                       Strings.notAvailable.toUpperCase(),
                       style: TextStyle(

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CheckProductAvailability {
   final String responseText;
-  final String responseCode;
+  final int responseCode;
   final DateTime expectedDeliveryDate;
 
   CheckProductAvailability(
@@ -14,7 +14,7 @@ class CheckProductAvailability {
 
     return CheckProductAvailability(
         responseText: data["responseText"],
-        responseCode: data["responseCode"],
+        responseCode: int.parse(data["responseCode"]),
         expectedDeliveryDate:  new Timestamp(data['expectedDeliveryDate']["_seconds"] , data['expectedDeliveryDate']["_nanoseconds"] ).toDate(),
     );
   }
