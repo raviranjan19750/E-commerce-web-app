@@ -9,7 +9,10 @@ class Strings {
   static const String searchBar = "Search for Products";
   static const String myWishlist = "My Wishlist";
   static const String myOrders = "My Orders";
+  static const String edit = "Edit";
   static const String myCart = "My Cart";
+  static const String delete = "Delete";
+  static const String setDefault = "Set as Default";
   static const String manageAddresses = "Manage Addresses";
   static const String normalOrders = "Normal Orders";
   static const String customOrders = "Customize Orders";
@@ -62,4 +65,6 @@ class Strings {
   static const String removeCart = "Remove From Cart";
   static const String updateAddress = "UPDATE ADDRERSS";
   static const String update = "UPDATE";
+  static const String addAddress = "Add Address";
+  static const String defaultText = "Default:";
 }

@@ -21,9 +21,6 @@ class ManageAddressesContainer extends StatefulWidget {
 class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
   @override
   Widget build(BuildContext context) {
-    Address address;
-
-    print('Manage Address Container');
     return BlocConsumer<ManageAddressesBloc, ManageAddresesState>(
       listener: (context, state) {
         if (state is LaunchAddNewAddressDialogueState) {
@@ -62,13 +59,17 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
           return CircularProgressIndicator();
         } else if (state is AddressDetailLoadingSuccessful) {
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(
+              top: 40.0,
+              left: 16.0,
+              right: 16.0,
+              bottom: 16.0,
+            ),
             child: Container(
               child: Wrap(
                 children: [
                   AddAddressContainer(),
                   ...state.addresses.map((address) {
-                    print('Address:' + address.toString());
                     return AddressContainer(
                       address: address,
                     );

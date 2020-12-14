@@ -28,19 +28,16 @@ class _ManageAddressesScreenDesktopState
       ],
       child: Scaffold(
         appBar: CustomAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ButtonList(
-                  isManageAddressesSelected: true,
-                ),
-                Expanded(child: ManageAddressesContainer()),
-              ],
-            ),
+        body: SingleChildScrollView(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ButtonList(
+                isManageAddressesSelected: true,
+              ),
+              Expanded(child: ManageAddressesContainer()),
+            ],
           ),
         ),
       ),

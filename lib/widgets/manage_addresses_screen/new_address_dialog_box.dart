@@ -23,31 +23,48 @@ class NewAddressDialogBox extends StatelessWidget {
       child: Container(
         height: MediaQuery.of(context).size.height * 0.6,
         width: MediaQuery.of(context).size.width * 0.35,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // ADD NEW ADDRESS TEXT
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ADD NEW ADDRESS TEXT
 
-                isAddAddress ? Text(Strings.addNewAddress) : SizedBox.shrink(),
+            isAddAddress
+                ? Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      Strings.addNewAddress,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
 
-                // Edit Address text
+            // Edit Address text
 
-                isEditAddress ? Text(Strings.updateAddress) : SizedBox.shrink(),
-                // TODO:Form
-                NewAddressForm(
-                  address: address,
-                  isAddAddress: isAddAddress,
-                  isEditAddress: isEditAddress,
-                  onActionAddress: onActionButton,
-                ),
-                // Submit Button
-              ],
+            isEditAddress
+                ? Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      Strings.updateAddress,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
+            // TODO:Form
+            NewAddressForm(
+              address: address,
+              isAddAddress: isAddAddress,
+              isEditAddress: isEditAddress,
+              onActionAddress: onActionButton,
             ),
-          ),
+            // Submit Button
+          ],
         ),
       ),
     );
