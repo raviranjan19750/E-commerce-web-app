@@ -41,11 +41,9 @@ class ProductRepository {
 
     HttpsCallable callable = FirebaseFunctions.instance.httpsCallable("checkPincodeAvailability");
 
-    var result  = await callable(data).then((value) {
-     var map = jsonDecode(value.data);
-     return CheckProductAvailability.fromJson(map);
-
-    });
+    var result  = await callable(data);
+    var map = jsonDecode(result.data);
+    return CheckProductAvailability.fromJson(map);
 
 
 

@@ -5,17 +5,28 @@ class CheckProductAvailability {
   final int responseCode;
   final DateTime expectedDeliveryDate;
 
-  CheckProductAvailability(
-      { this.responseText, this.responseCode, this.expectedDeliveryDate});
+   CheckProductAvailability(
+      { this.responseText, this.responseCode, this.expectedDeliveryDate });
 
   factory CheckProductAvailability.fromJson(Map<String, dynamic> data) {
 
+    print(data.toString());
 
+    if(data['expectedDeliveryDate'] != null) {
+      return CheckProductAvailability(
+        responseCode: data['responseCode'],
+        responseText: data['responseText'],
+        expectedDeliveryDate: new Timestamp(data['expectedDeliveryDate']["_seconds"], data['expectedDeliveryDate']["_nanoseconds"])
+            .toDate(),
+      );
+
+    }
 
     return CheckProductAvailability(
-        responseText: data["responseText"],
-        responseCode: int.parse(data["responseCode"]),
-        expectedDeliveryDate:  new Timestamp(data['expectedDeliveryDate']["_seconds"] , data['expectedDeliveryDate']["_nanoseconds"] ).toDate(),
+      responseCode: data['responseCode'],
+      responseText: data['responseText'],
+      // expectedDeliveryDate: new Timestamp(data['expectedDeliveryDate']["_seconds"], data['expectedDeliveryDate']["_nanoseconds"])
+      //     .toDate(),
     );
   }
 

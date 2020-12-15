@@ -104,6 +104,16 @@ class ProductAvailabilitySection extends StatelessWidget {
             )
           ],
         ),
+        Container(
+          width: 220,
+          padding: EdgeInsets.all(0.0),
+          margin: EdgeInsets.all(0.0),
+          child: Divider(
+            thickness: 1.0,
+            height: 0.0,
+            color: Colors.black,
+          ),
+        ),
 
         BlocBuilder<ProductAvailabilityBloc, ProductAvailabilityState>(
           builder: (context, state) {
@@ -114,16 +124,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 220,
-                    padding: EdgeInsets.all(0.0),
-                    margin: EdgeInsets.all(0.0),
-                    child: Divider(
-                      thickness: 1.0,
-                      height: 0.0,
-                      color: Colors.black,
-                    ),
-                  ),
+
 
                   if(state.checkProductAvailability.responseCode == 200)
                     Text(
@@ -135,7 +136,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                     )
                   else if(state.checkProductAvailability.responseCode == 402)
                     Text(
-                      Strings.notAvailable.toUpperCase(),
+                      Strings.notAvailable.toUpperCase() ,
                       style: TextStyle(
                           color: Colors.red[500],
                           fontWeight: FontWeight.normal,

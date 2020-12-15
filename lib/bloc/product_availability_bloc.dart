@@ -33,7 +33,7 @@ class ProductAvailabilityBloc extends Bloc<ProductAvailabilityEvent, ProductAvai
 
     try{
 
-      var productAvailabilityResponse = await productRepository.checkProductAvailability(pincode: "110042", productID: "0IeSrbsqqxiqwELq4Qqm", warehouseID: "temp_id" );
+      var productAvailabilityResponse = await productRepository.checkProductAvailability(pincode: "110062", productID: "0IeSrbsqqxiqwELq4Qqm", warehouseID: "temp_id" );
       yield ProductDetailAvailabilityCheckingSuccessful(productAvailabilityResponse);
 
     } catch (e) {
