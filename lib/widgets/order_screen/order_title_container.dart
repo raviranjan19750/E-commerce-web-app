@@ -25,6 +25,44 @@ class OrderTitleContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             //Text('Test'),
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      Strings.placedOn,
+                    ),
+                    Text(order.placedDate.toString()),
+                  ],
+                ),
+                // Total Proce of Order
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      Strings.total,
+                    ),
+                    // Ordered Product Price total
+                    Text(''),
+                  ],
+                ),
+                // Address Delivery
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(Strings.shipTo),
+                    // Delivery Address Pop up
+                    // OrderTitleAddress(
+                    //   deliveryAddressID: order.deliveryAddressID,
+                    // ),
+                  ],
+                ),
+              ],
+            ),
             // Placed On Order
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

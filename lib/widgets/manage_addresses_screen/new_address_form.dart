@@ -55,105 +55,128 @@ class _NewAddressFormState extends State<NewAddressForm> {
       child: Expanded(
         child: Column(
           children: [
-            // Name Field
-            Container(
-              alignment: Alignment.topCenter,
-              child: NewAddressFormField(
-                initialValue: widget.isAddAddress ? '' : widget.address.name,
-                hintText: 'Name',
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return 'Enter your Name';
-                  }
-                  return null;
-                },
-                onSaved: (String value) {},
-                onChanged: (String value) {
-                  name = value;
-                },
-              ),
-            ),
-            // mobile Field
-            // TODO: Set Keyboard type to number and validate mobile number 10 digits
-            Container(
-              alignment: Alignment.topCenter,
-              child: NewAddressFormField(
-                initialValue: widget.isAddAddress ? '' : widget.address.phone,
-                hintText: 'Mobile',
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return 'Enter your Mobile Number';
-                  }
-                  return null;
-                },
-                onSaved: (String value) {},
-                onChanged: (String value) {
-                  phone = value;
-                },
-              ),
-            ),
-            // Address Field
-            // TODO: Make Address Field multiline
-            Container(
-              alignment: Alignment.topCenter,
-              child: NewAddressFormField(
-                initialValue: widget.isAddAddress ? '' : widget.address.address,
-                hintText: 'Address',
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return 'Enter your Address';
-                  }
-                  return null;
-                },
-                onSaved: (String value) {},
-                onChanged: (String value) {
-                  address = value;
-                },
-              ),
-            ),
-            // Pincode Field
-            // TODO: Set keyboard type to number and validate pincode 6 digits
-            Container(
-              alignment: Alignment.topCenter,
-              child: NewAddressFormField(
-                initialValue: widget.isAddAddress ? '' : widget.address.pincode,
-                hintText: 'Pincode',
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return 'Enter valid Pincode';
-                  }
-                  return null;
-                },
-                onSaved: (String value) {},
-                onChanged: (String value) {
-                  pincode = value;
-                },
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 12.0,
+                  right: 12.0,
+                ),
+                child: Column(
+                  children: [
+// Name Field
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: NewAddressFormField(
+                        initialValue:
+                            widget.isAddAddress ? '' : widget.address.name,
+                        hintText: 'Name',
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Enter your Name';
+                          }
+                          return null;
+                        },
+                        onSaved: (String value) {},
+                        onChanged: (String value) {
+                          name = value;
+                        },
+                      ),
+                    ),
+                    // mobile Field
+                    // TODO: Set Keyboard type to number and validate mobile number 10 digits
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: NewAddressFormField(
+                        initialValue:
+                            widget.isAddAddress ? '' : widget.address.phone,
+                        hintText: 'Mobile',
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Enter your Mobile Number';
+                          }
+                          return null;
+                        },
+                        onSaved: (String value) {},
+                        onChanged: (String value) {
+                          phone = value;
+                        },
+                      ),
+                    ),
+                    // Address Field
+                    // TODO: Make Address Field multiline
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: NewAddressFormField(
+                        initialValue:
+                            widget.isAddAddress ? '' : widget.address.address,
+                        hintText: 'Address',
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Enter your Address';
+                          }
+                          return null;
+                        },
+                        onSaved: (String value) {},
+                        onChanged: (String value) {
+                          address = value;
+                        },
+                      ),
+                    ),
+                    // Pincode Field
+                    // TODO: Set keyboard type to number and validate pincode 6 digits
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: NewAddressFormField(
+                        initialValue:
+                            widget.isAddAddress ? '' : widget.address.pincode,
+                        hintText: 'Pincode',
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Enter valid Pincode';
+                          }
+                          return null;
+                        },
+                        onSaved: (String value) {},
+                        onChanged: (String value) {
+                          pincode = value;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    // Cancel Button
+                  // Cancel Button
+                  Expanded(
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text(
-                        Strings.cancel,
-                        style: TextStyle(color: Colors.black),
+                      child: Material(
+                        elevation: 10.0,
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          color: Colors.white,
+                          child: Center(
+                            child: Text(
+                              Strings.cancel,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
+
                   widget.isAddAddress
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: Palette.secondaryColor,
-                          ),
-                          // Add Button
+                      ?
+                      // Add Button
+                      Expanded(
                           child: InkWell(
                             onTap: () {
                               print('Adding new Address');
@@ -166,19 +189,27 @@ class _NewAddressFormState extends State<NewAddressForm> {
                               ));
                               Navigator.of(context).pop();
                             },
-                            child: Text(
-                              Strings.add,
-                              style: TextStyle(color: Colors.white),
+                            child: Material(
+                              elevation: 10.0,
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
+                                color: Colors.black,
+                                child: Center(
+                                  child: Text(
+                                    Strings.add,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         )
                       : SizedBox.shrink(),
                   widget.isEditAddress
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: Palette.secondaryColor,
-                          ),
-                          // Add Button
+                      ?
+                      // Add Button
+                      Expanded(
                           child: InkWell(
                             onTap: () {
                               print('Updating Address');
@@ -200,9 +231,19 @@ class _NewAddressFormState extends State<NewAddressForm> {
                               // ));
                               Navigator.of(context).pop();
                             },
-                            child: Text(
-                              Strings.update,
-                              style: TextStyle(color: Colors.white),
+                            child: Material(
+                              elevation: 10.0,
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
+                                color: Colors.black,
+                                child: Center(
+                                  child: Text(
+                                    Strings.update,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         )

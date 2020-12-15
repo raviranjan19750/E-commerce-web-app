@@ -30,6 +30,7 @@ class _OrderItemState extends State<OrderItem> {
       child: Container(
         width: double.infinity,
         child: Card(
+          elevation: 2.0,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

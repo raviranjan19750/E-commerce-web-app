@@ -30,19 +30,16 @@ class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
       ],
       child: Scaffold(
         appBar: CustomAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ButtonList(
-                  isMyOrderSelected: true,
-                ),
-                Expanded(child: NormalOrdersContainer()),
-              ],
-            ),
+        body: SingleChildScrollView(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ButtonList(
+                isMyOrderSelected: true,
+              ),
+              Expanded(child: NormalOrdersContainer()),
+            ],
           ),
         ),
       ),

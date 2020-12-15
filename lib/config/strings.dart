@@ -10,6 +10,9 @@ class Strings {
   static const String myWishlist = "My Wishlist";
   static const String myOrders = "My Orders";
   static const String edit = "Edit";
+  static const String items = "Items";
+  static const String item = "Item";
+
   static const String myCart = "My Cart";
   static const String delete = "Delete";
   static const String setDefault = "Set as Default";
