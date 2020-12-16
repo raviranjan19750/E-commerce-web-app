@@ -13,7 +13,7 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   bool visibleSubAppBar = true;
 
   CustomAppBar(
-      {this.size = 112,
+      {this.size = 136,
       this.visibleMiddleAppBar = true,
       this.visibleSubAppBar = true});
 

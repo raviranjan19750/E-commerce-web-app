@@ -1,22 +1,35 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
-import 'package:living_desire/models/user.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/screens/login/login.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import '../../config/configs.dart';
-import 'package:bloc/bloc.dart';
 
 class UserCard extends StatefulWidget {
   bool isLoggedIn = false;
   String userName, phoneNumber;
+
   UserCard({this.isLoggedIn, this.userName, this.phoneNumber});
   @override
   _UserCardState createState() => _UserCardState();
 }
 
 class _UserCardState extends State<UserCard> {
+  User user;
+  FirebaseAuth _auth;
+
+  @override
+  void initState() {
+    user = FirebaseAuth.instance.currentUser;
+
+    print("current state " + user.toString());
+    // print(user.toString() + "Current state");
+    super.initState();
+  }
+
   void _showLoginDialog(BuildContext context) async {
     await showDialog(
         context: context,
@@ -43,7 +56,12 @@ class _UserCardState extends State<UserCard> {
           child: Text("My Wishlist"),
         ),
         PopupMenuItem(
-          child: Text("Sign Out"),
+          child: InkWell(
+            child: Text("Sign Out"),
+            onTap: () {
+              RepositoryProvider.of<AuthenticationRepository>(context).logout();
+            },
+          ),
         ),
       ],
       elevation: 8.0,
@@ -122,14 +140,20 @@ class _UserCardState extends State<UserCard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInBloc, SignInState>(
-      builder: (context, state) {
-        if (state is VerificationSuccess) {
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+      print("user state" +
+          state.user.toString() +
+          "state.status" +
+          state.status.toString());
+      switch (state.status) {
+        case AuthenticationStatus.authenticated:
+          // if (state.user.phoneNumber == null) return returnView(false, context);
           return returnView(true, context);
-        } else {
+        case AuthenticationStatus.unauthenticated:
+        default:
           return returnView(false, context);
-        }
-      },
-    );
+      }
+    });
   }
 }

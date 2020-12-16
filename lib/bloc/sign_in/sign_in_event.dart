@@ -23,4 +23,10 @@ class LoginStatus extends SignInEvent {
   LoginStatus();
 }
 
+class SignIn extends SignInEvent {
+  final String token;
+
+  SignIn(@required this.token);
+}
+
 class SignOut extends SignInEvent {}

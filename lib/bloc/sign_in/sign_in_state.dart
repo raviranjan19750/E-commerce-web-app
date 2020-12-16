@@ -27,3 +27,5 @@ class ResendingOTPFailure extends SignInState {}
 class LoggedInState extends SignInState {}
 
 class LoggedOutState extends SignInState {}
+
+class SignInSuccessful extends SignInState {}
