@@ -10,8 +10,6 @@ class CartRepository {
       final response =
           await http.get(FunctionConfig.host + 'manageCart/normal/${authID}');
       if (response.statusCode == 200) {
-        print('Http Get request sucessfull');
-        print(jsonDecode(response.body).toString());
         return (jsonDecode(response.body) as List)
             .map((i) => Cart.fromJson(i))
             .toList();

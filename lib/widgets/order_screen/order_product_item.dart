@@ -15,7 +15,6 @@ class OrderProductItem extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print('Order Product Item');
     return Container(
       child: Padding(
         padding: const EdgeInsets.only(

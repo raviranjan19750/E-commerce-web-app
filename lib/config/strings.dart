@@ -12,7 +12,7 @@ class Strings {
   static const String edit = "Edit";
   static const String items = "Items";
   static const String item = "Item";
-
+  static const String combo = "Combo";
   static const String myCart = "My Cart";
   static const String delete = "Delete";
   static const String setDefault = "Set as Default";
@@ -65,6 +65,7 @@ class Strings {
   static const String buyAgain = "Buy Again";
   static const String rupeesSymbol = "₹ ";
   static const String youSaved = "You saved ";
+  static const String youSave = "You save ";
   static const String removeCart = "Remove From Cart";
   static const String updateAddress = "UPDATE ADDRERSS";
   static const String update = "UPDATE";

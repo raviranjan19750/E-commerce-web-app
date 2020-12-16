@@ -39,54 +39,67 @@ class _CartItemCountState extends State<CartItemCount> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          child: IconButton(
-            onPressed: () {
-              setState(() {
-                itemQuantityCount = decrementItemQuantity(itemQuantityCount);
-              });
-              BlocProvider.of<CartBloc>(context).add(ChangeQuantityCart(
-                widget.documentID,
-                itemQuantityCount,
-                "id1",
-              ));
-            },
-            iconSize: 14,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            icon: Icon(Icons.remove),
-            color: Colors.grey,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 8.0,
+      ),
+      child: Row(
+        children: [
+          Container(
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  itemQuantityCount = decrementItemQuantity(itemQuantityCount);
+                });
+                if (itemQuantityCount <= 0) {
+                  BlocProvider.of<CartBloc>(context).add(DeleteCart(
+                    widget.documentID,
+                    "id1",
+                  ));
+                } else {
+                  BlocProvider.of<CartBloc>(context).add(ChangeQuantityCart(
+                    widget.documentID,
+                    itemQuantityCount,
+                    "id1",
+                  ));
+                }
+              },
+              child: Icon(
+                Icons.remove,
+                color: Colors.grey,
+                size: 14,
+              ),
+            ),
           ),
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
-          child: Text(
-            itemQuantityCount.toString(),
-            style: TextStyle(fontSize: 14, color: Colors.black),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+            child: Text(
+              itemQuantityCount.toString(),
+              style: TextStyle(fontSize: 14, color: Colors.black),
+            ),
           ),
-        ),
-        Container(
-          child: IconButton(
-            onPressed: () {
-              setState(() {
-                itemQuantityCount = incrementItemQuantity(itemQuantityCount);
-              });
-              BlocProvider.of<CartBloc>(context).add(ChangeQuantityCart(
-                widget.documentID,
-                itemQuantityCount,
-                "id1",
-              ));
-            },
-            iconSize: 14,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            icon: Icon(Icons.add),
-            color: Colors.grey,
+          Container(
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  itemQuantityCount = incrementItemQuantity(itemQuantityCount);
+                });
+                BlocProvider.of<CartBloc>(context).add(ChangeQuantityCart(
+                  widget.documentID,
+                  itemQuantityCount,
+                  "id1",
+                ));
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.grey,
+                size: 14,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

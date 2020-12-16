@@ -12,6 +12,7 @@ class Cart {
   final bool isAvailable;
   final double sellingPrice;
   final String name;
+  final String pincode;
   final String imageUrl;
   final String colour;
   final String size;
@@ -22,6 +23,7 @@ class Cart {
     this.dateAdded,
     this.productType,
     this.discountPrice,
+    this.pincode,
     this.sellingPrice,
     this.isAvailable,
     this.manufacturingPrice,
@@ -37,27 +39,10 @@ class Cart {
 
   factory Cart.fromJson(Map<String, dynamic> data) {
     if (data == null) return null;
-    print(data.toString());
-    var cart = {
-      'key': data['id'],
-      'name': data['data']['name'],
-      'colour': data['data']['colour'],
-      'dateAdded': data['data']['dateAdded'],
-      'manufacturingPrice': data['data']['manufacturingPrice'],
-      'imageUrl': data['data']['images'][0],
-      'discountPrice': data['data']['discountPrice'],
-      'sellingPrice': data['data']['sellingPrice'],
-      'isCombo': data['data']['isCombo'],
-      'isAvailable': data['data']['isAvailable'],
-      'productID': data['data']['productID'],
-      'variantID': data['data']['variantID'],
-      'quantity': data['data']['quantity'],
-      'productType': data['data']['productType'],
-      'size': data['data']['size'],
-    };
-    print(cart.toString());
+
     return Cart(
       key: data['id'],
+      pincode: data['pincode'],
       name: data['data']['productName'],
       colour: data['data']['colour'],
       dateAdded: data['data']['dateAdded'],

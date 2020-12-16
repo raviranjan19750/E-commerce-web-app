@@ -27,7 +27,11 @@ class _CartScreenDesktopState extends State<CartScreenDesktop> {
                   ..add(LoadAllCart('id1'))),
       ],
       child: Scaffold(
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(
+          size: MediaQuery.of(context).size.height * 0.078,
+          visibleMiddleAppBar: false,
+          visibleSubAppBar: false,
+        ),
         body: SingleChildScrollView(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

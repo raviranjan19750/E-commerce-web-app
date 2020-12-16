@@ -10,7 +10,6 @@ class CartContainer extends StatelessWidget {
   // Cart Widget
   @override
   Widget build(BuildContext context) {
-    print('Cart Container');
     //TODO: Get The cart of the same user
 
     // Match the Product to the Product ID in cart
@@ -20,18 +19,27 @@ class CartContainer extends StatelessWidget {
           return CircularProgressIndicator();
         } else if (state is CartDetailLoadingSuccessful) {
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              bottom: 16.0,
+            ),
             child: Container(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.55,
                     child: CartListContainer(
                       carts: state.cart,
                     ),
                   ),
-                  CartTotal(),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    child: CartTotal(
+                      carts: state.cart,
+                    ),
+                  ),
                 ],
               ),
             ),
