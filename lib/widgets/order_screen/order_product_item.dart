@@ -33,152 +33,253 @@ class OrderProductItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Product Image
-                Placeholder(
-                  fallbackHeight: 150,
-                  fallbackWidth: 110,
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.12,
+                  child: Image.network(
+                    orderedProduct.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 SizedBox(
                   width: 15,
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Match the variant id to the actual product
-                    Text(
-                      orderedProduct.variantID,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 30,
-                      ),
-                    ),
-                    // Proie of the product bought
-                    Text(
-                      orderedProduct.sellingPrice.toString(),
-                      style: TextStyle(
-                        fontSize: 15,
-                        decoration: TextDecoration.lineThrough,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    // Price paid for the product
-                    Text(
-                      orderedProduct.discountPrice.toString(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    // Product Description: quantity, color, size
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //Color
-                        CircleAvatar(
-                          radius: 8,
-                          backgroundColor: Colors.blue,
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        // Size
-                        // Get product Size from variant ID
-                        Text(
-                          Strings.size,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: RichText(
+                          text: TextSpan(
+                            text: orderedProduct.productName,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 23,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          strutStyle: StrutStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 25,
                           ),
                         ),
-                        SizedBox(
-                          width: 15,
+                      ),
+                      // Proie of the product bought
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 8.0,
+                              top: 4.0,
+                            ),
+                            child: Text(
+                              Strings.rupeesSymbol +
+                                  orderedProduct.sellingPrice.toString(),
+                              style: TextStyle(
+                                fontSize: 14,
+                                decoration: TextDecoration.lineThrough,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          // Price paid for the product
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 4.0,
+                              left: 8.0,
+                            ),
+                            child: Text(
+                              Strings.rupeesSymbol +
+                                  orderedProduct.discountPrice.toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 4.0,
+                              left: 8.0,
+                            ),
+                            child: Text(
+                              Strings.youSaved +
+                                  Strings.rupeesSymbol +
+                                  (orderedProduct.sellingPrice -
+                                          orderedProduct.discountPrice)
+                                      .toString() +
+                                  ' (${((orderedProduct.sellingPrice - orderedProduct.discountPrice) / orderedProduct.sellingPrice) * 100}%)',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.green[600],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // Product Description: quantity, color, size
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 10,
                         ),
-                        // Quantity
-                        Text(
-                          Strings.quantity +
-                              ': ' +
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            //Color
+                            Container(
+                              padding: EdgeInsets.all(4.0),
+                              margin: EdgeInsets.only(left: 6.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                                border: Border.all(
+                                  width: 0.5,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              child: CircleAvatar(
+                                radius: 8,
+                                backgroundColor: Colors.blue,
+                              ),
+                            ),
+
+                            // Size
+                            // Get product Size from variant ID
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    Strings.size,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    orderedProduct.size,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            // Quantity
+                            Text(
+                              Strings.quantity,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey),
+                            ),
+                            Text(
                               orderedProduct.quantity.toString(),
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    // Buy Again
-                    Container(
-                      color: Colors.black,
-                      width: 100,
-                      height: 35,
-                      child: Center(
+                      ),
+
+                      // Buy Again
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           onTap: () {},
-                          child: Text(
-                            Strings.buyAgain,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
+                          child: Container(
+                            color: Colors.black,
+                            width: MediaQuery.of(context).size.width * 0.1,
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            child: Center(
+                              child: Text(
+                                Strings.buyAgain,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
-            SizedBox(
-              width: 350,
-            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 // Need Help Button
-                Container(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Text(
-                      Strings.needHelp,
-                      style: TextStyle(
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
-                        color: Colors.black54,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 5.0,
+                    bottom: 15.0,
+                  ),
+                  child: Container(
+                    child: InkWell(
+                      onTap: () {},
+                      child: Text(
+                        Strings.needHelp,
+                        style: TextStyle(
+                          fontSize: 14,
+                          decoration: TextDecoration.underline,
+                          color: Colors.black54,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+
                 // Rating Bar
-                RatingBar(
-                  onRatingChanged: (rating) {},
-                  filledIcon: Icons.star,
-                  emptyIcon: Icons.star_border,
-                  isHalfAllowed: false,
-                  filledColor: Colors.yellow[700],
-                  emptyColor: Colors.black12,
-                  size: 23,
-                ),
-                Container(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Text(
-                      Strings.rate,
-                      style: TextStyle(
-                        color: Colors.orange,
-                        decoration: TextDecoration.underline,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 15.0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      RatingBar(
+                        onRatingChanged: (rating) {},
+                        filledIcon: Icons.star,
+                        emptyIcon: Icons.star_border,
+                        isHalfAllowed: false,
+                        filledColor: Colors.yellow[700],
+                        emptyColor: Colors.black12,
+                        size: MediaQuery.of(context).size.width * 0.013,
                       ),
-                    ),
+                      Container(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Text(
+                            Strings.rate,
+                            style: TextStyle(
+                              color: Colors.orange,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

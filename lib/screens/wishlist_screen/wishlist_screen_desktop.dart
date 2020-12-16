@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
+import 'package:living_desire/bloc/bloc.dart';
 import '../screens.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
@@ -25,24 +25,24 @@ class _WishlistScreenDesktopState extends State<WishlistScreenDesktop> {
             create: (context) =>
                 WishlistBloc(wishlistRepository: RepositoryProvider.of(context))
                   ..add(LoadAllWishlist('id1'))),
+        BlocProvider(
+            create: (context) =>
+                CartBloc(cartRepository: RepositoryProvider.of(context))),
       ],
       child: Scaffold(
         appBar: CustomAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ButtonList(
-                  isWishlistSelected: true,
-                ),
-                Expanded(
-                  child: WishlistContainer(),
-                ),
-              ],
-            ),
+        body: SingleChildScrollView(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ButtonList(
+                isWishlistSelected: true,
+              ),
+              Expanded(
+                child: WishlistContainer(),
+              ),
+            ],
           ),
         ),
       ),

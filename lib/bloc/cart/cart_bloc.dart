@@ -19,6 +19,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield* deleteCartDetail(event);
     } else if (event is ChangeQuantityCart) {
       yield* changeQuantityCartDetail(event);
+    } else if (event is AddCart) {
+      yield* addCartDetail(event);
     }
   }
 
@@ -32,6 +34,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield CartDetailLoadingSuccessful(cart);
     } catch (e) {
       yield CartDetailLoadingFailure();
+    }
+  }
+
+  // Add a Cart Detail
+  Stream<CartState> addCartDetail(AddCart event) async* {
+    yield CartDetailLoading();
+
+    try {
+      await cartRepository.addCartDetails(
+        event.authID,
+        event.productID,
+        event.variantID,
+        event.quantity,
+      );
+
+      yield AddCartDetailLoadingSuccessful();
+    } catch (e) {
+      yield AddCartDetailLoadingFailure();
     }
   }
 

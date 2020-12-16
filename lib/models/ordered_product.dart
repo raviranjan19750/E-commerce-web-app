@@ -38,7 +38,7 @@ class OrderedProduct {
       quantity: data['data']['quantity'],
       colour: data['data']['colour'],
       size: data['data']['size'],
-      imageUrl: data['data']['imageUrl'],
+      imageUrl: data['data']['imageURL'],
       productName: data['data']['productName'],
     );
   }

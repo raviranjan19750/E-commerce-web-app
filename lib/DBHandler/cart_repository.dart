@@ -24,6 +24,34 @@ class CartRepository {
     }
   }
 
+  // Add Cart Details
+  Future<void> addCartDetails(
+    String authID,
+    String productID,
+    String variantID,
+    int quantity,
+  ) async {
+    try {
+      var data = {
+        "authID": authID,
+        "productID": productID,
+        "variantID": variantID,
+        "quantity": quantity
+      };
+      final response = await http.post(
+          FunctionConfig.host + 'manageCart/normal/${authID}',
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(data));
+      if (response.statusCode == 200) {
+      } else {
+        print('Http Request Failed');
+      }
+    } catch (e) {
+      print(e.toString());
+      throw Exception(e);
+    }
+  }
+
   //Change Quantity Cart Details
   Future<void> changeQuantityCartDetails(
     String key,

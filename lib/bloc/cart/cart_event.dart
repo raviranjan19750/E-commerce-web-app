@@ -12,6 +12,20 @@ class LoadAllCart extends CartEvent {
   );
 }
 
+class AddCart extends CartEvent {
+  final String authID;
+  final String productID;
+  final String variantID;
+  final int quantity;
+
+  AddCart({
+    this.authID,
+    this.quantity,
+    this.productID,
+    this.variantID,
+  });
+}
+
 class ChangeQuantityCart extends CartEvent {
   final String key;
   final int quantity;

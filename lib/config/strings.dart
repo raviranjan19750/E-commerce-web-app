@@ -19,11 +19,11 @@ class Strings {
   static const String manageAddresses = "Manage Addresses";
   static const String normalOrders = "Normal Orders";
   static const String customOrders = "Customize Orders";
-  static const String orderID = "Order ID";
-  static const String quantity = "Quantity";
+  static const String orderID = "Order ID ";
+  static const String quantity = "Quantity: ";
   static const String viewMore = "View More";
   static const String needHelp = "Need Help?";
-  static const String placedOn = "Placed On";
+  static const String placedOn = "Placed  :";
   static const String deliveryAddress = "Delivery Address";
   static const String phoneNumber = "Phone Number";
   static const String rate = "Rate & Review";
@@ -50,7 +50,7 @@ class Strings {
   static const String notAvailable = "Not Available";
   static const String customizeWithLogo = "Customize With Logo";
   static const String description = "Descriptions";
-  static const String size = "Size";
+  static const String size = "Size: ";
   static const String qty = "Qty";
   static const String downloadInvoice = "Download Invoice";
   static const String continueShopping = "Continue Shopping";

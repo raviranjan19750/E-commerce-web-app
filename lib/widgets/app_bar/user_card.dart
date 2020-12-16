@@ -2,20 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../config/configs.dart';
 
-
 class UserCard extends StatelessWidget {
-
   bool isLoggedIn;
 
-  String userNNme,phoneNumber;
+  String userNNme, phoneNumber;
 
-  UserCard({this.isLoggedIn,this.userNNme,this.phoneNumber});
+  UserCard({this.isLoggedIn, this.userNNme, this.phoneNumber});
 
-  void _showPopupMenu(BuildContext context,Offset offset) async {
+  void _showPopupMenu(BuildContext context, Offset offset) async {
     await showMenu(
-
       context: context,
-      position: RelativeRect.fromLTRB(offset.dx , offset.dy + 16, 64, 0),
+      position: RelativeRect.fromLTRB(offset.dx, offset.dy + 16, 64, 0),
       items: [
         PopupMenuItem(
           child: Text("My Account"),
@@ -37,74 +34,57 @@ class UserCard extends StatelessWidget {
     );
   }
 
-  Container returnView(bool isLoggedIn,BuildContext context){
-
-    if(isLoggedIn){
-
+  Container returnView(bool isLoggedIn, BuildContext context) {
+    if (isLoggedIn) {
       return Container(
-
-        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-
-          boxShadow:  [
+          boxShadow: [
             BoxShadow(
                 color: Colors.black12,
                 blurRadius: 12.0,
-                offset: Offset(0,0.75)
-            ),
+                offset: Offset(0, 0.75)),
           ],
           color: Palette.secondaryColor,
           borderRadius: BorderRadius.circular(4),
-
         ),
-
         child: InkWell(
-          onTap: (){},
-
+          onTap: () {},
           child: GestureDetector(
-
-            onTapDown: (TapDownDetails details){_showPopupMenu(context,details.globalPosition);},
+            onTapDown: (TapDownDetails details) {
+              _showPopupMenu(context, details.globalPosition);
+            },
             child: Row(
-
               children: [
                 Column(
-
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
-
-                    Text('Login as Vardaan Chakraborty',style: TextStyle(color: Palette.primaryColor),),
-                    Text('8617878497',style: TextStyle(color: Palette.primaryColor),),
-
+                    Text(
+                      'Login as Vardaan Chakraborty',
+                      style: TextStyle(color: Palette.primaryColor),
+                    ),
+                    Text(
+                      '8617878497',
+                      style: TextStyle(color: Palette.primaryColor),
+                    ),
                   ],
                 ),
-
                 Container(
-
                   margin: EdgeInsets.only(left: 16),
-
                   child: Icon(
-                      Icons.arrow_drop_down,
-                      color: Palette.primaryColor,
-                      size: 48,
-
+                    Icons.arrow_drop_down,
+                    color: Palette.primaryColor,
+                    size: 48,
                   ),
                 )
-
               ],
             ),
-
           ),
         ),
-
       );
-
-    }
-    else{
-
+    } else {
       return Container(
-
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Palette.secondaryColor,
@@ -113,23 +93,19 @@ class UserCard extends StatelessWidget {
         // Login Button
         child: InkWell(
           onTap: () {},
-
-          child: Text(Strings.loginText,
+          child: Text(
+            Strings.loginText,
             style: TextStyle(color: Colors.white),
-
           ),
         ),
       );
-
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     // Configure with firebase user login/signup
 
-    return returnView(isLoggedIn,context);
-
+    return returnView(isLoggedIn, context);
   }
 }

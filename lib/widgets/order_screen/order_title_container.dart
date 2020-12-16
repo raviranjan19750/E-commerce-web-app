@@ -14,7 +14,14 @@ class OrderTitleContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      color: Colors.grey[200],
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey,
+          ),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.only(
           left: 20,
@@ -24,111 +31,138 @@ class OrderTitleContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            //Text('Test'),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      Strings.placedOn,
-                    ),
-                    Text(order.placedDate.toString()),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 24.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        Strings.placedOn,
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                      Text(order.placedDate.toString()),
+                    ],
+                  ),
                 ),
                 // Total Proce of Order
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      Strings.total,
-                    ),
-                    // Ordered Product Price total
-                    Text(''),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 24.0,
+                    right: 24.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        Strings.total,
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                      // Ordered Product Price total
+                      Text(Strings.rupeesSymbol + order.amount.toString()),
+                    ],
+                  ),
                 ),
                 // Address Delivery
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(Strings.shipTo),
-                    // Delivery Address Pop up
-                    // OrderTitleAddress(
-                    //   deliveryAddressID: order.deliveryAddressID,
-                    // ),
-                  ],
-                ),
-              ],
-            ),
-            // Placed On Order
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  Strings.placedOn,
-                ),
-                Text(order.placedDate.toString()),
-              ],
-            ),
-            // Total Proce of Order
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  Strings.total,
-                ),
-                // Ordered Product Price total
-                Text(''),
-              ],
-            ),
-            // Address Delivery
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(Strings.shipTo),
-                // Delivery Address Pop up
-                // OrderTitleAddress(
-                //   deliveryAddressID: order.deliveryAddressID,
-                // ),
-              ],
-            ),
-            SizedBox(
-              width: 250,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(Strings.deliveryStatus),
-                // Delivery Status Pop up
-                OrderTitleDeliveryStatus(
-                  status: order.status,
-                  tracking: order.tracking,
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(Strings.orderID + order.orderID),
-                Container(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Text(
-                      Strings.invoice,
-                      style: TextStyle(color: Colors.blue),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 24.0,
+                    right: 24.0,
                   ),
-                )
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        Strings.shipTo,
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+
+                      // Delivery Address Pop up
+                      OrderTitleAddress(
+                        name: order.name,
+                        address: order.address,
+                        phone: order.phone,
+                        pincode: order.pincode,
+                      ),
+                    ],
+                  ),
+                ),
               ],
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 24.0,
+                    right: 24.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        Strings.deliveryStatus,
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                      // Delivery Status Pop up
+                      OrderTitleDeliveryStatus(
+                        status: order.status,
+                        tracking: order.tracking,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 24.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            Strings.orderID,
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(order.orderID),
+                        ],
+                      ),
+                      Container(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Text(
+                            Strings.invoice,
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

@@ -29,7 +29,6 @@ class _CartItemState extends State<CartItem> {
           child: Row(
             children: [
               // Product Image
-              Text('Product Image'),
               Container(
                 child: Expanded(
                   child: Column(

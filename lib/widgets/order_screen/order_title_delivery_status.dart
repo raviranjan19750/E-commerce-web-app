@@ -12,6 +12,8 @@ class OrderTitleDeliveryStatus extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text(status.toString()),
+    );
   }
 }

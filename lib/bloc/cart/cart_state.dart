@@ -21,6 +21,10 @@ class DeleteCartDetailLoadingSuccessful extends CartState {}
 
 class DeleteCartDetailLoadingFailure extends CartState {}
 
+class AddCartDetailLoadingSuccessful extends CartState {}
+
+class AddCartDetailLoadingFailure extends CartState {}
+
 class ChangeQuantityCartDetailLoading extends CartState {}
 
 class ChangeQuantityCartDetailLoadingSuccessful extends CartState {}

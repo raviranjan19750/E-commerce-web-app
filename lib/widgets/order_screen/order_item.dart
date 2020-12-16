@@ -30,20 +30,29 @@ class _OrderItemState extends State<OrderItem> {
       child: Container(
         width: double.infinity,
         child: Card(
+          borderOnForeground: false,
           elevation: 2.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              OrderTitleContainer(
-                order: widget.order,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(
+                color: Colors.grey,
               ),
-              ...widget.order.orderedProducts.map(
-                (e) => OrderProductItem(
-                  orderedProduct: e,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                OrderTitleContainer(
+                  order: widget.order,
                 ),
-              ),
-            ],
+                ...widget.order.orderedProducts.map(
+                  (e) => OrderProductItem(
+                    orderedProduct: e,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

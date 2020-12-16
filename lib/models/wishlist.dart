@@ -20,24 +20,14 @@ class Wishlist {
   });
   factory Wishlist.fromJson(Map<String, dynamic> data) {
     if (data == null) return null;
-    print(data.toString());
-    var wishlist = {
-      'key': data['id'],
-      'productID': data['data']['productID'],
-      'variantID': data['data']['variantID'],
-      'imageUrl': data['data']['imageUrl'],
-      'discountPrice': data['data']['discountPrice'],
-      'name': data['data']['name'],
-      'sellingPrice': data['data']['sellingPrice'],
-    };
-    print(wishlist.toString());
+
     return Wishlist(
       key: data['id'],
       productID: data['data']['productID'],
       variantID: data['data']['variantID'],
       imageUrl: data['data']['imageURL'],
       discountPrice: data['data']['discountPrice'],
-      name: data['data']['name'],
+      name: data['data']['productName'],
       sellingPrice: data['data']['sellingPrice'],
     );
   }
