@@ -87,8 +87,7 @@ class BulkOrder extends StatelessWidget{
                                     padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
 
                                     onPressed: (){
-
-
+                                        value.onClear();
                                     },
 
                                     color: Colors.white,

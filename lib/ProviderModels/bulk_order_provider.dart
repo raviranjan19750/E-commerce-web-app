@@ -161,4 +161,16 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
+  void onClear(){
+
+    selectedType = -1;
+    selectedSubType = -1;
+    stepTwoDone = false;
+    stepOneDone = false;
+    productTypeSelected = false;
+    productSubTypeSelected = false;
+    notifyListeners();
+
+  }
+
 }
