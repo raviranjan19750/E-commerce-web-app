@@ -8,6 +8,15 @@ class CartTotal extends StatelessWidget {
   final List<Cart> carts;
 
   const CartTotal({Key key, this.carts}) : super(key: key);
+
+  double total(List<Cart> cart) {
+    double subTotal = 0;
+    cart.forEach((element) {
+      subTotal = subTotal + element.quantity * element.discountPrice;
+    });
+    return subTotal;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(

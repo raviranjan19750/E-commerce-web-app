@@ -6,7 +6,7 @@ part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final CartRepository cartRepository;
-  CartBloc({this.cartRepository}) : super(CartDetailInitial());
+  CartBloc({this.cartRepository}) : super(CartDetailInitial(List()));
 
   @override
   Stream<CartState> mapEventToState(
@@ -70,8 +70,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   // Change quantity of a Cart Detail
   Stream<CartState> changeQuantityCartDetail(ChangeQuantityCart event) async* {
-    yield ChangeQuantityCartDetailLoading();
-
     try {
       await cartRepository.changeQuantityCartDetails(
         event.key,
