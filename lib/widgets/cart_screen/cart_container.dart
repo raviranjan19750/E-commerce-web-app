@@ -14,13 +14,6 @@ class CartContainer extends StatelessWidget {
 
     // Match the Product to the Product ID in cart
     return BlocBuilder<CartBloc, CartState>(
-      buildWhen: (previous, current) {
-        if (current is PrdouctCardViewState) {
-          return false;
-        } else {
-          return true;
-        }
-      },
       builder: (context, state) {
         if (state is CartDetailLoading) {
           return CircularProgressIndicator();

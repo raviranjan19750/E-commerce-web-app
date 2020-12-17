@@ -41,9 +41,12 @@ class ChangeQuantityCartDetailLoadingSuccessful extends CartState {}
 
 class ChangeQuantityCartDetailLoadingFailure extends CartState {}
 
+enum PrdouctCardViewType {LOADING, SUCCESS}
+
 class PrdouctCardViewState extends CartState {
+  final PrdouctCardViewType type;
   final String key;
   final List<Cart> cart;
 
-  PrdouctCardViewState({this.key, this.cart});
+  PrdouctCardViewState({this.key, this.cart, this.type});
 }

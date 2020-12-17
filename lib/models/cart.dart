@@ -1,22 +1,29 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/models/models.dart';
+import 'package:living_desire/widgets/home_screen_products/product_item.dart';
+
+class CartDetail {}
 
 class Cart {
-  final String key;
-  final DateTime dateAdded;
-  final String variantID;
-  final String productID;
-  final String productType;
-  final int quantity;
-  final double manufacturingPrice;
-  final double discountPrice;
-  final bool isAvailable;
-  final double sellingPrice;
-  final String name;
-  final String pincode;
-  final String imageUrl;
-  final String colour;
-  final String size;
-  final bool isCombo;
+  String key;
+  DateTime dateAdded;
+  String variantID;
+  String productID;
+  String productType;
+  int quantity;
+  double manufacturingPrice;
+  double discountPrice;
+  bool isAvailable;
+  double sellingPrice;
+  String name;
+  String pincode;
+  String imageUrl;
+  String colour;
+  String size;
+  bool isCombo;
 
   Cart({
     this.key,
@@ -58,5 +65,10 @@ class Cart {
       productType: data['data']['productType'],
       size: data['data']['size'],
     );
+  }
+
+  @override
+  String toString() {
+    return 'Cart{key: $key, dateAdded: $dateAdded, variantID: $variantID, productID: $productID, productType: $productType, quantity: $quantity, manufacturingPrice: $manufacturingPrice, discountPrice: $discountPrice, isAvailable: $isAvailable, sellingPrice: $sellingPrice, name: $name, pincode: $pincode, imageUrl: $imageUrl, colour: $colour, size: $size, isCombo: $isCombo}';
   }
 }

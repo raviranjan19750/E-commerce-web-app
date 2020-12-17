@@ -80,7 +80,7 @@ class CartListContainer extends StatelessWidget {
           ),
           // Cart Items
           ...carts.map(
-            (e) => CartItem(
+            (e) => CartItemView(
               cart: e,
             ),
           ),

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:bloc/bloc.dart';
 import '../../DBHandler/DBHandler.dart';
 import 'package:living_desire/models/models.dart';
@@ -30,7 +32,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     try {
       List<Cart> cart = await cartRepository.getCartDetails(event.authID);
-
+      print(cart);
       yield CartDetailLoadingSuccessful(cart);
     } catch (e) {
       yield CartDetailLoadingFailure();
@@ -71,12 +73,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   // Change quantity of a Cart Detail
   Stream<CartState> changeQuantityCartDetail(ChangeQuantityCart event) async* {
     try {
+      yield PrdouctCardViewState(type: PrdouctCardViewType.LOADING);
+      await Future.delayed(Duration(seconds: 2));
       await cartRepository.changeQuantityCartDetails(
         event.key,
         event.quantity,
       );
-
-      yield* loadCartDetail(LoadAllCart(event.authID));
+      // Manupuating the card result
+      if (state.cart != null) {
+        int len = state.cart.length;
+        for (int i  = 0; i < len; i++) {
+          if (state.cart[i].key == event.key) {
+            state.cart[i].quantity = event.quantity;
+          }
+        }
+        yield PrdouctCardViewState(cart: state.cart, key: event.key, type: PrdouctCardViewType.SUCCESS);
+      }
     } catch (e) {
       yield ChangeQuantityCartDetailLoadingFailure();
     }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
 
 class CartItemCount extends StatefulWidget {
   final int quantity;
@@ -53,12 +53,12 @@ class _CartItemCountState extends State<CartItemCount> {
                   itemQuantityCount = decrementItemQuantity(itemQuantityCount);
                 });
                 if (itemQuantityCount <= 0) {
-                  BlocProvider.of<CartBloc>(context).add(DeleteCart(
+                  BlocProvider.of<CartItemBloc>(context).add(DeleteCart(
                     widget.documentID,
                     "id1",
                   ));
                 } else {
-                  BlocProvider.of<CartBloc>(context).add(ChangeQuantityCart(
+                  BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
                     widget.documentID,
                     itemQuantityCount,
                     "id1",
@@ -85,7 +85,7 @@ class _CartItemCountState extends State<CartItemCount> {
                 setState(() {
                   itemQuantityCount = incrementItemQuantity(itemQuantityCount);
                 });
-                BlocProvider.of<CartBloc>(context).add(ChangeQuantityCart(
+                BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
                   widget.documentID,
                   itemQuantityCount,
                   "id1",
