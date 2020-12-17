@@ -165,6 +165,8 @@ class BulkOrderProvider with ChangeNotifier{
 
     selectedType = -1;
     selectedSubType = -1;
+    quantity = 50;
+    quantityController.text = quantity.toString();
     stepTwoDone = false;
     stepOneDone = false;
     productTypeSelected = false;
