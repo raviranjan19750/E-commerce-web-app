@@ -484,7 +484,6 @@ class StepTwoBlock extends StatelessWidget{
 
                         Text( value.quantity.toString() + " ",style: TextStyle(color: Palette.secondaryColor),),
 
-
                       ],
 
                     ),

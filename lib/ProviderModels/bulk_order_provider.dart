@@ -35,13 +35,10 @@ class BulkOrderProvider with ChangeNotifier{
   void onItemSizeChanged(String s){
 
     itemSize = s;
-
+    bulkOrderCart.size = s;
     notifyListeners();
 
   }
-
-
-
 
   void initStepOne(String productType, String productSubType){
 
@@ -64,6 +61,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     productTypeSelected = true;
     selectedType = index;
+    bulkOrderCart.productID = "545648945456456A";
     notifyListeners();
 
   }
@@ -72,6 +70,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     productSubTypeSelected = true;
     selectedSubType = index;
+    bulkOrderCart.variantID = "6545894756456A";
     notifyListeners();
 
   }
@@ -132,6 +131,7 @@ class BulkOrderProvider with ChangeNotifier{
   void incrementQuantity(int val){
 
     quantity++;
+    bulkOrderCart.quantity = quantity;
     quantityController.text = quantity.toString();
     notifyListeners();
 
@@ -140,6 +140,7 @@ class BulkOrderProvider with ChangeNotifier{
   void decrementQuantity(int val){
 
     quantity--;
+    bulkOrderCart.quantity = quantity;
     quantityController.text = quantity.toString();
     notifyListeners();
 
