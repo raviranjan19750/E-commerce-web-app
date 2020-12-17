@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
+import 'package:living_desire/models/BulkOrderCart.dart';
 
 class BulkOrderProvider with ChangeNotifier{
 
@@ -14,6 +15,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   bool stepTwoDone = false;
 
+  TextEditingController quantityController = new TextEditingController(text: '50');
 
   bool productTypeSelected = false;
 
@@ -22,7 +24,24 @@ class BulkOrderProvider with ChangeNotifier{
   int selectedType = -1;
   int selectedSubType = -1;
 
+  String itemSize = "S";
+
   List<Image> logos = new List<Image>();
+
+  int quantity = 50;
+
+  BulkOrderCart bulkOrderCart = new BulkOrderCart();
+
+  void onItemSizeChanged(String s){
+
+    itemSize = s;
+
+    notifyListeners();
+
+  }
+
+
+
 
   void initStepOne(String productType, String productSubType){
 
@@ -33,6 +52,9 @@ class BulkOrderProvider with ChangeNotifier{
     else{
 
       stepOneDone = true;
+
+      bulkOrderCart.productID = productType;
+      bulkOrderCart.variantID = productSubType;
 
     }
 
@@ -105,6 +127,22 @@ class BulkOrderProvider with ChangeNotifier{
   void onStepOneReverse(){
       stepOneDone = false;
       notifyListeners();
+  }
+
+  void incrementQuantity(int val){
+
+    quantity++;
+    quantityController.text = quantity.toString();
+    notifyListeners();
+
+  }
+
+  void decrementQuantity(int val){
+
+    quantity--;
+    quantityController.text = quantity.toString();
+    notifyListeners();
+
   }
 
 }

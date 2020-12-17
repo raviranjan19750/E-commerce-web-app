@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:provider/provider.dart';
@@ -10,13 +12,74 @@ class StepTwoBlock extends StatelessWidget{
 
   StepTwoBlock({this.value});
 
-  List <String> spinnerItems = [
-    'One',
-    'Two',
-    'Three',
-    'Four',
-    'Five'
-  ] ;
+
+
+  void _showPopupMenu(BuildContext context,Offset offset) async {
+    await showMenu(
+
+      context: context,
+
+      position: RelativeRect.fromLTRB(-offset.dx , offset.dy ,0,0),
+      items: [
+        PopupMenuItem(
+          child: FlatButton(
+
+            onPressed: (){
+
+              value.onItemSizeChanged("S");
+
+            },
+
+              child: Text("S")),
+        ),
+        PopupMenuItem(
+          child: FlatButton(
+
+              onPressed: (){
+
+                value.onItemSizeChanged("M");
+
+              },
+
+              child: Text("M")),
+        ),
+        PopupMenuItem(
+          child: FlatButton(
+
+              onPressed: (){
+
+                value.onItemSizeChanged("L");
+
+              },
+
+              child: Text("L")),
+        ),
+        PopupMenuItem(
+          child: FlatButton(
+
+              onPressed: (){
+
+                value.onItemSizeChanged("XL");
+
+              },
+
+              child: Text("XL")),
+        ),
+        PopupMenuItem(
+          child: FlatButton(
+
+              onPressed: (){
+
+                value.onItemSizeChanged("XXL");
+
+              },
+
+              child: Text("XXL")),
+        ),
+      ],
+      elevation: 8.0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +164,11 @@ class StepTwoBlock extends StatelessWidget{
                                   (BuildContext context, int index) {
                                 return InkWell(
 
-                                  onTap: (){},
+                                  onTap: (){
+
+
+
+                                  },
 
                                   child: Container(
 
@@ -125,9 +192,13 @@ class StepTwoBlock extends StatelessWidget{
 
                       children: [
 
-                        InkWell(
+                        GestureDetector(
 
-                          onTap: (){},
+                          onTapDown: (TapDownDetails details){
+
+                              _showPopupMenu(context, details.globalPosition);
+
+                          },
 
                           child: Container(
 
@@ -154,7 +225,16 @@ class StepTwoBlock extends StatelessWidget{
 
                               children: [
 
-                                Text('  Size : s',style: TextStyle(color: Palette.secondaryColor),),
+                                Row(
+
+                                  children: [
+
+                                    Text('  Size : ',style: TextStyle(color: Palette.secondaryColor),),
+                                    Text(value.itemSize,style: TextStyle(color: Palette.secondaryColor),),
+
+                                  ],
+
+                                ),
 
                                 Padding(
                                   padding: EdgeInsets.all(8),
@@ -201,7 +281,11 @@ class StepTwoBlock extends StatelessWidget{
 
                               IconButton(
 
-                                onPressed: (){},
+                                onPressed: (){
+
+                                  value.decrementQuantity(60);
+
+                                },
 
                                 icon: Icon(
 
@@ -218,10 +302,20 @@ class StepTwoBlock extends StatelessWidget{
 
                                   textAlign: TextAlign.center,
                                   autofocus: false,
-                                  initialValue: '50',
 
-                                  onChanged: (value){
+                                  keyboardType: TextInputType.number,
+                                  controller: value.quantityController,
 
+                                  validator: (input) {
+                                    final isDigitsOnly = int.tryParse(input);
+                                    return isDigitsOnly == null
+                                        ? 'Input needs to be digits only'
+                                        : null;
+                                  },
+
+                                  onChanged: (s){
+
+                                    value.quantity = int.tryParse(s);
 
                                   },
 
@@ -236,7 +330,11 @@ class StepTwoBlock extends StatelessWidget{
 
                               IconButton(
 
-                                onPressed: (){},
+                                onPressed: (){
+
+                                  value.incrementQuantity(60);
+
+                                },
 
                                 icon: Icon(
 
