@@ -480,9 +480,9 @@ class StepTwoBlock extends StatelessWidget{
 
                       children: [
 
-                        Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor),),
+                        Text(' Qty :  ',style: TextStyle(color: Palette.secondaryColor),),
 
-                        Text(' 32 ',style: TextStyle(color: Palette.secondaryColor),),
+                        Text( value.quantity.toString() + " ",style: TextStyle(color: Palette.secondaryColor),),
 
 
                       ],
