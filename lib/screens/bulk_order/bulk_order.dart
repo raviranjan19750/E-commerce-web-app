@@ -88,6 +88,7 @@ class BulkOrder extends StatelessWidget{
 
                                     onPressed: (){
 
+
                                     },
 
                                     color: Colors.white,
@@ -109,6 +110,8 @@ class BulkOrder extends StatelessWidget{
 
 
                                     onPressed: (){
+
+                                      value.addToCart();
 
                                     },
 

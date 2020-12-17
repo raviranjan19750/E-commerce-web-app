@@ -26,6 +26,8 @@ class BulkOrderProvider with ChangeNotifier{
 
   String itemSize = "S";
 
+  String description  = "";
+
   List<Image> logos = new List<Image>();
 
   int quantity = 50;
@@ -143,6 +145,19 @@ class BulkOrderProvider with ChangeNotifier{
     bulkOrderCart.quantity = quantity;
     quantityController.text = quantity.toString();
     notifyListeners();
+
+  }
+
+  void addToCart(){
+
+    bulkOrderCart.description = description;
+
+    print("Product ID : " + bulkOrderCart.productID);
+    print("Variant ID : " + bulkOrderCart.variantID);
+    print("Size : " + bulkOrderCart.size);
+    print("Quantity : " + bulkOrderCart.quantity.toString());
+    print("Description : " + description);
+
 
   }
 

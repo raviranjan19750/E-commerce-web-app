@@ -103,6 +103,13 @@ class StepThreeBlock extends StatelessWidget{
 
                 child: TextField(
 
+
+                  onChanged: (s){
+
+                    value.description = s;
+
+                  },
+
                   decoration: InputDecoration(
 
                       hintText: 'Comments (Optional)',
