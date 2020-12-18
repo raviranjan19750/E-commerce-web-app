@@ -1,118 +1,145 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
+
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/screens/bulk_order/step_one_block.dart';
 import 'package:living_desire/screens/bulk_order/step_three_block.dart';
 import 'package:living_desire/screens/bulk_order/step_two_block.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 import 'bulk_order_cart.dart';
 
 class BulkOrder extends StatelessWidget{
 
+  final String productType, productSubType, color, size ;
+
+  BulkOrder({this.productType, this.productSubType, this.color, this.size});
+
+  bool init = false;
+
 
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return ChangeNotifierProvider(
+        lazy: false,
+        create: (context) => BulkOrderProvider(),
+        child: Consumer<BulkOrderProvider>(
+          builder: (BuildContext context, BulkOrderProvider value, Widget child) {
 
-      appBar: CustomAppBar(size: 80,visibleSubAppBar: false,visibleMiddleAppBar: false,),
+            if (!init) {
+              Provider.of<BulkOrderProvider>(context, listen: false).initStepOne(productType, productSubType);
+              init = true;
+            }
 
-      body: Row(
+            return Scaffold(
 
-        children: [
+              appBar: CustomAppBar(size: 80,visibleSubAppBar: false,visibleMiddleAppBar: false,),
 
-          Expanded(
+              body: Row(
 
-            child: Container(
+                children: [
 
-              padding: EdgeInsets.only(left: 32,right: 32),
+                  Expanded(
 
-              child: SingleChildScrollView(
+                    child: Container(
 
-                child: Column(
+                      padding: EdgeInsets.only(left: 32,right: 32),
 
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                      child: SingleChildScrollView(
 
-                  children: [
+                        child: Column(
 
-                    Text('Order in Bulk',style: TextStyle(fontSize: 32 , fontWeight: FontWeight.bold),),
+                          crossAxisAlignment: CrossAxisAlignment.start,
 
-                    StepOneBlock(),
 
-                    StepTwoBlock(),
+                          children: [
 
-                    StepThreeBlock(),
+                            Text('Order in Bulk',style: TextStyle(fontSize: 32 , fontWeight: FontWeight.bold),),
 
-                    Row(
+                            StepOneBlock(productType: productType,productSubType: productSubType,value: value,),
 
-                      mainAxisAlignment: MainAxisAlignment.end,
+                            StepTwoBlock(value: value,),
 
-                      children: [
+                            StepThreeBlock(value: value,),
 
-                        Container(
+                            Row(
 
-                          margin: EdgeInsets.only(top: 16,bottom: 64),
+                              mainAxisAlignment: MainAxisAlignment.end,
 
-                          decoration: BoxDecoration(
+                              children: [
 
-                            border: Border.all(color: Palette.secondaryColor),
+                                Container(
 
-                          ),
+                                  margin: EdgeInsets.only(top: 16,bottom: 64),
 
-                          alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
 
-                          child: FlatButton(
+                                    border: Border.all(color: Palette.secondaryColor),
 
-                            padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
+                                  ),
 
-                            onPressed: (){
+                                  alignment: Alignment.centerLeft,
 
-                            },
+                                  child: FlatButton(
 
-                            color: Colors.white,
+                                    padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
 
-                            child: Text('Clear',style: TextStyle(color: Palette.secondaryColor,fontSize: 24),),
+                                    onPressed: (){
+                                        value.onClear();
+                                    },
 
-                          ),
+                                    color: Colors.white,
+
+                                    child: Text('Clear',style: TextStyle(color: Palette.secondaryColor,fontSize: 24),),
+
+                                  ),
+                                ),
+
+                                Container(
+
+                                  margin: EdgeInsets.only(top: 16,left: 32,bottom: 64),
+
+                                  alignment: Alignment.centerLeft,
+
+                                  child: RaisedButton(
+
+                                    padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
+
+
+                                    onPressed: (){
+
+                                      value.addToCart();
+
+                                    },
+
+                                    color: Palette.secondaryColor,
+
+                                    child: Text('ADD MORE',style: TextStyle(color: Colors.white,fontSize: 24),),
+
+                                  ),
+                                ),
+
+                              ],
+
+                            )
+
+                          ],
+
                         ),
-
-                        Container(
-
-                          margin: EdgeInsets.only(top: 16,left: 32,bottom: 64),
-
-                          alignment: Alignment.centerLeft,
-
-                          child: RaisedButton(
-
-                            padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
-
-
-                            onPressed: (){
-
-                            },
-
-                            color: Palette.secondaryColor,
-
-                            child: Text('ADD MORE',style: TextStyle(color: Colors.white,fontSize: 24),),
-
-                          ),
-                        ),
-
-                      ],
-
-                    )
-
-                  ],
-
-                ),
+                      ),
+                    ),
+                  ),
+                  Container(height: double.infinity ,child: BulkOrderCart())
+                ],
               ),
-            ),
-          ),
-          Container(height: double.infinity ,child: BulkOrderCart())
-        ],
-      ),
 
-    );
+            );
+
+          },
+        ));
+
 
 
   }
