@@ -24,7 +24,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     SignInEvent event,
   ) async* {
     if (event is SendOTP) {
-      yield* _sendOtp1(event);
+      yield* _sendOtp(event);
     } else if (event is VerifyOTP) {
       yield* _verifyotp(event);
     } else if (event is ResendOTP) {
@@ -32,50 +32,18 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }
   }
 
-  // Stream<SignInState> _createUser(SignIn event) async* {
-  //   try {
-  //     HttpsCallableResult res = await authService.createUser(event.token);
-  //     var map = jsonDecode(res.data);
-  //     print("inside signinsucc" + res.data.toString());
-  //     // int code = res.data['responseCode'];
-  //     int code = map['responseCode'];
-  //     print("Create user code" + code.toString());
-  //     switch (code) {
-  //       case 200:
-  //         print("new user created... signing in");
-  //         print(map['token']);
-  //         String customToken = map['token'];
-  //         await authService.signInWithToken(token: customToken);
-  //         yield SignInSuccessful();
-  //         break;
-  //       case 401:
-  //         break;
-  //       case 402:
-  //         print("User already exists so signing in with customToken");
-  //         await authService.signInWithToken(token: event.token);
-  //         yield SignInSuccessful();
-  //         break;
-  //       case 403:
-  //         break;
-  //       default:
-  //     }
-  //   } catch (e) {
-  //     print("error in create user");
-  //   }
-  // }
-
   Future<void> newUserCreation() async {
     try {
       HttpsCallableResult res = await authService.createUser();
-      print("inside signinsucc" + res.data.toString());
+      // print("inside signinsucc" + res.data.toString());
       // var map = jsonDecode(res.data);
       int code = res.data['responseCode'];
       // int code = map['responseCode'];
-      print("Create user code" + code.toString());
+      // print("Create user code" + code.toString());
       switch (code) {
         case 200:
-          print("new user created... signing in");
-          print(res.data['token']);
+          // print("new user created... signing in");
+          // print(res.data['token']);
           String customToken = res.data['token'];
           await authService.signInWithToken(token: customToken);
           print("user signed in....");
@@ -83,9 +51,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         case 401:
           break;
         case 402:
-          // print("User already exists so signing in with customToken");
-          // String customToken = map['token'];
-          // await authService.signInWithToken(token: customToken);
           break;
         case 403:
           break;
@@ -96,12 +61,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }
   }
 
-  Stream<SignInState> _sendOtp1(SendOTP event) async* {
+  Stream<SignInState> _sendOtp(SendOTP event) async* {
     yield SendingOTP();
     try {
       HttpsCallableResult res = await authService.sendOtp(event.phoneNumber);
-      // print(res.data.toString());
-      // int code = int.parse(res.data['responseCode']);
       var map = jsonDecode(res.data);
       int code = map['responseCode'];
       print("response : " + code.toString());
@@ -130,14 +93,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           await authService.verifyOtp(event.verificationCode);
       print(res.data.toString());
       var map = jsonDecode(res.data);
-      // int code = res.data['responseCode'];
       int code = map['responseCode'];
       print(" verify otp response : " + code.toString());
       switch (code) {
         case 200:
           this.isSignedIn = true;
-          // print(
-          //     "Currentu LoggedIn UserID ${FirebaseAuth.instance.currentUser.uid}");
           await newUserCreation();
           yield VerificationSuccess();
           break;
@@ -146,7 +106,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           yield VerificationFailure();
           break;
         case 402:
-          // print("error")
           yield VerificationFailure();
           break;
 
@@ -163,12 +122,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     yield ResendingOTP();
     try {
       HttpsCallableResult res = await authService.resendOtp();
-      print(res.data.toString());
       var map = jsonDecode(res.data);
-      // int code = res.data['responseCode'];
       int code = map['responseCode'];
 
-      print(" resend otp response : " + code.toString());
+      // print(" resend otp response : " + code.toString());
       switch (code) {
         case 200:
           yield ResendingOTPSuccess();
@@ -178,7 +135,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           yield ResendingOTPFailure();
           break;
         case 402:
-          // print("error")
           yield ResendingOTPFailure();
           break;
 
@@ -186,14 +142,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           yield ResendingOTPFailure();
           break;
       }
-    } catch (e) {}
-  }
-
-  Stream<SignInState> _loginStatus(LoginStatus event) async* {
-    if (this.isSignedIn) {
-      yield LoggedInState();
-    } else {
-      yield LoggedOutState();
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

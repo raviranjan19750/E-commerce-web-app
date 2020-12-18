@@ -148,7 +148,6 @@ class _UserCardState extends State<UserCard> {
           state.status.toString());
       switch (state.status) {
         case AuthenticationStatus.authenticated:
-          // if (state.user.phoneNumber == null) return returnView(false, context);
           return returnView(true, context);
         case AuthenticationStatus.unauthenticated:
         default:
