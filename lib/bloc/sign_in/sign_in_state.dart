@@ -17,3 +17,15 @@ class VerifyingOTP extends SignInState {}
 class VerificationSuccess extends SignInState {}
 
 class VerificationFailure extends SignInState {}
+
+class ResendingOTP extends SignInState {}
+
+class ResendingOTPSuccess extends SignInState {}
+
+class ResendingOTPFailure extends SignInState {}
+
+class LoggedInState extends SignInState {}
+
+class LoggedOutState extends SignInState {}
+
+class SignInSuccessful extends SignInState {}
