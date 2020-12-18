@@ -56,10 +56,10 @@ class AuthenticationRepository {
 
   // auth id phone nu
   // function name?
-  Future<HttpsCallableResult> createUser(String uid) async {
+  Future<HttpsCallableResult> createUser() async {
     HttpsCallable res = FirebaseFunctions.instance.httpsCallable('createUser');
     // res.call()
-    return res.call(<String, dynamic>{"phone": this.phone, "authID": uid});
+    return res.call(<String, dynamic>{"phone": this.phone});
   }
 
   Future<void> signInAnony() async {

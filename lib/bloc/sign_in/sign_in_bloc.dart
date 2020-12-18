@@ -29,64 +29,63 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       yield* _verifyotp(event);
     } else if (event is ResendOTP) {
       yield* _resendotp(event);
-    } else if (event is SignIn) {
-      yield* _createUser(event);
     }
   }
 
-  Stream<SignInState> _createUser(SignIn event) async* {
+  // Stream<SignInState> _createUser(SignIn event) async* {
+  //   try {
+  //     HttpsCallableResult res = await authService.createUser(event.token);
+  //     var map = jsonDecode(res.data);
+  //     print("inside signinsucc" + res.data.toString());
+  //     // int code = res.data['responseCode'];
+  //     int code = map['responseCode'];
+  //     print("Create user code" + code.toString());
+  //     switch (code) {
+  //       case 200:
+  //         print("new user created... signing in");
+  //         print(map['token']);
+  //         String customToken = map['token'];
+  //         await authService.signInWithToken(token: customToken);
+  //         yield SignInSuccessful();
+  //         break;
+  //       case 401:
+  //         break;
+  //       case 402:
+  //         print("User already exists so signing in with customToken");
+  //         await authService.signInWithToken(token: event.token);
+  //         yield SignInSuccessful();
+  //         break;
+  //       case 403:
+  //         break;
+  //       default:
+  //     }
+  //   } catch (e) {
+  //     print("error in create user");
+  //   }
+  // }
+
+  Future<void> newUserCreation() async {
     try {
-      HttpsCallableResult res = await authService.createUser(event.token);
-      var map = jsonDecode(res.data);
+      HttpsCallableResult res = await authService.createUser();
       print("inside signinsucc" + res.data.toString());
-      // int code = res.data['responseCode'];
-      int code = map['responseCode'];
+      // var map = jsonDecode(res.data);
+      int code = res.data['responseCode'];
+      // int code = map['responseCode'];
       print("Create user code" + code.toString());
       switch (code) {
         case 200:
           print("new user created... signing in");
-          print(map['token']);
-          String customToken = map['token'];
-          await authService.signInWithToken(token: customToken);
-          yield SignInSuccessful();
-          break;
-        case 401:
-          break;
-        case 402:
-          print("User already exists so signing in with customToken");
-          await authService.signInWithToken(token: event.token);
-          yield SignInSuccessful();
-          break;
-        case 403:
-          break;
-        default:
-      }
-    } catch (e) {
-      print("error in create user");
-    }
-  }
-
-  Future<void> newUSerCreation(String token) async {
-    try {
-      HttpsCallableResult res = await authService.createUser(token);
-      var map = jsonDecode(res.data);
-      print("inside signinsucc" + res.data.toString());
-      // int code = res.data['responseCode'];
-      int code = map['responseCode'];
-      print("Create user code" + code.toString());
-      switch (code) {
-        case 200:
-          print("new user created... signing in");
-          print(map['token']);
-          String customToken = map['token'];
+          print(res.data['token']);
+          String customToken = res.data['token'];
           await authService.signInWithToken(token: customToken);
           print("user signed in....");
           break;
         case 401:
           break;
         case 402:
-          print("User already exists so signing in with customToken");
-          await authService.signInWithToken(token: token);
+          // print("User already exists so signing in with customToken");
+          // String customToken = map['token'];
+          // await authService.signInWithToken(token: customToken);
           break;
         case 403:
           break;
@@ -137,9 +136,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       switch (code) {
         case 200:
           this.isSignedIn = true;
-          print(
-              "Currentu LoggedIn UserID ${FirebaseAuth.instance.currentUser.uid}");
-          await newUSerCreation(FirebaseAuth.instance.currentUser.uid);
+          // print(
+          //     "Currentu LoggedIn UserID ${FirebaseAuth.instance.currentUser.uid}");
+          await newUserCreation();
           yield VerificationSuccess();
           break;
 
