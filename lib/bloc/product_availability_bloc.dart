@@ -30,7 +30,7 @@ class ProductAvailabilityBloc
     try {
       var productAvailabilityResponse =
           await productRepository.checkProductAvailability(
-              pincode: "110062",
+              pincode: "110042",
               productID: "0IeSrbsqqxiqwELq4Qqm",
               warehouseID: "temp_id");
       yield ProductDetailAvailabilityCheckingSuccessful(

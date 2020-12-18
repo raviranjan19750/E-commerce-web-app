@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/DBHandler/DBHandler.dart';
+import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
@@ -54,7 +55,10 @@ class InitailizeAppService extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => CartRepository(),
-        )
+        ),
+        RepositoryProvider(
+          create: (context) => ProductRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
