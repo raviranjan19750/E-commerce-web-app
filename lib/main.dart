@@ -6,11 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/routes.dart';
+import 'package:living_desire/service/CustomerDetailRepository.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/searchapi.dart';
 import './config/configs.dart';
-import 'bloc/all_product/all_product_bloc.dart';
-import 'bloc/filter/filter_bloc.dart';
 import 'bloc/wishlist/wishlist_bloc.dart';
 
 void main() async {
@@ -33,11 +32,12 @@ class InitailizeAppService extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => SearchApi(),
-        )
+        ),
+        RepositoryProvider(create: (context) => CustomerDetailRepository())
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => WishlistBloc()),
+          BlocProvider(create: (context) => WishlistBloc(customerRepository: RepositoryProvider.of(context))),
           BlocProvider(
               create: (context) =>
                   SignInBloc(authService: RepositoryProvider.of(context))),

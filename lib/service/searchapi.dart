@@ -1,51 +1,31 @@
-import 'dart:ui';
-import 'dart:collection';
-import 'dart:convert' as convert;
 import 'package:elastic_client/elastic_client.dart';
-import 'package:living_desire/models/models.dart';
-
-import 'CustomHttpsTransport.dart';
+import 'package:living_desire/models/filtertags.dart';
+import 'package:living_desire/models/product.dart';
+// import 'package:living_desire/models/models.dart';
 
 class SearchApi {
   // curl -XGET "http://es01:9200/catalogue/_search" -H 'Content-Type: application/json' -d'{  "query": {    "query_string": {      "default_field": "description",      "query": "A*"    }  },  "aggs": {    "auto_complete": {      "terms": {        "field": "description.keyword",        "size": 10      }    }  }}'
-  final String SEARCH_URL = "http://192.168.0.194:9200";
+  final String SEARCH_URL =
+      "https://d23a3b77a86e405ab4a578e303b0267c.us-central1.gcp.cloud.es.io:9243";
 
   Client client;
 
   SearchApi() {
     // var uri = Uri.parse(SEARCH_URL);
-    final transport = HttpTransport(url: SEARCH_URL);
+    final transport = HttpTransport(
+        url: SEARCH_URL,
+        authorization: 'Basic ZWxhc3RpYzpjckFaZnRBWjVhZDU2UE1Ja1oyZm9qelU=');
     client = Client(transport);
   }
 
-  // Future<List<String>> getSuggestion(String keyword) async {
-  //   final Map<String, dynamic> query = Map();
-  //   Map<String, dynamic> query_string = Map();
-  //   query_string.putIfAbsent("fields", () => ["description", "category"]);
-  //   query_string.putIfAbsent("query", () => keyword + "*");
-  //   query.putIfAbsent("query_string", () => query_string);
-  //
-  //
-  //   final Map<String, dynamic> aggregation = HashMap();
-  //   Map<String, dynamic> terms = HashMap();
-  //   terms.putIfAbsent("field", () => "description.keyword");
-  //   terms.putIfAbsent("size", () => 10);
-  //   Map<String, dynamic> ac = HashMap();
-  //   ac.putIfAbsent("terms", () => terms);
-  //   aggregation.putIfAbsent("auto_complete", () => ac);
-  //
-  //   final searchResult = await client.search(index: "catalogue",  query: query, aggregations: aggregation);
-  //
-  //   var autocomplete_result = searchResult.aggregations["auto_complete"].buckets;
-  //   // print(autocomplete_result);
-  //   List<String> result = List();
-  //   for (var b in autocomplete_result) {
-  //     result.add(b.key.toString());
-  //   }
-  //   return result;
-  // }
+  Future<SearchResult> getFilteredProduct(String title,
+      {int limit, int offset}) async {
 
-  Future<List<Product>> getFilteredProduct(String title, {int limit, int offset}) async {
+    if (title.isEmpty) {
+      final searchResult = await client.search(index: "products", limit: limit, offset: offset);
+      return searchResult;
+    }
+
     final Map<String, dynamic> query = Map();
 
     // query.putIfAbsent("size", () => 30);
@@ -53,39 +33,9 @@ class SearchApi {
     matches.putIfAbsent("title", () => title);
 
     query.putIfAbsent("match", () => matches);
-    final searchResult = await client.search(index: "product", query: query, limit: limit, offset: offset);
-    final hits = searchResult.hits;
-    List<Product> result = List();
-    for (var hit in hits) {
-      Product tmpProduxt = Product(
-        title: hit.doc['title'],
-        color: hit.doc['color'],
-        imageUrl: hit.doc['imageUrl'],
-        size: hit.doc['size'],
-        discountPrice: hit.doc['offerPrice'],
-        retailPrice: hit.doc['retailPrice'],
-      );
-      result.add(tmpProduxt);
-    }
-    return result;
-  }
-
-  Future<List<Product>> getAllProducts({int limit, int offset}) async {
-    final searchResult = await client.search(index: "product", limit: limit, offset: offset);
-    final hits = searchResult.hits;
-    List<Product> result = List();
-    for (var hit in hits) {
-      Product tmpProduxt = Product(
-        title: hit.doc['title'],
-        color: hit.doc['color'],
-        imageUrl: hit.doc['imageUrl'],
-        size: hit.doc['size'],
-        discountPrice: hit.doc['offerPrice'],
-        retailPrice: hit.doc['retailPrice'],
-      );
-      result.add(tmpProduxt);
-    }
-    return result;
+    final searchResult = await client.search(
+        index: "products", query: query, limit: limit, offset: offset);
+    return searchResult;
   }
 
   Future<List<FilterTag>> getAllCategoryTags() async {
@@ -100,7 +50,7 @@ class SearchApi {
     aggregation.putIfAbsent("color-aggr", () => colorAggregation);
 
     final searchResult = await client.search(
-        index: "product", limit: 0, aggregations: aggregation);
+        index: "products", limit: 0, aggregations: aggregation);
     List<FilterTag> tag = List();
     final sizeresult = searchResult.aggregations['size-aggr'];
     FilterTag sizetag = FilterTag("SIZE", description: "Size");
@@ -135,8 +85,3 @@ class SearchApi {
     return terms;
   }
 }
-
-// void main() async {
-//   SearchApi api = SearchApi();
-//   api.getAllProducts();
-// }

@@ -11,8 +11,9 @@ class SuccessLoadingAllProduct extends AllProductState {
   final List<Product> productList;
   final int limit;
   final int offset;
+  final int totalResults;
 
-  SuccessLoadingAllProduct(this.productList, {this.limit, this.offset});
+  SuccessLoadingAllProduct(this.productList, {this.limit, this.offset, this.totalResults});
 }
 
 class FailureLoadingProduct extends AllProductState {}

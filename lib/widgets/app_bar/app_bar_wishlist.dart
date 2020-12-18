@@ -28,14 +28,9 @@ class AppBarWishlist extends StatelessWidget {
               children: [
 
                 BlocBuilder<WishlistBloc, WishlistState>(
-                  buildWhen: (cur, prev) {
-                    return true;
-                  },
                   builder: (context, state) {
-                    int count = 0;
-                    count = state.data.length;
                     return Badge(
-                      badgeContent: Text(count.toString(),style: TextStyle(color: Colors.white,fontSize: 12),),
+                      badgeContent: Text(state.totalItem.toString(),style: TextStyle(color: Colors.white,fontSize: 12),),
                       badgeColor: Palette.secondaryColor,
                       child: Icon(Icons.favorite_border),
                     );

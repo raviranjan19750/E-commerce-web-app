@@ -45,36 +45,51 @@ class AllProductScreen extends StatelessWidget {
           shrinkWrap: true,
           // primary: true,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Filters",
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-                FilterDropDown()
-              ],
+            SizedBox(
+              height: 30,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Filters",
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-                FilterDropDown()
-              ],
-            ),
+            BlocBuilder<AllProductBloc, AllProductState>(
+                buildWhen: (prev, current) {
+              if (current is SuccessLoadingAllProduct) {
+                return true;
+              }
+              return false;
+            }, builder: (context, state) {
+              if (state is SuccessLoadingAllProduct)
+                return Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.85,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Filters (" + state.totalResults.toString()+ ")",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        FilterDropDown()
+                      ],
+                    ),
+                  ),
+                );
+              else
+                return Container();
+            }),
             AllProductScreenBuilder(
               parentScrollController: _controller,
             ),
-            BlocBuilder<AllProductBloc, AllProductState>(
-                builder: (_, state) {
-                  if (state is LoadingNextProduct) {
-                    return LinearProgressIndicator();
-                  }
-                  return Container();
-                }),
+            BlocBuilder<AllProductBloc, AllProductState>(builder: (_, state) {
+              if (state is LoadingNextProduct) {
+                return Container(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.85,
+                    ),
+                    child: LinearProgressIndicator());
+              }
+              return Container();
+            }),
             Footer()
           ],
         ),

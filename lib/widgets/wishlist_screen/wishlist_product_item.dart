@@ -22,7 +22,7 @@ class WishlistProductItem extends StatelessWidget {
               children: [
                 Container(
                   child: Image.network(
-                    product.imageUrl,
+                    product.imageUrls[0],
                     fit: BoxFit.cover,
                   ),
                 ),
