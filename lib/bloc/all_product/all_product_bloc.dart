@@ -5,17 +5,26 @@ import 'package:elastic_client/elastic_client.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:meta/meta.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'all_product_event.dart';
 part 'all_product_state.dart';
 
 class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
-
   final SearchApi searchApi;
   var filter = "";
 
-  AllProductBloc({@required this.searchApi}) :
-        assert(searchApi != null),
+  @override
+  Stream<Transition<AllProductEvent, AllProductState>> transformEvents(
+      Stream<AllProductEvent> events,
+      TransitionFunction<AllProductEvent, AllProductState> transitionFn) {
+    return events
+        .debounceTime(const Duration(milliseconds: 350))
+        .switchMap(transitionFn);
+  }
+
+  AllProductBloc({@required this.searchApi})
+      : assert(searchApi != null),
         super(AllProductInitial());
 
   @override
@@ -31,25 +40,33 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
     }
   }
 
-
-  Stream<AllProductState> _mapLoadNextProduct(AllProductState state, LoadNextProduct event) async* {
-    yield LoadingNextProduct();
+  Stream<AllProductState> _mapLoadNextProduct(
+      AllProductState state, LoadNextProduct event) async* {
     if (state is SuccessLoadingAllProduct) {
-       final List<Product> previousList = state.productList;
-       int limit = state.limit;
-       int offset = state.offset + limit;
-       SearchResult result = await searchApi.getFilteredProduct(filter, offset: offset, limit: limit);
-       yield _createDataFromSearch(result, prev: previousList, limit: limit, offset: offset);
+      yield LoadingNextProduct();
+      final List<Product> previousList = state.productList;
+      int limit = state.limit;
+      int offset = state.offset + limit;
+      SearchResult result = await searchApi.getFilteredProduct(filter,
+          offset: offset, limit: limit);
+      SuccessLoadingAllProduct res = _createDataFromSearch(result,
+          prev: previousList, limit: limit, offset: offset);
+      yield res;
     }
   }
 
-  Stream<AllProductState> _mapLoadingFilteredProduct(LoadAllProductWithSearchParams event) async* {
+  Stream<AllProductState> _mapLoadingFilteredProduct(
+      LoadAllProductWithSearchParams event) async* {
     yield LoadingAllProduct();
     try {
       // searchApi
-      String filteredText = (event.filterText != null && event.filterText.isNotEmpty) ? event.filterText : "";
+      String filteredText =
+          (event.filterText != null && event.filterText.isNotEmpty)
+              ? event.filterText
+              : "";
       filter = filteredText;
-      SearchResult result = await searchApi.getFilteredProduct(filteredText, offset: 0, limit: 20);
+      SearchResult result = await searchApi.getFilteredProduct(filteredText,
+          offset: 0, limit: 20);
       yield _createDataFromSearch(result);
     } catch (e) {
       print(e);
@@ -57,12 +74,13 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
     }
   }
 
-  SuccessLoadingAllProduct _createDataFromSearch(SearchResult searchResult, {List<Product> prev, int offset = 0, int limit = 20}) {
+  SuccessLoadingAllProduct _createDataFromSearch(SearchResult searchResult,
+      {List<Product> prev, int offset = 0, int limit = 20}) {
     final hits = searchResult.hits;
 
     int len = hits.length;
     List<Product> result = List();
-    for(int x =  0; x < len; x++) {
+    for (int x = 0; x < len; x++) {
       Doc hit = hits[x];
       List<String> imgUrls = List();
       for (var img in hit.doc['images']) {
@@ -83,6 +101,12 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
     List<Product> finalResult = List();
     if (prev != null) finalResult.addAll(prev);
     finalResult.addAll(result);
-    return SuccessLoadingAllProduct(finalResult, offset: offset, limit: limit, totalResults: searchResult.totalCount);;
+    bool isEndReached = searchResult.totalCount <= finalResult.length;
+    return SuccessLoadingAllProduct(finalResult,
+        offset: offset,
+        limit: limit,
+        totalResults: searchResult.totalCount,
+        isEndReached: isEndReached);
+    ;
   }
 }

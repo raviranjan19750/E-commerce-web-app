@@ -87,6 +87,13 @@ class AllProductScreen extends StatelessWidget {
                       maxWidth: MediaQuery.of(context).size.width * 0.85,
                     ),
                     child: LinearProgressIndicator());
+              } else if (state is AllProductLoaded) {
+                return Container(
+                  margin: EdgeInsets.all(20),
+                  child: Center(
+                    child: Text("No More Product To Display"),
+                  ),
+                );
               }
               return Container();
             }),
@@ -199,6 +206,9 @@ class BuildAllProductView extends StatelessWidget {
         return true;
       },
       builder: (context, state) {
+        print(parentController.hasClients);
+        print(parentController.hasListeners);
+        parentController.notifyListeners();
         if (state is LoadingAllProduct) {
           return ProductLoadingView();
         } else if (state is SuccessLoadingAllProduct) {
@@ -209,13 +219,10 @@ class BuildAllProductView extends StatelessWidget {
           }
 
           parentController.addListener(() {
-            if (parentController.position.extentAfter < 300) {
-              print("loading more product");
+            if (parentController.position.extentAfter < 300 && !state.isEndReached) {
               BlocProvider.of<AllProductBloc>(context).add(LoadNextProduct());
             }
           });
-
-          print('Priary Scroll Controller is ${parentController}');
 
           return Container(
             margin: EdgeInsets.all(0),
