@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:living_desire/DBHandler/DBHandler.dart';
 import 'package:living_desire/models/models.dart';
-
 part 'cart_item_event.dart';
 part 'cart_item_state.dart';
 
@@ -28,7 +26,8 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
     }
   }
 
-  Stream<CartItemState> deleteCartDetail(DeleteCart event, CartItemState state) async* {
+  Stream<CartItemState> deleteCartDetail(
+      DeleteCart event, CartItemState state) async* {
     yield CartItemUpdate(state.cart, CartItemStateType.LOADING);
     try {
       await cartRepository.deleteCartDetails(event.key);
@@ -38,7 +37,8 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
     }
   }
 
-  Stream<CartItemState> changeQuantityCartDetail(ChangeQuantityCart event, CartItemState state) async* {
+  Stream<CartItemState> changeQuantityCartDetail(
+      ChangeQuantityCart event, CartItemState state) async* {
     yield CartItemUpdate(state.cart, CartItemStateType.LOADING);
     try {
       await cartRepository.changeQuantityCartDetails(

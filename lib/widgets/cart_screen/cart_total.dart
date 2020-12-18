@@ -1,15 +1,47 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
 
-class CartTotal extends StatelessWidget {
+class CartTotalView extends StatelessWidget {
   final List<Cart> carts;
 
-  const CartTotal({Key key, this.carts}) : super(key: key);
+  const CartTotalView({Key key, this.carts}) : super(key: key);
 
-  double total(List<Cart> cart) {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => CartTotalBloc(
+        cart: carts,
+      ),
+      child:
+          BlocBuilder<CartTotalBloc, CartTotalState>(builder: (context, state) {
+        if (state is CartTotalInitial) {
+          return CartTotal(
+            subtotal: state.subTotal,
+          );
+        } else if (state is CartTotalUpdate) {
+          return CartTotal(
+            subtotal: state.subTotal,
+          );
+        }
+      }),
+    );
+  }
+}
+
+class CartTotal extends StatelessWidget {
+  double subtotal;
+
+  CartTotal({
+    Key key,
+    this.subtotal,
+  }) : super(key: key);
+
+  double getTotal(List<Cart> cart) {
     double subTotal = 0;
     cart.forEach((element) {
       subTotal = subTotal + element.quantity * element.discountPrice;
@@ -83,13 +115,13 @@ class CartTotal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    Strings.subTotal + ' (${carts.length} Items):',
+                    Strings.subTotal + ' ( Items):',
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    'Amount',
+                    '',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

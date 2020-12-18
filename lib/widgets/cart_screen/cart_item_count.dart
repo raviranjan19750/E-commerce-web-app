@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
+import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 
 class CartItemCount extends StatefulWidget {
   final int quantity;

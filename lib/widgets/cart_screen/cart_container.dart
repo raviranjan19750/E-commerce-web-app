@@ -11,7 +11,6 @@ class CartContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO: Get The cart of the same user
-
     // Match the Product to the Product ID in cart
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
@@ -36,7 +35,7 @@ class CartContainer extends StatelessWidget {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.25,
-                    child: CartTotal(
+                    child: CartTotalView(
                       carts: state.cart,
                     ),
                   ),
