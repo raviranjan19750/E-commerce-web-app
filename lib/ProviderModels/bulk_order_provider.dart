@@ -1,7 +1,4 @@
 
-
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
@@ -157,6 +154,9 @@ class BulkOrderProvider with ChangeNotifier{
     print("Size : " + bulkOrderCart.size);
     print("Quantity : " + bulkOrderCart.quantity.toString());
     print("Description : " + description);
+
+    // Upload Images to fireStore
+    // add data to cart
 
 
   }
