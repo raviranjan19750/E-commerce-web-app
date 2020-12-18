@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/screens/ProductDetailScreen/ProductDetailScreeen.dart';
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order.dart';
 import 'package:living_desire/screens/home_screen/home_screen.dart';
 import 'package:living_desire/screens/my_orders/my_order.dart';
-import 'package:living_desire/screens/product_detail_screen.dart';
 import 'package:living_desire/screens/screens.dart';
 
 class RoutesConfiguration {

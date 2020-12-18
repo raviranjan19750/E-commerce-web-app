@@ -1,54 +1,64 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:living_desire/DBHandler/DBHandler.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:living_desire/DBHandler/ProductRepository.dart';
+import 'package:living_desire/models/CheckProductAvailability.dart';
+import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/product_variants.dart';
 import 'package:living_desire/models/products.dart';
 import 'package:meta/meta.dart';
 
 part 'product_detail_event.dart';
+
 part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
-  ProductDetailBloc() : super(ProductDetailInitial());
+  final ProductRepository productRepository;
+
+  ProductDetailBloc({this.productRepository})
+      : assert(productRepository != null),
+        super(ProductDetailInitial());
 
   @override
   Stream<ProductDetailState> mapEventToState(
     ProductDetailEvent event,
   ) async* {
-    // TODO: implement mapEventToState
     if (event is LoadProductDetail) {
       yield* loadProductDetail(event);
+    } else if (event is LoadProductVariantDetail) {
+      yield* loadProductVariantDetail(event);
     }
   }
-}
 
-Stream<ProductDetailState> loadProductDetail(LoadProductDetail event) async* {
-  Products products = new Products();
+  Stream<ProductDetailState> loadProductDetail(LoadProductDetail event) async* {
+    yield ProductDetailLoading();
 
-  ProductVariants productVariants = new ProductVariants(
-    manufacturingPrice: 25.0,
-    sellingPrice: 100.0,
-    discountPrice: 10.0,
-    size: "small",
-    colour: "Blue",
-    productID: "ProductID",
-    variantID: "VariantID",
-    isAvailable: true,
-    images: [
-      "https://ii2.pepperfry.com/media/catalog/product/x/l/236x260/xl-[kids]-classic-leatherette-kids-filled-bean-bag-in-brown-colour-by-can-xl-[kids]-classic-leathere-ecw5ij.jpg",
-      "https://ii2.pepperfry.com/media/catalog/product/x/l/236x260/xl-[kids]-classic-leatherette-kids-filled-bean-bag-in-brown-colour-by-can-xl-[kids]-classic-leathere-ecw5ij.jpg",
-      "https://ii1.pepperfry.com/media/catalog/product/c/l/236x260/classic-style-xxxl-bean-bag-filled-with-beans-in-neon-green-colour-by-sattva-classic-style-xxxl-bean-ojqije.jpg"
-    ],
-  );
+    try {
+      var productDescription =
+          await productRepository.getProductVariantDescription(
+              productID: "0Kw7a5E2AMQ8jJM6a7C0",
+              variantID: "02nnXgCzOjVHRarIPIrf");
+      // var availability = await productRepository.checkProductAvailability(pincode: "110042", productID: "0IeSrbsqqxiqwELq4Qqm", warehouseID: "temp_id");
+      yield ProductDetailLoadingSuccessful(productDescription);
+    } catch (e) {
+      print(e.toString());
+      yield ProductDetailLoadingFailure();
+    }
+  }
 
-  yield ProductDetailLoading();
+  Stream<ProductDetailState> loadProductVariantDetail(
+      LoadProductVariantDetail event) async* {
+    yield ProductDetailLoading();
 
-  try {
-    await Future.delayed(Duration(seconds: 2));
-
-    yield ProductDetailLoadingSuccessful(products, productVariants);
-  } catch (e) {
-    yield ProductDetailLoadingFailure();
+    try {
+      var productImageSizeDescription =
+          await productRepository.getProductVariantSizeColorDescription(
+              productID: "0IeSrbsqqxiqwELq4Qqm", color: "Blue", size: "XXL");
+      yield ProductDetailLoadingSuccessful(productImageSizeDescription);
+    } catch (e) {
+      print(e.toString());
+      yield ProductDetailLoadingFailure();
+    }
   }
 }

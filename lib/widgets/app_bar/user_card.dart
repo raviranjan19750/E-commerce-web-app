@@ -1,13 +1,42 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
+import 'package:living_desire/screens/login/login.dart';
+import 'package:living_desire/service/authentication_service.dart';
 import '../../config/configs.dart';
 
-class UserCard extends StatelessWidget {
-  bool isLoggedIn;
+class UserCard extends StatefulWidget {
+  bool isLoggedIn = false;
+  String userName, phoneNumber;
 
-  String userNNme, phoneNumber;
+  UserCard({this.isLoggedIn, this.userName, this.phoneNumber});
+  @override
+  _UserCardState createState() => _UserCardState();
+}
 
-  UserCard({this.isLoggedIn, this.userNNme, this.phoneNumber});
+class _UserCardState extends State<UserCard> {
+  User user;
+  FirebaseAuth _auth;
+
+  @override
+  void initState() {
+    user = FirebaseAuth.instance.currentUser;
+
+    print("current state " + user.toString());
+    // print(user.toString() + "Current state");
+    super.initState();
+  }
+
+  void _showLoginDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return LoginScreen();
+        });
+  }
 
   void _showPopupMenu(BuildContext context, Offset offset) async {
     await showMenu(
@@ -27,15 +56,20 @@ class UserCard extends StatelessWidget {
           child: Text("My Wishlist"),
         ),
         PopupMenuItem(
-          child: Text("Sign Out"),
+          child: InkWell(
+            child: Text("Sign Out"),
+            onTap: () {
+              RepositoryProvider.of<AuthenticationRepository>(context).logout();
+            },
+          ),
         ),
       ],
       elevation: 8.0,
     );
   }
 
-  Container returnView(bool isLoggedIn, BuildContext context) {
-    if (isLoggedIn) {
+  Container returnView(bool loggedIn, BuildContext context) {
+    if (loggedIn) {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         margin: EdgeInsets.all(8),
@@ -92,7 +126,9 @@ class UserCard extends StatelessWidget {
         ),
         // Login Button
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            _showLoginDialog(context);
+          },
           child: Text(
             Strings.loginText,
             style: TextStyle(color: Colors.white),
@@ -104,8 +140,19 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Configure with firebase user login/signup
-
-    return returnView(isLoggedIn, context);
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+      print("user state" +
+          state.user.toString() +
+          "state.status" +
+          state.status.toString());
+      switch (state.status) {
+        case AuthenticationStatus.authenticated:
+          return returnView(true, context);
+        case AuthenticationStatus.unauthenticated:
+        default:
+          return returnView(false, context);
+      }
+    });
   }
 }

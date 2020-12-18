@@ -6,12 +6,13 @@ class Products {
   final String type;
 
   final String subType;
-
   final String productID;
+  final String warehouseID ;
+
 
   final List<String> tags;
   final List<String> description;
-  final List<String> productIDs;
+
 
   final bool isCustomizable;
   final bool isCombo;
@@ -19,21 +20,42 @@ class Products {
   final DateTime addedDate;
   final DateTime updatedDate;
 
-   static const List<String> tag = ["Beans", "Bags"];
-   static const List<String> desc = ["Beans description", "Bags description"];
-   static const List<String> productIDSList = ["ProductID 1", "ProductID 2"];
-
   Products(
-      {this.name = "RaviRanjan",
-      this.type = "Product Type",
-      this.subType = "Product sub type",
-      this.productID = " productID 123",
-      this.tags = tag,
-      this.description = desc ,
-      this.productIDs = productIDSList,
-      this.isCustomizable = true,
-      this.isCombo = true,
+      {this.name ,
+      this.type ,
+      this.subType,
+      this.productID ,
+      this.warehouseID  ,
+      this.tags ,
+      this.description  ,
+      this.isCustomizable ,
+      this.isCombo ,
       this.addedDate ,
       this.updatedDate,
       });
+
+
+  static Products fromMap(Map <String, dynamic> data) {
+
+    if(data == null) return null;
+
+    return Products(
+      name: data['name'],
+      type: data['type'],
+      subType: data['subType'],
+      productID: data['productID'],
+      warehouseID : data['warehouseID '],
+      tags: data['tags'].cast<String>(),
+      description: data['description'].cast<String>(),
+      isCustomizable: data['isCustomizable'],
+      isCombo: data['isCombo'],
+      addedDate: data['addedDate'].toDate(),
+      updatedDate: data['updatedDate'].toDate(),
+
+    );
+
+
+  }
+
+
 }

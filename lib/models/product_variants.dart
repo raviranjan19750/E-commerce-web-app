@@ -27,4 +27,27 @@ class ProductVariants {
     this.isAvailable,
     this.images
   });
+
+
+  static ProductVariants fromMap(Map <String, dynamic> data) {
+
+    if(data == null) return null;
+
+    return ProductVariants(
+      manufacturingPrice: data['manufacturingPrice'],
+      sellingPrice: data['sellingPrice'],
+      discountPrice: data['discountPrice'],
+      size: data['size'],
+      colour: data['colour'],
+      productID: data['productID'],
+      variantID: data['variantID'],
+      isAvailable: data['isAvailable'],
+      images: data['images'].cast<String>(),
+
+    );
+
+  }
+
+
+
 }

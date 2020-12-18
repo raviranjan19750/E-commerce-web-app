@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:living_desire/config/strings.dart';
+
 
 // ignore: must_be_immutable
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 class CustomWidgetButton extends StatelessWidget {
 
   final VoidCallback onPressed;
@@ -10,9 +11,11 @@ class CustomWidgetButton extends StatelessWidget {
   final Color textColor;
   final String text;
 
-  const CustomWidgetButton({Key key, this.onPressed, this.backGroundColor = Colors.white, this.textColor = Colors.black, @required this.text }) :
+   const CustomWidgetButton({Key key, this.onPressed, this.backGroundColor = Colors.white, this.textColor = Colors.black, @required this.text }) :
         assert (text != null),
         super(key: key);
+
+
 
 
   @override

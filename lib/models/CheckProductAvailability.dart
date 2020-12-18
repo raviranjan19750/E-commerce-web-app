@@ -10,13 +10,23 @@ class CheckProductAvailability {
 
   factory CheckProductAvailability.fromJson(Map<String, dynamic> data) {
     print(data.toString());
+
+    if (data['expectedDeliveryDate'] != null) {
+      return CheckProductAvailability(
+        responseCode: data['responseCode'],
+        responseText: data['responseText'],
+        expectedDeliveryDate: new Timestamp(
+                data['expectedDeliveryDate']["_seconds"],
+                data['expectedDeliveryDate']["_nanoseconds"])
+            .toDate(),
+      );
+    }
+
     return CheckProductAvailability(
       responseCode: data['responseCode'],
       responseText: data['responseText'],
-      expectedDeliveryDate: new Timestamp(
-              data['expectedDeliveryDate']["_seconds"],
-              data['expectedDeliveryDate']["_nanoseconds"])
-          .toDate(),
+      // expectedDeliveryDate: new Timestamp(data['expectedDeliveryDate']["_seconds"], data['expectedDeliveryDate']["_nanoseconds"])
+      //     .toDate(),
     );
   }
 }
