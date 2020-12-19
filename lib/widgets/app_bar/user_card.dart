@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/screens/login/login.dart';
 import 'package:living_desire/service/authentication_service.dart';
+import 'package:living_desire/screens/login/login_view.dart';
 import '../../config/configs.dart';
 
 class UserCard extends StatefulWidget {
