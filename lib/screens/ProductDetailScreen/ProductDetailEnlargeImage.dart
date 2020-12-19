@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/palette.dart';
@@ -6,20 +5,18 @@ import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/screens/all_product/product_widgets.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
 
-
 class ProductDetailEnlargeImage extends StatefulWidget {
-
   final List<String> imageURL;
 
   const ProductDetailEnlargeImage({Key key, this.imageURL}) : super(key: key);
 
   @override
-  _ProductDetailEnlargeImageState createState() => _ProductDetailEnlargeImageState();
+  _ProductDetailEnlargeImageState createState() =>
+      _ProductDetailEnlargeImageState();
 }
 
 class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
-
-  int selectedImageIndex ;
+  int selectedImageIndex;
   int selectedColorIndex;
   int selectedSizeIndex;
   String selectedURI;
@@ -32,24 +29,23 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     double imageWidth = MediaQuery.of(context).size.width * 0.26;
     double imageHeight = MediaQuery.of(context).size.height * 0.62;
 
-    double imageListWidth = MediaQuery.of(context).size.width*0.06;
-    double imageListHeight = MediaQuery.of(context).size.height*0.55;
+    double imageListWidth = MediaQuery.of(context).size.width * 0.06;
+    double imageListHeight = MediaQuery.of(context).size.height * 0.55;
 
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       //List of images
+        //List of images
         Container(
           margin: EdgeInsets.only(left: 32.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 width: imageListWidth,
@@ -63,41 +59,38 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
               ),
               Container(
                 width: imageListWidth,
-                height: imageListHeight,
+                //height: imageListHeight,
                 margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
                 color: Palette.lightGrey,
                 alignment: Alignment.center,
-                child:  ListView.builder(
+                child: ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: widget.imageURL.length,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
-
                       onTap: () {
                         setState(() {
                           selectedImageIndex = index;
-                          selectedURI = widget.imageURL[selectedImageIndex].toString();
+                          selectedURI =
+                              widget.imageURL[selectedImageIndex].toString();
                         });
-
                       },
                       child: Container(
-
-                        child: (widget.imageURL[index] != null)?Image.network(widget.imageURL[index].toString()) : Text(
-                          widget.imageURL[index],
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black),
-                        ),
-
-
+                        child: (widget.imageURL[index] != null)
+                            ? Image.network(widget.imageURL[index].toString())
+                            : Text(
+                                widget.imageURL[index],
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
                       ),
                     );
                   },
                 ),
               ),
               Container(
-                width:imageListWidth,
+                width: imageListWidth,
                 height: 30,
                 color: Palette.lightGrey,
                 child: IconButton(
@@ -118,14 +111,15 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
               InkWell(
                 child: Container(
                   height: imageHeight,
-                  width:imageWidth,
+                  width: imageWidth,
                   decoration: new BoxDecoration(
                       //color: Palette.lightGrey,
                       image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: (selectedURI != null)?NetworkImage(selectedURI) : NetworkImage(widget.imageURL[0]),
-                      )
-                  ),
+                    fit: BoxFit.fill,
+                    image: (selectedURI != null)
+                        ? NetworkImage(selectedURI)
+                        : NetworkImage(widget.imageURL[0]),
+                  )),
                   child: Stack(
                     children: [
                       Positioned(
@@ -146,7 +140,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                     ],
                   ),
                 ),
-              ) ,
+              ),
 
 // action buttons
               Container(
