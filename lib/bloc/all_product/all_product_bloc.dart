@@ -42,7 +42,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
 
   Stream<AllProductState> _mapLoadNextProduct(
       AllProductState state, LoadNextProduct event) async* {
-    if (state is SuccessLoadingAllProduct) {
+    if (state is SuccessLoadingAllProduct && !state.isEndReached) {
       yield LoadingNextProduct();
       final List<Product> previousList = state.productList;
       int limit = state.limit;
