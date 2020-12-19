@@ -11,20 +11,31 @@ import 'package:living_desire/widgets/nextListHover.dart';
 import 'package:living_desire/widgets/productTypeBar.dart';
 
 class ProductDetailScreen extends StatelessWidget {
+  final String productID;
+  final String variantID;
+
+  const ProductDetailScreen({
+    Key key,
+    this.productID,
+    this.variantID,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
       BlocProvider(
-        create: (context) => ProductDetailBloc(
-            productRepository: RepositoryProvider.of(context))..add(LoadProductDetail("0IeSrbsqqxiqwELq4Qqm", "0LSDZLNUdmWQZohaIQCw")),
+        create: (context) =>
+            ProductDetailBloc(productRepository: RepositoryProvider.of(context))
+              ..add(LoadProductDetail(
+                productID,
+                variantID,
+              )),
       ),
-
     ], child: ProductDetail());
   }
 }
 
 class ProductDetail extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -122,7 +133,4 @@ class ProductDetail extends StatelessWidget {
 
     throw UnimplementedError();
   }
-
 }
-
-

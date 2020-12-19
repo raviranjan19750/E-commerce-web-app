@@ -30,6 +30,8 @@ class RoutesConfiguration {
                   searchFilter: searchFilter,
                 ));
       case PRODUCT_DETAIL:
+        var productID = settings.arguments as String;
+        var variantID = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => ProductDetailScreen());
       case BULK_ORDER:
         return MaterialPageRoute(builder: (_) => BulkOrder());
