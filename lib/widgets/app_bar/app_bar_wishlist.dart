@@ -2,7 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
+import 'package:living_desire/bloc/wishlist_config/wishlist_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 
 class AppBarWishlist extends StatelessWidget {
@@ -27,7 +27,7 @@ class AppBarWishlist extends StatelessWidget {
 
               children: [
 
-                BlocBuilder<WishlistBloc, WishlistState>(
+                BlocBuilder<WishlistConfigBloc, WishlistConfigState>(
                   builder: (context, state) {
                     return Badge(
                       badgeContent: Text(state.totalItem.toString(),style: TextStyle(color: Colors.white,fontSize: 12),),

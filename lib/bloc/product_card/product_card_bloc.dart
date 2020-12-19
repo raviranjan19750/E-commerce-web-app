@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
+import 'package:living_desire/bloc/wishlist_config/wishlist_bloc.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
 
@@ -12,7 +12,7 @@ part 'product_card_state.dart';
 class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
   final Product product;
   final CustomerDetailRepository customerRepo;
-  final WishlistBloc wishlistBloc;
+  final WishlistConfigBloc wishlistBloc;
 
   ProductCardBloc({this.product, this.customerRepo, this.wishlistBloc})
       : assert(product != null),
@@ -28,11 +28,11 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
     if (event is AddToWishListProductEvent) {
       customerRepo.addToWishList(product.varientId);
       yield UpdatedProductCard(product, true);
-      wishlistBloc.add(UpdateWishList());
+      wishlistBloc.add(UpdateWishConfigList());
     } else if (event is RemoveFromWishListProductEvent) {
       customerRepo.removeFromWishList(product.varientId);
       yield UpdatedProductCard(product, false);
-      wishlistBloc.add(UpdateWishList());
+      wishlistBloc.add(UpdateWishConfigList());
     }
   }
 }
