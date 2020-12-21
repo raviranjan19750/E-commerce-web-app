@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/models/models.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailScreeen.dart';
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order.dart';
@@ -30,9 +31,8 @@ class RoutesConfiguration {
                   searchFilter: searchFilter,
                 ));
       case PRODUCT_DETAIL:
-        var productID = settings.arguments as String;
-        var variantID = settings.arguments as String;
-        return MaterialPageRoute(builder: (_) => ProductDetailScreen());
+        var product = settings.arguments as Product;
+        return MaterialPageRoute(builder: (_) => ProductDetailScreen(product: product,));
       case BULK_ORDER:
         return MaterialPageRoute(builder: (_) => BulkOrder());
       case ORDER:

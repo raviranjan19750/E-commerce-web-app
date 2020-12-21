@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/service/authentication_service.dart';
@@ -81,9 +83,27 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ],
         ),
         Positioned(
-            right: 0,
+            right: -5,
             bottom: -32,
             child: Visibility(visible: visibleSubAppBar, child: SubAppBar())),
+      ],
+    );
+  }
+}
+
+class MyAppBar extends StatelessWidget {
+
+  var rng = new Random();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      actions: [
+        AppBarCart(),
+        AppBarWishlist(),
+        UserCard(
+          isLoggedIn: BlocProvider.of<SignInBloc>(context).isSignedIn,
+        ),
       ],
     );
   }

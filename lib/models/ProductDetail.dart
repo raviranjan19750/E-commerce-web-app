@@ -14,7 +14,7 @@ class ProductDetail {
   final bool isAvailable;
 
   final String size;
-  final String colour;
+  final List<String> colour;
 
   final double sellingPrice;
   final double discountPrice;
@@ -43,7 +43,7 @@ class ProductDetail {
       variantID: data["variantID"],
       productName: data["productName"],
       size: data["size"],
-      colour: data["colour"],
+      colour: data["colour"].cast<String>(),
 
       sellingPrice: data["sellingPrice"],
       discountPrice: data["discountPrice"],
@@ -59,11 +59,4 @@ class ProductDetail {
     );
 
   }
-
-
-
-
-
-
-
 }

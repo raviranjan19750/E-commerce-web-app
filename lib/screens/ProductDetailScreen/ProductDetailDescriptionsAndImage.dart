@@ -12,8 +12,10 @@ import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWid
 import 'package:living_desire/widgets/bullet.dart';
 
 class ProductDetailDescriptionAndImage extends StatelessWidget {
-  final List<Color> itemColor = itemColors;
-  final List<String> itemDescriptions = productItemDescriptions;
+  final List<Color> itemColor;
+  final List<String> itemDescriptions;
+
+  const ProductDetailDescriptionAndImage({Key key, this.itemColor = itemColors, this.itemDescriptions = productItemDescriptions}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: itemColor.length,
+                            itemCount: state.productDetail.colourOptions.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
@@ -122,7 +124,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                           width: 0.5, color: Colors.black)),
                                   child: CircleAvatar(
                                     radius: 10,
-                                    backgroundColor: itemColor[index],
+                                    backgroundColor: Color(0x3700B3),
                                   ),
                                 ),
                               );
@@ -218,34 +220,28 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                 fontSize: 22),
                           ),
                         ),
-
                         Container(
                           alignment: Alignment.center,
                           width: MediaQuery.of(context).size.width * 0.4,
                           margin: EdgeInsets.only(top: 8.0),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: state.productDetail.description.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Bullets(),
-                                  Container(
-                                    width: 10,
+                          child: Column(
+                            children: state.productDetail.description.map((e) => Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Bullets(),
+                                Container(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    e,
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black),
                                   ),
-                                  Flexible(
-                                    child: Text(
-                                      state.productDetail.description[index],
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
+                                ),
+                              ],
+                            )).toList(),
                           ),
                         )
                       ],

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
 import 'package:elastic_client/elastic_client.dart';
@@ -7,10 +8,15 @@ import 'package:living_desire/service/searchapi.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../logger.dart';
+
 part 'all_product_event.dart';
 part 'all_product_state.dart';
 
 class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
+
+  var LOG = LogBuilder.getLogger();
+
   final SearchApi searchApi;
   var filter = "";
 
@@ -86,15 +92,29 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       for (var img in hit.doc['images']) {
         imgUrls.add(img.toString());
       }
+
+      List<String> colors = List();
+      for (var col in hit.doc['colour']) {
+        colors.add(col['hexCode'].toString());
+      }
+
+      Set<String> tags = HashSet();
+      for (var tag in hit.doc['tags']) {
+        tags.add(tag.toString());
+      }
       var prod = Product(
-        title: hit.doc['title'],
-        color: hit.doc['color'],
+        title: hit.doc['name'],
+        color: colors,
         imageUrls: imgUrls,
         size: hit.doc['size'],
-        discountPrice: hit.doc['discountprice'],
-        retailPrice: hit.doc['retailprice'],
+        discountPrice: hit.doc['discountPrice'],
+        retailPrice: hit.doc['sellingPrice'],
         productId: hit.doc['productID'],
         varientId: hit.doc['variantID'],
+        tags: tags,
+        type: hit.doc['type'],
+        isAvailable: hit.doc['isAvailable'],
+        subType: hit.doc['subType']
       );
       result.add(prod);
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/product.dart';
@@ -11,24 +12,27 @@ import 'package:living_desire/widgets/nextListHover.dart';
 import 'package:living_desire/widgets/productTypeBar.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  final String productID;
-  final String variantID;
+  final Product product;
 
-  const ProductDetailScreen({
-    Key key,
-    this.productID,
-    this.variantID,
-  }) : super(key: key);
+  const ProductDetailScreen({Key key, this.product})
+      : assert(product != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
       BlocProvider(
+          create: (context) => ProductCardBloc(
+                customerRepo: RepositoryProvider.of(context),
+                wishlistBloc: BlocProvider.of(context),
+                product: product,
+              )),
+      BlocProvider(
         create: (context) =>
             ProductDetailBloc(productRepository: RepositoryProvider.of(context))
               ..add(LoadProductDetail(
-                productID,
-                variantID,
+                product.productId,
+                product.varientId,
               )),
       ),
     ], child: ProductDetail());

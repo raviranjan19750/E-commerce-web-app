@@ -5,20 +5,23 @@ import '../widgets.dart';
 
 class ProductsHomeOverview extends StatelessWidget {
   // Dummy List Data for Products type
-  // TODO:Later Connect to Firebase
   final List<ProductType> productTypes = productsType;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        child: ListView.builder(
-          // Item Count Connect to firebase
-          itemCount: productTypes.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ProductsType(productType: productTypes[index]);
-          },
-        ),
-      ),
+    return Column(
+      children: productTypes.map((e) => ProductsType(productType: e)).toList(),
     );
+
+    // return Expanded(
+    //   child: Container(
+    //     child: ListView.builder(
+    //       // Item Count Connect to firebase
+    //       itemCount: productTypes.length,
+    //       itemBuilder: (BuildContext context, int index) {
+    //         return ProductsType(productType: productTypes[index]);
+    //       },
+    //     ),
+    //   ),
+    // );
   }
 }

@@ -24,7 +24,6 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     if (event is InitializeDummyFilter) {
       List<FilterTag> tags = await searchApi.getAllCategoryTags();
       yield LoadFiltersFromServer(tags);
-      // yield* _dummyFilter();
     } else if (event is ChangeFilterEvent) {
       yield* _onFilterChange(event);
     }
@@ -51,23 +50,5 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
       }
     }
     yield DummyFilterState(newFilters);
-  }
-
-  Stream<FilterState> _dummyFilter() async* {
-    List<FilterTag> filters = List();
-    FilterTag tag1 = FilterTag("Category", description: "Category");
-    tag1.addChild(FilterCategoryChild("BULK", "Bulk Product", false));
-    tag1.addChild(FilterCategoryChild("BULK2", "Bulk Product", false));
-    tag1.addChild(FilterCategoryChild("COMBO", "Combo Product", true));
-    filters.add(tag1);
-
-    FilterTag tag2 = FilterTag("Sizes", description: "Sizes");
-    tag2.addChild(FilterCategoryChild("S", "Small", false));
-    tag2.addChild(FilterCategoryChild("M", "Medium", false));
-    tag2.addChild(FilterCategoryChild("XL", "Large", true));
-    tag2.addChild(FilterCategoryChild("XXL", "Extra Large", true));
-    tag2.addChild(FilterCategoryChild("XL", "Large", true));
-    filters.add(tag2);
-    yield(DummyFilterState(filters));
   }
 }
