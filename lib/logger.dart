@@ -6,9 +6,7 @@ class LogBuilder {
   static Logger getLogger() {
     if (_logger == null) {
       _logger = Logger(
-        printer: PrettyPrinter(
-          colors: true,
-        )
+        printer: SimplePrinter(colors: true)
       );
     }
 

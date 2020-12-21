@@ -107,7 +107,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: state.productDetail.colourOptions.length,
+                            itemCount: state.productDetail.colour.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
@@ -119,12 +119,12 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                   margin: EdgeInsets.only(left: 6.0),
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.white,
+                                      color: Color(int.parse("FF" + state.productDetail.colour[index], radix: 16)),
                                       border: Border.all(
                                           width: 0.5, color: Colors.black)),
                                   child: CircleAvatar(
                                     radius: 10,
-                                    backgroundColor: Color(0x3700B3),
+                                    backgroundColor: Color(int.parse(state.productDetail.colour[index], radix: 16)),
                                   ),
                                 ),
                               );
