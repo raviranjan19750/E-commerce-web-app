@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/bloc.dart';
 import '../../widgets/widgets.dart';
 import '../../models/models.dart';
 
@@ -13,16 +15,26 @@ class SelectAddressScreenDesktop extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(),
-      body: Container(
-        child: Row(
-          children: [
-            SelectAddressContainer(),
-            SelectAddressCartTotal(
-              cart: cart,
-            ),
-          ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => ManageAddressesBloc(
+                addresssRepository: RepositoryProvider.of(context))
+              ..add(LoadAllAddresses('id1'))),
+      ],
+      child: Scaffold(
+        appBar: CustomAppBar(),
+        body: SingleChildScrollView(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: SelectAddressContainer()),
+              SelectAddressCartTotal(
+                cart: cart,
+              ),
+            ],
+          ),
         ),
       ),
     );

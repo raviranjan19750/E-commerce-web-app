@@ -25,25 +25,17 @@ class CartListContainer extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Row(
-              children: [
-                Text(
-                  Strings.deliveringTo,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14,
-                  ),
-                ),
-                // Get Pincode
-                Text(
-                  "carts[0].pincode",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                )
-              ],
+
+            child: Text(
+              Strings.deliveringTo,
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 14,
+              ),
             ),
+            // Get Pincode
           ),
+
           Divider(
             thickness: 0.5,
             color: Colors.black54,

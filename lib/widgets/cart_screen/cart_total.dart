@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
@@ -40,14 +39,6 @@ class CartTotal extends StatelessWidget {
     Key key,
     this.subtotal,
   }) : super(key: key);
-
-  double getTotal(List<Cart> cart) {
-    double subTotal = 0;
-    cart.forEach((element) {
-      subTotal = subTotal + element.quantity * element.discountPrice;
-    });
-    return subTotal;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +112,7 @@ class CartTotal extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '',
+                    '${subtotal}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

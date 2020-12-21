@@ -13,8 +13,4 @@ class InitialCartTotal extends CartTotalEvent {
   InitialCartTotal(this.cart);
 }
 
-class UpdateCartTotal extends CartTotalEvent {
-  final List<Cart> cart;
-
-  UpdateCartTotal(this.cart);
-}
+class UpdateCartTotal extends CartTotalEvent {}

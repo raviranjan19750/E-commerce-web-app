@@ -17,6 +17,8 @@ class CartItemView extends StatelessWidget {
     return BlocProvider(
       create: (context) => CartItemBloc(
         cart: cart,
+        customerDetailRepository: RepositoryProvider.of(context),
+        cartTotalBloc: BlocProvider.of(context),
         cartRepository: RepositoryProvider.of(context),
       ),
       child: BlocBuilder<CartItemBloc, CartItemState>(
@@ -26,13 +28,20 @@ class CartItemView extends StatelessWidget {
               return Opacity(
                 opacity: 0.5,
                 child: IgnorePointer(
-                  child: CartItem(cart: state.cart,),
+                  child: CartItem(
+                    cart: state.cart,
+                  ),
                 ),
               );
             case CartItemStateType.LOADING:
-              return Icon(Icons.warning, color: Colors.red,);
+              return Icon(
+                Icons.warning,
+                color: Colors.red,
+              );
             default:
-              return CartItem(cart: state.cart,);
+              return CartItem(
+                cart: state.cart,
+              );
           }
         },
       ),
@@ -41,7 +50,6 @@ class CartItemView extends StatelessWidget {
 }
 
 class CartItem extends StatelessWidget {
-
   final Cart cart;
 
   const CartItem({Key key, this.cart}) : super(key: key);
@@ -223,8 +231,7 @@ class CartItem extends StatelessWidget {
                           top: 4.0,
                         ),
                         child: Text(
-                          Strings.rupeesSymbol +
-                              cart.sellingPrice.toString(),
+                          Strings.rupeesSymbol + cart.sellingPrice.toString(),
                           style: TextStyle(
                             fontSize: 14,
                             decoration: TextDecoration.lineThrough,
@@ -240,8 +247,7 @@ class CartItem extends StatelessWidget {
                           left: 8.0,
                         ),
                         child: Text(
-                          Strings.rupeesSymbol +
-                              cart.discountPrice.toString(),
+                          Strings.rupeesSymbol + cart.discountPrice.toString(),
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -255,12 +261,10 @@ class CartItem extends StatelessWidget {
                         child: Text(
                           Strings.youSave +
                               Strings.rupeesSymbol +
-                              (cart.sellingPrice -
-                                      cart.discountPrice)
+                              (cart.sellingPrice - cart.discountPrice)
                                   .toString() +
                               ' (' +
-                              (((cart.sellingPrice -
-                                              cart.discountPrice) /
+                              (((cart.sellingPrice - cart.discountPrice) /
                                           cart.sellingPrice) *
                                       100)
                                   .toInt()

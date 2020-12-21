@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:living_desire/bloc/wishlist_config/wishlist_bloc.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
-
 part 'product_card_event.dart';
 part 'product_card_state.dart';
 
