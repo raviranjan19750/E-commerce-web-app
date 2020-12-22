@@ -231,9 +231,17 @@ class AllProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    int itemCount = 4;
+    if (width < 1000) {
+      itemCount = 2;
+    } else if (width < 1200) {
+      itemCount = 3;
+    }
+    // 1200 - 3
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
+        crossAxisCount: itemCount,
         childAspectRatio: 0.73,
         mainAxisSpacing: 8,
       ),

@@ -27,11 +27,9 @@ class ProductCard extends StatelessWidget {
               Navigator.pushNamed(context, RoutesConfiguration.PRODUCT_DETAIL,
                   arguments: product);
             },
-            child: Container(
-                width: 200,
-                child: ProductCardContent(
-                  product: product,
-                )),
+            child: ProductCardContent(
+              product: product,
+            ),
           )),
     );
   }
@@ -51,26 +49,29 @@ class ProductCardContent extends StatelessWidget {
 
     return Column(
       children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              height: 280,
-              child: Image.network(
-                product.imageUrls[0],
-                fit: BoxFit.cover,
+        Expanded(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                child: Image.network(
+                  product.imageUrls[0],
+                  fit: BoxFit.cover,
+                ),
+                width: double.infinity,
+                height: double.infinity,
               ),
-            ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: ProductWishlistButton(productId: product.title),
-            ),
-            Positioned(
-              bottom: 0,
-              child: _AddToCartButton(),
-            )
-          ],
+              Positioned(
+                right: 0,
+                top: 0,
+                child: ProductWishlistButton(productId: product.title),
+              ),
+              Positioned(
+                bottom: 0,
+                child: _AddToCartButton(),
+              )
+            ],
+          ),
         ),
         Container(
           padding: EdgeInsets.all(8.0),
@@ -368,14 +369,14 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
   Widget _buildWidget(bool _on) {
     if (_on) {
       return AnimatedContainer(
-        width: 200,
+        width: 400,
         color: Colors.white.withAlpha(180),
         duration: Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(vertical: 6),
         child: Icon(Icons.add_shopping_cart),
       );
     } else {
-      return Container(width: 200, height: 40, margin: EdgeInsets.all(0));
+      return Container(width: 400, height: 40, margin: EdgeInsets.all(0));
     }
   }
 
