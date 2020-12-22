@@ -200,7 +200,8 @@ class BuildAllProductView extends StatelessWidget {
             if (BlocProvider.of<ScrollBloc>(context)
                         .controller
                         .position
-                        .extentAfter < 300 &&
+                        .extentAfter <
+                    300 &&
                 !state.isEndReached) {
               BlocProvider.of<AllProductBloc>(context).add(LoadNextProduct());
             }
@@ -234,7 +235,8 @@ class AllProductGrid extends StatelessWidget {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
-        childAspectRatio: 0.73,
+        childAspectRatio: (MediaQuery.of(context).size.width * 0.15) /
+            (MediaQuery.of(context).size.height * 0.41),
         mainAxisSpacing: 8,
       ),
       itemCount: products.length,

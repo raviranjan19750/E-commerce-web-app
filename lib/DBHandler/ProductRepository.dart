@@ -6,18 +6,17 @@ import 'package:living_desire/models/ProductDetail.dart';
 import 'package:http/http.dart' as http;
 
 class ProductRepository {
-  
   var LOG = LogBuilder.getLogger();
-  
+
   Future<ProductDetail> getProductVariantDescription(
       {String productID, String variantID}) async {
-    LOG.i('Fetching Product Description for Product ID ${productID} and VarientId ${variantID}');
+    LOG.i(
+        'Fetching Product Description for Product ID ${productID} and VarientId ${variantID}');
     final response = await http.get(
-        "http://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID");
+        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID");
     Map<String, dynamic> map = jsonDecode(response.body);
     LOG.i(map);
     return ProductDetail.fromJson(map);
-
 
     //return ProductDetail.fromJson(jsonDecode(response.body));
   }
@@ -27,7 +26,7 @@ class ProductRepository {
     var params = {"size": size, "colour": color};
 
     var response = await http.post(
-        "http://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProducts/details/$productID",
+        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID",
         body: params);
     Map<String, dynamic> map = jsonDecode(response.body);
     return ProductDetail.fromJson(map);
