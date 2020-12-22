@@ -47,6 +47,9 @@ dependencies:
   firebase_auth_web: ^0.3.2
   pin_input_text_field: ^3.1.1
   flutter_web_image_picker: ^0.0.2
+  shared_preferences: ^0.5.4+8
+  shared_preferences_web: ^0.1.0
+  localstorage: ^3.0.6+9
 
 
 
