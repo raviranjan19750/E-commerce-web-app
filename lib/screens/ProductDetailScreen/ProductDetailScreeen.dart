@@ -13,14 +13,14 @@ import 'package:living_desire/widgets/productTypeBar.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final Product product;
-  final String productID;
-  final String variantID;
+  // final String productID;
+  // final String variantID;
 
   const ProductDetailScreen({
     Key key,
     this.product,
-    this.productID,
-    this.variantID,
+    // this.productID,
+    // this.variantID,
   }) : super(key: key);
 
   @override
