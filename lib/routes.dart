@@ -31,9 +31,10 @@ class RoutesConfiguration {
                   searchFilter: searchFilter,
                 ));
       case PRODUCT_DETAIL:
-        var product = settings.arguments as Product;
-        var productID = settings.arguments as String;
-        var variantID = settings.arguments as String;
+        var args = settings.arguments as Map;
+        var product = args["product"];
+        var productID = args["productID"];
+        var variantID = args["variantID"];
         return MaterialPageRoute(
             builder: (_) => MyDesktopView(
                     child: ProductDetailScreen(

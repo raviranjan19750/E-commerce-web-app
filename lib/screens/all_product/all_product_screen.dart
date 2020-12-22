@@ -210,7 +210,7 @@ class BuildAllProductView extends StatelessWidget {
             if (BlocProvider.of<ScrollBloc>(context)
                         .controller
                         .position
-                        .extentAfter < 300 &&
+                        .extentAfter < 600 &&
                 !state.isEndReached) {
               BlocProvider.of<AllProductBloc>(context).add(LoadNextProduct());
             }

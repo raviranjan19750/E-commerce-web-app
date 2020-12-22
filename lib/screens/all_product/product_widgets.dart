@@ -51,7 +51,7 @@ class ProductCardContent extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, RoutesConfiguration.PRODUCT_DETAIL,
-                        arguments: product);
+                        arguments: {"product": product, "productID": product.productId, "variantID": product.varientId});
                   },
                   child: Image.network(
                     product.imageUrls[0],
