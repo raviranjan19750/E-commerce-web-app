@@ -5,19 +5,7 @@ import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
-class CartScreenDesktop extends StatefulWidget {
-  final TrackingScrollController scrollController;
-
-  const CartScreenDesktop({
-    Key key,
-    this.scrollController,
-  }) : super(key: key);
-
-  @override
-  _CartScreenDesktopState createState() => _CartScreenDesktopState();
-}
-
-class _CartScreenDesktopState extends State<CartScreenDesktop> {
+class CartScreenDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -28,7 +16,7 @@ class _CartScreenDesktopState extends State<CartScreenDesktop> {
                   ..add(LoadAllCart('id1'))),
         BlocProvider(
           create: (context) => CartTotalBloc(
-              customerDetailRepository: RepositoryProvider.of(context)),
+              cartRepository: RepositoryProvider.of(context)),
         ),
       ],
       child: Row(

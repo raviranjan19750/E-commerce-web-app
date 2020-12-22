@@ -3,40 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 
-class CartItemCount extends StatefulWidget {
+class CartItemCount extends StatelessWidget {
   final int quantity;
   final String documentID;
 
-  const CartItemCount({
-    Key key,
-    this.documentID,
-    this.quantity,
-  }) : super(key: key);
-  @override
-  _CartItemCountState createState() => _CartItemCountState();
-}
-
-class _CartItemCountState extends State<CartItemCount> {
-  int itemQuantityCount;
-
-  int incrementItemQuantity(int count) {
-    return ++count;
-  }
-
-  int decrementItemQuantity(int count) {
-    if (count <= 0) {
-      return 0;
-    }
-
-    return --count;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    itemQuantityCount = widget.quantity;
-  }
+  const CartItemCount({Key key, this.quantity, this.documentID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,21 +21,11 @@ class _CartItemCountState extends State<CartItemCount> {
           Container(
             child: InkWell(
               onTap: () {
-                setState(() {
-                  itemQuantityCount = decrementItemQuantity(itemQuantityCount);
-                });
-                if (itemQuantityCount <= 0) {
-                  BlocProvider.of<CartItemBloc>(context).add(DeleteCart(
-                    widget.documentID,
-                    "id1",
-                  ));
-                } else {
-                  BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
-                    widget.documentID,
-                    itemQuantityCount,
-                    "id1",
-                  ));
-                }
+                BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
+                  documentID,
+                  quantity - 1,
+                  "id1",
+                ));
               },
               child: Icon(
                 Icons.remove,
@@ -76,19 +37,16 @@ class _CartItemCountState extends State<CartItemCount> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
             child: Text(
-              itemQuantityCount.toString(),
+              quantity.toString(),
               style: TextStyle(fontSize: 14, color: Colors.black),
             ),
           ),
           Container(
             child: InkWell(
               onTap: () {
-                setState(() {
-                  itemQuantityCount = incrementItemQuantity(itemQuantityCount);
-                });
                 BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
-                  widget.documentID,
-                  itemQuantityCount,
+                  documentID,
+                  quantity + 1,
                   "id1",
                 ));
               },

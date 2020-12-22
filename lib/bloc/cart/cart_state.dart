@@ -23,6 +23,10 @@ class CartDetailLoadingSuccessful extends CartState {
   CartDetailLoadingSuccessful(this.cart);
 }
 
+class UpdatedCartState extends CartDetailLoadingSuccessful {
+  UpdatedCartState(List<Cart> cart) : super(cart);
+}
+
 class CartDetailLoadingFailure extends CartState {}
 
 class DeleteCartDetailLoading extends CartState {}

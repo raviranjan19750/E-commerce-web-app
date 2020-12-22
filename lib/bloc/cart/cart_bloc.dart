@@ -5,14 +5,18 @@ import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
 import '../../DBHandler/DBHandler.dart';
 import 'package:living_desire/models/models.dart';
+
+import '../../logger.dart';
 part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final CartRepository cartRepository;
-
   final CustomerDetailRepository customerRepo;
   final CartItemBloc cartItemBloc;
+
+  var LOG = LogBuilder.getLogger();
+
   CartBloc({
     this.cartRepository,
     this.customerRepo,
@@ -21,7 +25,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         // assert(customerRepo != null),
         //       assert(cartRepository != null),
         //       assert(cartItemBloc != null),
-        super(CartDetailInitial(List()));
+        super(CartDetailInitial(cartRepository.cart));
 
   @override
   Stream<CartState> mapEventToState(
@@ -38,6 +42,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } else if (event is AddCart) {
       //customerRepo.addToCart(cart.key);
       yield* addCartDetail(event);
+    } else if (event is RefreshCart) {
+      yield CartDetailLoading();
+      await Future.delayed(Duration(milliseconds: 200));
+      LOG.i('Total Items Length ${cartRepository.cart.length}');
+      yield CartDetailLoadingSuccessful(cartRepository.cart.map((e) => e).toList());
     }
   }
 

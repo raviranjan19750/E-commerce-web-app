@@ -5,40 +5,29 @@ import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
 
-class CartTotalView extends StatelessWidget {
-  final List<Cart> carts;
+import '../../logger.dart';
 
-  const CartTotalView({Key key, this.carts}) : super(key: key);
+class CartTotalView extends StatelessWidget {
+  var LOG = LogBuilder.getLogger();
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CartTotalBloc(
-        cart: carts,
-        customerDetailRepository: RepositoryProvider.of(context),
-      ),
-      child:
-          BlocBuilder<CartTotalBloc, CartTotalState>(builder: (context, state) {
-        if (state is CartTotalInitial) {
-          return CartTotal(
-            subtotal: state.subTotal,
-          );
-        } else if (state is CartTotalUpdate) {
-          return CartTotal(
-            subtotal: state.subTotal,
-          );
-        }
-      }),
-    );
+    return BlocBuilder<CartTotalBloc, CartTotalState>(
+        builder: (context, state) {
+      LOG.i(state);
+      return CartTotal(
+        cart: state,
+      );
+    });
   }
 }
 
 class CartTotal extends StatelessWidget {
-  double subtotal;
+  final CartTotalState cart;
 
   CartTotal({
     Key key,
-    this.subtotal,
+    this.cart,
   }) : super(key: key);
 
   @override
@@ -107,13 +96,13 @@ class CartTotal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    Strings.subTotal + ' ( Items):',
+                    Strings.subTotal + ' (${cart.totalQuantity} Items):',
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    '${subtotal}',
+                    '${cart.retailTotal}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -148,7 +137,7 @@ class CartTotal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(Strings.discount),
-                  Text('Discount'),
+                  Text('-${cart.retailTotal - cart.discountTotal}'),
                 ],
               ),
             ),
@@ -171,7 +160,7 @@ class CartTotal extends StatelessWidget {
                     style: TextStyle(fontSize: 18),
                   ),
                   Text(
-                    'Total',
+                    '${cart.discountTotal}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

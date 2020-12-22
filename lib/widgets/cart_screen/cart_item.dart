@@ -17,7 +17,7 @@ class CartItemView extends StatelessWidget {
     return BlocProvider(
       create: (context) => CartItemBloc(
         cart: cart,
-        customerDetailRepository: RepositoryProvider.of(context),
+        cartBloc: RepositoryProvider.of(context),
         cartTotalBloc: BlocProvider.of(context),
         cartRepository: RepositoryProvider.of(context),
       ),

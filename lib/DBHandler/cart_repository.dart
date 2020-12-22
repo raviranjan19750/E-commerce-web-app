@@ -3,18 +3,49 @@ import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
 
-class CartRepository {
-  // Get Cart Details
+import '../logger.dart';
 
+class CartRepository {
+
+  var LOG = LogBuilder.getLogger();
+
+  List<Cart> _cart = List.empty();
+
+  List<Cart> get cart => _cart;
+
+  int get totalCartItem {
+    int count = 0;
+    for (var c in _cart) {
+      count += c.quantity;
+    }
+    return count;
+  }
+
+  double get cartDiscountedTotal {
+    double total = 0;
+    for (var c in _cart) {
+      total += (c.quantity * c.discountPrice);
+    }
+    return total;
+  }
+
+  double get cartRetailTotal {
+    double total = 0;
+    for (var c in _cart) {
+      total += (c.quantity * c.sellingPrice);
+    }
+    return total;
+  }
 
   Future<List<Cart>> getCartDetails(String authID) async {
     try {
       final response =
           await http.get(FunctionConfig.host + 'manageCart/normal/${authID}');
       if (response.statusCode == 200) {
-        return (jsonDecode(response.body) as List)
+        _cart = (jsonDecode(response.body) as List)
             .map((i) => Cart.fromJson(i))
             .toList();
+        return _cart;
       } else {
         print('Http Request Failed');
       }
@@ -43,6 +74,7 @@ class CartRepository {
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(data));
       if (response.statusCode == 200) {
+
       } else {
         print('Http Request Failed');
       }
@@ -69,6 +101,17 @@ class CartRepository {
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(data));
       if (request.statusCode == 200) {
+        // Updating the item quamtity in our local state
+        for (var c in _cart) {
+          if (c.key == key) {
+            c.quantity = quantity;
+            break;
+          }
+        }
+        LOG.i(_cart.length);
+        _cart.removeWhere((element) => element.quantity == 0);
+        LOG.i(_cart.length);
+
         print(request.body);
       } else {
         print(request.body);
@@ -88,6 +131,13 @@ class CartRepository {
         FunctionConfig.host + 'manageCart/normal/${key}',
       );
       if (request.statusCode == 200) {
+        LOG.i(_cart.length);
+        for (var e in _cart) {
+
+        }
+        LOG.i('Removing Key ${key}');
+        _cart.removeWhere((element) => element.key.compareTo(key) == 0);
+        LOG.i(_cart.length);
         print('Http Get request sucessfull');
       } else {
         print('Http Request Failed');

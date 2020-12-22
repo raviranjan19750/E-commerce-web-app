@@ -8,24 +8,26 @@ part 'cart_total_event.dart';
 part 'cart_total_state.dart';
 
 class CartTotalBloc extends Bloc<CartTotalEvent, CartTotalState> {
-  final List<Cart> cart;
-  final CustomerDetailRepository customerDetailRepository;
+  final CartRepository cartRepository;
   double subTotal;
 
   CartTotalBloc({
-    this.cart,
-    this.customerDetailRepository,
-  })  :
-        //assert(cart != null),
-        assert(customerDetailRepository != null),
-        super(CartTotalInitial());
+    this.cartRepository,
+  })  : assert(cartRepository != null),
+        super(CartTotalInitial(
+            totalQuantity: cartRepository.totalCartItem,
+            retailTotal: cartRepository.cartRetailTotal,
+            discountTotal: cartRepository.cartDiscountedTotal));
 
   @override
   Stream<CartTotalState> mapEventToState(
     CartTotalEvent event,
   ) async* {
     if (event is UpdateCartTotal) {
-      yield CartTotalUpdate(customerDetailRepository.cartTotal);
+      yield CartTotalUpdate(
+          totalQuantity: cartRepository.totalCartItem,
+          retailTotal: cartRepository.cartRetailTotal,
+          discountTotal: cartRepository.cartDiscountedTotal);
     }
   }
 

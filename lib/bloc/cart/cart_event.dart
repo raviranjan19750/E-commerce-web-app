@@ -47,3 +47,5 @@ class DeleteCart extends CartEvent {
     this.authID,
   );
 }
+
+class RefreshCart extends CartEvent {}
