@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:living_desire/service/authentication_service.dart';
+import 'package:living_desire/service/sharedPreferences.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -29,6 +30,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       yield* _verifyotp(event);
     } else if (event is ResendOTP) {
       yield* _resendotp(event);
+    } else if (event is SignOut) {
+      yield SignInInitial();
     }
   }
 
@@ -45,7 +48,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           // print("new user created... signing in");
           // print(res.data['token']);
           String customToken = res.data['token'];
+          // TODO :
+          // add auth id to local storage
+          // push local changesd to firebase
           await authService.signInWithToken(token: customToken);
+          UserPreferences().setAuthID(customToken);
+          UserPreferences().AuthID;
+          print("user auth id is ${UserPreferences().AuthID}");
           print("user signed in....");
           break;
         case 401:
