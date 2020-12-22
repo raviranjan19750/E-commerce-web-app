@@ -22,14 +22,8 @@ class ProductCard extends StatelessWidget {
       ),
       child: Card(
           elevation: 5,
-          child: InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, RoutesConfiguration.PRODUCT_DETAIL,
-                  arguments: product);
-            },
-            child: ProductCardContent(
-              product: product,
-            ),
+          child: ProductCardContent(
+            product: product,
           )),
     );
   }
@@ -54,9 +48,15 @@ class ProductCardContent extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Container(
-                child: Image.network(
-                  product.imageUrls[0],
-                  fit: BoxFit.cover,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, RoutesConfiguration.PRODUCT_DETAIL,
+                        arguments: product);
+                  },
+                  child: Image.network(
+                    product.imageUrls[0],
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 width: double.infinity,
                 height: double.infinity,

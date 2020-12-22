@@ -17,15 +17,15 @@ class SearchApi {
     final transport = HttpTransport(
         url: SEARCH_URL,
         authorization: 'Basic ZWxhc3RpYzplMnB3aDdnN29SSm5MZ2NxYUxGRE1nUnI=');
-        // authorization: 'Basic ZWxhc3RpYzpjckFaZnRBWjVhZDU2UE1Ja1oyZm9qelU=');
+    // authorization: 'Basic ZWxhc3RpYzpjckFaZnRBWjVhZDU2UE1Ja1oyZm9qelU=');
     client = Client(transport);
   }
 
   Future<SearchResult> getFilteredProduct(String title,
       {int limit, int offset}) async {
-
     if (title.isEmpty) {
-      final searchResult = await client.search(index: INDEX_NAME, limit: limit, offset: offset);
+      final searchResult =
+          await client.search(index: INDEX_NAME, limit: limit, offset: offset);
       return searchResult;
     }
 
