@@ -30,6 +30,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       yield* _verifyotp(event);
     } else if (event is ResendOTP) {
       yield* _resendotp(event);
+    } else if (event is SignOut) {
+      yield SignInInitial();
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/widgets/footer/footer.dart';
 import '../../widgets/widgets.dart';
 
 class HomeScreenDesktop extends StatefulWidget {
@@ -30,6 +31,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
             children: [
               // Products Category Body for HomeScreen
               ProductsHomeOverview(),
+              // Footer(),
             ],
           ),
         ),
