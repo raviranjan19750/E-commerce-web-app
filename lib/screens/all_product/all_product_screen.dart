@@ -244,6 +244,7 @@ class AllProductGrid extends StatelessWidget {
         crossAxisCount: itemCount,
         childAspectRatio: 0.73,
         mainAxisSpacing: 8,
+        crossAxisSpacing: 8
       ),
       itemCount: products.length,
       shrinkWrap: true,

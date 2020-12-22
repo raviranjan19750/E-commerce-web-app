@@ -52,9 +52,22 @@ class SearchApi {
     colorAggregation.putIfAbsent("terms", () => _getTerms("colour.name"));
     aggregation.putIfAbsent("color-aggr", () => colorAggregation);
 
+    final Map<String, dynamic> tagAggregation = Map();
+    tagAggregation.putIfAbsent("terms", () => _getTerms("tags"));
+    aggregation.putIfAbsent("tags-aggr", () => tagAggregation);
+
+    final Map<String, dynamic> typeAggregation = Map();
+    typeAggregation.putIfAbsent("terms", () => _getTerms("type"));
+    aggregation.putIfAbsent("type-aggr", () => typeAggregation);
+
+    final Map<String, dynamic> sybTypeAggregation = Map();
+    sybTypeAggregation.putIfAbsent("terms", () => _getTerms("subType"));
+    aggregation.putIfAbsent("subType-aggr", () => sybTypeAggregation);
+
     final searchResult = await client.search(
         index: INDEX_NAME, limit: 0, aggregations: aggregation);
     List<FilterTag> tag = List();
+
     final sizeresult = searchResult.aggregations['size-aggr'];
     FilterTag sizetag = FilterTag("SIZE", description: "Size");
     sizeresult.buckets.forEach((element) {
@@ -64,6 +77,7 @@ class SearchApi {
           false));
     });
     tag.add(sizetag);
+
     final colorresult = searchResult.aggregations['color-aggr'];
     FilterTag colortag = FilterTag("COLOR", description: "Color");
     colorresult.buckets.forEach((element) {
@@ -73,6 +87,37 @@ class SearchApi {
           false));
     });
     tag.add(colortag);
+
+    final tagResult = searchResult.aggregations['tags-aggr'];
+    FilterTag tagsTag = FilterTag("TAGS", description: "Tags");
+    tagResult.buckets.forEach((element) {
+      tagsTag.addChild(FilterCategoryChild(
+          element.key.toString(),
+          element.key.toString() + " (" + element.docCount.toString() + ")",
+          false));
+    });
+    tag.add(tagsTag);
+
+    final typeResult = searchResult.aggregations['type-aggr'];
+    FilterTag typeTag = FilterTag("TYPE", description: "Type");
+    typeResult.buckets.forEach((element) {
+      typeTag.addChild(FilterCategoryChild(
+          element.key.toString(),
+          element.key.toString() + " (" + element.docCount.toString() + ")",
+          false));
+    });
+    tag.add(typeTag);
+
+    final subTypeResult = searchResult.aggregations['subType-aggr'];
+    FilterTag subTypeTag = FilterTag("SUB-TYPE", description: "Sub Type");
+    subTypeResult.buckets.forEach((element) {
+      subTypeTag.addChild(FilterCategoryChild(
+          element.key.toString(),
+          element.key.toString() + " (" + element.docCount.toString() + ")",
+          false));
+    });
+    tag.add(subTypeTag);
+
     return tag;
   }
 
