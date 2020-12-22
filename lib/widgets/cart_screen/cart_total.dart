@@ -15,6 +15,7 @@ class CartTotalView extends StatelessWidget {
     return BlocProvider(
       create: (context) => CartTotalBloc(
         cart: carts,
+        customerDetailRepository: RepositoryProvider.of(context),
       ),
       child:
           BlocBuilder<CartTotalBloc, CartTotalState>(builder: (context, state) {

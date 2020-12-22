@@ -15,7 +15,8 @@ class CartTotalBloc extends Bloc<CartTotalEvent, CartTotalState> {
   CartTotalBloc({
     this.cart,
     this.customerDetailRepository,
-  })  : assert(cart != null),
+  })  :
+        //assert(cart != null),
         assert(customerDetailRepository != null),
         super(CartTotalInitial());
 

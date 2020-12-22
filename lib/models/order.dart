@@ -48,12 +48,10 @@ class Order {
 
     return Order(
       key: data['id'],
-      //placedDate: DateTime.parse(data['data']['placedDate'].toString()),
-      // expectedDeliveryDate: DateTime.fromMillisecondsSinceEpoch(
-      //     data['data']['expectedDeliveryDate'] * 1000),
-      // deliveryDate: DateTime.fromMillisecondsSinceEpoch(
-      //     data['data']['deliveryDate'] * 1000),
-
+      // placedDate: (DateTime.parse(data['data']['placedDate']).toLocal()),
+      // expectedDeliveryDate:
+      //     DateTime.parse(data['data']['expectedDeliveryDate']).toLocal(),
+      // deliveryDate: DateTime.parse(data['data']['deliveryDate']).toLocal(),
       name: data['data']['name'],
       address: data['data']['address'],
       phone: data['data']['phone'],

@@ -26,20 +26,15 @@ class _ManageAddressesScreenDesktopState
                 addresssRepository: RepositoryProvider.of(context))
               ..add(LoadAllAddresses('id1'))),
       ],
-      child: Scaffold(
-        appBar: CustomAppBar(),
-        body: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ButtonList(
-                isManageAddressesSelected: true,
-              ),
-              Expanded(child: ManageAddressesContainer()),
-            ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ButtonList(
+            isManageAddressesSelected: true,
           ),
-        ),
+          Expanded(child: ManageAddressesContainer()),
+        ],
       ),
     );
   }

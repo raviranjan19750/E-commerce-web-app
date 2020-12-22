@@ -1,4 +1,3 @@
-import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/models.dart';
 
 class CustomerDetailRepository {

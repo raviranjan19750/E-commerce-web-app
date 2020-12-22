@@ -30,16 +30,15 @@ class OrderedProduct {
     print(data.toString());
 
     return OrderedProduct(
-      key: data['id'],
-      productID: data['data']['productID'],
-      variantID: data['data']['variantID'],
-      sellingPrice: data['data']['sellingPrice'],
-      discountPrice: data['data']['discountPrice'],
-      quantity: data['data']['quantity'],
-      colour: data['data']['colour'],
-      size: data['data']['size'],
-      imageUrl: data['data']['imageURL'],
-      productName: data['data']['productName'],
+      productID: data['productID'],
+      variantID: data['variantID'],
+      sellingPrice: data['sellingPrice'],
+      discountPrice: data['discountPrice'],
+      quantity: data['quantity'],
+      //colour: data['data']['colour'],
+      size: data['size'],
+      imageUrl: data['imageURL'],
+      productName: data['productName'],
     );
   }
 }

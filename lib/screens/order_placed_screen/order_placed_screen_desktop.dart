@@ -9,7 +9,7 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
 
   const OrderPlacedScreenDesktop({
     Key key,
-    @required this.scrollController,
+    this.scrollController,
     this.order,
   }) : super(key: key);
 

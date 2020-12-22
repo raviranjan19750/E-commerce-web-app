@@ -39,7 +39,7 @@ class Cart {
     this.quantity,
     this.colour,
     this.imageUrl,
-    this.isCombo,
+    this.isCombo = false,
     this.name,
     this.size,
   });
@@ -51,7 +51,7 @@ class Cart {
       key: data['id'],
       pincode: data['pincode'],
       name: data['data']['productName'],
-      colour: data['data']['colour'],
+      // colour: data['data']['colour'],
       dateAdded: data['data']['dateAdded'],
       manufacturingPrice: data['data']['manufacturingPrice'],
       imageUrl: data['data']['images'][0],

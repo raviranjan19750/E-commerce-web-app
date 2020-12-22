@@ -79,35 +79,35 @@ class CartItem extends StatelessWidget {
                     ),
                   ),
                   // isCombo
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: cart.isCombo
-                        ? Diagonal(
-                            axis: Axis.vertical,
-                            position: DiagonalPosition.TOP_LEFT,
-                            clipHeight:
-                                MediaQuery.of(context).size.height * 0.03,
-                            child: Container(
-                              color: Colors.red[900],
-                              width: MediaQuery.of(context).size.width * 0.065,
-                              height: MediaQuery.of(context).size.height * 0.03,
-                              child: Center(
-                                child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 10.0,
-                                    ),
-                                    child: Text(
-                                      Strings.combo,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    )),
-                              ),
-                            ),
-                          )
-                        : SizedBox.shrink(),
-                  ),
+                  // Positioned(
+                  //   right: 0,
+                  //   top: 0,
+                  //   child: cart.isCombo
+                  //       ? Diagonal(
+                  //           axis: Axis.vertical,
+                  //           position: DiagonalPosition.TOP_LEFT,
+                  //           clipHeight:
+                  //               MediaQuery.of(context).size.height * 0.03,
+                  //           child: Container(
+                  //             color: Colors.red[900],
+                  //             width: MediaQuery.of(context).size.width * 0.065,
+                  //             height: MediaQuery.of(context).size.height * 0.03,
+                  //             child: Center(
+                  //               child: Padding(
+                  //                   padding: const EdgeInsets.only(
+                  //                     left: 10.0,
+                  //                   ),
+                  //                   child: Text(
+                  //                     Strings.combo,
+                  //                     style: TextStyle(
+                  //                       color: Colors.white,
+                  //                     ),
+                  //                   )),
+                  //             ),
+                  //           ),
+                  //         )
+                  //       : SizedBox.shrink(),
+                  // ),
                 ],
               ),
               Padding(

@@ -29,22 +29,17 @@ class _WishlistScreenDesktopState extends State<WishlistScreenDesktop> {
             create: (context) =>
                 CartBloc(cartRepository: RepositoryProvider.of(context))),
       ],
-      child: Scaffold(
-        appBar: CustomAppBar(),
-        body: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ButtonList(
-                isWishlistSelected: true,
-              ),
-              Expanded(
-                child: WishlistContainer(),
-              ),
-            ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ButtonList(
+            isWishlistSelected: true,
           ),
-        ),
+          Expanded(
+            child: WishlistContainer(),
+          ),
+        ],
       ),
     );
   }

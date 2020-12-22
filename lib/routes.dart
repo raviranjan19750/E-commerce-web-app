@@ -32,23 +32,36 @@ class RoutesConfiguration {
                 ));
       case PRODUCT_DETAIL:
         var product = settings.arguments as Product;
-        return MaterialPageRoute(builder: (_) => MyDesktopView(child: ProductDetailScreen(product: product,)));
+        var productID = settings.arguments as String;
+        var variantID = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => MyDesktopView(
+                    child: ProductDetailScreen(
+                  product: product,
+                )));
       case BULK_ORDER:
         return MaterialPageRoute(builder: (_) => BulkOrder());
       case ORDER:
         return MaterialPageRoute(builder: (_) => MyOrder());
       case WISHLIST:
-        return MaterialPageRoute(builder: (_) => WishlistScreen());
+        return MaterialPageRoute(
+            builder: (_) => MyDesktopView(child: WishlistScreenDesktop()));
       case MY_ORDERS:
-        return MaterialPageRoute(builder: (_) => OrderScreen());
+        return MaterialPageRoute(
+            builder: (_) => MyDesktopView(child: OrderScreenDesktop()));
       case CART:
-        return MaterialPageRoute(builder: (_) => CartScreen());
+        return MaterialPageRoute(
+            builder: (_) => MyDesktopView(child: CartScreenDesktop()));
       case MANAGE_ADDRESSES:
-        return MaterialPageRoute(builder: (_) => ManageAddressesScreen());
+        return MaterialPageRoute(
+            builder: (_) =>
+                MyDesktopView(child: ManageAddressesScreenDesktop()));
       case SELECT_ADDRESS:
-        return MaterialPageRoute(builder: (_) => SelectAddressScreen());
+        return MaterialPageRoute(
+            builder: (_) => MyDesktopView(child: SelectAddressScreenDesktop()));
       case ORDER_PLACED:
-        return MaterialPageRoute(builder: (_) => OrderPlacedScreen());
+        return MaterialPageRoute(
+            builder: (_) => MyDesktopView(child: OrderPlacedScreenDesktop()));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

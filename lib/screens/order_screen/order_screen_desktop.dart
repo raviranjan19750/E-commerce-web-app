@@ -28,20 +28,15 @@ class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
                 normalOrderRepository: RepositoryProvider.of(context))
               ..add(LoadAllNormalOrders('id1'))),
       ],
-      child: Scaffold(
-        appBar: CustomAppBar(),
-        body: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ButtonList(
-                isMyOrderSelected: true,
-              ),
-              Expanded(child: NormalOrdersContainer()),
-            ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ButtonList(
+            isMyOrderSelected: true,
           ),
-        ),
+          Expanded(child: NormalOrdersContainer()),
+        ],
       ),
     );
   }

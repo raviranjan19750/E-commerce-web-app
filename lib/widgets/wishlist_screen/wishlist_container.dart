@@ -3,15 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
 import 'package:living_desire/config/configs.dart';
-import '../../data/data.dart';
-import '../../models/models.dart';
+
 import '../widgets.dart';
 
 class WishlistContainer extends StatelessWidget {
   // WishList Container
-  final List<Product> wishlistProducts = product;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    int itemCount = 4;
+    if (width < 1000) {
+      itemCount = 2;
+    } else if (width < 1200) {
+      itemCount = 3;
+    }
     return BlocBuilder<WishlistBloc, WishlistState>(
       builder: (context, state) {
         if (state is WishlistDetailLoading) {
@@ -73,14 +79,21 @@ class WishlistContainer extends StatelessWidget {
                       top: 8.0,
                       bottom: 8.0,
                     ),
-                    child: Wrap(
-                      children: [
-                        ...state.wishlist.map(
-                          (e) => WishlistProductItem(
-                            product: e,
-                          ),
-                        ),
-                      ],
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: itemCount,
+                        childAspectRatio:
+                            (MediaQuery.of(context).size.width * 0.15) /
+                                (MediaQuery.of(context).size.height * 0.4),
+                      ),
+                      itemCount: state.wishlist.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return WishlistProductItem(
+                          product: state.wishlist[index],
+                        );
+                      },
                     ),
                   ),
                 ),
