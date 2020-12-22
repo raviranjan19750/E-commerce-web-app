@@ -15,6 +15,7 @@ import 'package:living_desire/screens/screens.dart';
 import 'package:living_desire/screens/select_address_screen/select_address_screen.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/searchapi.dart';
+import 'package:living_desire/service/sharedPreferences.dart';
 import './config/configs.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
 import 'package:living_desire/service/authentication_service.dart';
@@ -25,6 +26,7 @@ import 'bloc/wishlist_config/wishlist_bloc.dart';
 void main() async {
   final FirebaseApp _initialization = await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
+  await UserPreferences().init();
   var authRepo = AuthenticationRepository();
   // await authRepo.signInAnony();
   runApp(MyApp(

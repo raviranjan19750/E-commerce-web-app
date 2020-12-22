@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
+import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/screens/login/login.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/screens/login/login_view.dart';
@@ -61,6 +62,7 @@ class _UserCardState extends State<UserCard> {
             child: Text("Sign Out"),
             onTap: () {
               RepositoryProvider.of<AuthenticationRepository>(context).logout();
+              BlocProvider.of<SignInBloc>(context).add(SignOut());
             },
           ),
         ),

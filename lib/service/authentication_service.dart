@@ -1,6 +1,8 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 // import 'pa';
 
 class LogOutFailure implements Exception {}
@@ -82,6 +84,8 @@ class AuthenticationRepository {
   Future<void> logout() async {
     try {
       await _firebaseAuth.signOut();
+      // TODO
+      // Go back to initial state
     } on Exception {
       throw LogOutFailure();
     }

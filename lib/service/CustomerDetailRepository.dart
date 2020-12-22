@@ -5,21 +5,23 @@ class CustomerDetailRepository {
   List<String> _wishListIds = List();
   List<Cart> _cartItem = List();
   List<String> _cartListIDs = List();
+  Set<String> _wishlistSet = Set();
+  //List<Product> _cartItem = List();
 
   void addToWishList(String id) {
-    _wishListIds.add(id);
+    _wishlistSet.add(id);
   }
 
   void removeFromWishList(String id) {
-    _wishListIds.remove(id);
+    _wishlistSet.remove(id);
   }
 
   bool contains(String id) {
-    return _wishListIds.contains(id);
+    return _wishlistSet.contains(id);
   }
 
   get totalItemInCart {
-    return _wishListIds.length;
+    return _wishlistSet.length;
   }
 
   void addAllCartList(List<Cart> cart) {

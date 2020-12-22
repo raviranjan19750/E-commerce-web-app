@@ -100,11 +100,21 @@ class AllProductScreen extends StatelessWidget {
 class AllProductScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+    if (width < 1000) {
+      width = width * 0.95;
+    } else if (width < 1200) {
+      width = width * 0.9;
+    } else {
+      width = width * 0.8;
+    }
+
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.85,
+          maxWidth: width,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,8 +210,7 @@ class BuildAllProductView extends StatelessWidget {
             if (BlocProvider.of<ScrollBloc>(context)
                         .controller
                         .position
-                        .extentAfter <
-                    300 &&
+                        .extentAfter < 300 &&
                 !state.isEndReached) {
               BlocProvider.of<AllProductBloc>(context).add(LoadNextProduct());
             }
@@ -232,12 +241,20 @@ class AllProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    int itemCount = 4;
+    if (width < 1000) {
+      itemCount = 2;
+    } else if (width < 1200) {
+      itemCount = 3;
+    }
+    // 1200 - 3
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        childAspectRatio: (MediaQuery.of(context).size.width * 0.15) /
-            (MediaQuery.of(context).size.height * 0.41),
+        crossAxisCount: itemCount,
+        childAspectRatio: 0.73,
         mainAxisSpacing: 8,
+        crossAxisSpacing: 8
       ),
       itemCount: products.length,
       shrinkWrap: true,

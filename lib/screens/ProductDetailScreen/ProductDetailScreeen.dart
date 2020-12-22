@@ -55,86 +55,75 @@ class ProductDetail extends StatelessWidget {
     final double itemCardHeight = MediaQuery.of(context).size.height * 0.20;
     final double descriptionWidth = MediaQuery.of(context).size.width * 0.4;
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        size: 112,
-      ),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 64.0),
-                child: ProductDetailDescriptionAndImage(),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 32.0, left: 32.0, right: 64.0),
-                child: ProductTypeBar(
-                  productType: productType,
-                ),
-              ),
-              Container(
-                  margin: EdgeInsets.only(top: 16.0),
-                  height: productListItemHeight,
-                  child: Stack(
-                    children: [
-                      ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: products.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProductItem(
-                            product: products[index],
-                          );
-                        },
-                      ),
-                      Positioned(
-                        right: 0,
-                        top: itemCardHeight / 2,
-                        child: FlatButton(child: NextListHover()),
-                      ),
-                    ],
-                  )),
-              Container(
-                margin: EdgeInsets.only(top: 32.0, left: 32.0, right: 64.0),
-                child: ProductTypeBar(
-                  productType: productType,
-                ),
-              ),
-              Container(
-                  margin: EdgeInsets.only(top: 16.0),
-                  height: productListItemHeight,
-                  child: Stack(
-                    children: [
-                      ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: products.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProductItem(
-                            product: products[index],
-                          );
-                        },
-                      ),
-                      Positioned(
-                        right: 0,
-                        top: itemCardHeight / 2,
-                        child: NextListHover(),
-                      ),
-                    ],
-                  )),
-              Container(
-                height: 100,
-              ),
-            ],
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 64.0),
+          child: ProductDetailDescriptionAndImage(),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 32.0, left: 32.0, right: 64.0),
+          child: ProductTypeBar(
+            productType: productType,
           ),
         ),
-      ),
+        Container(
+            margin: EdgeInsets.only(top: 16.0),
+            height: productListItemHeight,
+            child: Stack(
+              children: [
+                ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: products.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ProductItem(
+                      product: products[index],
+                    );
+                  },
+                ),
+                Positioned(
+                  right: 0,
+                  top: itemCardHeight / 2,
+                  child: FlatButton(child: NextListHover()),
+                ),
+              ],
+            )),
+        Container(
+          margin: EdgeInsets.only(top: 32.0, left: 32.0, right: 64.0),
+          child: ProductTypeBar(
+            productType: productType,
+          ),
+        ),
+        Container(
+            margin: EdgeInsets.only(top: 16.0),
+            height: productListItemHeight,
+            child: Stack(
+              children: [
+                ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: products.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ProductItem(
+                      product: products[index],
+                    );
+                  },
+                ),
+                Positioned(
+                  right: 0,
+                  top: itemCardHeight / 2,
+                  child: NextListHover(),
+                ),
+              ],
+            )),
+        Container(
+          height: 100,
+        ),
+      ],
     );
-
-    throw UnimplementedError();
   }
 }

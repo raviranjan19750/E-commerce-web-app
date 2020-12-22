@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/data/data.dart';
+import 'package:living_desire/widgets/labeltag/label_tag.dart';
 import 'package:living_desire/widgets/productTypeBar.dart';
 import 'package:living_desire/widgets/widgets.dart';
 import '../../models/models.dart';
@@ -22,13 +23,11 @@ class ProductsType extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
-
       children: [
-
-        ProductTypeBar(
-          productType: productType.type,
-        ),
-
+        // ProductTypeBar(
+        //   productType: productType.type,
+        // ),
+        LabelTag(productType.type),
         Container(
           height: MediaQuery.of(context).size.height * 0.4,
           child: ListView.builder(
@@ -42,7 +41,6 @@ class ProductsType extends StatelessWidget {
             },
           ),
         ),
-
       ],
     );
   }
