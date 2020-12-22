@@ -120,7 +120,7 @@ final List<Rating> rating = [
   ),
 ];
 
-final List<Color> itemColors = [
+const List<Color> itemColors = [
   Colors.blue,
   Colors.green,
   Colors.brown,
@@ -128,7 +128,7 @@ final List<Color> itemColors = [
   Colors.red
 ];
 
-final List<String> productItemDescriptions = [
+const List<String> productItemDescriptions = [
   "Pack Contents – 1 Bean Bag Cover without beans",
   "Fade resistant Leatherette fabric with superior seam and tear strength",
   "Double stitched for extra strength",

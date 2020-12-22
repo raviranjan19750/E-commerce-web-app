@@ -5,6 +5,8 @@ import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/models/models.dart';
 
+import '../../routes.dart';
+
 class ProductCard extends StatelessWidget {
   final Product product;
 
@@ -20,11 +22,17 @@ class ProductCard extends StatelessWidget {
       ),
       child: Card(
           elevation: 5,
-          child: Container(
-              width: 200,
-              child: ProductCardContent(
-                product: product,
-              ))),
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, RoutesConfiguration.PRODUCT_DETAIL,
+                  arguments: product);
+            },
+            child: Container(
+                width: 200,
+                child: ProductCardContent(
+                  product: product,
+                )),
+          )),
     );
   }
 }

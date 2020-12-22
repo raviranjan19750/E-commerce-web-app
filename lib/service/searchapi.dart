@@ -6,7 +6,9 @@ import 'package:living_desire/models/product.dart';
 class SearchApi {
   // curl -XGET "http://es01:9200/catalogue/_search" -H 'Content-Type: application/json' -d'{  "query": {    "query_string": {      "default_field": "description",      "query": "A*"    }  },  "aggs": {    "auto_complete": {      "terms": {        "field": "description.keyword",        "size": 10      }    }  }}'
   final String SEARCH_URL =
-      "https://d23a3b77a86e405ab4a578e303b0267c.us-central1.gcp.cloud.es.io:9243";
+      "https://1c52378e333549089895e04eccedf28c.us-central1.gcp.cloud.es.io:9243";
+
+  static const String INDEX_NAME = "products-dev";
 
   Client client;
 
@@ -14,7 +16,8 @@ class SearchApi {
     // var uri = Uri.parse(SEARCH_URL);
     final transport = HttpTransport(
         url: SEARCH_URL,
-        authorization: 'Basic ZWxhc3RpYzpjckFaZnRBWjVhZDU2UE1Ja1oyZm9qelU=');
+        authorization: 'Basic ZWxhc3RpYzplMnB3aDdnN29SSm5MZ2NxYUxGRE1nUnI=');
+        // authorization: 'Basic ZWxhc3RpYzpjckFaZnRBWjVhZDU2UE1Ja1oyZm9qelU=');
     client = Client(transport);
   }
 
@@ -22,7 +25,7 @@ class SearchApi {
       {int limit, int offset}) async {
 
     if (title.isEmpty) {
-      final searchResult = await client.search(index: "products", limit: limit, offset: offset);
+      final searchResult = await client.search(index: INDEX_NAME, limit: limit, offset: offset);
       return searchResult;
     }
 
@@ -30,11 +33,11 @@ class SearchApi {
 
     // query.putIfAbsent("size", () => 30);
     Map<String, dynamic> matches = Map();
-    matches.putIfAbsent("title", () => title);
+    matches.putIfAbsent("name", () => title);
 
     query.putIfAbsent("match", () => matches);
     final searchResult = await client.search(
-        index: "products", query: query, limit: limit, offset: offset);
+        index: INDEX_NAME, query: query, limit: limit, offset: offset);
     return searchResult;
   }
 
@@ -46,11 +49,11 @@ class SearchApi {
     aggregation.putIfAbsent("size-aggr", () => sizeAggregation);
 
     final Map<String, dynamic> colorAggregation = Map();
-    colorAggregation.putIfAbsent("terms", () => _getTerms("color"));
+    colorAggregation.putIfAbsent("terms", () => _getTerms("colour.name"));
     aggregation.putIfAbsent("color-aggr", () => colorAggregation);
 
     final searchResult = await client.search(
-        index: "products", limit: 0, aggregations: aggregation);
+        index: INDEX_NAME, limit: 0, aggregations: aggregation);
     List<FilterTag> tag = List();
     final sizeresult = searchResult.aggregations['size-aggr'];
     FilterTag sizetag = FilterTag("SIZE", description: "Size");

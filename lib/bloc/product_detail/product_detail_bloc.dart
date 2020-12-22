@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:living_desire/DBHandler/ProductRepository.dart';
+import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/CheckProductAvailability.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/product_variants.dart';
@@ -15,6 +16,8 @@ part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   final ProductRepository productRepository;
+
+  var logger = LogBuilder.getLogger();
 
   ProductDetailBloc({this.productRepository})
       : assert(productRepository != null),
@@ -37,8 +40,8 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     try {
       var productDescription =
           await productRepository.getProductVariantDescription(
-              productID: "0Kw7a5E2AMQ8jJM6a7C0",
-              variantID: "02nnXgCzOjVHRarIPIrf");
+              productID: event.productID,
+              variantID: event.variantID);
       // var availability = await productRepository.checkProductAvailability(pincode: "110042", productID: "0IeSrbsqqxiqwELq4Qqm", warehouseID: "temp_id");
       yield ProductDetailLoadingSuccessful(productDescription);
     } catch (e) {
@@ -54,7 +57,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     try {
       var productImageSizeDescription =
           await productRepository.getProductVariantSizeColorDescription(
-              productID: "0IeSrbsqqxiqwELq4Qqm", color: "Blue", size: "XXL");
+              productID: event.productID, color: event.color, size: event.size);
       yield ProductDetailLoadingSuccessful(productImageSizeDescription);
     } catch (e) {
       print(e.toString());

@@ -1,3 +1,5 @@
+import 'package:convert/convert.dart';
+
 class ProductDetail {
 
 
@@ -14,7 +16,7 @@ class ProductDetail {
   final bool isAvailable;
 
   final String size;
-  final String colour;
+  final List<String> colour;
 
   final double sellingPrice;
   final double discountPrice;
@@ -37,13 +39,19 @@ class ProductDetail {
   factory ProductDetail.fromJson(Map<String, dynamic> data) {
 
     //if(data == null) return null;
+    List<String> cols = [];
+    for (var col in data["colour"]) {
+      var strcol = col['hexCode'] as String;
+      cols.add(strcol.replaceAll("#", ""));
+    }
+
 
     return ProductDetail(
       productID: data["productID"],
       variantID: data["variantID"],
       productName: data["productName"],
       size: data["size"],
-      colour: data["colour"],
+      colour: cols,
 
       sellingPrice: data["sellingPrice"],
       discountPrice: data["discountPrice"],
@@ -59,11 +67,4 @@ class ProductDetail {
     );
 
   }
-
-
-
-
-
-
-
 }
