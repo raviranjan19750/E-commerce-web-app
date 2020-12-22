@@ -32,7 +32,7 @@ class RoutesConfiguration {
                 ));
       case PRODUCT_DETAIL:
         var product = settings.arguments as Product;
-        return MaterialPageRoute(builder: (_) => ProductDetailScreen(product: product,));
+        return MaterialPageRoute(builder: (_) => MyDesktopView(child: ProductDetailScreen(product: product,)));
       case BULK_ORDER:
         return MaterialPageRoute(builder: (_) => BulkOrder());
       case ORDER:
