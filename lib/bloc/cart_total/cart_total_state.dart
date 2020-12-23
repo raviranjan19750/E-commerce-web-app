@@ -7,8 +7,11 @@ abstract class CartTotalState {
   final double retailTotal;
   final int totalQuantity;
 
-  CartTotalState({this.discountTotal, this.totalQuantity, this.retailTotal})
-      : assert(discountTotal != null),
+  CartTotalState({
+    this.discountTotal,
+    this.totalQuantity,
+    this.retailTotal,
+  })  : assert(discountTotal != null),
         assert(retailTotal != null),
         assert(totalQuantity != null);
 
@@ -19,22 +22,48 @@ abstract class CartTotalState {
 }
 
 class CartTotalInitial extends CartTotalState {
-  CartTotalInitial({double discountTotal, double retailTotal, int totalQuantity})
-      : super(totalQuantity: totalQuantity, discountTotal: discountTotal, retailTotal: retailTotal);
+  CartTotalInitial({
+    double discountTotal,
+    double retailTotal,
+    int totalQuantity,
+  }) : super(
+            totalQuantity: totalQuantity,
+            discountTotal: discountTotal,
+            retailTotal: retailTotal);
 }
 
 class CartTotalUpdateInitial extends CartTotalState {
-  CartTotalUpdateInitial({double discountTotal, double retailTotal, int totalQuantity})
-      : super(totalQuantity: totalQuantity, discountTotal: discountTotal, retailTotal: retailTotal);
+  CartTotalUpdateInitial({
+    double discountTotal,
+    double retailTotal,
+    int totalQuantity,
+  }) : super(
+          totalQuantity: totalQuantity,
+          discountTotal: discountTotal,
+          retailTotal: retailTotal,
+        );
 }
 
 class CartTotalUpdateFailure extends CartTotalState {
-  CartTotalUpdateFailure({double discountTotal, double retailTotal, int totalQuantity})
-      : super(totalQuantity: totalQuantity, discountTotal: discountTotal, retailTotal: retailTotal);
-
+  CartTotalUpdateFailure({
+    double discountTotal,
+    double retailTotal,
+    int totalQuantity,
+  }) : super(
+          totalQuantity: totalQuantity,
+          discountTotal: discountTotal,
+          retailTotal: retailTotal,
+        );
 }
 
 class CartTotalUpdate extends CartTotalState {
-  CartTotalUpdate({double discountTotal, double retailTotal, int totalQuantity})
-      : super(totalQuantity: totalQuantity, discountTotal: discountTotal, retailTotal: retailTotal);
+  CartTotalUpdate({
+    double discountTotal,
+    double retailTotal,
+    int totalQuantity,
+  }) : super(
+          totalQuantity: totalQuantity,
+          discountTotal: discountTotal,
+          retailTotal: retailTotal,
+        );
 }

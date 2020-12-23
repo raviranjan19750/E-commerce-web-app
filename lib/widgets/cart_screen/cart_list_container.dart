@@ -12,7 +12,9 @@ class CartListContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
       if (state is CartDetailLoading) {
-        return Center(child: CircularProgressIndicator(),);
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       }
       if (state is CartDetailLoadingSuccessful) {
         BlocProvider.of<CartTotalBloc>(context).add(UpdateCartTotal());
@@ -51,43 +53,59 @@ class CartListContainer extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.065,
                   height: MediaQuery.of(context).size.height * 0.03,
                   child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        right: 10.0,
-                      ),
-                      child: state.cart.length > 1
-                          ? Text(
-                        state.cart.length.toString() + ' ' + Strings.items,
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      )
-                          : Text(
-                        state.cart.length.toString() + ' ' + Strings.item,
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+                    child: BlocBuilder<CartTotalBloc, CartTotalState>(
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            right: 10.0,
+                          ),
+                          child: state.totalQuantity > 1
+                              ? Text(
+                                  state.totalQuantity.toString() +
+                                      ' ' +
+                                      Strings.items,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Text(
+                                  state.totalQuantity.toString() +
+                                      ' ' +
+                                      Strings.item,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                        );
+                      },
                     ),
                   ),
                 ),
               ),
               // Cart Items
-              ...state.cart.map(
-                    (e) => CartItemView(
-                  cart: e,
-                ),
-              ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.cart.length,
+                  itemBuilder: (context, index) {
+                    return CartItemView(
+                      cart: state.cart[index],
+                    );
+                  }),
 
               // Subtotal Container
               Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(Strings.subTotal + ' (total no. of products)'),
-                    Text('Subtotal Amount'),
-                  ],
+                child: BlocBuilder<CartTotalBloc, CartTotalState>(
+                  builder: (context, state) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(Strings.subTotal +
+                            ' (${state.totalQuantity} Items): '),
+                        Text('${state.retailTotal}'),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],
