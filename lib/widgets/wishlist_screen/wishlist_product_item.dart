@@ -31,8 +31,8 @@ class WishlistProductItemDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
-      width: MediaQuery.of(context).size.width * 0.15,
+      height: MediaQuery.of(context).size.height * 0.32,
+      width: MediaQuery.of(context).size.width * 0.12,
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed('/product', arguments: {
@@ -47,7 +47,7 @@ class WishlistProductItemDetail extends StatelessWidget {
                 children: [
                   Container(
                     height: MediaQuery.of(context).size.height * 0.32,
-                    width: MediaQuery.of(context).size.width * 0.15,
+                    width: MediaQuery.of(context).size.width * 0.12,
                     child: Image.network(
                       product.imageUrl,
                       fit: BoxFit.cover,
@@ -95,7 +95,7 @@ class WishlistProductItemDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.12,
                       height: 20,
 
                       // child: Text(

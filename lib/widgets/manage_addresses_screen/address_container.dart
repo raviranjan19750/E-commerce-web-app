@@ -141,6 +141,8 @@ class AddressContainer extends StatelessWidget {
                           height: 16.0,
                           color: Colors.black,
                         ),
+
+                        //delete address
                         Padding(
                           padding: const EdgeInsets.only(
                             left: 8.0,

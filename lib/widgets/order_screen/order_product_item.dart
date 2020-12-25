@@ -113,7 +113,7 @@ class OrderProductItem extends StatelessWidget {
                                   (orderedProduct.sellingPrice -
                                           orderedProduct.discountPrice)
                                       .toString() +
-                                  ' (${((orderedProduct.sellingPrice - orderedProduct.discountPrice) / orderedProduct.sellingPrice) * 100}%)',
+                                  ' (${(((orderedProduct.sellingPrice - orderedProduct.discountPrice) / orderedProduct.sellingPrice) * 100).toInt()}%)',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.green[600],
@@ -133,6 +133,61 @@ class OrderProductItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             //Color
+                            orderedProduct.colour.length == 2
+                                ? Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    margin: EdgeInsets.only(left: 6.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        width: 0.5,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(8),
+                                              topLeft: Radius.circular(8),
+                                            ),
+                                            color: orderedProduct.colour[0],
+                                          ),
+                                          height: 8,
+                                          width: 16,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              bottomRight: Radius.circular(8),
+                                              bottomLeft: Radius.circular(8),
+                                            ),
+                                            color: orderedProduct.colour[1],
+                                          ),
+                                          height: 8,
+                                          width: 16,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    margin: EdgeInsets.only(left: 6.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        width: 0.5,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    child: CircleAvatar(
+                                      radius: 8,
+                                      backgroundColor: orderedProduct.colour[0],
+                                    ),
+                                  ),
                             Container(
                               padding: EdgeInsets.all(4.0),
                               margin: EdgeInsets.only(left: 6.0),

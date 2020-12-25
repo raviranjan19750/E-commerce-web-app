@@ -83,8 +83,8 @@ class WishlistContainer extends StatelessWidget {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: itemCount,
                         childAspectRatio:
-                            (MediaQuery.of(context).size.width * 0.15) /
-                                (MediaQuery.of(context).size.height * 0.4),
+                            (MediaQuery.of(context).size.width * 0.12) /
+                                (MediaQuery.of(context).size.height * 0.32),
                       ),
                       itemCount: state.wishlist.length,
                       physics: NeverScrollableScrollPhysics(),

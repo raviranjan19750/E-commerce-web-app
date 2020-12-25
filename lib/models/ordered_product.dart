@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/get_colors.dart';
 
 class OrderedProduct {
   final String key;
@@ -7,7 +8,7 @@ class OrderedProduct {
   final String variantID;
   final double sellingPrice;
   final String imageUrl;
-  final String colour;
+  final List<Color> colour;
   final String size;
   final double discountPrice;
   final double quantity;
@@ -36,6 +37,9 @@ class OrderedProduct {
       discountPrice: data['discountPrice'],
       quantity: data['quantity'],
       //colour: data['data']['colour'],
+      colour: GetColors.fromHex((data['colour'] as List<dynamic>)
+          .map((e) => (e['hexCode'] as String))
+          .toList()),
       size: data['size'],
       imageUrl: data['imageURL'],
       productName: data['productName'],

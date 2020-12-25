@@ -209,29 +209,29 @@ class CartItem extends StatelessWidget {
                                         color: Colors.black,
                                       ),
                                     ),
-                                    child: Row(
+                                    child: Column(
                                       children: [
                                         Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(8),
+                                              topRight: Radius.circular(8),
                                               topLeft: Radius.circular(8),
                                             ),
                                             color: cart.colour[0],
                                           ),
-                                          height: 16,
-                                          width: 8,
+                                          height: 8,
+                                          width: 16,
                                         ),
                                         Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                               bottomRight: Radius.circular(8),
-                                              topRight: Radius.circular(8),
+                                              bottomLeft: Radius.circular(8),
                                             ),
                                             color: cart.colour[1],
                                           ),
-                                          height: 16,
-                                          width: 8,
+                                          height: 8,
+                                          width: 16,
                                         ),
                                       ],
                                     ),
