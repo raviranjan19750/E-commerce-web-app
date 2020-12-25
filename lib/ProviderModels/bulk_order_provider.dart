@@ -1,7 +1,11 @@
 
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
+import 'package:living_desire/models/filtertags.dart';
+import 'package:living_desire/service/searchapi.dart';
 
 class BulkOrderProvider with ChangeNotifier{
 
@@ -31,6 +35,10 @@ class BulkOrderProvider with ChangeNotifier{
 
   BulkOrderCart bulkOrderCart = new BulkOrderCart();
 
+  HashMap<String,List<String>> productTypeMap = new HashMap<String,List<String>>();
+  
+  List<String> subTypes = new List<String>();
+
   void onItemSizeChanged(String s){
 
     itemSize = s;
@@ -39,7 +47,36 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
-  void initStepOne(String productType, String productSubType){
+  void initStepOne(String productType, String productSubType) async {
+
+    SearchApi searchApi = new SearchApi();
+
+    List<FilterTag> list = await searchApi.getProductTypeAndSubtype();
+
+    for(FilterTag f in list){
+
+      for(FilterCategoryChild c in f.filterChilds){
+
+        List<FilterTag> list = await searchApi.getSubTypes(c.filterID);
+
+        print("Type  : " + c.filterID);
+
+        for(FilterTag f1 in list){
+
+          List<String> subTypes = new List<String>();
+
+          for(FilterCategoryChild c1 in f1.filterChilds){
+
+            subTypes.add(c1.filterID);
+
+          }
+
+          productTypeMap.putIfAbsent(c.filterID, () => subTypes);
+
+        }
+
+      }
+    }
 
     if(productType == null || productType.isEmpty){
 
@@ -54,13 +91,18 @@ class BulkOrderProvider with ChangeNotifier{
 
     }
 
+    notifyListeners();
+
   }
 
   void onProductTypeSelected(int index){
 
     productTypeSelected = true;
     selectedType = index;
-    bulkOrderCart.productID = "545648945456456A";
+    bulkOrderCart.productID = productTypeMap.keys.elementAt(index);
+    selectedSubType = -1;
+    productSubTypeSelected = false;
+    subTypes = productTypeMap.values.elementAt(index);
     notifyListeners();
 
   }
@@ -69,7 +111,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     productSubTypeSelected = true;
     selectedSubType = index;
-    bulkOrderCart.variantID = "6545894756456A";
+    bulkOrderCart.variantID = subTypes.elementAt(index);
     notifyListeners();
 
   }
