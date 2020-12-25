@@ -1,11 +1,15 @@
 
 import 'dart:collection';
+import 'dart:convert';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
+import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/filtertags.dart';
 import 'package:living_desire/service/searchapi.dart';
+import 'package:http/http.dart' as http;
 
 class BulkOrderProvider with ChangeNotifier{
 
@@ -58,8 +62,6 @@ class BulkOrderProvider with ChangeNotifier{
       for(FilterCategoryChild c in f.filterChilds){
 
         List<FilterTag> list = await searchApi.getSubTypes(c.filterID);
-
-        print("Type  : " + c.filterID);
 
         for(FilterTag f1 in list){
 
@@ -187,7 +189,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
-  void addToCart(){
+  void addToCart() async{
 
     bulkOrderCart.description = description;
 
@@ -200,7 +202,58 @@ class BulkOrderProvider with ChangeNotifier{
     // Upload Images to fireStore
     // add data to cart
 
+    await addCustomCart("kisdjsjdnjsdhn81237Q");
 
+
+  }
+
+
+  Future<void> addCustomCart(String authID) async {
+    try {
+
+      var data = {
+
+        "authID": authID,
+        "productType": bulkOrderCart.productID,
+        "quantity": bulkOrderCart.quantity,
+        "size": bulkOrderCart.size,
+        "colour": bulkOrderCart.colour,
+        "productID": bulkOrderCart.productID,
+        "variantID": bulkOrderCart.variantID,
+        "description": bulkOrderCart.description,
+
+      };
+
+      final response =
+      await http.post(FunctionConfig.host + 'custom/{$authID}',
+          body: jsonEncode(data)
+      );
+      if (response.statusCode == 200) {
+
+          print("Success");
+
+      }
+    } catch (e) {
+      print(e.toString());
+      throw Exception(e);
+    }
+
+
+
+}
+
+  Future uploadFile() async {
+    Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('testingImages');
+    UploadTask uploadTask = storageReference.putFile(null);
+    await uploadTask;
+
+    storageReference.getDownloadURL().then((fileURL) {
+
+
+
+    });
   }
 
   void onClear(){

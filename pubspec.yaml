@@ -33,6 +33,7 @@ dependencies:
   dotted_border: ^1.0.7
   # cloud_functions: ^0.7.2
   pedantic: ^1.9.2
+  firebase_storage: ^5.0.0
 
   equatable: ^1.2.5
   rxdart: ^0.24.0
