@@ -11,7 +11,7 @@ class Tracking {
     @required this.comments,
   });
 
-  factory Tracking.fromJson(Map<String, dynamic> data) {
+  factory Tracking.fromJson(dynamic data) {
     if (data == null) return null;
     print(data.toString());
 

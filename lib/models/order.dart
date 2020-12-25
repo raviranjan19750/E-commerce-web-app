@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:living_desire/models/ordered_product.dart';
 import './models.dart';
 
@@ -42,16 +44,30 @@ class Order {
     this.orderID,
   });
 
-  factory Order.fromJson(Map<String, dynamic> data) {
+  factory Order.fromJson(dynamic data) {
     if (data == null) return null;
     print('Data Model: ' + data.toString());
 
     return Order(
       key: data['id'],
-      // placedDate: (DateTime.parse(data['data']['placedDate']).toLocal()),
-      // expectedDeliveryDate:
-      //     DateTime.parse(data['data']['expectedDeliveryDate']).toLocal(),
-      // deliveryDate: DateTime.parse(data['data']['deliveryDate']).toLocal(),
+      placedDate: Jiffy(new Timestamp(data['data']['placedDate']["_seconds"],
+                  data['data']['placedDate']["_nanoseconds"])
+              .toDate()
+              .toLocal())
+          .add(hours: 5, minutes: 30),
+      expectedDeliveryDate: Jiffy(new Timestamp(
+                  data['data']['expectedDeliveryDate']["_seconds"],
+                  data['data']['expectedDeliveryDate']["_nanoseconds"])
+              .toDate()
+              .toLocal())
+          .add(hours: 5, minutes: 30),
+      deliveryDate: (data['data']['deliveryDate'] != null)
+          ? Jiffy(new Timestamp(data['data']['deliveryDate']["_seconds"],
+                      data['data']['deliveryDate']["_nanoseconds"])
+                  .toDate()
+                  .toLocal())
+              .add(hours: 5, minutes: 30)
+          : null,
       name: data['data']['name'],
       address: data['data']['address'],
       phone: data['data']['phone'],
@@ -60,10 +76,10 @@ class Order {
       status: data['data']['status'],
       statusValue: data['data']['statusValue'],
       amount: data['data']['amount'],
-      tracking: (((data['data']['tracking']) as List)
+      tracking: (((data['data']['tracking']) as List<dynamic>)
           .map((tracking) => Tracking.fromJson(tracking))
           .toList()),
-      orderedProducts: ((data['data']['products']) as List)
+      orderedProducts: ((data['data']['products']) as List<dynamic>)
           .map((product) => OrderedProduct.fromJson(product))
           .toList(),
     );

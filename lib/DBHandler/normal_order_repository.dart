@@ -12,7 +12,7 @@ class NormalOrderRepository {
       if (response.statusCode == 200) {
         print('Http Get request sucessfull');
         // print(jsonDecode(response.body).toString());
-        return (jsonDecode(response.body) as List)
+        return (jsonDecode(response.body) as List<dynamic>)
             .map((i) => Order.fromJson(i))
             .toList();
       } else {

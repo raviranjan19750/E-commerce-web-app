@@ -64,11 +64,14 @@ class NormalOrdersContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ...state.order.map(
-                    (orderItem) => OrderItem(
-                      order: orderItem,
-                    ),
-                  ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.order.length,
+                      itemBuilder: (context, index) {
+                        return OrderItem(
+                          order: state.order[index],
+                        );
+                      }),
                 ],
               ),
             ),

@@ -21,7 +21,7 @@ class Cart {
   String name;
   String pincode;
   String imageUrl;
-  String colour;
+  List<Color> colour;
   String size;
   bool isCombo;
 
@@ -44,7 +44,7 @@ class Cart {
     this.size,
   });
 
-  factory Cart.fromJson(Map<String, dynamic> data) {
+  factory Cart.fromJson(dynamic data) {
     if (data == null) return null;
 
     return Cart(
@@ -52,6 +52,13 @@ class Cart {
       pincode: data['pincode'],
       name: data['data']['productName'],
       // colour: data['data']['colour'],
+      // colour:
+      //     (data['data']['colour'] as List<dynamic>).map((e) {
+      //   return Colour.fromJson(e);
+      // }).toList(),
+      colour: GetColors.fromHex((data['data']['colour'] as List<dynamic>)
+          .map((e) => (e['hexCode'] as String))
+          .toList()),
       dateAdded: data['data']['dateAdded'],
       manufacturingPrice: data['data']['manufacturingPrice'],
       imageUrl: data['data']['images'][0],

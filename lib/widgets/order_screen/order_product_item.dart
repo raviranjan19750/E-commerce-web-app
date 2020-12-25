@@ -201,7 +201,9 @@ class OrderProductItem extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/product');
+                          },
                           child: Container(
                             color: Colors.black,
                             width: MediaQuery.of(context).size.width * 0.1,

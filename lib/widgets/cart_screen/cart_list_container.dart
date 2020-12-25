@@ -22,6 +22,7 @@ class CartListContainer extends StatelessWidget {
           padding: const EdgeInsets.only(
             top: 16.0,
             right: 16.0,
+            left: 16.0,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -100,9 +101,21 @@ class CartListContainer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(Strings.subTotal +
-                            ' (${state.totalQuantity} Items): '),
-                        Text('${state.retailTotal}'),
+                        Text(
+                          Strings.subTotal +
+                              ' (${state.totalQuantity} Items): ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text(
+                          Strings.rupeesSymbol + ' ${state.retailTotal}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ],
                     );
                   },

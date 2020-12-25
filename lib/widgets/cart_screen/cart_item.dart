@@ -7,6 +7,7 @@ import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/widgets/widgets.dart';
 import '../../bloc/cart/cart_bloc.dart';
+import 'dart:math' as math;
 
 class CartItemView extends StatelessWidget {
   final Cart cart;
@@ -14,6 +15,7 @@ class CartItemView extends StatelessWidget {
   const CartItemView({Key key, this.cart}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print(cart.colour);
     return BlocProvider(
       create: (context) => CartItemBloc(
         cart: cart,
@@ -46,6 +48,41 @@ class CartItemView extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class CustomLeftHalfCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final Path path = new Path();
+    path.moveTo(size.width / 2, 0);
+    path.lineTo(size.width / 2, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
+class CustomRightHalfCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final Path path = new Path();
+
+    path.moveTo(size.width / 2, 0);
+    path.lineTo(size.width / 2, size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
 
@@ -160,19 +197,90 @@ class CartItem extends StatelessWidget {
                         child: Row(
                           children: [
                             //TODO: Color of the product
-                            Container(
-                              padding: EdgeInsets.all(4.0),
-                              margin: EdgeInsets.only(left: 6.0),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                  border: Border.all(
-                                      width: 0.5, color: Colors.black)),
-                              child: CircleAvatar(
-                                radius: 8,
-                                backgroundColor: Colors.blue,
-                              ),
-                            ),
+                            cart.colour.length == 2
+                                ? Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    margin: EdgeInsets.only(left: 6.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        width: 0.5,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(8),
+                                              topLeft: Radius.circular(8),
+                                            ),
+                                            color: cart.colour[0],
+                                          ),
+                                          height: 16,
+                                          width: 8,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              bottomRight: Radius.circular(8),
+                                              topRight: Radius.circular(8),
+                                            ),
+                                            color: cart.colour[1],
+                                          ),
+                                          height: 16,
+                                          width: 8,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    margin: EdgeInsets.only(left: 6.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        width: 0.5,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    child: CircleAvatar(
+                                      radius: 8,
+                                      backgroundColor: cart.colour[0],
+                                    ),
+                                  ),
+
+                            // Stack(
+                            //     children: [
+                            //       ClipPath(
+                            //         clipper:
+                            //             new CustomLeftHalfCircleClipper(),
+                            //         child: new Container(
+                            //           height: 16,
+                            //           width: 16,
+                            //           decoration: new BoxDecoration(
+                            //               color: cart.colour[0],
+                            //               borderRadius:
+                            //                   BorderRadius.circular(8)),
+                            //         ),
+                            //       ),
+                            //       ClipPath(
+                            //         clipper:
+                            //             new CustomRightHalfCircleClipper(),
+                            //         child: new Container(
+                            //           height: 16,
+                            //           width: 16,
+                            //           decoration: new BoxDecoration(
+                            //               color: cart.colour[1],
+                            //               borderRadius:
+                            //                   BorderRadius.circular(8)),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   )
 
                             Padding(
                               padding: const EdgeInsets.symmetric(

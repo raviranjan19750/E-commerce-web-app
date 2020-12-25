@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import '../logger.dart';
 
 class CartRepository {
-
   var LOG = LogBuilder.getLogger();
 
   List<Cart> _cart = List.empty();
@@ -42,9 +41,10 @@ class CartRepository {
       final response =
           await http.get(FunctionConfig.host + 'manageCart/normal/${authID}');
       if (response.statusCode == 200) {
-        _cart = (jsonDecode(response.body) as List)
-            .map((i) => Cart.fromJson(i))
-            .toList();
+        //Map<String, dynamic> map = json.decode(response.body);
+
+        _cart = ((jsonDecode(response.body) as List<dynamic>)
+            .map((i) => Cart.fromJson(i))).toList();
         return _cart;
       } else {
         print('Http Request Failed');
@@ -74,7 +74,6 @@ class CartRepository {
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(data));
       if (response.statusCode == 200) {
-
       } else {
         print('Http Request Failed');
       }
@@ -132,9 +131,7 @@ class CartRepository {
       );
       if (request.statusCode == 200) {
         LOG.i(_cart.length);
-        for (var e in _cart) {
-
-        }
+        for (var e in _cart) {}
         LOG.i('Removing Key ${key}');
         _cart.removeWhere((element) => element.key.compareTo(key) == 0);
         LOG.i(_cart.length);

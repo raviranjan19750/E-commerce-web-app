@@ -25,7 +25,7 @@ class OrderedProduct {
     @required this.quantity,
   });
 
-  factory OrderedProduct.fromJson(Map<String, dynamic> data) {
+  factory OrderedProduct.fromJson(dynamic data) {
     if (data == null) return null;
     print(data.toString());
 
