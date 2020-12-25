@@ -30,13 +30,10 @@ class ProductRepository {
 
   Future<ProductDetail> getProductVariantSizeColorDescription(
       {String productID, List<ProductVariantColor> color, String size}) async {
-    var colors = [];
+    List<String> colors = [];
     for (var c in color) {
-      var o = {
-        "hexCode": '#' + c.colorHexCode.toString().substring(10, 16),
-        "name": c.colorName.toString()
-      };
-      colors.add(o);
+      colors.add(
+          ('#' + c.colorHexCode.toString().substring(10, 16).toUpperCase()));
     }
     var params = {"size": size, "colour": colors};
     print(params);
