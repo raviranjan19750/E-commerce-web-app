@@ -21,19 +21,16 @@ class ProductRepository {
     //return ProductDetail.fromJson(jsonDecode(response.body));
   }
 
-  Future<ProductDetail> getProductVariantSizeColorDescription(
-      {String productID, String color, String size}) async {
+  Future<ProductDetail> getProductVariantSizeColorDescription({String productID, List<String> color, String size}) async {
+
     var params = {"size": size, "colour": color};
 
-    var response = await http.post(
-        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID",
-        body: params);
+    var response = await http.post("https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID", body: params);
     Map<String, dynamic> map = jsonDecode(response.body);
     return ProductDetail.fromJson(map);
   }
 
-  Future<CheckProductAvailability> checkProductAvailability(
-      {String pincode, String productID, String warehouseID}) async {
+  Future<CheckProductAvailability> checkProductAvailability({String pincode, String productID, String warehouseID}) async {
     Map<String, dynamic> data = {
       "pincode": pincode,
       "productID": productID,

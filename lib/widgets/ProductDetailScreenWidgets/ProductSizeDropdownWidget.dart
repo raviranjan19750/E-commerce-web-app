@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/data/data.dart';
+import 'package:living_desire/models/productVariantColorModel.dart';
 
 class ProductSizeDropdown extends StatefulWidget {
 
   final List<String> productSizeList;
-  final String productColor;
+  final List<ProductVariantColor> productColor;
   final String productID;
   final String productSize;
 

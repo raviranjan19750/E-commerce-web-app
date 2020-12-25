@@ -6,6 +6,7 @@ import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/CheckProductAvailability.dart';
 import 'package:living_desire/models/ProductDetail.dart';
+import 'package:living_desire/models/productVariantColorModel.dart';
 import 'package:living_desire/models/product_variants.dart';
 import 'package:living_desire/models/products.dart';
 import 'package:meta/meta.dart';
@@ -50,14 +51,11 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     }
   }
 
-  Stream<ProductDetailState> loadProductVariantDetail(
-      LoadProductVariantDetail event) async* {
+  Stream<ProductDetailState> loadProductVariantDetail(LoadProductVariantDetail event) async* {
     yield ProductDetailLoading();
 
     try {
-      var productImageSizeDescription =
-          await productRepository.getProductVariantSizeColorDescription(
-              productID: event.productID, color: event.color, size: event.size);
+      var productImageSizeDescription = await productRepository.getProductVariantSizeColorDescription(productID: event.productID, color: event.color, size: event.size);
       yield ProductDetailLoadingSuccessful(productImageSizeDescription);
     } catch (e) {
       print(e.toString());

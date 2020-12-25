@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/data/data.dart';
+import 'package:living_desire/models/productVariantColorModel.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductAvailablity.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductSizeDropdownWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
+import 'package:living_desire/widgets/ProductDetailScreenWidgets/productVariantColorList.dart';
 import 'package:living_desire/widgets/bullet.dart';
 
 class ProductDetailDescriptionAndImage extends StatelessWidget {
@@ -99,36 +101,17 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                         ),
 //list of color
 //todo Set lst of color
+
                         Container(
 //width: 150,
                           height: 50,
                           margin: EdgeInsets.only(top: 16.0),
 
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: state.productDetail.colour.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                onTap: () {
-//todo show selectd color
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(4.0),
-                                  margin: EdgeInsets.only(left: 6.0),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color(int.parse("FF" + state.productDetail.colour[index], radix: 16)),
-                                      border: Border.all(
-                                          width: 0.5, color: Colors.black)),
-                                  child: CircleAvatar(
-                                    radius: 10,
-                                    backgroundColor: Color(int.parse(state.productDetail.colour[index], radix: 16)),
-                                  ),
-                                ),
-                              );
-                            },
+                          child: ProductVariantColorWidget(
+                            colorList: state.productDetail.colourOptions,
+                            size: state.productDetail.size,
+                            selectedColor: state.productDetail.colour,
+                            productID: state.productDetail.productID,
                           ),
                         ),
 
@@ -159,10 +142,9 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       ),
                                     ),
                                     ProductSizeDropdown(
-                                      productSizeList:
-                                          state.productDetail.sizeOptions,
-                                      productColor: "Blue",
-                                      productID: "0IeSrbsqqxiqwELq4Qqm",
+                                      productSizeList: state.productDetail.sizeOptions,
+                                      productColor: state.productDetail.colour,
+                                      productID: state.productDetail.productID,
                                       productSize: state.productDetail.size,
                                     ),
                                   ],

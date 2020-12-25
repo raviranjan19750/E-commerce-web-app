@@ -1,6 +1,8 @@
 import 'package:convert/convert.dart';
+import 'package:living_desire/models/productVariantColorModel.dart';
 
 class ProductDetail {
+
 
 
   final String productID;
@@ -8,7 +10,7 @@ class ProductDetail {
   final String productName;
 
   final List<String> sizeOptions;
-  final List<String> colourOptions;
+  final List<ProductVariantColor> colourOptions;
   final List<String> images;
   final List<String> description;
 
@@ -16,7 +18,7 @@ class ProductDetail {
   final bool isAvailable;
 
   final String size;
-  final List<String> colour;
+  final List<ProductVariantColor> colour;
 
   final double sellingPrice;
   final double discountPrice;
@@ -39,10 +41,22 @@ class ProductDetail {
   factory ProductDetail.fromJson(Map<String, dynamic> data) {
 
     //if(data == null) return null;
-    List<String> cols = [];
+    List<ProductVariantColor> cols = [];
     for (var col in data["colour"]) {
+
       var strcol = col['hexCode'] as String;
-      cols.add(strcol.replaceAll("#", ""));
+      strcol.replaceAll("#", "replace");
+      cols.add(new ProductVariantColor(colorHexCode: strcol, colorName: col['name']));
+
+    }
+
+    List<ProductVariantColor> colourOption = [];
+    for (var col in data["colourOptions"]) {
+
+      var strcol = col['hexCode'] as String;
+      strcol.replaceAll("#", "replace");
+      colourOption.add(new ProductVariantColor(colorHexCode: strcol, colorName: col['name']));
+
     }
 
 
@@ -57,7 +71,7 @@ class ProductDetail {
       discountPrice: data["discountPrice"],
 
       sizeOptions: data["sizeOptions"].cast<String>(),
-      colourOptions: data["colourOptions"].cast<String>(),
+      colourOptions: colourOption,
       images: data["images"].cast<String>(),
       description: data["description"].cast<String>(),
 
