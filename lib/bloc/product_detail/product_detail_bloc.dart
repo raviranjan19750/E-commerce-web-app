@@ -41,8 +41,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     try {
       var productDescription =
           await productRepository.getProductVariantDescription(
-              productID: event.productID,
-              variantID: event.variantID);
+              productID: event.productID, variantID: event.variantID);
       // var availability = await productRepository.checkProductAvailability(pincode: "110042", productID: "0IeSrbsqqxiqwELq4Qqm", warehouseID: "temp_id");
       yield ProductDetailLoadingSuccessful(productDescription);
     } catch (e) {
@@ -51,11 +50,17 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     }
   }
 
-  Stream<ProductDetailState> loadProductVariantDetail(LoadProductVariantDetail event) async* {
+  Stream<ProductDetailState> loadProductVariantDetail(
+      LoadProductVariantDetail event) async* {
     yield ProductDetailLoading();
 
     try {
-      var productImageSizeDescription = await productRepository.getProductVariantSizeColorDescription(productID: event.productID, color: event.color, size: event.size);
+      var productImageSizeDescription =
+          await productRepository.getProductVariantSizeColorDescription(
+        productID: event.productID,
+        color: event.color,
+        size: event.size,
+      );
       yield ProductDetailLoadingSuccessful(productImageSizeDescription);
     } catch (e) {
       print(e.toString());

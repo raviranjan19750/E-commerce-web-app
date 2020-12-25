@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,22 +5,22 @@ import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/models/productVariantColorModel.dart';
 
 class ProductVariantColorWidget extends StatefulWidget {
-
-  final List<ProductVariantColor> colorList;
+  final List<List<ProductVariantColor>> colorList;
   List<ProductVariantColor> selectedColor;
   String productID;
   String size;
-  Function (String) onColorSelected;
+  Function(String) onColorSelected;
   List<ProductVariantColor> selectedVariantColor;
 
-  ProductVariantColorWidget({Key key, this.colorList, this.size, this.selectedColor, this.productID}) : super(key: key);
+  ProductVariantColorWidget(
+      {Key key, this.colorList, this.size, this.selectedColor, this.productID})
+      : super(key: key);
 
   @override
   _ProductVariantColorState createState() => _ProductVariantColorState();
 }
 
 class _ProductVariantColorState extends State<ProductVariantColorWidget> {
-
   int selectedColorCount;
 
   @override
@@ -29,10 +28,7 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
     // TODO: implement initState
     super.initState();
     selectedColorCount = widget.selectedColor.length;
-    widget.selectedVariantColor.clear();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,23 +41,68 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
         return InkWell(
           onTap: () {
             setState(() {
-              widget.selectedVariantColor.add(widget.colorList[index]);
+              // widget.selectedVariantColor.add(widget.colorList[index]);
               widget.selectedColor = widget.colorList[index];
-              BlocProvider.of<ProductDetailBloc>(context).add(LoadProductVariantDetail(widget.productID, widget.selectedColor, widget.size));
+              BlocProvider.of<ProductDetailBloc>(context).add(
+                  LoadProductVariantDetail(
+                      widget.productID, widget.selectedColor, widget.size));
             });
           },
-          child: Container(
-            padding: EdgeInsets.all(4.0),
-            margin: EdgeInsets.only(left: 6.0),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(int.parse("FF" + widget.colorList[index].colorHexCode, radix: 16)),
-                border: Border.all(width: 0.5, color: Colors.black)),
-            child: CircleAvatar(
-              radius: 10,
-              backgroundColor: Color(int.parse(widget.colorList[index].colorHexCode, radix: 16)),
-            ),
-          ),
+          child: widget.colorList[index].length == 2
+              ? Container(
+                  padding: EdgeInsets.all(4.0),
+                  margin: EdgeInsets.only(left: 6.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.black,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(8),
+                            topLeft: Radius.circular(8),
+                          ),
+                          color: widget.colorList[index][0].colorHexCode,
+                        ),
+                        height: 8,
+                        width: 16,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(8),
+                            bottomLeft: Radius.circular(8),
+                          ),
+                          color: widget.colorList[index][1].colorHexCode,
+                        ),
+                        height: 8,
+                        width: 16,
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  padding: EdgeInsets.all(4.0),
+                  margin: EdgeInsets.only(left: 6.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.black,
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    radius: 8,
+                    backgroundColor: widget.colorList[index][0].colorHexCode,
+                  ),
+                ),
         );
       },
     );

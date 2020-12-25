@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/data/data.dart';
-import 'package:living_desire/models/productVariantColorModel.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductAvailablity.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
@@ -17,7 +16,11 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
   final List<Color> itemColor;
   final List<String> itemDescriptions;
 
-  const ProductDetailDescriptionAndImage({Key key, this.itemColor = itemColors, this.itemDescriptions = productItemDescriptions}) : super(key: key);
+  const ProductDetailDescriptionAndImage(
+      {Key key,
+      this.itemColor = itemColors,
+      this.itemDescriptions = productItemDescriptions})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +145,8 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       ),
                                     ),
                                     ProductSizeDropdown(
-                                      productSizeList: state.productDetail.sizeOptions,
+                                      productSizeList:
+                                          state.productDetail.sizeOptions,
                                       productColor: state.productDetail.colour,
                                       productID: state.productDetail.productID,
                                       productSize: state.productDetail.size,
@@ -207,23 +211,28 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.4,
                           margin: EdgeInsets.only(top: 8.0),
                           child: Column(
-                            children: state.productDetail.description.map((e) => Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Bullets(),
-                                Container(
-                                  width: 10,
-                                ),
-                                Flexible(
-                                  child: Text(
-                                    e,
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.black),
-                                  ),
-                                ),
-                              ],
-                            )).toList(),
+                            children: state.productDetail.description
+                                .map((e) => Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Bullets(),
+                                        Container(
+                                          width: 10,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            e,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ],
+                                    ))
+                                .toList(),
                           ),
                         )
                       ],
