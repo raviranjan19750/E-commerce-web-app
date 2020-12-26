@@ -185,16 +185,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                   text: Strings.customizeWithLogo,
                                 ),
                               )
-                            : Container(
-                                height: 45,
-                                width: 220,
-                                color: Colors.brown,
-                                margin: EdgeInsets.only(top: 12.0),
-                                child: CustomWidgetButton(
-                                  onPressed: () {},
-                                  text: Strings.customizeWithLogo,
-                                ),
-                              ),
+                            : Container(),
 
                         Container(
                           margin: EdgeInsets.only(top: 20.0),
