@@ -258,6 +258,7 @@ class BulkOrderProvider with ChangeNotifier{
       if (response.statusCode == 200) {
 
           print("Success");
+          onClear();
 
       }
     } catch (e) {
