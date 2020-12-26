@@ -220,10 +220,11 @@ class BulkOrderProvider with ChangeNotifier{
 
     bulkOrderCart.description = description;
 
-    // Upload Images to fireStore
-    // add data to cart
-
-    //await addCustomCart("kisdjsjdnjsdhn81237Q");
+    List<String> imageUrls = await uploadFile();
+    
+    for(int i=0;i<imageUrls.length;i++){
+      print("Url {$i} : "+ imageUrls.elementAt(i));
+    }
 
 
   }
@@ -264,16 +265,25 @@ class BulkOrderProvider with ChangeNotifier{
 
 }
 
-  Future uploadFile() async {
+  Future<List<String>> uploadFile() async {
 
-    fb.StorageReference storageRef = fb.storage().ref('images/testImage');
-    fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(0).imageFile).future;
+    List<String> imageUrls = List();
 
-    storageRef.getDownloadURL().then((fileURL) {
+    for(int i=0;i<logos.length;i++){
 
-        print(fileURL);
+      String fileName = DateTime.now().toString();
+      
+      fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo').child(fileName);
+      fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(i).imageFile).future;
+      Uri imageUrl = await storageRef.getDownloadURL();
+      imageUrls.add(imageUrl.toString());
 
-    });
+
+    }
+
+    return imageUrls;
+
+
   }
 
   void onClear(){
