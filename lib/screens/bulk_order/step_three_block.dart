@@ -85,7 +85,7 @@ class StepThreeBlock extends StatelessWidget{
 
                               if(index == value.logos.length){
 
-                                value.getImage();
+                                value.startFilePicker();
 
                               }
 

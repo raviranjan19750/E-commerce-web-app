@@ -1,10 +1,10 @@
 
 import 'dart:collection';
 import 'dart:convert';
-
+import 'dart:html';
+import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/filtertags.dart';
@@ -33,7 +33,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   String description  = "";
 
-  List<Image> logos = new List<Image>();
+  List<Uint8List> logos = new List<Uint8List>();
 
   int quantity = 50;
 
@@ -134,13 +134,33 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
-  void getImage() async {
+  void startFilePicker() async {
 
-    final Image image = await FlutterWebImagePicker.getImage;
+    InputElement uploadInput = FileUploadInputElement()..accept = 'image/*';
+    uploadInput.click();
 
-    logos.add(image);
+    uploadInput.onChange.listen((e) {
+      // read file content as dataURL
+      final files = uploadInput.files;
+      if (files.length == 1) {
+        final file = files[0];
+        FileReader reader =  FileReader();
 
-    notifyListeners();
+        reader.onLoadEnd.listen((e) {
+
+          logos.add(reader.result);
+          notifyListeners();
+
+
+        });
+
+        reader.onError.listen((fileEvent) {
+
+        });
+
+        reader.readAsArrayBuffer(file);
+      }
+    });
   }
 
   void deleteImage(int index){
@@ -207,7 +227,6 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
-
   Future<void> addCustomCart(String authID) async {
     try {
 
@@ -246,7 +265,7 @@ class BulkOrderProvider with ChangeNotifier{
     Reference storageReference = FirebaseStorage.instance
         .ref()
         .child('testingImages');
-    UploadTask uploadTask = storageReference.putFile(null);
+    UploadTask uploadTask = storageReference.putData(null);
     await uploadTask;
 
     storageReference.getDownloadURL().then((fileURL) {

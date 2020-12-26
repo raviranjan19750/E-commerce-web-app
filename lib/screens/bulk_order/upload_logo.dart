@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/palette.dart';
@@ -6,7 +9,7 @@ class UploadLogo extends StatelessWidget{
 
   BulkOrderProvider value;
 
-  List<Image> logos;
+  List<Uint8List> logos;
 
   int index, size;
 
@@ -28,11 +31,7 @@ class UploadLogo extends StatelessWidget{
             elevation: 8,
             color: Palette.secondaryColor,
 
-            child: Image(
-              image: logos[index].image,
-              width: 120 ,
-              height: 160
-            ),
+            child: Image.memory(logos.elementAt(index),height: 160,width: 120,),
 
           ),
 
