@@ -1,15 +1,18 @@
 
 import 'dart:collection';
 import 'dart:convert';
-
-import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:html';
+import 'dart:io' as io;
+import 'dart:typed_data';
+import 'package:firebase/firebase.dart' as fb;
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/filtertags.dart';
+import 'package:living_desire/models/uploadImage.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:http/http.dart' as http;
+import 'package:living_desire/service/sharedPreferences.dart';
 
 class BulkOrderProvider with ChangeNotifier{
 
@@ -33,7 +36,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   String description  = "";
 
-  List<Image> logos = new List<Image>();
+  List<UploadImage> logos = new List<UploadImage>();
 
   int quantity = 50;
 
@@ -134,13 +137,38 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
-  void getImage() async {
+  void startFilePicker() async {
 
-    final Image image = await FlutterWebImagePicker.getImage;
+    InputElement uploadInput = FileUploadInputElement()..accept = 'image/*';
+    uploadInput.click();
 
-    logos.add(image);
+    uploadInput.onChange.listen((e) {
+      // read file content as dataURL
+      final files = uploadInput.files;
+      if (files.length == 1) {
 
-    notifyListeners();
+        final file = files[0];
+
+        FileReader reader =  FileReader();
+
+        reader.onLoadEnd.listen((e) {
+
+
+          UploadImage uploadImage = new UploadImage(imageFile: file,uri: reader.result);
+
+          logos.add(uploadImage);
+          notifyListeners();
+
+
+        });
+
+        reader.onError.listen((fileEvent) {
+
+        });
+
+        reader.readAsArrayBuffer(file);
+      }
+    });
   }
 
   void deleteImage(int index){
@@ -193,44 +221,44 @@ class BulkOrderProvider with ChangeNotifier{
 
     bulkOrderCart.description = description;
 
-    print("Product ID : " + bulkOrderCart.productID);
-    print("Variant ID : " + bulkOrderCart.variantID);
-    print("Size : " + bulkOrderCart.size);
-    print("Quantity : " + bulkOrderCart.quantity.toString());
-    print("Description : " + description);
+    String authID = UserPreferences().AuthID;
 
-    // Upload Images to fireStore
-    // add data to cart
+    print("Auth ID  :  " + authID);
 
-    await addCustomCart("kisdjsjdnjsdhn81237Q");
+    if(authID!=null && authID.isNotEmpty){
 
+      List<String> imageUrls = await uploadFile(authID);
+
+      addCustomCart(authID,imageUrls);
+
+    }
 
   }
 
+  Future<void> addCustomCart(String authID,List<String> imageUrls) async {
 
-  Future<void> addCustomCart(String authID) async {
     try {
 
       var data = {
-
-        "authID": authID,
         "productType": bulkOrderCart.productID,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
-        "colour": bulkOrderCart.colour,
+        "colour":['red'],
         "productID": bulkOrderCart.productID,
         "variantID": bulkOrderCart.variantID,
         "description": bulkOrderCart.description,
-
+        "images": imageUrls,
       };
 
       final response =
-      await http.post(FunctionConfig.host + 'custom/{$authID}',
-          body: jsonEncode(data)
+      await http.post(FunctionConfig.host + 'manageCart/custom/{$authID}',
+          body: jsonEncode(data),
+          headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
 
           print("Success");
+          onClear();
 
       }
     } catch (e) {
@@ -239,21 +267,27 @@ class BulkOrderProvider with ChangeNotifier{
     }
 
 
-
 }
 
-  Future uploadFile() async {
-    Reference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('testingImages');
-    UploadTask uploadTask = storageReference.putFile(null);
-    await uploadTask;
+  Future<List<String>> uploadFile(String authID) async {
 
-    storageReference.getDownloadURL().then((fileURL) {
+    List<String> imageUrls = List();
+
+    for(int i=0;i<logos.length;i++){
+
+      String fileName = DateTime.now().toString();
+      
+      fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo/{$authID}').child(fileName);
+      fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(i).imageFile).future;
+      Uri imageUrl = await storageRef.getDownloadURL();
+      imageUrls.add(imageUrl.toString());
 
 
+    }
 
-    });
+    return imageUrls;
+
+
   }
 
   void onClear(){
