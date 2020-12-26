@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
+import 'package:living_desire/service/sharedPreferences.dart';
 // import 'pa';
 
 class LogOutFailure implements Exception {}
@@ -75,7 +76,9 @@ class AuthenticationRepository {
   Future<void> signInWithToken({String token}) async {
     assert(token != null);
     try {
-      await _firebaseAuth.signInWithCustomToken(token);
+      firebase_auth.UserCredential user =
+          await _firebaseAuth.signInWithCustomToken(token);
+      UserPreferences().setAuthID(user.user.uid);
     } on Exception {
       throw LoginWithTokenFailure();
     }

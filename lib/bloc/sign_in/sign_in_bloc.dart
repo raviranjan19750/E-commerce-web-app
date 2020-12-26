@@ -52,7 +52,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           // add auth id to local storage
           // push local changesd to firebase
           await authService.signInWithToken(token: customToken);
-          UserPreferences().setAuthID(customToken);
+          // UserPreferences().setAuthID(customToken);
           UserPreferences().AuthID;
           print("user auth id is ${UserPreferences().AuthID}");
           print("user signed in....");
