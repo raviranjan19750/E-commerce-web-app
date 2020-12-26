@@ -12,33 +12,24 @@ import 'package:living_desire/widgets/nextListHover.dart';
 import 'package:living_desire/widgets/productTypeBar.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  final Product product;
   final String productID;
   final String variantID;
 
   const ProductDetailScreen({
     Key key,
-    this.product,
     this.productID,
     this.variantID,
-  }) : assert(product != null || (productID != null && variantID != null)),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
       BlocProvider(
-          create: (context) => ProductCardBloc(
-                customerRepo: RepositoryProvider.of(context),
-                wishlistBloc: BlocProvider.of(context),
-                product: product,
-              )),
-      BlocProvider(
         create: (context) =>
             ProductDetailBloc(productRepository: RepositoryProvider.of(context))
               ..add(LoadProductDetail(
-                product.productId,
-                product.varientId,
+                productID,
+                variantID,
               )),
       ),
     ], child: ProductDetail());

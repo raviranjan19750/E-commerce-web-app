@@ -117,6 +117,64 @@ class SearchApi {
     return tag;
   }
 
+  Future<List<FilterTag>> getSubTypes(String type) async {
+    final Map<String, dynamic> query = Map();
+
+    Map<String, dynamic> matches = Map();
+    matches.putIfAbsent("type", () => type);
+
+    query.putIfAbsent("match", () => matches);
+
+    final Map<String, dynamic> aggregation = Map();
+
+    final Map<String, dynamic> sybTypeAggregation = Map();
+    sybTypeAggregation.putIfAbsent("terms", () => _getTerms("subType"));
+    aggregation.putIfAbsent("subType-aggr", () => sybTypeAggregation);
+
+    final searchResult = await client.search(
+        index: INDEX_NAME, limit: 10, query: query, aggregations: aggregation);
+    List<FilterTag> tag = List();
+
+    print("Search Result  : " + searchResult.hits.elementAt(0).doc.toString());
+    print("Search Result  : " + searchResult.aggregations.toString());
+
+    final subTypeResult = searchResult.aggregations['subType-aggr'];
+    FilterTag subTypeTag =
+        FilterTag("SUB-TYPE", "subType", description: "Sub Type");
+    subTypeResult.buckets.forEach((element) {
+      subTypeTag.addChild(FilterCategoryChild(
+          element.key.toString(),
+          element.key.toString() + " (" + element.docCount.toString() + ")",
+          false));
+    });
+    tag.add(subTypeTag);
+
+    return tag;
+  }
+
+  Future<List<FilterTag>> getProductTypeAndSubtype() async {
+    final Map<String, dynamic> aggregation = Map();
+
+    final Map<String, dynamic> typeAggregation = Map();
+    typeAggregation.putIfAbsent("terms", () => _getTerms("type"));
+    aggregation.putIfAbsent("type-aggr", () => typeAggregation);
+
+    final searchResult = await client.search(
+        index: INDEX_NAME, limit: 0, aggregations: aggregation);
+    List<FilterTag> tag = List();
+
+    final typeResult = searchResult.aggregations['type-aggr'];
+    FilterTag typeTag = FilterTag("TYPE", "type", description: "Type");
+    typeResult.buckets.forEach((element) {
+      typeTag.addChild(FilterCategoryChild(
+          element.key.toString(),
+          element.key.toString() + " (" + element.docCount.toString() + ")",
+          false));
+    });
+    tag.add(typeTag);
+    return tag;
+  }
+
   Map<String, dynamic> _getTerms(String fieldName, {size = 100}) {
     final Map<String, dynamic> terms = Map();
     terms.putIfAbsent("field", () => fieldName);
