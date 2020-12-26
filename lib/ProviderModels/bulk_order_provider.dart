@@ -229,24 +229,25 @@ class BulkOrderProvider with ChangeNotifier{
 
       List<String> imageUrls = await uploadFile(authID);
 
-      addCustomCart(authID);
+      addCustomCart(authID,imageUrls);
 
     }
 
   }
 
-  Future<void> addCustomCart(String authID) async {
+  Future<void> addCustomCart(String authID,List<String> imageUrls) async {
 
     try {
 
       var data = {
-        "authID": authID,
         "productType": bulkOrderCart.productID,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
+        "colour":['red'],
         "productID": bulkOrderCart.productID,
         "variantID": bulkOrderCart.variantID,
         "description": bulkOrderCart.description,
+        "images": imageUrls,
       };
 
       final response =
