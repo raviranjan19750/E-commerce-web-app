@@ -1,5 +1,7 @@
 part of 'filter_bloc.dart';
 
+enum FilterSortCriteria {RELEVANCE, PRICE_LOW_TO_HIGH, PRICE_HIGH_TO_LOW, NEWEST_FIRST}
+
 @immutable
 abstract class FilterState {
   List<FilterTag> filters;

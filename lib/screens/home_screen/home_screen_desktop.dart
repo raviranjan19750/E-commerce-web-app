@@ -58,7 +58,9 @@ class MyDesktopView extends StatelessWidget {
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               child,
               Footer()
             ],

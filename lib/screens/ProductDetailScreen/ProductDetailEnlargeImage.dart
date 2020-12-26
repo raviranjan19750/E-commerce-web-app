@@ -133,7 +133,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                             shape: CircleBorder(),
                             child: CircleAvatar(
                                 backgroundColor: Colors.white,
-                                child: ProductWishlistButton()),
+                                child: Icon(Icons.favorite)),
                           ),
                         ),
                       ),

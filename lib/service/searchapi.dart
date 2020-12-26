@@ -22,20 +22,24 @@ class SearchApi {
   }
 
   Future<SearchResult> getFilteredProduct(String title,
-      {int limit, int offset}) async {
-    if (title.isEmpty) {
-      final searchResult =
-          await client.search(index: INDEX_NAME, limit: limit, offset: offset);
-      return searchResult;
-    }
-
+      {int limit, int offset, List<Map<String, dynamic>> filter}) async {
     final Map<String, dynamic> query = Map();
 
-    // query.putIfAbsent("size", () => 30);
-    Map<String, dynamic> matches = Map();
-    matches.putIfAbsent("name", () => title);
+    final Map<String, dynamic> queryCriteria = Map();
+    if (title != null && title.isNotEmpty) {
+      var tmp = [
+        {
+          "match": {"name": title}
+        }
+      ];
+      queryCriteria.putIfAbsent("must", () => tmp);
+    }
 
-    query.putIfAbsent("match", () => matches);
+    if (filter != null && filter.isNotEmpty) {
+      queryCriteria.putIfAbsent("filter", () => filter);
+    }
+
+    query.putIfAbsent("bool", () => queryCriteria);
     final searchResult = await client.search(
         index: INDEX_NAME, query: query, limit: limit, offset: offset);
     return searchResult;
@@ -69,47 +73,74 @@ class SearchApi {
     List<FilterTag> tag = List();
 
     final sizeresult = searchResult.aggregations['size-aggr'];
-    FilterTag sizetag = FilterTag("SIZE", description: "Size");
+    FilterTag sizetag = FilterTag("SIZE", "size", description: "Size");
     sizeresult.buckets.forEach((element) {
       sizetag.addChild(FilterCategoryChild(
-          element.key.toString(),
-          element.key.toString() + " (" + element.docCount.toString() + ")",
-          false));
+          element.key.toString(), element.key.toString(), false));
     });
     tag.add(sizetag);
 
     final colorresult = searchResult.aggregations['color-aggr'];
-    FilterTag colortag = FilterTag("COLOR", description: "Color");
+    FilterTag colortag =
+        FilterTag("COLOR", "colour.name", description: "Color");
     colorresult.buckets.forEach((element) {
       colortag.addChild(FilterCategoryChild(
-          element.key.toString(),
-          element.key.toString() + " (" + element.docCount.toString() + ")",
-          false));
+          element.key.toString(), element.key.toString(), false));
     });
     tag.add(colortag);
 
     final tagResult = searchResult.aggregations['tags-aggr'];
-    FilterTag tagsTag = FilterTag("TAGS", description: "Tags");
+    FilterTag tagsTag = FilterTag("TAGS", "tags", description: "Tags");
     tagResult.buckets.forEach((element) {
       tagsTag.addChild(FilterCategoryChild(
-          element.key.toString(),
-          element.key.toString() + " (" + element.docCount.toString() + ")",
-          false));
+          element.key.toString(), element.key.toString(), false));
     });
     tag.add(tagsTag);
 
     final typeResult = searchResult.aggregations['type-aggr'];
-    FilterTag typeTag = FilterTag("TYPE", description: "Type");
+    FilterTag typeTag = FilterTag("TYPE", "type", description: "Type");
     typeResult.buckets.forEach((element) {
       typeTag.addChild(FilterCategoryChild(
-          element.key.toString(),
-          element.key.toString() + " (" + element.docCount.toString() + ")",
-          false));
+          element.key.toString(), element.key.toString(), false));
     });
     tag.add(typeTag);
 
     final subTypeResult = searchResult.aggregations['subType-aggr'];
-    FilterTag subTypeTag = FilterTag("SUB-TYPE", description: "Sub Type");
+    FilterTag subTypeTag =
+        FilterTag("SUB-TYPE", "subType", description: "Sub Type");
+    subTypeResult.buckets.forEach((element) {
+      subTypeTag.addChild(FilterCategoryChild(
+          element.key.toString(), element.key.toString(), false));
+    });
+    tag.add(subTypeTag);
+
+    return tag;
+  }
+
+  Future<List<FilterTag>> getSubTypes(String type) async {
+    final Map<String, dynamic> query = Map();
+
+    Map<String, dynamic> matches = Map();
+    matches.putIfAbsent("type", () => type);
+
+    query.putIfAbsent("match", () => matches);
+
+    final Map<String, dynamic> aggregation = Map();
+
+    final Map<String, dynamic> sybTypeAggregation = Map();
+    sybTypeAggregation.putIfAbsent("terms", () => _getTerms("subType"));
+    aggregation.putIfAbsent("subType-aggr", () => sybTypeAggregation);
+
+    final searchResult = await client.search(
+        index: INDEX_NAME, limit: 10, query: query, aggregations: aggregation);
+    List<FilterTag> tag = List();
+
+    print("Search Result  : " + searchResult.hits.elementAt(0).doc.toString());
+    print("Search Result  : " + searchResult.aggregations.toString());
+
+    final subTypeResult = searchResult.aggregations['subType-aggr'];
+    FilterTag subTypeTag =
+        FilterTag("SUB-TYPE", "subType", description: "Sub Type");
     subTypeResult.buckets.forEach((element) {
       subTypeTag.addChild(FilterCategoryChild(
           element.key.toString(),
@@ -118,6 +149,29 @@ class SearchApi {
     });
     tag.add(subTypeTag);
 
+    return tag;
+  }
+
+  Future<List<FilterTag>> getProductTypeAndSubtype() async {
+    final Map<String, dynamic> aggregation = Map();
+
+    final Map<String, dynamic> typeAggregation = Map();
+    typeAggregation.putIfAbsent("terms", () => _getTerms("type"));
+    aggregation.putIfAbsent("type-aggr", () => typeAggregation);
+
+    final searchResult = await client.search(
+        index: INDEX_NAME, limit: 0, aggregations: aggregation);
+    List<FilterTag> tag = List();
+
+    final typeResult = searchResult.aggregations['type-aggr'];
+    FilterTag typeTag = FilterTag("TYPE", "type", description: "Type");
+    typeResult.buckets.forEach((element) {
+      typeTag.addChild(FilterCategoryChild(
+          element.key.toString(),
+          element.key.toString() + " (" + element.docCount.toString() + ")",
+          false));
+    });
+    tag.add(typeTag);
     return tag;
   }
 

@@ -97,7 +97,7 @@ class StepOneBlock extends StatelessWidget{
           Container(
 
             width: double.infinity,
-            height: 240,
+            height: 280,
 
             padding: EdgeInsets.all(16),
 
@@ -119,7 +119,7 @@ class StepOneBlock extends StatelessWidget{
 
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: 7,
+                itemCount: value.productTypeMap.keys.length,
                 itemBuilder:
                     (BuildContext context, int index) {
                   return InkWell(
@@ -176,7 +176,7 @@ class StepOneBlock extends StatelessWidget{
 
                     GridView.builder(
                       shrinkWrap: true,
-                      itemCount: 8,
+                      itemCount: value.subTypes.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 6,
 
@@ -211,7 +211,7 @@ class StepOneBlock extends StatelessWidget{
 
                             ),
 
-                            child: Text('SubType',style: TextStyle(fontSize: 16,color: (index == value.selectedSubType) ? Colors.white :Palette.secondaryColor),),
+                            child: Text(value.subTypes.elementAt(index),style: TextStyle(fontSize: 16,color: (index == value.selectedSubType) ? Colors.white :Palette.secondaryColor),),
 
                           ),
                         );

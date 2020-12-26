@@ -126,7 +126,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1+1"
+    version: "1.0.2"
   dotted_border:
     dependency: "direct main"
     description:
@@ -183,6 +183,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.1"
+  firebase:
+    dependency: "direct main"
+    description:
+      name: firebase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.3.3"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -407,7 +414,7 @@ packages:
       name: pin_input_text_field
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   platform:
     dependency: transitive
     description:

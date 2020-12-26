@@ -35,7 +35,7 @@ class BulkOrder extends StatelessWidget{
 
             return Scaffold(
 
-              appBar: CustomAppBar(size: 80,visibleSubAppBar: false,visibleMiddleAppBar: false,),
+              appBar: CustomAppBar(size: 104,visibleSubAppBar: false,visibleMiddleAppBar: false,),
 
               body: Row(
 
@@ -97,27 +97,32 @@ class BulkOrder extends StatelessWidget{
                                   ),
                                 ),
 
-                                Container(
+                                Visibility(
 
-                                  margin: EdgeInsets.only(top: 16,left: 32,bottom: 64),
+                                  visible: value.stepOneDone && value.stepTwoDone,
 
-                                  alignment: Alignment.centerLeft,
+                                  child: Container(
 
-                                  child: RaisedButton(
+                                    margin: EdgeInsets.only(top: 16,left: 32,bottom: 64),
 
-                                    padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
+                                    alignment: Alignment.centerLeft,
+
+                                    child: RaisedButton(
+
+                                      padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
 
 
-                                    onPressed: (){
+                                      onPressed: (){
 
-                                      value.addToCart();
+                                        value.addToCart();
 
-                                    },
+                                      },
 
-                                    color: Palette.secondaryColor,
+                                      color: Palette.secondaryColor,
 
-                                    child: Text('ADD MORE',style: TextStyle(color: Colors.white,fontSize: 24),),
+                                      child: Text('ADD MORE',style: TextStyle(color: Colors.white,fontSize: 24),),
 
+                                    ),
                                   ),
                                 ),
 

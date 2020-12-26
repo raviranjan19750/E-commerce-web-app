@@ -1,11 +1,12 @@
 class FilterTag {
   final String tag;
   final String description;
+  final String keyword;
   List<FilterCategoryChild> _filterChilds = List();
 
   List<FilterCategoryChild> get filterChilds => _filterChilds;
 
-  FilterTag(this.tag, {this.description});
+  FilterTag(this.tag, this.keyword, {this.description});
 
   void addChild(FilterCategoryChild child) {
     _filterChilds.add(child);

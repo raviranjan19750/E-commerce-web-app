@@ -28,12 +28,13 @@ class AllProductScreen extends StatelessWidget {
         providers: [
           BlocProvider(
               create: (context) =>
-                  FilterBloc(searchApi: RepositoryProvider.of(context))
-                    ..add(InitializeDummyFilter())),
-          BlocProvider(
-              create: (context) =>
                   AllProductBloc(searchApi: RepositoryProvider.of(context))
-                    ..add(event))
+                    ..add(event)),
+          BlocProvider(
+              create: (context) => FilterBloc(
+                  searchApi: RepositoryProvider.of(context),
+                  allProductBloc: BlocProvider.of(context))
+                ..add(InitializeDummyFilter())),
         ],
         child: MyDesktopView(
           child: ListView(
@@ -100,7 +101,6 @@ class AllProductScreen extends StatelessWidget {
 class AllProductScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     if (width < 1000) {
       width = width * 0.95;
@@ -210,7 +210,8 @@ class BuildAllProductView extends StatelessWidget {
             if (BlocProvider.of<ScrollBloc>(context)
                         .controller
                         .position
-                        .extentAfter < 600 &&
+                        .extentAfter <
+                    600 &&
                 !state.isEndReached) {
               BlocProvider.of<AllProductBloc>(context).add(LoadNextProduct());
             }
@@ -251,11 +252,10 @@ class AllProductGrid extends StatelessWidget {
     // 1200 - 3
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: itemCount,
-        childAspectRatio: 0.73,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8
-      ),
+          crossAxisCount: itemCount,
+          childAspectRatio: 0.73,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8),
       itemCount: products.length,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {

@@ -16,17 +16,28 @@ class BulkOrderItem extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return Card(
+    return Column(
+      children: [
+        Card(
 
-      elevation: value.elevation,
-      color: (index == value.selectedType ) ? Palette.secondaryColor : Colors.grey[500],
+          elevation: value.elevation,
+          color: (index == value.selectedType ) ? Palette.secondaryColor : Colors.grey[500],
 
-      child: Image(
-        image: AssetImage('assets/images/logo.jpeg'),
-        width: 150 * value.size,
-        height: 200 * value.size,
-      ),
+          child: Image(
+            image: AssetImage('assets/images/logo.jpeg'),
+            width: 150 * value.size,
+            height: 200 * value.size,
+          ),
 
+        ),
+        Container(
+
+          margin: EdgeInsets.only(bottom: 8),
+
+          child: Text(value.productTypeMap.keys.elementAt(index),),
+
+        )
+      ],
     );
   }
 
