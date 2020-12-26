@@ -8,31 +8,21 @@ class LabelTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipPath(
       clipper: MyClipper(),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Wrap(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 24.0),
-            child: Divider(
-              color: Colors.black,
-              thickness: 0.5,
-            ),
-          ),
           Container(
             // height: MediaQuery.of(context).size.height * 0.025,
             // width: MediaQuery.of(context).size.width * 0.08,
-            height: 30,
-            width: 120,
+            height: 35,
+            padding: EdgeInsets.only(top: 8.0,  left: 16.0, right: 40.0),
             decoration: BoxDecoration(color: Color.fromARGB(255, 184, 68, 68)),
-            child: Center(
-              child: Text(
-                this.labeltext,
-                style: TextStyle(color: Colors.white),
-              ),
+            child: Text(
+              this.labeltext,
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ],
+
       ),
     );
   }
@@ -42,17 +32,14 @@ class MyClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0, size.height);
-    // path.moveTo(size.width * 0.67, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(size.width * 0.90, 0);
-
+    path.lineTo(size.width, 0.0);
+    path.lineTo(size.width * 0.75, size.height);
+    path.lineTo(0.0, size.height);
     return path;
   }
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return true;
-    throw UnimplementedError();
   }
 }

@@ -40,10 +40,20 @@ class SimilarProductAndCombos extends StatelessWidget {
           else if (state is SimilarProductsLoadingSuccessful) {
             return Column(
 
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
                 Container(
-                  margin: EdgeInsets.only(top: 32.0, left: 32.0, right: 0.0),
+                  margin: EdgeInsets.only(top: 32.0, left: 32.0, right: 64.0),
+                  child: Divider(
+                    thickness: 0.5,
+                    color: Colors.black,
+                  ),
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(top: 0.0, left: 32.0),
                   child: LabelTag(
                    Strings.similarProudcts,
                   )
@@ -75,7 +85,16 @@ class SimilarProductAndCombos extends StatelessWidget {
                     )),
 
                 Container(
-                  margin: EdgeInsets.only(top: 32.0, left: 32.0, right: 0.0),
+                  margin: EdgeInsets.only(top: 32.0, left: 32.0, right: 64.0),
+                  child: Divider(
+                    thickness: 0.5,
+                    color: Colors.black,
+
+                  ),
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(left: 32.0),
                   child:LabelTag(
                   Strings.Combos,
                   )
