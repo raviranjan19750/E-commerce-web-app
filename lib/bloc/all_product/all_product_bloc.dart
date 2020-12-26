@@ -14,11 +14,11 @@ part 'all_product_event.dart';
 part 'all_product_state.dart';
 
 class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
-
   var LOG = LogBuilder.getLogger();
 
   final SearchApi searchApi;
   var filter = "";
+  List<Map<String, dynamic>> filterCriteria;
 
   @override
   Stream<Transition<AllProductEvent, AllProductState>> transformEvents(
@@ -54,7 +54,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       int limit = state.limit;
       int offset = state.offset + limit;
       SearchResult result = await searchApi.getFilteredProduct(filter,
-          offset: offset, limit: limit);
+          offset: offset, limit: limit, filter: filterCriteria);
       SuccessLoadingAllProduct res = _createDataFromSearch(result,
           prev: previousList, limit: limit, offset: offset);
       yield res;
@@ -71,8 +71,9 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
               ? event.filterText
               : "";
       filter = filteredText;
+      filterCriteria = event.filters;
       SearchResult result = await searchApi.getFilteredProduct(filteredText,
-          offset: 0, limit: 20);
+          offset: 0, limit: 20, filter: event.filters);
       yield _createDataFromSearch(result);
     } catch (e) {
       print(e);
@@ -103,19 +104,18 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
         tags.add(tag.toString());
       }
       var prod = Product(
-        title: hit.doc['name'],
-        color: colors,
-        imageUrls: imgUrls,
-        size: hit.doc['size'],
-        discountPrice: hit.doc['discountPrice'],
-        retailPrice: hit.doc['sellingPrice'],
-        productId: hit.doc['productID'],
-        varientId: hit.doc['variantID'],
-        tags: tags,
-        type: hit.doc['type'],
-        isAvailable: hit.doc['isAvailable'],
-        subType: hit.doc['subType']
-      );
+          title: hit.doc['name'],
+          color: colors,
+          imageUrls: imgUrls,
+          size: hit.doc['size'],
+          discountPrice: hit.doc['discountPrice'],
+          retailPrice: hit.doc['sellingPrice'],
+          productId: hit.doc['productID'],
+          varientId: hit.doc['variantID'],
+          tags: tags,
+          type: hit.doc['type'],
+          isAvailable: hit.doc['isAvailable'],
+          subType: hit.doc['subType']);
       result.add(prod);
     }
     List<Product> finalResult = List();

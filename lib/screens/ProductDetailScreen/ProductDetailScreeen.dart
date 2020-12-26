@@ -21,7 +21,8 @@ class ProductDetailScreen extends StatelessWidget {
     this.product,
     this.productID,
     this.variantID,
-  }) : super(key: key);
+  }) : assert(product != null || (productID != null && variantID != null)),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
