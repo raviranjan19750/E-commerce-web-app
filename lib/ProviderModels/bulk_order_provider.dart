@@ -2,12 +2,14 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:html';
+import 'dart:io' as io;
 import 'dart:typed_data';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase/firebase.dart' as fb;
 import 'package:flutter/cupertino.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/filtertags.dart';
+import 'package:living_desire/models/uploadImage.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +35,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   String description  = "";
 
-  List<Uint8List> logos = new List<Uint8List>();
+  List<UploadImage> logos = new List<UploadImage>();
 
   int quantity = 50;
 
@@ -143,12 +145,17 @@ class BulkOrderProvider with ChangeNotifier{
       // read file content as dataURL
       final files = uploadInput.files;
       if (files.length == 1) {
+
         final file = files[0];
+
         FileReader reader =  FileReader();
 
         reader.onLoadEnd.listen((e) {
 
-          logos.add(reader.result);
+
+          UploadImage uploadImage = new UploadImage(imageFile: file,uri: reader.result);
+
+          logos.add(uploadImage);
           notifyListeners();
 
 
@@ -213,21 +220,18 @@ class BulkOrderProvider with ChangeNotifier{
 
     bulkOrderCart.description = description;
 
-    print("Product ID : " + bulkOrderCart.productID);
-    print("Variant ID : " + bulkOrderCart.variantID);
-    print("Size : " + bulkOrderCart.size);
-    print("Quantity : " + bulkOrderCart.quantity.toString());
-    print("Description : " + description);
-
     // Upload Images to fireStore
     // add data to cart
 
-    await addCustomCart("kisdjsjdnjsdhn81237Q");
+    //await addCustomCart("kisdjsjdnjsdhn81237Q");
 
 
   }
 
   Future<void> addCustomCart(String authID) async {
+
+
+
     try {
 
       var data = {
@@ -258,19 +262,16 @@ class BulkOrderProvider with ChangeNotifier{
     }
 
 
-
 }
 
   Future uploadFile() async {
-    Reference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('testingImages');
-    UploadTask uploadTask = storageReference.putData(null);
-    await uploadTask;
 
-    storageReference.getDownloadURL().then((fileURL) {
+    fb.StorageReference storageRef = fb.storage().ref('images/testImage');
+    fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(0).imageFile).future;
 
+    storageRef.getDownloadURL().then((fileURL) {
 
+        print(fileURL);
 
     });
   }
