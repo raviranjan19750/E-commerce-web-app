@@ -74,4 +74,6 @@ class Strings {
   static const String outOfStock = "Out of stock";
   static const String checkAvailability = "Check Availability";
   static const String invalidPincode = "Invalid Pincode";
+  static const String similarProudcts = "Similar Products";
+  static const String Combos = "Combos";
 }

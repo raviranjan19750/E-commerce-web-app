@@ -57,6 +57,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   color: Colors.black,
                 ),
               ),
+
               Container(
                 width: imageListWidth,
                 //height: imageListHeight,
@@ -89,6 +90,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   },
                 ),
               ),
+
               Container(
                 width: imageListWidth,
                 height: 30,
@@ -107,7 +109,12 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
           margin: EdgeInsets.only(left: 32.0),
           child: Column(
             children: [
+
               // enlarged image
+
+
+
+
               InkWell(
                 child: Container(
                   height: imageHeight,

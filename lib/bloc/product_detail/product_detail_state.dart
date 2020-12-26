@@ -18,6 +18,13 @@ class ProductDetailLoadingSuccessful extends ProductDetailState {
 
 class ProductDetailLoadingFailure extends ProductDetailState {}
 
+class SimilarProductDetailLoadingSuccessful extends ProductDetailState {
+
+  final List<Product> productDetail;
+
+  SimilarProductDetailLoadingSuccessful(this.productDetail);
+
+}
 
 
 
