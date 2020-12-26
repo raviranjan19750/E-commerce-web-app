@@ -136,7 +136,7 @@ class BulkOrder extends StatelessWidget{
                       ),
                     ),
                   ),
-                  Container(height: double.infinity ,child: BulkOrderCart())
+                  Container(height: double.infinity ,child: BulkOrderCart(value: value,))
                 ],
               ),
 
