@@ -12,6 +12,7 @@ import 'package:living_desire/models/filtertags.dart';
 import 'package:living_desire/models/uploadImage.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:http/http.dart' as http;
+import 'package:living_desire/service/sharedPreferences.dart';
 
 class BulkOrderProvider with ChangeNotifier{
 
@@ -220,37 +221,38 @@ class BulkOrderProvider with ChangeNotifier{
 
     bulkOrderCart.description = description;
 
-    List<String> imageUrls = await uploadFile();
-    
-    for(int i=0;i<imageUrls.length;i++){
-      print("Url {$i} : "+ imageUrls.elementAt(i));
-    }
+    String authID = UserPreferences().AuthID;
 
+    print("Auth ID  :  " + authID);
+
+    if(authID!=null && authID.isNotEmpty){
+
+      List<String> imageUrls = await uploadFile(authID);
+
+      addCustomCart(authID);
+
+    }
 
   }
 
   Future<void> addCustomCart(String authID) async {
 
-
-
     try {
 
       var data = {
-
         "authID": authID,
         "productType": bulkOrderCart.productID,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
-        "colour": bulkOrderCart.colour,
         "productID": bulkOrderCart.productID,
         "variantID": bulkOrderCart.variantID,
         "description": bulkOrderCart.description,
-
       };
 
       final response =
-      await http.post(FunctionConfig.host + 'custom/{$authID}',
-          body: jsonEncode(data)
+      await http.post(FunctionConfig.host + 'manageCart/custom/{$authID}',
+          body: jsonEncode(data),
+          headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
 
@@ -265,7 +267,7 @@ class BulkOrderProvider with ChangeNotifier{
 
 }
 
-  Future<List<String>> uploadFile() async {
+  Future<List<String>> uploadFile(String authID) async {
 
     List<String> imageUrls = List();
 
@@ -273,7 +275,7 @@ class BulkOrderProvider with ChangeNotifier{
 
       String fileName = DateTime.now().toString();
       
-      fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo').child(fileName);
+      fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo/{$authID}').child(fileName);
       fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(i).imageFile).future;
       Uri imageUrl = await storageRef.getDownloadURL();
       imageUrls.add(imageUrl.toString());
