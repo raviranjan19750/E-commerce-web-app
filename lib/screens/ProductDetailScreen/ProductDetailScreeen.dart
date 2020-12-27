@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/bloc/similarProducts/similar_products_bloc.dart';
@@ -31,15 +32,16 @@ class ProductDetailScreen extends StatelessWidget {
       BlocProvider(
         create: (context) => ProductDetailBloc(productRepository: RepositoryProvider.of(context))..add(LoadProductDetail(productID, variantID,)),
       ),
-
-      BlocProvider(
-        create: (context) => SimilarProductsBloc(searchApi: RepositoryProvider.of(context))..add(LoadingSimilarProducts(product.type, product.subType),),
-      ),
-    ], child: ProductDetail());
+      
+      BlocProvider(create: (context) => CartBloc(cartRepository: RepositoryProvider.of(context))),
+    ], child: ProductDetail(product: product,));
   }
 }
 
 class ProductDetail extends StatelessWidget {
+   Product product;
+
+   ProductDetail({Key key, this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
 
@@ -48,14 +50,9 @@ class ProductDetail extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(top: 64.0),
-          child: ProductDetailDescriptionAndImage(),
+          child: ProductDetailDescriptionAndImage(product: product,),
         ),
 
-        SimilarProductAndCombos(),
-
-        Container(
-          height: 100,
-        ),
       ],
     );
   }

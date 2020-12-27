@@ -33,11 +33,11 @@ class ProductRepository {
   }
 
   Future<CheckProductAvailability> checkProductAvailability(
-      {String pincode, String productID, String warehouseID}) async {
+      {String pincode, String productID, String variantID}) async {
     Map<String, dynamic> data = {
       "pincode": pincode,
       "productID": productID,
-      "warehouseID": warehouseID,
+      "variantID": variantID,
     };
 
     HttpsCallable callable =
