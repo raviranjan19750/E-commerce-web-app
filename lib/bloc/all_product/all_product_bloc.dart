@@ -69,7 +69,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       String filteredText =
           (event.filterText != null && event.filterText.isNotEmpty)
               ? event.filterText
-              : "";
+              : filter;
       filter = filteredText;
       filterCriteria = event.filters;
       SearchResult result = await searchApi.getFilteredProduct(filteredText, offset: 0, limit: 20, filter: event.filters);

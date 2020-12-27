@@ -1,10 +1,11 @@
 import 'package:elastic_client/elastic_client.dart';
+import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/filtertags.dart';
-import 'package:living_desire/models/product.dart';
-// import 'package:living_desire/models/models.dart';
 
 class SearchApi {
-  // curl -XGET "http://es01:9200/catalogue/_search" -H 'Content-Type: application/json' -d'{  "query": {    "query_string": {      "default_field": "description",      "query": "A*"    }  },  "aggs": {    "auto_complete": {      "terms": {        "field": "description.keyword",        "size": 10      }    }  }}'
+
+  var LOG = LogBuilder.getLogger();
+
   final String SEARCH_URL =
       "https://1c52378e333549089895e04eccedf28c.us-central1.gcp.cloud.es.io:9243";
 
@@ -13,11 +14,9 @@ class SearchApi {
   Client client;
 
   SearchApi() {
-    // var uri = Uri.parse(SEARCH_URL);
     final transport = HttpTransport(
         url: SEARCH_URL,
         authorization: 'Basic ZWxhc3RpYzplMnB3aDdnN29SSm5MZ2NxYUxGRE1nUnI=');
-    // authorization: 'Basic ZWxhc3RpYzpjckFaZnRBWjVhZDU2UE1Ja1oyZm9qelU=');
     client = Client(transport);
   }
 
@@ -40,10 +39,12 @@ class SearchApi {
     }
 
     query.putIfAbsent("bool", () => queryCriteria);
+    LOG.i(query);
     final searchResult = await client.search(
         index: INDEX_NAME, query: query, limit: limit, offset: offset);
     return searchResult;
   }
+
 
   Future<List<FilterTag>> getAllCategoryTags() async {
     final Map<String, dynamic> aggregation = Map();
@@ -132,13 +133,11 @@ class SearchApi {
     aggregation.putIfAbsent("subType-aggr", () => sybTypeAggregation);
 
     final searchResult = await client.search(
-        index: INDEX_NAME, limit: 1, query: query, aggregations: aggregation);
+        index: INDEX_NAME, limit: 10, query: query, aggregations: aggregation);
     List<FilterTag> tag = List();
 
-
-
-    String imageUrl = searchResult.hits.elementAt(0).doc['images'][0];
-
+    print("Search Result  : " + searchResult.hits.elementAt(0).doc.toString());
+    print("Search Result  : " + searchResult.aggregations.toString());
 
     final subTypeResult = searchResult.aggregations['subType-aggr'];
     FilterTag subTypeTag =
@@ -146,7 +145,7 @@ class SearchApi {
     subTypeResult.buckets.forEach((element) {
       subTypeTag.addChild(FilterCategoryChild(
           element.key.toString(),
-          imageUrl,
+          element.key.toString() + " (" + element.docCount.toString() + ")",
           false));
     });
     tag.add(subTypeTag);
@@ -154,7 +153,7 @@ class SearchApi {
     return tag;
   }
 
-  Future<List<FilterTag>> getProductType() async {
+  Future<List<FilterTag>> getProductTypeAndSubtype() async {
     final Map<String, dynamic> aggregation = Map();
 
     final Map<String, dynamic> typeAggregation = Map();
@@ -189,35 +188,29 @@ class SearchApi {
     return terms;
   }
 
-
-  Future<SearchResult> getSimilarProduct(String type, String subType) async {
-    print("hogya");
-
+  Future<SearchResult> _getSimilarProduct() async {
     var criteria = {
       "bool": {
         "filter": [
           {
             "terms": {
-              "type": [
-                type
+              "subTypes": [
+
               ]
             }
           },
           {
             "terms": {
-              "subType": [
-               subType
+              "type": [
+
               ]
             }
           }
         ]
       }
     };
-    final searchResult = await client.search(index: INDEX_NAME, limit: 50, query: criteria);
 
-    return searchResult;
+    final searchResult = await client.search(
+        index: INDEX_NAME, limit: 0, query: criteria);
   }
-
-
-
 }
