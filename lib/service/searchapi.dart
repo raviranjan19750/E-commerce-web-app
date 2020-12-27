@@ -1,10 +1,10 @@
 import 'package:elastic_client/elastic_client.dart';
+import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/filtertags.dart';
-import 'package:living_desire/models/product.dart';
-// import 'package:living_desire/models/models.dart';
 
 class SearchApi {
-  // curl -XGET "http://es01:9200/catalogue/_search" -H 'Content-Type: application/json' -d'{  "query": {    "query_string": {      "default_field": "description",      "query": "A*"    }  },  "aggs": {    "auto_complete": {      "terms": {        "field": "description.keyword",        "size": 10      }    }  }}'
+  var LOG = LogBuilder.getLogger();
+
   final String SEARCH_URL =
       "https://1c52378e333549089895e04eccedf28c.us-central1.gcp.cloud.es.io:9243";
 
@@ -13,16 +13,14 @@ class SearchApi {
   Client client;
 
   SearchApi() {
-    // var uri = Uri.parse(SEARCH_URL);
     final transport = HttpTransport(
         url: SEARCH_URL,
         authorization: 'Basic ZWxhc3RpYzplMnB3aDdnN29SSm5MZ2NxYUxGRE1nUnI=');
-    // authorization: 'Basic ZWxhc3RpYzpjckFaZnRBWjVhZDU2UE1Ja1oyZm9qelU=');
     client = Client(transport);
   }
 
   Future<SearchResult> getFilteredProduct(String title,
-      {int limit, int offset, List<Map<String, dynamic>> filter}) async {
+      {int limit, int offset, List<Map<String, dynamic>> filter, List<Map<String, dynamic>> sort}) async {
     final Map<String, dynamic> query = Map();
 
     final Map<String, dynamic> queryCriteria = Map();
@@ -40,8 +38,9 @@ class SearchApi {
     }
 
     query.putIfAbsent("bool", () => queryCriteria);
+    LOG.i(query);
     final searchResult = await client.search(
-        index: INDEX_NAME, query: query, limit: limit, offset: offset);
+        index: INDEX_NAME, query: query, limit: limit, offset: offset, sort: sort);
     return searchResult;
   }
 
@@ -187,7 +186,6 @@ class SearchApi {
     return terms;
   }
 
-
   Future<SearchResult> getSimilarProduct(String type, String subType) async {
     print("hogya");
 
@@ -196,26 +194,20 @@ class SearchApi {
         "filter": [
           {
             "terms": {
-              "type": [
-                type
-              ]
+              "type": [type]
             }
           },
           {
             "terms": {
-              "subType": [
-               subType
-              ]
+              "subType": [subType]
             }
           }
         ]
       }
     };
-    final searchResult = await client.search(index: INDEX_NAME, limit: 50, query: criteria);
+    final searchResult =
+        await client.search(index: INDEX_NAME, limit: 50, query: criteria);
 
     return searchResult;
   }
-
-
-
 }

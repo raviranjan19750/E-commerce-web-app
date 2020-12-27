@@ -47,4 +47,18 @@ class BulkOrderCart {
     );
   }
 
+  void reset(){
+
+    productID = "";
+    variantID = "";
+    quantity = 50;
+    size = "s";
+    description = "";
+    key = "";
+    images = List.empty();
+    productType = "";
+    colour = "red";
+
+  }
+
 }

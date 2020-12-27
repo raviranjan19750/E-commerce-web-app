@@ -76,4 +76,5 @@ class Strings {
   static const String invalidPincode = "Invalid Pincode";
   static const String similarProudcts = "Similar Products";
   static const String Combos = "Combos";
+  static const String inValidPincode = "Invalid pincode";
 }

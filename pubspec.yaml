@@ -34,6 +34,7 @@ dependencies:
   dotted_border: ^1.0.7
   # cloud_functions: ^0.7.2
   pedantic: ^1.9.2
+  ars_progress_dialog: ^0.1.2
 
   equatable: ^1.2.5
   rxdart: ^0.24.0
@@ -51,6 +52,7 @@ dependencies:
   shared_preferences: ^0.5.4+8
   shared_preferences_web: ^0.1.0
   localstorage: ^3.0.6+9
+  intl: ^0.16.1
 
 
 
