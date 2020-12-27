@@ -41,7 +41,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         "yellow Bean Bags",
         "green Bean Bags",
         "Orange Bean Bags",
-        "Blue Football Bean Bags"
+        "Blue Football Bean Bags",
+        "Combo Bean Bags",
+        "Black Bean Bag"
       ];
 
       Map<String, List<Product>> res = {};

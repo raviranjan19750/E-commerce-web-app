@@ -9,6 +9,8 @@ class HomeWidget extends StatelessWidget {
   final List<Product> productlist;
   final String labeltxt;
 
+  // final ScrollController controller = ScrollController();
+
   const HomeWidget({Key key, this.productlist, this.labeltxt})
       : super(key: key);
   @override
@@ -44,11 +46,22 @@ class HomeWidget extends StatelessWidget {
                     );
                   }),
               Positioned(
-                  height: 175,
+                  height: 100.0,
                   right: 0,
+                  top: 125.0,
                   child: FlatButton(
                     onPressed: () {},
                     child: NextListHover(),
+                  )),
+              Positioned(
+                  height: 100.0,
+                  left: 0,
+                  top: 125.0,
+                  child: FlatButton(
+                    onPressed: () {},
+                    child: NextListHover(
+                      icon: Icons.arrow_back_ios,
+                    ),
                   ))
             ],
           ),
