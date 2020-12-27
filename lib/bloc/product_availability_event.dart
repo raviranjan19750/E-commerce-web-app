@@ -13,9 +13,9 @@ class CheckingProductAvailabilityInitial extends ProductAvailabilityEvent{
 class CheckingProductAvailability extends ProductAvailabilityEvent{
 
   final String productID;
-  final String wareHouseID;
+  final String variantID;
   final String pincode;
 
-  CheckingProductAvailability(this.productID, this.wareHouseID, this.pincode);
+  CheckingProductAvailability(this.productID, this.variantID, this.pincode);
 
 }
