@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:bloc/bloc.dart';
 import 'package:elastic_client/elastic_client.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:living_desire/models/sorting_criteria.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -19,6 +20,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
   final SearchApi searchApi;
   var filter = "";
   List<Map<String, dynamic>> filterCriteria;
+  FilterSortCriteria sortCriteria = FilterSortCriteria.RELEVANCE;
 
   @override
   Stream<Transition<AllProductEvent, AllProductState>> transformEvents(
@@ -71,8 +73,13 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
               ? event.filterText
               : filter;
       filter = filteredText;
-      filterCriteria = event.filters;
-      SearchResult result = await searchApi.getFilteredProduct(filteredText, offset: 0, limit: 20, filter: event.filters);
+      filterCriteria = event.filters != null ? event.filters : filterCriteria;
+      sortCriteria = event.sort != null ? event.sort : sortCriteria;
+      SearchResult result = await searchApi.getFilteredProduct(filter,
+          offset: 0,
+          limit: 20,
+          filter: filterCriteria,
+          sort: Sorting.getCriteria(sortCriteria));
       yield _createDataFromSearch(result);
     } catch (e) {
       print(e);
@@ -80,7 +87,8 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
     }
   }
 
-  SuccessLoadingAllProduct _createDataFromSearch(SearchResult searchResult, {List<Product> prev, int offset = 0, int limit = 20}) {
+  SuccessLoadingAllProduct _createDataFromSearch(SearchResult searchResult,
+      {List<Product> prev, int offset = 0, int limit = 20}) {
     final hits = searchResult.hits;
 
     int len = hits.length;

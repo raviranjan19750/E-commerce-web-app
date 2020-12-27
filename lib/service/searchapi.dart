@@ -20,7 +20,7 @@ class SearchApi {
   }
 
   Future<SearchResult> getFilteredProduct(String title,
-      {int limit, int offset, List<Map<String, dynamic>> filter}) async {
+      {int limit, int offset, List<Map<String, dynamic>> filter, List<Map<String, dynamic>> sort}) async {
     final Map<String, dynamic> query = Map();
 
     final Map<String, dynamic> queryCriteria = Map();
@@ -40,7 +40,7 @@ class SearchApi {
     query.putIfAbsent("bool", () => queryCriteria);
     LOG.i(query);
     final searchResult = await client.search(
-        index: INDEX_NAME, query: query, limit: limit, offset: offset);
+        index: INDEX_NAME, query: query, limit: limit, offset: offset, sort: sort);
     return searchResult;
   }
 

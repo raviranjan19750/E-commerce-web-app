@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:living_desire/models/sorting_criteria.dart';
 
 import '../../routes.dart';
 
@@ -338,28 +340,30 @@ class FilterDropDown extends StatefulWidget {
 }
 
 class _FilterDropDownState extends State<FilterDropDown> {
-  int _value = 1;
+  FilterSortCriteria _value = FilterSortCriteria.RELEVANCE;
 
   @override
   Widget build(BuildContext context) {
+    _value = BlocProvider.of<AllProductBloc>(context).sortCriteria;
     return Container(
       child: DropdownButton(
           value: _value,
           items: [
             DropdownMenuItem(
-              child: Text("Featured"),
-              value: 1,
+              child: Text("Relevance"),
+              value: FilterSortCriteria.RELEVANCE,
             ),
             DropdownMenuItem(
               child: Text("Price: Low To High"),
-              value: 2,
+              value: FilterSortCriteria.PRICE_LOW_TO_HIGH,
             ),
-            DropdownMenuItem(child: Text("Price: High To Low"), value: 3),
-            DropdownMenuItem(child: Text("Avg Customer Review"), value: 4),
+            DropdownMenuItem(child: Text("Price: High To Low"), value: FilterSortCriteria.PRICE_HIGH_TO_LOW,),
+            DropdownMenuItem(child: Text("Newest Arrival"), value: FilterSortCriteria.NEWEST_FIRST,),
           ],
           onChanged: (value) {
             setState(() {
               _value = value;
+              BlocProvider.of<AllProductBloc>(context).add(LoadAllProductWithSearchParams(sort: _value));
             });
           }),
     );
