@@ -125,7 +125,7 @@ class BulkOrderProvider with ChangeNotifier{
   Future<void> getCustomCart(String authID) async {
 
     final response =
-        await http.get(FunctionConfig.host + 'manageCart/custom/{$authID}', headers: {"Content-Type": "application/json"},);
+        await http.get(FunctionConfig.host + 'manageCart/custom/$authID', headers: {"Content-Type": "application/json"},);
 
     if(response.statusCode == 200){
 
