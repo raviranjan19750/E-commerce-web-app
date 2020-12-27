@@ -8,18 +8,19 @@ class LabelTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipPath(
       clipper: MyClipper(),
-      child: Container(
-        // height: MediaQuery.of(context).size.height * 0.025,
-        // width: MediaQuery.of(context).size.width * 0.08,
-        height: 30,
-        width: 120,
-        decoration: BoxDecoration(color: Color.fromARGB(255, 184, 68, 68)),
-        child: Center(
-          child: Text(
-            this.labeltext,
-            style: TextStyle(color: Colors.white),
+      child: Wrap(
+        children: [
+          Container(
+            // height: MediaQuery.of(context).size.height * 0.025,
+            // width: MediaQuery.of(context).size.width * 0.08,
+            // height: 35,
+            decoration: BoxDecoration(color: Color.fromARGB(255, 184, 68, 68)),
+            child: Text(
+              this.labeltext,
+              style: TextStyle(color: Colors.white),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

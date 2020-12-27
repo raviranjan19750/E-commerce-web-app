@@ -38,6 +38,8 @@ class BulkOrderProvider with ChangeNotifier{
 
   List<UploadImage> logos = new List<UploadImage>();
 
+  List<BulkOrderCart> customCartItems = new List();
+
   int quantity = 50;
 
   BulkOrderCart bulkOrderCart = new BulkOrderCart();
@@ -83,6 +85,8 @@ class BulkOrderProvider with ChangeNotifier{
       }
     }
 
+    await getCustomCart(UserPreferences().AuthID);
+
     if(productType == null || productType.isEmpty){
 
       stepOneDone = false;
@@ -97,6 +101,23 @@ class BulkOrderProvider with ChangeNotifier{
     }
 
     notifyListeners();
+
+  }
+
+  Future<void> getCustomCart(String authID) async {
+
+    final response =
+        await http.get(FunctionConfig.host + 'manageCart/custom/{$authID}', headers: {"Content-Type": "application/json"},);
+
+    if(response.statusCode == 200){
+
+      customCartItems.clear();
+
+      customCartItems = (jsonDecode(response.body) as List)
+          .map((i) => BulkOrderCart.fromJson(i))
+          .toList();
+
+    }
 
   }
 

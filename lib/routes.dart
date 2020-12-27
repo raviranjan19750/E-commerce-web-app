@@ -40,6 +40,7 @@ class RoutesConfiguration {
                     child: ProductDetailScreen(
                   productID: productID,
                       variantID: variantID,
+                      product: product,
                 )));
       case BULK_ORDER:
         return MaterialPageRoute(builder: (_) => BulkOrder());

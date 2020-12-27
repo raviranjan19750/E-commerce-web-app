@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/models/BulkOrderProduct.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_cart_item.dart';
 
 class BulkOrderCart extends StatelessWidget{
 
+  BulkOrderProvider value;
+
+  BulkOrderCart({this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +47,14 @@ class BulkOrderCart extends StatelessWidget{
             child: ListView.builder(
 
                 shrinkWrap: true,
-                itemCount: 5,
+                itemCount: value.customCartItems.length,
                 itemBuilder:
                     (BuildContext context, int index) {
                   return Container(
 
                     padding: EdgeInsets.symmetric(horizontal: 16),
 
-                    child: BulkOrderCartItem(),
+                    child: BulkOrderCartItem(items: value.customCartItems,index: index,),
                   );
                 }),
           ),

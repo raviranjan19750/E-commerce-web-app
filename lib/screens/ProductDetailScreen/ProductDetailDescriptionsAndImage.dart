@@ -23,7 +23,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
 // ignore: missing_return
         builder: (context, state) {
       if (state is ProductDetailLoading) {
-        return CircularProgressIndicator();
+        return LinearProgressIndicator();
       } else if (state is ProductDetailLoadingSuccessful) {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,

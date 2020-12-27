@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/models/BulkOrderCart.dart';
 
 class BulkOrderCartItem extends StatelessWidget{
+
+  List<BulkOrderCart> items;
+  int index;
+
+  BulkOrderCartItem({this.items,this.index});
+
   @override
   Widget build(BuildContext context) {
 
@@ -17,7 +24,7 @@ class BulkOrderCartItem extends StatelessWidget{
 
               color: Palette.secondaryColor,
 
-              image: AssetImage('assets/images/logo.jpeg'),
+              image: AssetImage(''),
 
               height: 120,
 
@@ -34,7 +41,7 @@ class BulkOrderCartItem extends StatelessWidget{
 
                 children: [
 
-                  Container(margin : EdgeInsets.only(left: 16,bottom: 8),child: Text('Bean Bag with beans',style: TextStyle(fontSize: 20),)),
+                  Container(margin : EdgeInsets.only(left: 16,bottom: 8),child: Text(items.elementAt(index).productType,style: TextStyle(fontSize: 20),)),
 
                   Row(
                     children: [
@@ -104,7 +111,7 @@ class BulkOrderCartItem extends StatelessWidget{
 
                             Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor),),
 
-                            Text(' 32 ',style: TextStyle(color: Palette.secondaryColor),),
+                            Text(items.elementAt(index).quantity.toString(),style: TextStyle(color: Palette.secondaryColor),),
 
 
                           ],
