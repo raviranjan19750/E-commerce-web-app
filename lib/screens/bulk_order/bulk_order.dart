@@ -1,3 +1,4 @@
+import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 
@@ -87,6 +88,7 @@ class BulkOrder extends StatelessWidget{
                                     padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
 
                                     onPressed: (){
+
                                         value.onClear();
                                     },
 
@@ -113,6 +115,8 @@ class BulkOrder extends StatelessWidget{
 
 
                                       onPressed: (){
+
+                                        value.showProgressDialog(context,"Adding to cart");
 
                                         value.addToCart();
 
