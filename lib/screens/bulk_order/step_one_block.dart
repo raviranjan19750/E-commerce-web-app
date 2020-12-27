@@ -115,29 +115,36 @@ class StepOneBlock extends StatelessWidget{
             ),
 
 
-            child: ListView.builder(
+            child: Visibility(
 
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: value.productTypeMap.keys.length,
-                itemBuilder:
-                    (BuildContext context, int index) {
-                  return InkWell(
+              visible: value.onDataLoaded,
 
-                    onTap: (){
+              replacement: Center(child: CircularProgressIndicator(),),
 
-                      value.onProductTypeSelected(index);
+              child: ListView.builder(
 
-                    },
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: value.productTypeMap.keys.length,
+                  itemBuilder:
+                      (BuildContext context, int index) {
+                    return InkWell(
 
-                    child: Container(
+                      onTap: (){
 
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                        value.onProductTypeSelected(index);
 
-                      child: BulkOrderItem(value: value,index: index,),
-                    ),
-                  );
-                }),
+                      },
+
+                      child: Container(
+
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+
+                        child: BulkOrderItem(value: value,index: index,),
+                      ),
+                    );
+                  }),
+            ),
 
 
 

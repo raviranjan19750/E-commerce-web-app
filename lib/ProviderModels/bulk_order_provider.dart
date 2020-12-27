@@ -4,8 +4,11 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:io' as io;
 import 'dart:typed_data';
+import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/filtertags.dart';
@@ -22,6 +25,8 @@ class BulkOrderProvider with ChangeNotifier{
   bool stepOneDone = false;
 
   bool stepTwoDone = false;
+
+  bool onDataLoaded = false;
 
   TextEditingController quantityController = new TextEditingController(text: '50');
 
@@ -47,6 +52,8 @@ class BulkOrderProvider with ChangeNotifier{
   HashMap<String,List<String>> productTypeMap = new HashMap<String,List<String>>();
   
   List<String> subTypes = new List<String>();
+
+  ArsProgressDialog progressDialog;
 
   void onItemSizeChanged(String s){
 
@@ -100,6 +107,8 @@ class BulkOrderProvider with ChangeNotifier{
 
     }
 
+    onDataLoaded = true;
+
     notifyListeners();
 
   }
@@ -118,6 +127,84 @@ class BulkOrderProvider with ChangeNotifier{
           .toList();
 
     }
+
+  }
+
+  Future<void> deleteCustomCartItems(String key,int index) async {
+
+    print("Key  :  " + key + "  index  :  " + index.toString());
+
+    final response =
+        await http.delete(FunctionConfig.host + 'manageCart/custom/{$key}', headers: {"Content-Type": "application/json"},);
+
+    print("Status Code  :  "+ response.statusCode.toString());
+
+    if(response.statusCode == 200){
+
+      print("item deleted");
+      customCartItems.removeAt(index);
+      notifyListeners();
+
+    }
+
+
+  }
+
+  void dismissProgressDialog(){
+    progressDialog.dismiss();
+  }
+
+  void showProgressDialog(BuildContext context,String message){
+
+    progressDialog = createProgressDialog(context,message);
+
+    progressDialog.show();
+
+  }
+
+  ArsProgressDialog createProgressDialog(BuildContext context,String message){
+
+    return ArsProgressDialog(context,
+        dismissable: false,
+        blur: 2,
+        backgroundColor: Color(0x33000000),
+        loadingWidget: Container(
+          decoration: BoxDecoration(
+
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white
+
+          ),
+          width: 360,
+          height: 240,
+          child: Center(
+
+              child: Column(
+
+                mainAxisAlignment: MainAxisAlignment.center,
+
+                children: [
+
+                  Icon(
+                    Icons.shopping_cart,
+                    color: Colors.grey[500],
+                    size: 48,
+                  ),
+
+                  Container(
+
+                    padding: EdgeInsets.all(8),
+                    margin: EdgeInsets.only(bottom: 16,top: 8),
+
+                    child: Text(message,style: TextStyle(fontSize: 20,color: Palette.secondaryColor),),
+
+                  ),
+                  CircularProgressIndicator(),
+                ],
+              )
+
+          ),
+        ));
 
   }
 
@@ -276,10 +363,13 @@ class BulkOrderProvider with ChangeNotifier{
           body: jsonEncode(data),
           headers: {"Content-Type": "application/json"},
       );
+
+      dismissProgressDialog();
+
       if (response.statusCode == 200) {
 
-          print("Success");
-          onClear();
+        onClear();
+
 
       }
     } catch (e) {

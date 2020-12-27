@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 
@@ -6,8 +7,9 @@ class BulkOrderCartItem extends StatelessWidget{
 
   List<BulkOrderCart> items;
   int index;
+  BulkOrderProvider value;
 
-  BulkOrderCartItem({this.items,this.index});
+  BulkOrderCartItem({this.items,this.index,this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +138,11 @@ class BulkOrderCartItem extends StatelessWidget{
 
                 IconButton(
 
-                  onPressed: (){},
+                  onPressed: (){
+
+                    value.deleteCustomCartItems(items.elementAt(index).key, index);
+
+                  },
 
                   icon: Icon(Icons.highlight_remove_sharp),
                   color: Colors.grey[500],
