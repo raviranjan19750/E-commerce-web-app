@@ -1,64 +1,61 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/DBHandler/ProductRepository.dart';
+import 'package:intl/intl.dart';
 import 'package:living_desire/bloc/product_availability_bloc.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
 
 class ProductAvailability extends StatelessWidget {
-
   final String productID;
-  final String wareHouseID;
+  final String variantID;
 
-  const ProductAvailability({Key key, this.productID, this.wareHouseID}) : super(key: key);
+  const ProductAvailability({Key key, this.productID, this.variantID})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MultiBlocProvider(providers: [
-      BlocProvider(
-        create: (context) => ProductAvailabilityBloc(
-            productRepository: RepositoryProvider.of(context))..add(CheckingProductAvailabilityInitial()),
-      ),
-
-    ], child: ProductAvailabilitySection());
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ProductAvailabilityBloc(
+                productRepository: RepositoryProvider.of(context))
+              ..add(CheckingProductAvailabilityInitial()),
+          ),
+        ],
+        child: ProductAvailabilitySection(
+          productID: productID,
+          variantID: variantID,
+        ));
   }
-
-
 }
 
-
-
 class ProductAvailabilitySection extends StatelessWidget {
+  final String productID;
+  final String variantID;
+
+  const ProductAvailabilitySection({Key key, this.productID, this.variantID})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-
-    ProductRepository productRepository;
-    var checkProductAvailability;
     DateTime expectedDeliveryDate;
-    String availabilityResponseStatus ;
+    String availabilityResponseStatus;
     String pincode;
-    String pincodeInvalidMessage;
+
     TextEditingController textEditingController;
 
-    pincodeInvalidMessage = Strings.invalidPincode;
     textEditingController = TextEditingController();
     availabilityResponseStatus = "0";
     pincode = "";
     expectedDeliveryDate = DateTime.now();
 
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-
       children: [
-
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -67,9 +64,8 @@ class ProductAvailabilitySection extends StatelessWidget {
               color: Colors.black,
             ),
             Container(
-              width: 120,
-              margin: EdgeInsets.symmetric(
-                  horizontal: 8.0, vertical: 0.0),
+              width: 130,
+              margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
               child: TextFormField(
                   controller: textEditingController,
                   keyboardType: TextInputType.number,
@@ -82,8 +78,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                   decoration: InputDecoration(
                       labelText: Strings.checkAvailability,
                       border: InputBorder.none,
-                      labelStyle: TextStyle(
-                          color: Colors.black54),
+                      labelStyle: TextStyle(color: Colors.black54),
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
@@ -92,7 +87,8 @@ class ProductAvailabilitySection extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                BlocProvider.of<ProductAvailabilityBloc>(context).add(CheckingProductAvailability("0IeSrbsqqxiqwELq4Qqm", "temp_id", "110062"));
+                BlocProvider.of<ProductAvailabilityBloc>(context).add(
+                    CheckingProductAvailability(productID, variantID, pincode));
               },
               child: Text(
                 Strings.check,
@@ -105,7 +101,7 @@ class ProductAvailabilitySection extends StatelessWidget {
           ],
         ),
         Container(
-          width: 220,
+          width: 230,
           padding: EdgeInsets.all(0.0),
           margin: EdgeInsets.all(0.0),
           child: Divider(
@@ -114,29 +110,33 @@ class ProductAvailabilitySection extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-
         BlocBuilder<ProductAvailabilityBloc, ProductAvailabilityState>(
           builder: (context, state) {
-            if(state is ProductDetailAvailabilityChecking)
-              return CircularProgressIndicator();
+            if (state is ProductDetailAvailabilityChecking)
+              return Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: CircularProgressIndicator(
+                      strokeWidth: 3.0,
+
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.black,
+                      )));
             else if (state is ProductDetailAvailabilityCheckingSuccessful)
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-
-                  if(state.checkProductAvailability.responseCode == 200)
+                  if (state.checkProductAvailability.responseCode == 200)
                     Text(
-                      Strings.available.toUpperCase(),
+                      Strings.available.toUpperCase() + " (Delivery by " + DateFormat('dd MMM, EEEE').format(state.checkProductAvailability.expectedDeliveryDate) + " )",
                       style: TextStyle(
                           color: Palette.green,
                           fontWeight: FontWeight.normal,
                           fontSize: 14),
                     )
-                  else if(state.checkProductAvailability.responseCode == 402)
+                  else if (state.checkProductAvailability.responseCode == 402)
                     Text(
-                      Strings.notAvailable.toUpperCase() ,
+                      Strings.notAvailable.toUpperCase(),
                       style: TextStyle(
                           color: Colors.red[500],
                           fontWeight: FontWeight.normal,
@@ -144,9 +144,9 @@ class ProductAvailabilitySection extends StatelessWidget {
                     )
                   else
                     Text(
-                      Strings.available.toUpperCase(),
+                      Strings.invalidPincode.toUpperCase(),
                       style: TextStyle(
-                          color: Colors.yellow,
+                          color: Colors.orange,
                           fontWeight: FontWeight.normal,
                           fontSize: 14),
                     ),
@@ -155,18 +155,14 @@ class ProductAvailabilitySection extends StatelessWidget {
             else if (state is ProductDetailAvailabilityCheckingFailure)
               return Container(
                 child: Text(
-                  "Not avaiable",
+                  "Not available",
                 ),
               );
-            else{
+            else {
               return Container();
             }
           },
-
         ),
-
-
-
       ],
     );
   }
