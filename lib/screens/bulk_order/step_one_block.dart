@@ -53,11 +53,11 @@ class StepOneBlock extends StatelessWidget{
           child: Row(
             children: [
 
-              Image(image: AssetImage('assets/images/logo.jpeg'),width: 80,height: 80,),
+              Image.network((value.selectedType != -1) ?value.productTypeImages.elementAt(value.selectedType) : "",width: 80,height: 80,),
 
-              Container( margin: EdgeInsets.only(left: 16),child: Text('Bean Bags',style: TextStyle(color: Colors.white,fontSize: 24),)),
+              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productType,style: TextStyle(color: Colors.white,fontSize: 24),)),
 
-              Container( margin: EdgeInsets.only(left: 16),child: Text('Sofa',style: TextStyle(color: Colors.white,fontSize: 24),)),
+              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.variantID,style: TextStyle(color: Colors.white,fontSize: 24),)),
             ],
           ),
 
@@ -140,7 +140,7 @@ class StepOneBlock extends StatelessWidget{
 
                         padding: EdgeInsets.symmetric(horizontal: 16),
 
-                        child: BulkOrderItem(value: value,index: index,),
+                        child: BulkOrderItem(value: value,index: index,imageUrl: value.productTypeImages.elementAt(index),),
                       ),
                     );
                   }),

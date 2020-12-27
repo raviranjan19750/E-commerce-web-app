@@ -47,11 +47,14 @@ class BulkOrderProvider with ChangeNotifier{
 
   int quantity = 50;
 
-  BulkOrderCart bulkOrderCart = new BulkOrderCart();
+  BulkOrderCart bulkOrderCart = new BulkOrderCart(productType: "",variantID: "");
 
   HashMap<String,List<String>> productTypeMap = new HashMap<String,List<String>>();
   
   List<String> subTypes = new List<String>();
+
+  List<String> productTypeImages = new List();
+
 
   ArsProgressDialog progressDialog;
 
@@ -67,13 +70,17 @@ class BulkOrderProvider with ChangeNotifier{
 
     SearchApi searchApi = new SearchApi();
 
-    List<FilterTag> list = await searchApi.getProductTypeAndSubtype();
+    List<FilterTag> list = await searchApi.getProductType();
 
     for(FilterTag f in list){
 
       for(FilterCategoryChild c in f.filterChilds){
 
         List<FilterTag> list = await searchApi.getSubTypes(c.filterID);
+
+        if(list.length> 0){
+          productTypeImages.add(list.first.filterChilds.first.description);
+        }
 
         for(FilterTag f1 in list){
 
@@ -91,6 +98,8 @@ class BulkOrderProvider with ChangeNotifier{
 
       }
     }
+
+    print("Image URL" + productTypeImages.first);
 
     await getCustomCart(UserPreferences().AuthID);
 
@@ -214,7 +223,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     productTypeSelected = true;
     selectedType = index;
-    bulkOrderCart.productID = productTypeMap.keys.elementAt(index);
+    bulkOrderCart.productType = productTypeMap.keys.elementAt(index);
     selectedSubType = -1;
     productSubTypeSelected = false;
     subTypes = productTypeMap.values.elementAt(index);

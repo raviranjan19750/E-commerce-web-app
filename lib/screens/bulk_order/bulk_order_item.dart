@@ -8,13 +8,16 @@ class BulkOrderItem extends StatelessWidget{
 
   BulkOrderProvider value;
 
+  String imageUrl;
+
   int index;
 
 
-  BulkOrderItem({this.value,this.index});
+  BulkOrderItem({this.value,this.index,this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
+
 
     return Column(
       children: [
@@ -23,11 +26,7 @@ class BulkOrderItem extends StatelessWidget{
           elevation: value.elevation,
           color: (index == value.selectedType ) ? Palette.secondaryColor : Colors.grey[500],
 
-          child: Image(
-            image: AssetImage('assets/images/logo.jpeg'),
-            width: 150 * value.size,
-            height: 200 * value.size,
-          ),
+          child: Image.network(imageUrl,width: 150*value.size,height: 200*value.size,)
 
         ),
         Container(

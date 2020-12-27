@@ -132,11 +132,13 @@ class SearchApi {
     aggregation.putIfAbsent("subType-aggr", () => sybTypeAggregation);
 
     final searchResult = await client.search(
-        index: INDEX_NAME, limit: 10, query: query, aggregations: aggregation);
+        index: INDEX_NAME, limit: 1, query: query, aggregations: aggregation);
     List<FilterTag> tag = List();
 
-    print("Search Result  : " + searchResult.hits.elementAt(0).doc.toString());
-    print("Search Result  : " + searchResult.aggregations.toString());
+
+
+    String imageUrl = searchResult.hits.elementAt(0).doc['images'][0];
+
 
     final subTypeResult = searchResult.aggregations['subType-aggr'];
     FilterTag subTypeTag =
@@ -144,7 +146,7 @@ class SearchApi {
     subTypeResult.buckets.forEach((element) {
       subTypeTag.addChild(FilterCategoryChild(
           element.key.toString(),
-          element.key.toString() + " (" + element.docCount.toString() + ")",
+          imageUrl,
           false));
     });
     tag.add(subTypeTag);
@@ -152,7 +154,7 @@ class SearchApi {
     return tag;
   }
 
-  Future<List<FilterTag>> getProductTypeAndSubtype() async {
+  Future<List<FilterTag>> getProductType() async {
     final Map<String, dynamic> aggregation = Map();
 
     final Map<String, dynamic> typeAggregation = Map();
