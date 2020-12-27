@@ -141,10 +141,10 @@ class BulkOrderProvider with ChangeNotifier{
 
   Future<void> deleteCustomCartItems(String key,int index) async {
 
-    print("Key  :  " + key + "  index  :  " + index.toString());
+    String authID = UserPreferences().AuthID;
 
     final response =
-        await http.delete(FunctionConfig.host + 'manageCart/custom/{$key}', headers: {"Content-Type": "application/json"},);
+        await http.delete(FunctionConfig.host + 'manageCart/custom/{$authID}/{$key}', headers: {"Content-Type": "application/json"},);
 
     print("Status Code  :  "+ response.statusCode.toString());
 
