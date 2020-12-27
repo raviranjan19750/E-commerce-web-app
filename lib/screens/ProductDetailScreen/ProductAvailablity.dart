@@ -118,6 +118,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                   padding: EdgeInsets.all(4.0),
                   child: CircularProgressIndicator(
                       strokeWidth: 3.0,
+
                       valueColor: AlwaysStoppedAnimation<Color>(
                         Colors.black,
                       )));
