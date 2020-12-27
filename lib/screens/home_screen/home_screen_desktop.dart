@@ -5,6 +5,7 @@ import 'package:living_desire/bloc/scroll/bloc/scroll_bloc.dart';
 import 'package:living_desire/screens/all_product/product_widgets.dart';
 import 'package:living_desire/screens/screens.dart';
 import 'package:living_desire/widgets/footer/footer.dart';
+import 'package:living_desire/widgets/home_widget/home_widget.dart';
 import 'package:living_desire/widgets/labeltag/label_tag.dart';
 import 'package:living_desire/widgets/nextListHover.dart';
 import '../../widgets/widgets.dart';
@@ -85,49 +86,20 @@ class HomeScreenvView extends StatelessWidget {
       builder: (context, state) {
         if (state is SuccessfulLoadingHomeProducts) {
           print("OK ");
+          List<HomeWidget> widgetList = [];
+          state.productList.forEach((key, value) {
+            widgetList.add(HomeWidget(
+              labeltxt: key,
+              productlist: value,
+            ));
+          });
           return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 24.0),
-                child: Divider(
-                  color: Colors.black,
-                  thickness: 0.5,
-                ),
-              ),
-              LabelTag("Bean Bags"),
-              Container(
-                margin: EdgeInsets.only(top: 16.0),
-                height: 350,
-                child: Stack(
-                  children: [
-                    ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: state.productList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            padding: EdgeInsets.only(left: 5, right: 5),
-                            width: MediaQuery.of(context).size.width * 0.15,
-                            height: MediaQuery.of(context).size.width * 0.15,
-                            child: ProductCard(
-                              product: state.productList[index],
-                            ),
-                          );
-                        }),
-                    Positioned(
-                        height: 175,
-                        right: 0,
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: NextListHover(),
-                        ))
-                  ],
-                ),
-                // child: ListView(),
-              ),
-            ],
+            children: widgetList,
           );
+          // return HomeWidget(
+          //   labeltxt: 'Bean Bags',
+          //   productlist: state.productList['Bean Bags'],
+          // );
           // return Container(
           //   height: 140,
           //   width: 140,

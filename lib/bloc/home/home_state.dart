@@ -12,7 +12,8 @@ class HomeInitial extends HomeState {}
 class LoadingHomeProducts extends HomeState {}
 
 class SuccessfulLoadingHomeProducts extends HomeState {
-  final List<Product> productList;
+  final Map<String, List<Product>> productList;
+
   SuccessfulLoadingHomeProducts(this.productList);
 }
 
