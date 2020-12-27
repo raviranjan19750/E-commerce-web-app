@@ -47,7 +47,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   int quantity = 50;
 
-  BulkOrderCart bulkOrderCart = new BulkOrderCart(productType: "",variantID: "");
+  BulkOrderCart bulkOrderCart = new BulkOrderCart(productType: "",variantID: "",size: "s",quantity: 50);
 
   HashMap<String,List<String>> productTypeMap = new HashMap<String,List<String>>();
   
@@ -141,10 +141,12 @@ class BulkOrderProvider with ChangeNotifier{
 
   Future<void> deleteCustomCartItems(String key,int index) async {
 
+    print("Key  :  " + key);
+
     String authID = UserPreferences().AuthID;
 
     final response =
-        await http.delete(FunctionConfig.host + 'manageCart/custom/{$authID}/{$key}', headers: {"Content-Type": "application/json"},);
+        await http.delete(FunctionConfig.host + 'manageCart/custom/{$authID}/{$key}');
 
     print("Status Code  :  "+ response.statusCode.toString());
 
@@ -223,6 +225,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     productTypeSelected = true;
     selectedType = index;
+    print("Product Type  :  " + productTypeMap.keys.elementAt(index));
     bulkOrderCart.productType = productTypeMap.keys.elementAt(index);
     selectedSubType = -1;
     productSubTypeSelected = false;
@@ -359,7 +362,7 @@ class BulkOrderProvider with ChangeNotifier{
     try {
 
       var data = {
-        "productType": bulkOrderCart.productID,
+        "productType": bulkOrderCart.productType,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
         "colour":['red'],
