@@ -9,11 +9,14 @@ class NormalOrdersContainer extends StatelessWidget {
   // Normal Order Container
   @override
   Widget build(BuildContext context) {
+    // Order Bloc: list of orders
     return BlocBuilder<NormalOrderBloc, NormalOrderState>(
       builder: (context, state) {
         if (state is NormalOrderDetailLoading) {
           return CircularProgressIndicator();
-        } else if (state is NormalOrderDetailLoadingSuccessful) {
+        }
+        // Orders acquired in state
+        else if (state is NormalOrderDetailLoadingSuccessful) {
           return Padding(
             padding: const EdgeInsets.only(
               top: 40.0,

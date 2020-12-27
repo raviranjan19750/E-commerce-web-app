@@ -23,7 +23,6 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     selectedImageIndex = 0;
     selectedURI = widget.imageURL[0];
     super.initState();
@@ -52,6 +51,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 height: 30,
                 color: Palette.lightGrey,
                 child: IconButton(
+                  onPressed: () {},
                   alignment: Alignment.center,
                   icon: Icon(Icons.keyboard_arrow_up),
                   color: Colors.black,
@@ -94,6 +94,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 height: 30,
                 color: Palette.lightGrey,
                 child: IconButton(
+                  onPressed: () {},
                   icon: Icon(Icons.keyboard_arrow_down),
                   color: Colors.black,
                 ),

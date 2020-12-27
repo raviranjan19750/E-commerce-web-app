@@ -6,9 +6,11 @@ import '../../models/models.dart';
 import '../widgets.dart';
 
 class AddressContainer extends StatelessWidget {
+  // Address Container
   final Address address;
+  var authID = 'id1';
 
-  const AddressContainer({
+  AddressContainer({
     Key key,
     this.address,
   }) : super(key: key);
@@ -130,6 +132,8 @@ class AddressContainer extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
+                              // BloC Provider to Manage Address Bloc to load address dialog box
+                              // Opens showDialog Container
                               BlocProvider.of<ManageAddressesBloc>(context).add(
                                   LoadEditAddressDialogueEvent(
                                       address: address));
@@ -158,7 +162,7 @@ class AddressContainer extends StatelessWidget {
                             onTap: () {
                               BlocProvider.of<ManageAddressesBloc>(context)
                                   .add(DeleteAddress(
-                                authID: "id1",
+                                authID: authID,
                                 key: address.key,
                               ));
                             },
@@ -186,10 +190,12 @@ class AddressContainer extends StatelessWidget {
                                     ),
                                   ),
                                   onTap: () {
+                                    // Bloc Provider to Manage Address Bloc to Set as Default Address
+                                    // Hits API Requests
                                     BlocProvider.of<ManageAddressesBloc>(
                                             context)
                                         .add(DefaultAddress(
-                                      authID: "id1",
+                                      authID: authID,
                                       key: address.key,
                                     ));
                                   },

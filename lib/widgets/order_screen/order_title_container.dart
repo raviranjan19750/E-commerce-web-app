@@ -92,7 +92,6 @@ class OrderTitleContainer extends StatelessWidget {
                           color: Colors.black54,
                         ),
                       ),
-
                       // Delivery Address Pop up
                       OrderTitleAddress(
                         name: order.name,
@@ -126,7 +125,7 @@ class OrderTitleContainer extends StatelessWidget {
                       ),
                       // Delivery Status Pop up
                       OrderTitleDeliveryStatus(
-                        status: order.status,
+                        statusValue: order.statusValue,
                         tracking: order.tracking,
                       ),
                     ],

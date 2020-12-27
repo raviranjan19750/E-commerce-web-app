@@ -57,7 +57,7 @@ class Cart {
       //   return Colour.fromJson(e);
       // }).toList(),
       colour: GetColors.fromHex((data['data']['colour'] as List<dynamic>)
-          .map((e) => (e['hexCode'] as String))
+          .map((e) => (e as String))
           .toList()),
       dateAdded: data['data']['dateAdded'],
       manufacturingPrice: data['data']['manufacturingPrice'],

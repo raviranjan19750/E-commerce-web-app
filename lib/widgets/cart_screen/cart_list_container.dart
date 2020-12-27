@@ -10,13 +10,17 @@ import '../widgets.dart';
 class CartListContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Cart Bloc : list of carts
     return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
       if (state is CartDetailLoading) {
         return Center(
           child: CircularProgressIndicator(),
         );
       }
+      // Carts acquired in state
       if (state is CartDetailLoadingSuccessful) {
+        // Bloc Provider to cart total bloc
+        // No. of items in cart
         BlocProvider.of<CartTotalBloc>(context).add(UpdateCartTotal());
         return Padding(
           padding: const EdgeInsets.only(
@@ -38,7 +42,7 @@ class CartListContainer extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                // Get Pincode
+                //TODO: Get Pincode
               ),
 
               Divider(
@@ -54,6 +58,8 @@ class CartListContainer extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.065,
                   height: MediaQuery.of(context).size.height * 0.03,
                   child: Center(
+                    // Bloc Builder to state of carts quantity
+
                     child: BlocBuilder<CartTotalBloc, CartTotalState>(
                       builder: (context, state) {
                         return Padding(
@@ -83,6 +89,7 @@ class CartListContainer extends StatelessWidget {
                   ),
                 ),
               ),
+
               // Cart Items
               ListView.builder(
                   shrinkWrap: true,

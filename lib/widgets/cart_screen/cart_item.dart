@@ -1,13 +1,9 @@
-import 'package:clippy_flutter/clippy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
 import 'package:living_desire/config/configs.dart';
-import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/widgets/widgets.dart';
-import '../../bloc/cart/cart_bloc.dart';
-import 'dart:math' as math;
 
 class CartItemView extends StatelessWidget {
   final Cart cart;
@@ -15,7 +11,14 @@ class CartItemView extends StatelessWidget {
   const CartItemView({Key key, this.cart}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print(cart.colour);
+    // Bloc Provider to cart item bloc
+    // Gets cart items in state
+
+    // Cart Item Bloc:
+    // Cart Bloc
+    // Cart Total Bloc
+    // Cart Repository: http requests , carts local repository
+
     return BlocProvider(
       create: (context) => CartItemBloc(
         cart: cart,
@@ -23,6 +26,7 @@ class CartItemView extends StatelessWidget {
         cartTotalBloc: BlocProvider.of(context),
         cartRepository: RepositoryProvider.of(context),
       ),
+      // Get state of cart items
       child: BlocBuilder<CartItemBloc, CartItemState>(
         builder: (context, state) {
           switch (state.type) {
@@ -41,6 +45,7 @@ class CartItemView extends StatelessWidget {
                 color: Colors.red,
               );
             default:
+              // Cart Item Container
               return CartItem(
                 cart: state.cart,
               );
@@ -51,41 +56,7 @@ class CartItemView extends StatelessWidget {
   }
 }
 
-class CustomLeftHalfCircleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final Path path = new Path();
-    path.moveTo(size.width / 2, 0);
-    path.lineTo(size.width / 2, size.height);
-    path.lineTo(0, size.height);
-    path.lineTo(0, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
-  }
-}
-
-class CustomRightHalfCircleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final Path path = new Path();
-
-    path.moveTo(size.width / 2, 0);
-    path.lineTo(size.width / 2, size.height);
-    path.lineTo(size.width, size.height);
-    path.lineTo(size.width, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
-  }
-}
-
+// Cart Item Class
 class CartItem extends StatelessWidget {
   final Cart cart;
 
@@ -94,6 +65,7 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Match the Product according to the Product ID in cart
+    //
     return Column(
       children: [
         Padding(
@@ -115,36 +87,6 @@ class CartItem extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  // isCombo
-                  // Positioned(
-                  //   right: 0,
-                  //   top: 0,
-                  //   child: cart.isCombo
-                  //       ? Diagonal(
-                  //           axis: Axis.vertical,
-                  //           position: DiagonalPosition.TOP_LEFT,
-                  //           clipHeight:
-                  //               MediaQuery.of(context).size.height * 0.03,
-                  //           child: Container(
-                  //             color: Colors.red[900],
-                  //             width: MediaQuery.of(context).size.width * 0.065,
-                  //             height: MediaQuery.of(context).size.height * 0.03,
-                  //             child: Center(
-                  //               child: Padding(
-                  //                   padding: const EdgeInsets.only(
-                  //                     left: 10.0,
-                  //                   ),
-                  //                   child: Text(
-                  //                     Strings.combo,
-                  //                     style: TextStyle(
-                  //                       color: Colors.white,
-                  //                     ),
-                  //                   )),
-                  //             ),
-                  //           ),
-                  //         )
-                  //       : SizedBox.shrink(),
-                  // ),
                 ],
               ),
               Padding(
@@ -161,6 +103,7 @@ class CartItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // Cart Item Name
                           Container(
                             width: MediaQuery.of(context).size.width * 0.35,
                             child: RichText(
@@ -179,6 +122,7 @@ class CartItem extends StatelessWidget {
                               ),
                             ),
                           ),
+                          // Cart Discount Price
                           Text(
                             Strings.rupeesSymbol +
                                 cart.discountPrice.toString(),
@@ -196,7 +140,7 @@ class CartItem extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            //TODO: Color of the product
+                            //Color of the product
                             cart.colour.length == 2
                                 ? Container(
                                     padding: EdgeInsets.all(4.0),
@@ -253,35 +197,6 @@ class CartItem extends StatelessWidget {
                                     ),
                                   ),
 
-                            // Stack(
-                            //     children: [
-                            //       ClipPath(
-                            //         clipper:
-                            //             new CustomLeftHalfCircleClipper(),
-                            //         child: new Container(
-                            //           height: 16,
-                            //           width: 16,
-                            //           decoration: new BoxDecoration(
-                            //               color: cart.colour[0],
-                            //               borderRadius:
-                            //                   BorderRadius.circular(8)),
-                            //         ),
-                            //       ),
-                            //       ClipPath(
-                            //         clipper:
-                            //             new CustomRightHalfCircleClipper(),
-                            //         child: new Container(
-                            //           height: 16,
-                            //           width: 16,
-                            //           decoration: new BoxDecoration(
-                            //               color: cart.colour[1],
-                            //               borderRadius:
-                            //                   BorderRadius.circular(8)),
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   )
-
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8.0,
@@ -322,6 +237,7 @@ class CartItem extends StatelessWidget {
                               child: Row(
                                 children: [
                                   CartItemCount(
+                                    productID: cart.productID,
                                     quantity: cart.quantity,
                                     documentID: cart.key,
                                   ),

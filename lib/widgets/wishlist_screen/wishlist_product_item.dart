@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/routes.dart';
+import 'package:living_desire/widgets/wishlist_screen/add_to_cart_button.dart';
 import '../../bloc/wishlist/wishlist_bloc.dart';
-import '../widgets.dart';
 
 class WishlistProductItem extends StatelessWidget {
   final Wishlist product;
+  final authID;
 
   const WishlistProductItem({
     Key key,
     this.product,
+    this.authID = 'id1',
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: WishlistProductItemDetail(
+        authID: authID,
         product: product,
       ),
     );
@@ -25,9 +27,14 @@ class WishlistProductItem extends StatelessWidget {
 }
 
 class WishlistProductItemDetail extends StatelessWidget {
+  final authID;
   final Wishlist product;
 
-  const WishlistProductItemDetail({Key key, this.product}) : super(key: key);
+  const WishlistProductItemDetail({
+    Key key,
+    this.product,
+    this.authID,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,8 +67,9 @@ class WishlistProductItemDetail extends StatelessWidget {
                       onTap: () {
                         BlocProvider.of<WishlistBloc>(context)
                             .add(DeleteWishlist(
-                          authID: "id1",
+                          authID: authID,
                           key: product.key,
+                          productID: product.productID,
                         ));
                       },
                       child: CircleAvatar(
@@ -72,15 +80,15 @@ class WishlistProductItemDetail extends StatelessWidget {
                     ),
                   ),
                   // TODO: Add to cart button
-                  // Positioned(
-                  //   left: 0,
-                  //   right: 0,
-                  //   bottom: 0,
-                  //   child: AddToCartButton(
-                  //     productID: product.productID,
-                  //     variantID: product.variantID,
-                  //   ),
-                  // )
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: AddToCartButton(
+                      productID: product.productID,
+                      variantID: product.variantID,
+                    ),
+                  )
                 ],
               ),
               Padding(
@@ -97,11 +105,6 @@ class WishlistProductItemDetail extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.12,
                       height: 20,
-
-                      // child: Text(
-                      //   product.name,
-                      //   overflow: TextOverflow.,
-                      // ),
                       child: RichText(
                         text: TextSpan(
                           text: product.name,
@@ -172,16 +175,5 @@ class WishlistProductItemDetail extends StatelessWidget {
         ),
       ),
     );
-    // RaisedButton(
-    //   onPressed: () {
-    //     Navigator.of(context).pushNamed('/product', arguments: {
-    //       "product": product,
-    //       "productID": product.productID,
-    //       "variantID": product.variantID
-    //     });
-    //   },
-
-    // ),
-    //);
   }
 }

@@ -17,20 +17,24 @@ class ChangeQuantityCart extends CartItemEvent {
   final String key;
   final int quantity;
   final String authID;
+  final String productID;
 
-  ChangeQuantityCart(
-      this.key,
-      this.quantity,
-      this.authID,
-      );
+  ChangeQuantityCart({
+    this.key,
+    this.quantity,
+    this.authID,
+    this.productID,
+  });
 }
 
 class DeleteCart extends CartItemEvent {
   final String key;
   final String authID;
+  final String productID;
 
   DeleteCart(
-      this.key,
-      this.authID,
-      );
+    this.key,
+    this.authID,
+    this.productID,
+  );
 }

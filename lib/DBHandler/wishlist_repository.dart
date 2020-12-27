@@ -1,4 +1,5 @@
 import 'package:living_desire/config/function_config.dart';
+import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/models.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -53,12 +54,13 @@ class WishlistRepository {
 
   // Delete a wishlist
 
-  Future<void> deleteWishlistDetails(
-    String key,
-  ) async {
+  Future<void> deleteWishlistDetails(String key, String productID) async {
     try {
+      // var params = {
+      //   "productID":productID,
+      // };
       final response = await http.delete(
-        FunctionConfig.host + 'manageWishlist/${key}',
+        FunctionConfig.host + 'manageWishlist/${productID}/${key}',
       );
       if (response.statusCode == 200) {
         print('Http Get request sucessfull');

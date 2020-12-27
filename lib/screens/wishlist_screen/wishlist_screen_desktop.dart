@@ -6,11 +6,10 @@ import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
 class WishlistScreenDesktop extends StatefulWidget {
-  final TrackingScrollController scrollController;
+  var authID = 'id1';
 
-  const WishlistScreenDesktop({
+  WishlistScreenDesktop({
     Key key,
-    this.scrollController,
   }) : super(key: key);
   @override
   _WishlistScreenDesktopState createState() => _WishlistScreenDesktopState();
@@ -24,7 +23,7 @@ class _WishlistScreenDesktopState extends State<WishlistScreenDesktop> {
         BlocProvider(
             create: (context) =>
                 WishlistBloc(wishlistRepository: RepositoryProvider.of(context))
-                  ..add(LoadAllWishlist('id1'))),
+                  ..add(LoadAllWishlist(widget.authID))),
         BlocProvider(
             create: (context) =>
                 CartBloc(cartRepository: RepositoryProvider.of(context))),

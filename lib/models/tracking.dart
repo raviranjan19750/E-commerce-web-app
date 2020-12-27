@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 
 class Tracking {
   final double status;
@@ -6,9 +8,9 @@ class Tracking {
   final String comments;
 
   const Tracking({
-    @required this.status,
+    this.status,
     this.date,
-    @required this.comments,
+    this.comments,
   });
 
   factory Tracking.fromJson(dynamic data) {
@@ -17,7 +19,11 @@ class Tracking {
 
     return Tracking(
       status: data['status'],
-      //date: DateTime.fromMillisecondsSinceEpoch(data['date'] * 1000),
+      date: Jiffy(new Timestamp(
+                  data['date']["_seconds"], data['date']["_nanoseconds"])
+              .toDate()
+              .toLocal())
+          .add(hours: 5, minutes: 30),
       comments: data['comments'],
     );
   }
