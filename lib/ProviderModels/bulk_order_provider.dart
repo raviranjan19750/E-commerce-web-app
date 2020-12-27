@@ -139,6 +139,8 @@ class BulkOrderProvider with ChangeNotifier{
 
     print("Status Code  :  "+ response.statusCode.toString());
 
+    dismissProgressDialog();
+
     if(response.statusCode == 200){
 
       print("item deleted");

@@ -140,6 +140,7 @@ class BulkOrderCartItem extends StatelessWidget{
 
                   onPressed: (){
 
+                    value.showProgressDialog(context, "Removing item from cart");
                     value.deleteCustomCartItems(items.elementAt(index).key, index);
 
                   },
