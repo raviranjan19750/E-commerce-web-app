@@ -44,19 +44,30 @@ class BulkOrderCart extends StatelessWidget{
 
           Expanded(
 
-            child: ListView.builder(
+            child: Visibility(
 
-                shrinkWrap: true,
-                itemCount: value.customCartItems.length,
-                itemBuilder:
-                    (BuildContext context, int index) {
-                  return Container(
+              visible: value.onDataLoaded,
 
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+              replacement: Center(
 
-                    child: BulkOrderCartItem(items: value.customCartItems,index: index,),
-                  );
-                }),
+                child: CircularProgressIndicator(),
+
+              ),
+
+              child: ListView.builder(
+
+                  shrinkWrap: true,
+                  itemCount: value.customCartItems.length,
+                  itemBuilder:
+                      (BuildContext context, int index) {
+                    return Container(
+
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+
+                      child: BulkOrderCartItem(items: value.customCartItems,index: index,value: value,),
+                    );
+                  }),
+            ),
           ),
           
           Container(

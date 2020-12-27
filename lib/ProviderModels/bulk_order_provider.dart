@@ -23,6 +23,8 @@ class BulkOrderProvider with ChangeNotifier{
 
   bool stepTwoDone = false;
 
+  bool onDataLoaded = false;
+
   TextEditingController quantityController = new TextEditingController(text: '50');
 
   bool productTypeSelected = false;
@@ -100,6 +102,8 @@ class BulkOrderProvider with ChangeNotifier{
 
     }
 
+    onDataLoaded = true;
+
     notifyListeners();
 
   }
@@ -118,6 +122,26 @@ class BulkOrderProvider with ChangeNotifier{
           .toList();
 
     }
+
+  }
+
+  Future<void> deleteCustomCartItems(String key,int index) async {
+
+    print("Key  :  " + key + "  index  :  " + index.toString());
+
+    final response =
+        await http.delete(FunctionConfig.host + 'manageCart/custom/{$key}', headers: {"Content-Type": "application/json"},);
+
+    print("Status Code  :  "+ response.statusCode.toString());
+
+    if(response.statusCode == 200){
+
+      print("item deleted");
+      customCartItems.removeAt(index);
+      notifyListeners();
+
+    }
+
 
   }
 
