@@ -5,12 +5,19 @@ abstract class ProductCardState {
   final bool isItemInWishList;
 
   ProductCardState(this.product, this.isItemInWishList);
+
+  @override
+  String toString() {
+    return 'ProductCardState{product: $product, isItemInWishList: $isItemInWishList}';
+  }
 }
 
 class ProductCardInitial extends ProductCardState {
-  ProductCardInitial(Product product, bool isItemInWishList) : super(product, isItemInWishList);
+  ProductCardInitial(Product product, bool isItemInWishList)
+      : super(product, isItemInWishList);
 }
 
 class UpdatedProductCard extends ProductCardState {
-  UpdatedProductCard(Product product, bool isItemInWishList) : super(product, isItemInWishList);
+  UpdatedProductCard(Product product, bool isItemInWishList)
+      : super(product, isItemInWishList);
 }

@@ -50,8 +50,13 @@ class ProductCardContent extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, RoutesConfiguration.PRODUCT_DETAIL,
-                        arguments: {"product": product, "productID": product.productId, "variantID": product.varientId});
+                    Navigator.pushNamed(
+                        context, RoutesConfiguration.PRODUCT_DETAIL,
+                        arguments: {
+                          "product": product,
+                          "productID": product.productId,
+                          "variantID": product.varientId
+                        });
                   },
                   child: Image.network(
                     product.imageUrls[0],
@@ -64,7 +69,7 @@ class ProductCardContent extends StatelessWidget {
               Positioned(
                 right: 0,
                 top: 0,
-                child: ProductWishlistButton(productId: product.title),
+                child: ProductWishlistButton(productId: product.varientId),
               ),
               Positioned(
                 bottom: 0,
@@ -270,13 +275,16 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
   @override
   void initState() {
     super.initState();
-    _wishHover = false;
+    // _wishHover;
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCardBloc, ProductCardState>(
         builder: (context, state) {
+      if (_wishHover == null) {
+        _wishHover = state.isItemInWishList;
+      }
       return Container(
         padding: EdgeInsets.all(6.0),
         child: MouseRegion(
