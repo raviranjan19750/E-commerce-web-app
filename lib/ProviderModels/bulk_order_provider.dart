@@ -427,6 +427,7 @@ class BulkOrderProvider with ChangeNotifier{
     stepOneDone = false;
     productTypeSelected = false;
     productSubTypeSelected = false;
+    bulkOrderCart.reset();
     notifyListeners();
 
   }
