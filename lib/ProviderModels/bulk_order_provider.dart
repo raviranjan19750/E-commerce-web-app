@@ -146,7 +146,7 @@ class BulkOrderProvider with ChangeNotifier{
     String authID = UserPreferences().AuthID;
 
     final response =
-        await http.delete(FunctionConfig.host + 'manageCart/custom/{$authID}/{$key}');
+        await http.delete(FunctionConfig.host + 'manageCart/custom/$authID/$key');
 
     print("Status Code  :  "+ response.statusCode.toString());
 
@@ -373,7 +373,7 @@ class BulkOrderProvider with ChangeNotifier{
       };
 
       final response =
-      await http.post(FunctionConfig.host + 'manageCart/custom/{$authID}',
+      await http.post(FunctionConfig.host + 'manageCart/custom/$authID',
           body: jsonEncode(data),
           headers: {"Content-Type": "application/json"},
       );
