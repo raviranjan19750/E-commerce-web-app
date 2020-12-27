@@ -1,4 +1,3 @@
-
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:html';
@@ -17,8 +16,7 @@ import 'package:living_desire/service/searchapi.dart';
 import 'package:http/http.dart' as http;
 import 'package:living_desire/service/sharedPreferences.dart';
 
-class BulkOrderProvider with ChangeNotifier{
-
+class BulkOrderProvider with ChangeNotifier {
   double elevation = 4;
   double size = 1;
 
@@ -28,7 +26,8 @@ class BulkOrderProvider with ChangeNotifier{
 
   bool onDataLoaded = false;
 
-  TextEditingController quantityController = new TextEditingController(text: '50');
+  TextEditingController quantityController =
+      new TextEditingController(text: '50');
 
   bool productTypeSelected = false;
 
@@ -39,7 +38,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   String itemSize = "S";
 
-  String description  = "";
+  String description = "";
 
   List<UploadImage> logos = new List<UploadImage>();
 
@@ -47,55 +46,46 @@ class BulkOrderProvider with ChangeNotifier{
 
   int quantity = 50;
 
-  BulkOrderCart bulkOrderCart = new BulkOrderCart(productType: "",variantID: "",size: "s",quantity: 50);
+  BulkOrderCart bulkOrderCart = new BulkOrderCart(
+      productType: "", variantID: "", size: "s", quantity: 50);
 
-  HashMap<String,List<String>> productTypeMap = new HashMap<String,List<String>>();
-  
+  HashMap<String, List<String>> productTypeMap =
+      new HashMap<String, List<String>>();
+
   List<String> subTypes = new List<String>();
 
   List<String> productTypeImages = new List();
 
-
   ArsProgressDialog progressDialog;
 
-  void onItemSizeChanged(String s){
-
+  void onItemSizeChanged(String s) {
     itemSize = s;
     bulkOrderCart.size = s;
     notifyListeners();
-
   }
 
   void initStepOne(String productType, String productSubType) async {
-
     SearchApi searchApi = new SearchApi();
 
-    List<FilterTag> list = await searchApi.getProductType();
+    List<FilterTag> list = await searchApi.getProductTypeAndSubtype();
 
-    for(FilterTag f in list){
-
-      for(FilterCategoryChild c in f.filterChilds){
-
+    for (FilterTag f in list) {
+      for (FilterCategoryChild c in f.filterChilds) {
         List<FilterTag> list = await searchApi.getSubTypes(c.filterID);
 
-        if(list.length> 0){
+        if (list.length > 0) {
           productTypeImages.add(list.first.filterChilds.first.description);
         }
 
-        for(FilterTag f1 in list){
-
+        for (FilterTag f1 in list) {
           List<String> subTypes = new List<String>();
 
-          for(FilterCategoryChild c1 in f1.filterChilds){
-
+          for (FilterCategoryChild c1 in f1.filterChilds) {
             subTypes.add(c1.filterID);
-
           }
 
           productTypeMap.putIfAbsent(c.filterID, () => subTypes);
-
         }
-
       }
     }
 
@@ -103,126 +93,98 @@ class BulkOrderProvider with ChangeNotifier{
 
     await getCustomCart(UserPreferences().AuthID);
 
-    if(productType == null || productType.isEmpty){
-
+    if (productType == null || productType.isEmpty) {
       stepOneDone = false;
-    }
-    else{
-
+    } else {
       stepOneDone = true;
 
       bulkOrderCart.productID = productType;
       bulkOrderCart.variantID = productSubType;
-
     }
 
     onDataLoaded = true;
 
     notifyListeners();
-
   }
 
   Future<void> getCustomCart(String authID) async {
+    final response = await http.get(
+      FunctionConfig.host + 'manageCart/custom/$authID',
+      headers: {"Content-Type": "application/json"},
+    );
 
-    final response =
-        await http.get(FunctionConfig.host + 'manageCart/custom/$authID', headers: {"Content-Type": "application/json"},);
-
-    if(response.statusCode == 200){
-
+    if (response.statusCode == 200) {
       customCartItems.clear();
 
       customCartItems = (jsonDecode(response.body) as List)
           .map((i) => BulkOrderCart.fromJson(i))
           .toList();
-
     }
-
   }
 
-  Future<void> deleteCustomCartItems(String key,int index) async {
-
+  Future<void> deleteCustomCartItems(String key, int index) async {
     print("Key  :  " + key);
 
     String authID = UserPreferences().AuthID;
 
-    final response =
-        await http.delete(FunctionConfig.host + 'manageCart/custom/$authID/$key');
+    final response = await http
+        .delete(FunctionConfig.host + 'manageCart/custom/$authID/$key');
 
-    print("Status Code  :  "+ response.statusCode.toString());
+    print("Status Code  :  " + response.statusCode.toString());
 
     dismissProgressDialog();
 
-    if(response.statusCode == 200){
-
+    if (response.statusCode == 200) {
       print("item deleted");
       customCartItems.removeAt(index);
       notifyListeners();
-
     }
-
-
   }
 
-  void dismissProgressDialog(){
+  void dismissProgressDialog() {
     progressDialog.dismiss();
   }
 
-  void showProgressDialog(BuildContext context,String message){
-
-    progressDialog = createProgressDialog(context,message);
+  void showProgressDialog(BuildContext context, String message) {
+    progressDialog = createProgressDialog(context, message);
 
     progressDialog.show();
-
   }
 
-  ArsProgressDialog createProgressDialog(BuildContext context,String message){
-
+  ArsProgressDialog createProgressDialog(BuildContext context, String message) {
     return ArsProgressDialog(context,
         dismissable: false,
         blur: 2,
         backgroundColor: Color(0x33000000),
         loadingWidget: Container(
           decoration: BoxDecoration(
-
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white
-
-          ),
+              borderRadius: BorderRadius.circular(8), color: Colors.white),
           width: 360,
           height: 240,
           child: Center(
-
               child: Column(
-
-                mainAxisAlignment: MainAxisAlignment.center,
-
-                children: [
-
-                  Icon(
-                    Icons.shopping_cart,
-                    color: Colors.grey[500],
-                    size: 48,
-                  ),
-
-                  Container(
-
-                    padding: EdgeInsets.all(8),
-                    margin: EdgeInsets.only(bottom: 16,top: 8),
-
-                    child: Text(message,style: TextStyle(fontSize: 20,color: Palette.secondaryColor),),
-
-                  ),
-                  CircularProgressIndicator(),
-                ],
-              )
-
-          ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.shopping_cart,
+                color: Colors.grey[500],
+                size: 48,
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.only(bottom: 16, top: 8),
+                child: Text(
+                  message,
+                  style: TextStyle(fontSize: 20, color: Palette.secondaryColor),
+                ),
+              ),
+              CircularProgressIndicator(),
+            ],
+          )),
         ));
-
   }
 
-  void onProductTypeSelected(int index){
-
+  void onProductTypeSelected(int index) {
     productTypeSelected = true;
     selectedType = index;
     print("Product Type  :  " + productTypeMap.keys.elementAt(index));
@@ -231,36 +193,30 @@ class BulkOrderProvider with ChangeNotifier{
     productSubTypeSelected = false;
     subTypes = productTypeMap.values.elementAt(index);
     notifyListeners();
-
   }
 
-  void onProductSubTypeSelected(int index){
-
+  void onProductSubTypeSelected(int index) {
     productSubTypeSelected = true;
     selectedSubType = index;
     bulkOrderCart.variantID = subTypes.elementAt(index);
     notifyListeners();
-
   }
 
-  void onEnter(){
-      elevation = 20;
-      size = 1.1;
+  void onEnter() {
+    elevation = 20;
+    size = 1.1;
 
-      notifyListeners();
+    notifyListeners();
   }
 
-  void onExit(){
-
+  void onExit() {
     elevation = 4;
     size = 1;
 
     notifyListeners();
-
   }
 
   void startFilePicker() async {
-
     InputElement uploadInput = FileUploadInputElement()..accept = 'image/*';
     uploadInput.click();
 
@@ -268,157 +224,125 @@ class BulkOrderProvider with ChangeNotifier{
       // read file content as dataURL
       final files = uploadInput.files;
       if (files.length == 1) {
-
         final file = files[0];
 
-        FileReader reader =  FileReader();
+        FileReader reader = FileReader();
 
         reader.onLoadEnd.listen((e) {
-
-
-          UploadImage uploadImage = new UploadImage(imageFile: file,uri: reader.result);
+          UploadImage uploadImage =
+              new UploadImage(imageFile: file, uri: reader.result);
 
           logos.add(uploadImage);
           notifyListeners();
-
-
         });
 
-        reader.onError.listen((fileEvent) {
-
-        });
+        reader.onError.listen((fileEvent) {});
 
         reader.readAsArrayBuffer(file);
       }
     });
   }
 
-  void deleteImage(int index){
-
+  void deleteImage(int index) {
     logos.removeAt(index);
 
     notifyListeners();
-
   }
 
-  void onStepOneDone(){
+  void onStepOneDone() {
+    stepOneDone = true;
 
-      stepOneDone = true;
-
-      notifyListeners();
-
+    notifyListeners();
   }
 
-  void onStepTwoDone(){
-
-      stepTwoDone = true;
-      notifyListeners();
-
+  void onStepTwoDone() {
+    stepTwoDone = true;
+    notifyListeners();
   }
 
-  void onStepOneReverse(){
-      stepOneDone = false;
-      notifyListeners();
+  void onStepOneReverse() {
+    stepOneDone = false;
+    notifyListeners();
   }
 
-  void incrementQuantity(int val){
-
+  void incrementQuantity(int val) {
     quantity++;
     bulkOrderCart.quantity = quantity;
     quantityController.text = quantity.toString();
     notifyListeners();
-
   }
 
-  void decrementQuantity(int val){
-
+  void decrementQuantity(int val) {
     quantity--;
     bulkOrderCart.quantity = quantity;
     quantityController.text = quantity.toString();
     notifyListeners();
-
   }
 
-  void addToCart() async{
-
+  void addToCart() async {
     bulkOrderCart.description = description;
 
     String authID = UserPreferences().AuthID;
 
     print("Auth ID  :  " + authID);
 
-    if(authID!=null && authID.isNotEmpty){
-
+    if (authID != null && authID.isNotEmpty) {
       List<String> imageUrls = await uploadFile(authID);
 
-      addCustomCart(authID,imageUrls);
-
+      addCustomCart(authID, imageUrls);
     }
-
   }
 
-  Future<void> addCustomCart(String authID,List<String> imageUrls) async {
-
+  Future<void> addCustomCart(String authID, List<String> imageUrls) async {
     try {
-
       var data = {
         "productType": bulkOrderCart.productType,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
-        "colour":['red'],
+        "colour": ['red'],
         "productID": bulkOrderCart.productID,
         "variantID": bulkOrderCart.variantID,
         "description": bulkOrderCart.description,
         "images": imageUrls,
       };
 
-      final response =
-      await http.post(FunctionConfig.host + 'manageCart/custom/$authID',
-          body: jsonEncode(data),
-          headers: {"Content-Type": "application/json"},
+      final response = await http.post(
+        FunctionConfig.host + 'manageCart/custom/$authID',
+        body: jsonEncode(data),
+        headers: {"Content-Type": "application/json"},
       );
 
       dismissProgressDialog();
 
       if (response.statusCode == 200) {
-
         customCartItems.add(bulkOrderCart);
         onClear();
         notifyListeners();
-
-
       }
     } catch (e) {
       print(e.toString());
       throw Exception(e);
     }
-
-
-}
+  }
 
   Future<List<String>> uploadFile(String authID) async {
-
     List<String> imageUrls = List();
 
-    for(int i=0;i<logos.length;i++){
-
+    for (int i = 0; i < logos.length; i++) {
       String fileName = DateTime.now().toString();
-      
-      fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo/{$authID}').child(fileName);
-      fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(i).imageFile).future;
+
+      fb.StorageReference storageRef =
+          fb.storage().ref('bulkOrderLogo/{$authID}').child(fileName);
+      fb.UploadTaskSnapshot uploadTaskSnapshot =
+          await storageRef.put(logos.elementAt(i).imageFile).future;
       Uri imageUrl = await storageRef.getDownloadURL();
       imageUrls.add(imageUrl.toString());
-
-
     }
 
     return imageUrls;
-
-
   }
 
-  void onClear(){
-
+  void onClear() {
     selectedType = -1;
     selectedSubType = -1;
     quantity = 50;
@@ -429,7 +353,5 @@ class BulkOrderProvider with ChangeNotifier{
     productSubTypeSelected = false;
     bulkOrderCart.reset();
     notifyListeners();
-
   }
-
 }

@@ -3,7 +3,6 @@ import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/filtertags.dart';
 
 class SearchApi {
-
   var LOG = LogBuilder.getLogger();
 
   final String SEARCH_URL =
@@ -44,7 +43,6 @@ class SearchApi {
         index: INDEX_NAME, query: query, limit: limit, offset: offset);
     return searchResult;
   }
-
 
   Future<List<FilterTag>> getAllCategoryTags() async {
     final Map<String, dynamic> aggregation = Map();
@@ -188,29 +186,28 @@ class SearchApi {
     return terms;
   }
 
-  Future<SearchResult> _getSimilarProduct() async {
+  Future<SearchResult> getSimilarProduct(String type, String subType) async {
+    print("hogya");
+
     var criteria = {
       "bool": {
         "filter": [
           {
             "terms": {
-              "subTypes": [
-
-              ]
+              "type": [type]
             }
           },
           {
             "terms": {
-              "type": [
-
-              ]
+              "subType": [subType]
             }
           }
         ]
       }
     };
+    final searchResult =
+        await client.search(index: INDEX_NAME, limit: 50, query: criteria);
 
-    final searchResult = await client.search(
-        index: INDEX_NAME, limit: 0, query: criteria);
+    return searchResult;
   }
 }
