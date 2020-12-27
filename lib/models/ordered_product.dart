@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/get_colors.dart';
+import 'package:living_desire/models/models.dart';
 
 class OrderedProduct {
   final String key;
@@ -7,13 +9,15 @@ class OrderedProduct {
   final String variantID;
   final double sellingPrice;
   final String imageUrl;
-  final String colour;
+  final List<Color> colour;
   final String size;
   final double discountPrice;
   final double quantity;
+  Rating rating;
 
-  const OrderedProduct({
+  OrderedProduct({
     this.key,
+    this.rating,
     this.productName,
     this.imageUrl,
     this.colour,
@@ -25,7 +29,7 @@ class OrderedProduct {
     @required this.quantity,
   });
 
-  factory OrderedProduct.fromJson(Map<String, dynamic> data) {
+  factory OrderedProduct.fromJson(dynamic data) {
     if (data == null) return null;
     print(data.toString());
 
@@ -36,6 +40,9 @@ class OrderedProduct {
       discountPrice: data['discountPrice'],
       quantity: data['quantity'],
       //colour: data['data']['colour'],
+      //rating: Rating.fromJson(data['rating']),
+      colour: GetColors.fromHex(
+          (data['colour'] as List).map((e) => (e as String)).toList()),
       size: data['size'],
       imageUrl: data['imageURL'],
       productName: data['productName'],

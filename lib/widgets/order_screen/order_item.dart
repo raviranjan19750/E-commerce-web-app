@@ -47,7 +47,8 @@ class _OrderItemState extends State<OrderItem> {
                   order: widget.order,
                 ),
                 ...widget.order.orderedProducts.map(
-                  (e) => OrderProductItem(
+                  (e) => OrderProductItemView(
+                    orderID: widget.order.orderID,
                     orderedProduct: e,
                   ),
                 ),

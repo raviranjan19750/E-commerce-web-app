@@ -25,6 +25,7 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
       listener: (context, state) {
         if (state is LaunchAddNewAddressDialogueState) {
           showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext buildContext) {
               return NewAddressDialogBox(
@@ -36,6 +37,7 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
           );
         } else if (state is LaunchEditAddressDialogueState) {
           showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (BuildContext buildContext) {
                 return NewAddressDialogBox(

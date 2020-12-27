@@ -102,7 +102,7 @@ class AddresssRepository {
   ) async {
     try {
       final request = await http.delete(
-        FunctionConfig.host + 'manageAddress/delete/${authID}/${key}',
+        FunctionConfig.host + 'manageAddress/delete/${key}',
       );
       if (request.statusCode == 200) {
         print('Http Get request sucessfull');

@@ -4,16 +4,19 @@ import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/widgets/widgets.dart';
+import 'package:logger/logger.dart';
 
 class NewAddressForm extends StatefulWidget {
   final Function onActionAddress;
   final bool isAddAddress;
   final bool isEditAddress;
   final Address address;
+  final authID;
 
   const NewAddressForm({
     Key key,
     this.address,
+    this.authID = 'id1',
     this.onActionAddress,
     this.isAddAddress = false,
     this.isEditAddress = false,
@@ -30,6 +33,9 @@ class _NewAddressFormState extends State<NewAddressForm> {
   String address;
   String phone;
   String pincode;
+
+  // Logger
+  var LOG = Logger();
 
   @override
   void initState() {
@@ -181,7 +187,7 @@ class _NewAddressFormState extends State<NewAddressForm> {
                             onTap: () {
                               print('Adding new Address');
                               widget.onActionAddress(AddAddress(
-                                authID: "id1",
+                                authID: widget.authID,
                                 address: address,
                                 name: name,
                                 phone: phone,
@@ -212,23 +218,17 @@ class _NewAddressFormState extends State<NewAddressForm> {
                       Expanded(
                           child: InkWell(
                             onTap: () {
-                              print('Updating Address');
-                              widget.onActionAddress(UpdateAddress(
+                              var value = UpdateAddress(
                                 address: address,
-                                authID: "id1",
+                                authID: widget.authID,
                                 name: name,
                                 phone: phone,
                                 pincode: pincode,
                                 key: widget.address.key,
-                              ));
-                              // BlocProvider.of<ManageAddressesBloc>(context)
-                              //     .add(UpdateAddress(
-                              //   address: address,
-                              //   name: name,
-                              //   phone: phone,
-                              //   pincode: pincode,
-                              //   key: widget.address.key,
-                              // ));
+                              );
+                              LOG.i('Update Address Event ${value}');
+                              widget.onActionAddress(value);
+
                               Navigator.of(context).pop();
                             },
                             child: Material(

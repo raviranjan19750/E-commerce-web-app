@@ -36,7 +36,7 @@ class RoutesConfiguration {
         var productID = args["productID"];
         var variantID = args["variantID"];
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(
+            builder: (context) => MyDesktopView(
                     child: ProductDetailScreen(
                   productID: productID,
                       variantID: variantID,

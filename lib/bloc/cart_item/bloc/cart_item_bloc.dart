@@ -5,10 +5,10 @@ import 'package:living_desire/DBHandler/DBHandler.dart';
 import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 import 'package:living_desire/models/models.dart';
-import 'package:living_desire/service/CustomerDetailRepository.dart';
 part 'cart_item_event.dart';
 part 'cart_item_state.dart';
 
+// Cart Item Bloc
 class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
   final CartRepository cartRepository;
   final Cart cart;
@@ -20,13 +20,13 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
     this.cartRepository,
     this.cart,
     this.cartTotalBloc,
-  }) :
-      assert(cartBloc != null),
+  })  : assert(cartBloc != null),
         assert(cartRepository != null),
         assert(cart != null),
         assert(cartTotalBloc != null),
         super(CartItemInitial(cart, CartItemStateType.INITIAL));
 
+  // Cart Item Events
   @override
   Stream<CartItemState> mapEventToState(
     CartItemEvent event,
@@ -43,7 +43,11 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
       DeleteCart event, CartItemState state) async* {
     yield CartItemUpdate(state.cart, CartItemStateType.LOADING);
     try {
-      await cartRepository.deleteCartDetails(event.key);
+      await cartRepository.deleteCartDetails(
+        key: event.key,
+        productID: event.productID,
+        authID: event.authID,
+      );
       yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
       cartBloc.add(RefreshCart());
     } catch (e) {
@@ -56,7 +60,11 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
     yield CartItemUpdate(state.cart, CartItemStateType.LOADING);
     try {
       if (event.quantity == 0) {
-        await cartRepository.deleteCartDetails(event.key);
+        await cartRepository.deleteCartDetails(
+          key: event.key,
+          productID: event.productID,
+          authID: event.authID,
+        );
         cartBloc.add(RefreshCart());
       } else {
         await cartRepository.changeQuantityCartDetails(

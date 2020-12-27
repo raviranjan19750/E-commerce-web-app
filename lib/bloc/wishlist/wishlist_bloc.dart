@@ -58,6 +58,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     try {
       await wishlistRepository.deleteWishlistDetails(
         event.key,
+        event.productID,
       );
 
       yield* loadWishlistDetail(LoadAllWishlist(event.authID));

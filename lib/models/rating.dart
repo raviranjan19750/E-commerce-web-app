@@ -1,16 +1,21 @@
-import 'package:flutter/material.dart';
-import './models.dart';
-
 class Rating {
-  final String orderID;
-  final String authID;
-  final double rating;
-  final List<Review> reviews;
+  double rating;
+  String review;
+  final String key;
 
   Rating({
-    this.orderID,
-    this.authID,
     this.rating,
-    this.reviews,
+    this.key,
+    this.review,
   });
+
+  factory Rating.fromJson(dynamic data) {
+    if (data == null) return null;
+
+    return Rating(
+      rating: data['rating'],
+      review: data['review'],
+      key: data['ratingID'],
+    );
+  }
 }

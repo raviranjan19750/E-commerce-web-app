@@ -5,12 +5,11 @@ import '../../widgets/widgets.dart';
 import '../../models/models.dart';
 
 class SelectAddressScreenDesktop extends StatelessWidget {
-  final TrackingScrollController scrollController;
   final List<Cart> cart;
+  var authID = 'id1';
 
-  const SelectAddressScreenDesktop({
+  SelectAddressScreenDesktop({
     Key key,
-    this.scrollController,
     this.cart,
   }) : super(key: key);
   @override
@@ -20,7 +19,7 @@ class SelectAddressScreenDesktop extends StatelessWidget {
         BlocProvider(
             create: (context) => ManageAddressesBloc(
                 addresssRepository: RepositoryProvider.of(context))
-              ..add(LoadAllAddresses('id1'))),
+              ..add(LoadAllAddresses(authID))),
       ],
       child: Scaffold(
         appBar: CustomAppBar(),

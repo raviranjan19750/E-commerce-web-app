@@ -7,11 +7,11 @@ import '../../config/configs.dart';
 
 class OrderScreenDesktop extends StatefulWidget {
   // Desktop Website Order Screen
-  final TrackingScrollController scrollController;
 
-  const OrderScreenDesktop({
+  var authID = 'id1';
+
+  OrderScreenDesktop({
     Key key,
-    this.scrollController,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class _OrderScreenDesktopState extends State<OrderScreenDesktop> {
         BlocProvider(
             create: (context) => NormalOrderBloc(
                 normalOrderRepository: RepositoryProvider.of(context))
-              ..add(LoadAllNormalOrders('id1'))),
+              ..add(LoadAllNormalOrders(widget.authID))),
       ],
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
