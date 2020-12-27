@@ -54,19 +54,48 @@ class BulkOrderCart extends StatelessWidget{
 
               ),
 
-              child: ListView.builder(
+              child: Visibility(
 
-                  shrinkWrap: true,
-                  itemCount: value.customCartItems.length,
-                  itemBuilder:
-                      (BuildContext context, int index) {
-                    return Container(
+                visible: (value.customCartItems.length !=0),
 
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                replacement: Column(
 
-                      child: BulkOrderCartItem(items: value.customCartItems,index: index,value: value,),
-                    );
-                  }),
+                  mainAxisAlignment: MainAxisAlignment.center,
+
+                  children: [
+
+                    Icon(
+                      Icons.shopping_cart,
+                      color: Colors.grey[500],
+                      size: 72,
+                    ),
+
+                    Container(
+
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.only(bottom: 16,top: 32),
+
+                      child: Text("Your Cart is empty",style: TextStyle(fontSize: 20,color: Palette.secondaryColor),),
+
+                    ),
+                  ],
+                ),
+
+                child: ListView.builder(
+
+
+                    shrinkWrap: true,
+                    itemCount: value.customCartItems.length,
+                    itemBuilder:
+                        (BuildContext context, int index) {
+                      return Container(
+
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+
+                        child: BulkOrderCartItem(items: value.customCartItems,index: index,value: value,),
+                      );
+                    }),
+              ),
             ),
           ),
           

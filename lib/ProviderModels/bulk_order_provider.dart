@@ -368,7 +368,9 @@ class BulkOrderProvider with ChangeNotifier{
 
       if (response.statusCode == 200) {
 
+        customCartItems.add(bulkOrderCart);
         onClear();
+        notifyListeners();
 
 
       }
