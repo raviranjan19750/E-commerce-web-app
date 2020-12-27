@@ -72,8 +72,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
               : "";
       filter = filteredText;
       filterCriteria = event.filters;
-      SearchResult result = await searchApi.getFilteredProduct(filteredText,
-          offset: 0, limit: 20, filter: event.filters);
+      SearchResult result = await searchApi.getFilteredProduct(filteredText, offset: 0, limit: 20, filter: event.filters);
       yield _createDataFromSearch(result);
     } catch (e) {
       print(e);
@@ -81,8 +80,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
     }
   }
 
-  SuccessLoadingAllProduct _createDataFromSearch(SearchResult searchResult,
-      {List<Product> prev, int offset = 0, int limit = 20}) {
+  SuccessLoadingAllProduct _createDataFromSearch(SearchResult searchResult, {List<Product> prev, int offset = 0, int limit = 20}) {
     final hits = searchResult.hits;
 
     int len = hits.length;

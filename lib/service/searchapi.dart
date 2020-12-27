@@ -186,4 +186,36 @@ class SearchApi {
 
     return terms;
   }
+
+
+  Future<SearchResult> getSimilarProduct(String type, String subType) async {
+    print("hogya");
+
+    var criteria = {
+      "bool": {
+        "filter": [
+          {
+            "terms": {
+              "type": [
+                type
+              ]
+            }
+          },
+          {
+            "terms": {
+              "subType": [
+               subType
+              ]
+            }
+          }
+        ]
+      }
+    };
+    final searchResult = await client.search(index: INDEX_NAME, limit: 50, query: criteria);
+
+    return searchResult;
+  }
+
+
+
 }
