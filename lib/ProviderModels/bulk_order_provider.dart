@@ -8,6 +8,7 @@ import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
@@ -57,6 +58,42 @@ class BulkOrderProvider with ChangeNotifier{
 
 
   ArsProgressDialog progressDialog;
+
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff443a49);
+
+
+  void showColorPicker(BuildContext context){
+
+    showDialog(
+      context: context, builder: (context) => AlertDialog(
+      title: const Text('Pick a color!'),
+      content: SingleChildScrollView(
+        child: ColorPicker(
+          pickerColor: pickerColor,
+          onColorChanged: (changeColor){
+
+            pickerColor = changeColor;
+
+          },
+          showLabel: true,
+          pickerAreaHeightPercent: 0.8,
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('Got it'),
+          onPressed: () {
+            currentColor = pickerColor;
+            notifyListeners();
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    ),
+    );
+
+  }
 
   void onItemSizeChanged(String s){
 
@@ -225,7 +262,6 @@ class BulkOrderProvider with ChangeNotifier{
 
     productTypeSelected = true;
     selectedType = index;
-    print("Product Type  :  " + productTypeMap.keys.elementAt(index));
     bulkOrderCart.productType = productTypeMap.keys.elementAt(index);
     selectedSubType = -1;
     productSubTypeSelected = false;

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,6 @@ class StepTwoBlock extends StatelessWidget{
   BulkOrderProvider value;
 
   StepTwoBlock({this.value});
-
 
 
   void _showPopupMenu(BuildContext context,Offset offset) async {
@@ -27,6 +27,7 @@ class StepTwoBlock extends StatelessWidget{
             onPressed: (){
 
               value.onItemSizeChanged("S");
+              Navigator.of(context).pop();
 
             },
 
@@ -38,6 +39,7 @@ class StepTwoBlock extends StatelessWidget{
               onPressed: (){
 
                 value.onItemSizeChanged("M");
+                Navigator.of(context).pop();
 
               },
 
@@ -49,6 +51,7 @@ class StepTwoBlock extends StatelessWidget{
               onPressed: (){
 
                 value.onItemSizeChanged("L");
+                Navigator.of(context).pop();
 
               },
 
@@ -60,6 +63,7 @@ class StepTwoBlock extends StatelessWidget{
               onPressed: (){
 
                 value.onItemSizeChanged("XL");
+                Navigator.of(context).pop();
 
               },
 
@@ -71,6 +75,7 @@ class StepTwoBlock extends StatelessWidget{
               onPressed: (){
 
                 value.onItemSizeChanged("XXL");
+                Navigator.of(context).pop();
 
               },
 
@@ -155,33 +160,18 @@ class StepTwoBlock extends StatelessWidget{
 
                           Text('Select Color : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18),),
 
-                          ListView.builder(
+                          RaisedButton(
 
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 15,
-                              itemBuilder:
-                                  (BuildContext context, int index) {
-                                return InkWell(
+                              onPressed: (){
 
-                                  onTap: (){
+                                value.showColorPicker(context);
 
+                              },
+
+                              color: value.currentColor,
 
 
-                                  },
-
-                                  child: Container(
-
-                                    margin: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                                    width: 32.0,
-                                    height: 32.0,
-                                    decoration: new BoxDecoration(
-                                      color: Colors.redAccent,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                );
-                              })
+                          ),
 
                         ],
 
