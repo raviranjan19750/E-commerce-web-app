@@ -222,6 +222,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     this.bulkOrderCart.reset();
     this.bulkOrderCart.productType = bulkOrderCart.productType;
+    this.bulkOrderCart.key = bulkOrderCart.key;
     this.bulkOrderCart.variantID = bulkOrderCart.variantID;
     this.bulkOrderCart.size = bulkOrderCart.size;
     this.bulkOrderCart.quantity = bulkOrderCart.quantity;
@@ -231,6 +232,7 @@ class BulkOrderProvider with ChangeNotifier{
     description = bulkOrderCart.description;
 
     currentColor = HexColorConvert.fromHex(bulkOrderCart.colour.first);
+    hexColor ='#${currentColor.value.toRadixString(16)}';
     itemSize = bulkOrderCart.size;
 
     buttonName = "SAVE CHANGES";
@@ -359,6 +361,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     productSubTypeSelected = true;
     selectedSubType = index;
+    print(subTypes.elementAt(index));
     bulkOrderCart.variantID = subTypes.elementAt(index);
     notifyListeners();
 
@@ -457,15 +460,73 @@ class BulkOrderProvider with ChangeNotifier{
 
     String authID = UserPreferences().AuthID;
 
-    print("Auth ID  :  " + authID);
-
     if(authID!=null && authID.isNotEmpty){
 
       List<String> imageUrls = await uploadFile(authID);
 
-      addCustomCart(authID,imageUrls);
+      if(editElementIndex !=-1){
+        updateCustomCart(authID, imageUrls,bulkOrderCart.key);
+      }
+      else{
+        addCustomCart(authID,imageUrls);
+      }
+
 
     }
+
+  }
+
+  Future<void> updateCustomCart(String authID,List<String> imageUrls,String key) async {
+
+    try {
+
+      List<String> colours = new List();
+
+      colours.add(hexColor);
+
+      bulkOrderCart.colour = colours;
+
+      print("On Update  :  " + bulkOrderCart.variantID);
+
+      var data = {
+        "productType": bulkOrderCart.productType,
+        "quantity": bulkOrderCart.quantity,
+        "size": bulkOrderCart.size,
+        "colour":colours,
+        "productID": bulkOrderCart.productID,
+        "variantID": bulkOrderCart.variantID,
+        "description": bulkOrderCart.description,
+        "images": imageUrls,
+      };
+
+      final response =
+      await http.put(FunctionConfig.host + 'manageCart/custom/$key',
+        body: jsonEncode(data),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      print(response.body);
+
+
+      if (response.statusCode == 200) {
+
+
+        await getCustomCart(authID);
+
+        dismissProgressDialog();
+
+        onClear();
+
+
+      }
+      else{
+        dismissProgressDialog();
+      }
+    } catch (e) {
+      print(e.toString());
+      throw Exception(e);
+    }
+
 
   }
 
