@@ -413,7 +413,7 @@ class StepTwoBlock extends StatelessWidget{
                     width: 32.0,
                     height: 32.0,
                     decoration: new BoxDecoration(
-                      color: Colors.redAccent,
+                      color: value.currentColor,
                       shape: BoxShape.circle,
                     ),
                   ),

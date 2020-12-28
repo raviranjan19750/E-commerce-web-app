@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BulkOrderCart {
 
-  String  productID, productType,variantID, colour, size, description,key;
+  String  productID, productType,variantID, size, description,key;
+
+  var colour = new List.empty();
 
   int quantity;
 
-  var images;
+  var images = new List.empty();
 
   DateTime addedDate,updatedDate;
 
@@ -43,6 +45,7 @@ class BulkOrderCart {
       quantity: data['cartResponseData']['data']['quantity'],
       productType: data['cartResponseData']['data']['productType'],
       size: data['cartResponseData']['data']['size'],
+      colour: data['cartResponseData']['data']['colour'],
       description: data['cartResponseData']['data']['description']
     );
   }
@@ -57,7 +60,7 @@ class BulkOrderCart {
     key = "";
     images = List.empty();
     productType = "";
-    colour = "red";
+    colour = List.empty();
 
   }
 

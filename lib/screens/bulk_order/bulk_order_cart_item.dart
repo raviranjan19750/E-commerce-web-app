@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
+import 'package:living_desire/models/StringToHexColor.dart';
 
 class BulkOrderCartItem extends StatelessWidget{
 
@@ -54,7 +55,7 @@ class BulkOrderCartItem extends StatelessWidget{
                         width: 24.0,
                         height: 24.0,
                         decoration: new BoxDecoration(
-                          color: Colors.redAccent,
+                          color: HexColor.hexToColor(items.elementAt(index).colour.first),
                           shape: BoxShape.circle,
                         ),
                       ),

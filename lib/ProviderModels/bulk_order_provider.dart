@@ -48,19 +48,20 @@ class BulkOrderProvider with ChangeNotifier{
 
   int quantity = 50;
 
-  BulkOrderCart bulkOrderCart = new BulkOrderCart(productType: "",variantID: "",size: "s",quantity: 50);
-
   HashMap<String,List<String>> productTypeMap = new HashMap<String,List<String>>();
   
   List<String> subTypes = new List<String>();
 
   List<String> productTypeImages = new List();
 
+  BulkOrderCart bulkOrderCart = new BulkOrderCart(productType: "",variantID: "",size: "s",quantity: 50);
+
 
   ArsProgressDialog progressDialog;
 
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
+  String hexColor ;
 
 
   void showColorPicker(BuildContext context){
@@ -68,6 +69,7 @@ class BulkOrderProvider with ChangeNotifier{
     showDialog(
       context: context, builder: (context) => AlertDialog(
       title: const Text('Pick a color!'),
+
       content: SingleChildScrollView(
         child: ColorPicker(
           pickerColor: pickerColor,
@@ -76,15 +78,16 @@ class BulkOrderProvider with ChangeNotifier{
             pickerColor = changeColor;
 
           },
-          showLabel: true,
-          pickerAreaHeightPercent: 0.8,
+          showLabel: false,
+          pickerAreaHeightPercent: 1,
         ),
       ),
       actions: <Widget>[
         FlatButton(
-          child: const Text('Got it'),
+          child: const Text('Got it',style: TextStyle(fontSize: 20),),
           onPressed: () {
             currentColor = pickerColor;
+            hexColor ='#${currentColor.value.toRadixString(16)}';
             notifyListeners();
             Navigator.of(context).pop();
           },
@@ -136,7 +139,7 @@ class BulkOrderProvider with ChangeNotifier{
       }
     }
 
-    print("Image URL" + productTypeImages.first);
+    hexColor ='#${currentColor.value.toRadixString(16)}';
 
     await getCustomCart(UserPreferences().AuthID);
 
@@ -397,11 +400,17 @@ class BulkOrderProvider with ChangeNotifier{
 
     try {
 
+      List<String> colours = new List();
+
+      colours.add(hexColor);
+
+      bulkOrderCart.colour = colours;
+
       var data = {
         "productType": bulkOrderCart.productType,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
-        "colour":['red'],
+        "colour":colours,
         "productID": bulkOrderCart.productID,
         "variantID": bulkOrderCart.variantID,
         "description": bulkOrderCart.description,
@@ -414,15 +423,25 @@ class BulkOrderProvider with ChangeNotifier{
           headers: {"Content-Type": "application/json"},
       );
 
-      dismissProgressDialog();
 
       if (response.statusCode == 200) {
 
-        customCartItems.add(bulkOrderCart);
+        var res = jsonDecode(response.body);
+
+        String key = res['key'];
+
+        bulkOrderCart.key = key;
+
+        await getCustomCart(authID);
+
+        dismissProgressDialog();
+
         onClear();
-        notifyListeners();
 
 
+      }
+      else{
+        dismissProgressDialog();
       }
     } catch (e) {
       print(e.toString());
