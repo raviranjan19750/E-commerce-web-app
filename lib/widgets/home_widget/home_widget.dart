@@ -13,8 +13,27 @@ class HomeWidget extends StatelessWidget {
 
   const HomeWidget({Key key, this.productlist, this.labeltxt})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    ScrollController homeWidgetScrollController = new ScrollController();
+
+    homeWidgetProductMoveRight() {
+      homeWidgetScrollController.animateTo(
+          homeWidgetScrollController.offset +
+              MediaQuery.of(context).size.width * 0.85,
+          curve: Curves.linear,
+          duration: Duration(milliseconds: 700));
+    }
+
+    homeWidgetMoveLeft() {
+      homeWidgetScrollController.animateTo(
+          homeWidgetScrollController.offset -
+              MediaQuery.of(context).size.width * 0.85,
+          curve: Curves.linear,
+          duration: Duration(milliseconds: 700));
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,6 +53,7 @@ class HomeWidget extends StatelessWidget {
             children: [
               ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  controller: homeWidgetScrollController,
                   itemCount: this.productlist.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
@@ -50,7 +70,9 @@ class HomeWidget extends StatelessWidget {
                   right: 0,
                   top: 125.0,
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      homeWidgetProductMoveRight();
+                    },
                     child: NextListHover(),
                   )),
               Positioned(
@@ -58,7 +80,9 @@ class HomeWidget extends StatelessWidget {
                   left: 0,
                   top: 125.0,
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      homeWidgetMoveLeft();
+                    },
                     child: NextListHover(
                       icon: Icons.arrow_back_ios,
                     ),
