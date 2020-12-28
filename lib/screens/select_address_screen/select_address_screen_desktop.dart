@@ -21,20 +21,15 @@ class SelectAddressScreenDesktop extends StatelessWidget {
                 addresssRepository: RepositoryProvider.of(context))
               ..add(LoadAllAddresses(authID))),
       ],
-      child: Scaffold(
-        appBar: CustomAppBar(),
-        body: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: SelectAddressContainer()),
-              SelectAddressCartTotal(
-                cart: cart,
-              ),
-            ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: SelectAddressContainer()),
+          SelectAddressCartTotal(
+            cart: cart,
           ),
-        ),
+        ],
       ),
     );
   }

@@ -57,7 +57,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     try {
       List<Cart> cart = await cartRepository.getCartDetails(event.authID);
-      print('got list of cart');
+      //print('got list of cart');
 
       //customerRepo.addAllCartList(cart);
       yield CartDetailLoadingSuccessful(cart);

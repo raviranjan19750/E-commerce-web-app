@@ -116,7 +116,7 @@ class _WishlistContainerGridState extends State<WishlistContainerGrid> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: widget.itemCount,
             childAspectRatio: (MediaQuery.of(context).size.width * 0.08) /
-                (MediaQuery.of(context).size.height * 0.32),
+                (MediaQuery.of(context).size.height * 0.24),
           ),
           itemCount: widget.wishlist.length,
           physics: NeverScrollableScrollPhysics(),

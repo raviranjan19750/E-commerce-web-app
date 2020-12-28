@@ -60,9 +60,9 @@ class NormalOrderItemBloc
       );
       state.orderedProduct.rating.rating = event.rating;
       state.orderedProduct.rating.review = event.review;
+      normalOrderBloc.add(RefreshOrder());
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.SUCCESS);
-      normalOrderBloc.add(RefreshOrder());
     } catch (e) {
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.FAILURE);
@@ -83,9 +83,9 @@ class NormalOrderItemBloc
       );
       state.orderedProduct.rating.rating = event.rating;
       state.orderedProduct.rating.review = event.review;
+      normalOrderBloc.add(RefreshOrder());
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.SUCCESS);
-      normalOrderBloc.add(RefreshOrder());
     } catch (e) {
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.FAILURE);

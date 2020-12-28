@@ -48,3 +48,9 @@ class LaunchEditAddressDialogueState extends ManageDialogueState {
 
   LaunchEditAddressDialogueState(this.address);
 }
+
+class LaunchDeleteAddressDialogueState extends ManageDialogueState {
+  final Address address;
+
+  LaunchDeleteAddressDialogueState(this.address);
+}

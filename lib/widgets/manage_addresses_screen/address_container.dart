@@ -160,11 +160,9 @@ class AddressContainer extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
+                              // Bloc Provider to Delete Address dialog box
                               BlocProvider.of<ManageAddressesBloc>(context)
-                                  .add(DeleteAddress(
-                                authID: authID,
-                                key: address.key,
-                              ));
+                                  .add(LoadDeleteAddressDialogueEvent(address));
                             },
                           ),
                         ),

@@ -75,3 +75,9 @@ class LoadEditAddressDialogueEvent extends AddressDialogueEvent {
 
   LoadEditAddressDialogueEvent({this.address});
 }
+
+class LoadDeleteAddressDialogueEvent extends AddressDialogueEvent {
+  final Address address;
+
+  LoadDeleteAddressDialogueEvent(this.address);
+}

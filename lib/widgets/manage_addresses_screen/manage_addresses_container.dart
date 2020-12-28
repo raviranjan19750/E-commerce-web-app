@@ -47,6 +47,17 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
                       {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
                 );
               });
+        } else if (state is LaunchDeleteAddressDialogueState) {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext buildContext) {
+                return DeleteAddressContainer(
+                  address: state.address,
+                  onAction: (val) =>
+                      {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
+                );
+              });
         }
       },
       buildWhen: (prev, curr) {
@@ -84,6 +95,85 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
           return Container();
         }
       },
+    );
+  }
+}
+
+class DeleteAddressContainer extends StatelessWidget {
+  final Address address;
+  final Function onAction;
+  var authID = 'id1';
+
+  DeleteAddressContainer({
+    Key key,
+    this.onAction,
+    this.address,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.2,
+        width: MediaQuery.of(context).size.width * 0.3,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                Strings.areYouSure,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: InkWell(
+                    onTap: () {
+                      onAction(DeleteAddress(
+                        authID: authID,
+                        key: address.key,
+                      ));
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      Strings.yes,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      Strings.no,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
