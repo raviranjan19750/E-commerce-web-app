@@ -57,7 +57,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   List<String> productTypeImages = new List();
 
-  BulkOrderCart bulkOrderCart = new BulkOrderCart(productType: "",variantID: "",size: "s",quantity: 50);
+  BulkOrderCart bulkOrderCart = new BulkOrderCart(productType: "",productSubType: "",variantID: "",size: "s",quantity: 50);
 
 
   ArsProgressDialog progressDialog;
