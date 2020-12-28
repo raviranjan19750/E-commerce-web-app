@@ -59,8 +59,8 @@ class BulkOrderProvider with ChangeNotifier{
 
   ArsProgressDialog progressDialog;
 
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
+  Color pickerColor = Color(0xffffffff);
+  Color currentColor = Color(0xffffffff);
   String hexColor ;
 
 

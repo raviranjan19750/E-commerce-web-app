@@ -55,7 +55,7 @@ class BulkOrderCartItem extends StatelessWidget{
                         width: 24.0,
                         height: 24.0,
                         decoration: new BoxDecoration(
-                          color: HexColor.hexToColor(items.elementAt(index).colour.first),
+                          color: HexColorConvert.fromHex(items.elementAt(index).colour.first),
                           shape: BoxShape.circle,
                         ),
                       ),
