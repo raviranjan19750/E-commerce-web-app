@@ -24,6 +24,8 @@ class BulkOrderProvider with ChangeNotifier{
   double elevation = 4;
   double size = 1;
 
+  bool sampleRequested = false;
+
   bool stepOneDone = false;
 
   bool stepTwoDone = false;
@@ -68,6 +70,10 @@ class BulkOrderProvider with ChangeNotifier{
   Color currentColor = Color(0xffffffff);
   String hexColor ;
 
+  void onSampleRequested(bool value){
+    sampleRequested = value;
+    notifyListeners();
+  }
 
   void showColorPicker(BuildContext context){
 

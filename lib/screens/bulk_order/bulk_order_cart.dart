@@ -112,8 +112,11 @@ class BulkOrderCart extends StatelessWidget{
                 Text('Get Sample ?',style: TextStyle(color: Colors.redAccent,fontSize: 24),),
 
                 Switch(
-                  value: false,
-                  onChanged: (value){
+
+                  value: value.sampleRequested,
+
+                  onChanged: (v){
+                    value.onSampleRequested(v);
                   },
                   activeTrackColor: Colors.black12,
                   activeColor: Palette.secondaryColor,
