@@ -6,7 +6,7 @@ part 'manage_addresses_state.dart';
 
 class ManageAddressesBloc
     extends Bloc<ManageAddressesEvent, ManageAddresesState> {
-  final AddresssRepository addresssRepository;
+  final AddressRepository addresssRepository;
   ManageAddressesBloc({this.addresssRepository})
       : super(AddressDetailInitial());
 

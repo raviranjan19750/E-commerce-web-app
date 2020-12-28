@@ -606,6 +606,39 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
+  Future<void> getQuotation() async {
+
+    String authID = UserPreferences().AuthID;
+
+    try{
+
+      var data = {
+        "isSampleRequested" : sampleRequested,
+        "deliveryAddressID" : "address"
+      };
+
+      final response =
+      await http.post(FunctionConfig.host + 'manageOrders/custom-request/$authID',
+        body: jsonEncode(data),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      dismissProgressDialog();
+
+      if(response.statusCode == 200){
+
+        print("Quotation Placed Successfully");
+
+      }
+
+    }
+    catch(e){
+      throw Exception(e.toString());
+    }
+
+
+  }
+
   void onClear(){
 
     selectedType = -1;

@@ -60,8 +60,13 @@ class RoutesConfiguration {
             builder: (_) =>
                 MyDesktopView(child: ManageAddressesScreenDesktop()));
       case SELECT_ADDRESS:
+
+        var args = settings.arguments as Map;
+        bool sampleRequested = args["sampleRequested"];
+        bool isBulkOrder = args["isBulkOrder"];
+        int totalItems = args["totalItems"];
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: SelectAddressScreenDesktop()));
+            builder: (_) => MyDesktopView(child: SelectAddressScreenDesktop(isCustomOrder: isBulkOrder,isSampleRequested: sampleRequested,totalItems: totalItems,)));
       case ORDER_PLACED:
         return MaterialPageRoute(
             builder: (_) => MyDesktopView(child: OrderPlacedScreenDesktop()));

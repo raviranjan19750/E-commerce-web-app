@@ -5,7 +5,7 @@ import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
 
-class AddresssRepository {
+class AddressRepository {
   // Get Address Details
 
   Future<List<Address>> getAddressDetails(String authID) async {
