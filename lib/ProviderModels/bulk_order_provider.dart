@@ -107,7 +107,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     SearchApi searchApi = new SearchApi();
 
-    List<FilterTag> list = await searchApi.getProductTypeAndSubtype();
+    List<FilterTag> list = await searchApi.getProductType();
 
     for(FilterTag f in list){
 
