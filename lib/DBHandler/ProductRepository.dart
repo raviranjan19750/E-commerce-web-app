@@ -22,11 +22,6 @@ class ProductRepository {
   }
   //return ProductDetail.fromJson(jsonDecode(response.body));
 
-  // String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
-  //     '${alpha.toRadixString(16).padLeft(2, '0')}'
-  //     '${red.toRadixString(16).padLeft(2, '0')}'
-  //     '${green.toRadixString(16).padLeft(2, '0')}'
-  //     '${blue.toRadixString(16).padLeft(2, '0')}';
 
   Future<ProductDetail> getProductVariantSizeColorDescription(
       {String productID, List<ProductVariantColor> color, String size}) async {
@@ -38,10 +33,10 @@ class ProductRepository {
     var params = {"size": size, "colour": colors};
     print(params);
 
-    var response = await http.post(
-        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID",
+    var response = await http.post("https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID",
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode(params));
+        body: json.encode(params));
+    print(response.toString());
     Map<String, dynamic> map = jsonDecode(response.body);
     print('Http request sucessfull');
     return ProductDetail.fromJson(map);
@@ -55,8 +50,7 @@ class ProductRepository {
       "warehouseID": warehouseID,
     };
 
-    HttpsCallable callable =
-        FirebaseFunctions.instance.httpsCallable("checkPincodeAvailability");
+    HttpsCallable callable = FirebaseFunctions.instance.httpsCallable("checkPincodeAvailability");
 
     var result = await callable(data);
     //var map = jsonDecode(result.data);

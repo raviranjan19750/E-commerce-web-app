@@ -100,7 +100,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                       children: [
                         ProductAvailability(
                           productID: state.productDetail.productID,
-                          wareHouseID: "temp_id",
+                          variantID: state.productDetail.variantID,
                         ),
 //list of color
 //todo Set lst of color
@@ -145,8 +145,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       ),
                                     ),
                                     ProductSizeDropdown(
-                                      productSizeList:
-                                          state.productDetail.sizeOptions,
+                                      productSizeList: state.productDetail.sizeOptions,
                                       productColor: state.productDetail.colour,
                                       productID: state.productDetail.productID,
                                       productSize: state.productDetail.size,
