@@ -545,6 +545,7 @@ class BulkOrderProvider with ChangeNotifier{
     editElementIndex = -1;
     buttonName = "ADD MORE";
     currentColor = Color(0xffffffff);
+    logos.clear();
     bulkOrderCart.reset();
     notifyListeners();
 
