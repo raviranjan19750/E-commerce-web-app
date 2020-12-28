@@ -4,6 +4,7 @@ import 'package:living_desire/screens/ProductDetailScreen/ProductDetailScreeen.d
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order.dart';
 import 'package:living_desire/screens/home_screen/home_screen.dart';
+import 'package:living_desire/screens/my_orders/my_bulk_order.dart';
 import 'package:living_desire/screens/my_orders/my_order.dart';
 import 'package:living_desire/screens/screens.dart';
 
@@ -15,6 +16,7 @@ class RoutesConfiguration {
   static const String ORDER = "/orders";
   static const String WISHLIST = "/wishlist";
   static const String MY_ORDERS = "/myorders";
+  static const String MY_BULK_ORDERS = "/mybulkorders";
   static const String CART = "/cart";
   static const String MANAGE_ADDRESSES = "/manageaddresses";
   static const String SELECT_ADDRESS = "/selectaddress";
@@ -46,6 +48,10 @@ class RoutesConfiguration {
         return MaterialPageRoute(builder: (_) => BulkOrder());
       case ORDER:
         return MaterialPageRoute(builder: (_) => MyOrder());
+
+      case MY_BULK_ORDERS:
+        return MaterialPageRoute(builder: (_) => MyBulkOrder());
+        
       case WISHLIST:
         return MaterialPageRoute(
             builder: (_) => MyDesktopView(child: WishlistScreenDesktop()));

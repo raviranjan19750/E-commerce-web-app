@@ -11,7 +11,7 @@ class MyBulkOrderItem extends StatelessWidget{
 
     return Container(
 
-      margin: EdgeInsets.only(left: 48,right: 48,top: 16,bottom: 16),
+      margin: EdgeInsets.only(left: 32,right: 48,top: 16,bottom: 16),
       
       decoration: BoxDecoration(
         
