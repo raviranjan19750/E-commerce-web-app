@@ -146,13 +146,16 @@ class BulkOrderCart extends StatelessWidget{
 
               onPressed: (){
 
-                Navigator.pushNamed(
+                /*Navigator.pushNamed(
                     context, RoutesConfiguration.SELECT_ADDRESS,
                     arguments: {
                       "totalItems": value.customCartItems.length,
                       "sampleRequested": value.sampleRequested,
                       "isBulkOrder": true,
-                    });
+                    });*/
+
+                value.showProgressDialog(context, "Generating Quotation");
+                value.getQuotation();
 
               },
 
