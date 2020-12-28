@@ -4,13 +4,21 @@ import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 
 class CartItemCount extends StatelessWidget {
+  // Cart Item COunt Container
   final int quantity;
   final String documentID;
+  final String productID;
 
-  const CartItemCount({Key key, this.quantity, this.documentID}) : super(key: key);
+  const CartItemCount({
+    Key key,
+    this.quantity,
+    this.documentID,
+    this.productID,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var authID = 'id1';
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
@@ -21,10 +29,13 @@ class CartItemCount extends StatelessWidget {
           Container(
             child: InkWell(
               onTap: () {
+                // Bloc Provider to Change quantity cart
+                // Hits API request
                 BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
-                  documentID,
-                  quantity - 1,
-                  "id1",
+                  authID: authID,
+                  key: documentID,
+                  quantity: quantity - 1,
+                  productID: productID,
                 ));
               },
               child: Icon(
@@ -44,10 +55,13 @@ class CartItemCount extends StatelessWidget {
           Container(
             child: InkWell(
               onTap: () {
+                // Bloc Provider to Change quantity cart
+                // Hits API request
                 BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
-                  documentID,
-                  quantity + 1,
-                  "id1",
+                  authID: authID,
+                  key: documentID,
+                  quantity: quantity + 1,
+                  productID: productID,
                 ));
               },
               child: Icon(

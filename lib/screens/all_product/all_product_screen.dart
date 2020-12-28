@@ -52,12 +52,20 @@ class AllProductScreen extends StatelessWidget {
                 }
                 return false;
               }, builder: (context, state) {
+                double width = MediaQuery.of(context).size.width;
+                if (width < 1000) {
+                  width = width * 0.95;
+                } else if (width < 1200) {
+                  width = width * 0.9;
+                } else {
+                  width = width * 0.8;
+                }
                 if (state is SuccessLoadingAllProduct)
                   return Align(
                     alignment: Alignment.topCenter,
                     child: Container(
                       constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.85,
+                        maxWidth: width,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,10 +84,18 @@ class AllProductScreen extends StatelessWidget {
               }),
               AllProductScreenBuilder(),
               BlocBuilder<AllProductBloc, AllProductState>(builder: (_, state) {
+                double width = MediaQuery.of(context).size.width;
+                if (width < 1000) {
+                  width = width * 0.95;
+                } else if (width < 1200) {
+                  width = width * 0.9;
+                } else {
+                  width = width * 0.8;
+                }
                 if (state is LoadingNextProduct) {
                   return Container(
                       constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.85,
+                        maxWidth: width,
                       ),
                       child: LinearProgressIndicator());
                 } else if (state is AllProductLoaded) {

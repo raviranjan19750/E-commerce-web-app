@@ -77,4 +77,6 @@ class Strings {
   static const String similarProudcts = "Similar Products";
   static const String Combos = "Combos";
   static const String inValidPincode = "Invalid pincode";
+  static const String deliveredBy = "Order will be delivered by ";
+  static const String writeReview = "Write a Review Here(Optional)...";
 }

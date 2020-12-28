@@ -29,8 +29,7 @@ class _OrderScreenState extends State<OrderScreen> {
           //Mobile Website
           mobile: OrderScreenMobile(scrollController: trackingScrollController),
           // Desktop Website
-          desktop:
-              OrderScreenDesktop(scrollController: trackingScrollController),
+          desktop: OrderScreenDesktop(),
         ),
       ),
     );

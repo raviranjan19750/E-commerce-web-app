@@ -40,7 +40,6 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
               scrollController: trackingScrollController),
           // Desktop Website
           desktop: SelectAddressScreenDesktop(
-            scrollController: trackingScrollController,
             cart: widget.cart,
           ),
         ),

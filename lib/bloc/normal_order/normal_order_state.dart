@@ -14,3 +14,15 @@ class NormalOrderDetailLoadingSuccessful extends NormalOrderState {
 }
 
 class NormalOrderDetailLoadingFailure extends NormalOrderState {}
+
+class AddRatingNormalOrderDetailLoading extends NormalOrderState {}
+
+class AddRatingNormalOrderDetailSuccessfull extends NormalOrderState {}
+
+class AddRatingNormalOrderDetailFailure extends NormalOrderState {}
+
+class EditRatingNormalOrderDetailLoading extends NormalOrderState {}
+
+class EditRatingNormalOrderDetailSuccessfull extends NormalOrderState {}
+
+class EditRatingNormalOrderDetailFailure extends NormalOrderState {}

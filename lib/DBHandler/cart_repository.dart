@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import '../logger.dart';
 
 class CartRepository {
-
   var LOG = LogBuilder.getLogger();
 
   List<Cart> _cart = List.empty();
@@ -38,19 +37,19 @@ class CartRepository {
   }
 
   Future<List<Cart>> getCartDetails(String authID) async {
+    LOG.v('Requesting all cart details for ${authID}');
     try {
       final response =
           await http.get(FunctionConfig.host + 'manageCart/normal/${authID}');
       if (response.statusCode == 200) {
-        _cart = (jsonDecode(response.body) as List)
-            .map((i) => Cart.fromJson(i))
-            .toList();
+        //Map<String, dynamic> map = json.decode(response.body);
+        LOG.i('Http Request sucessfull ${response.body}');
+        _cart = ((jsonDecode(response.body) as List<dynamic>)
+            .map((i) => Cart.fromJson(i))).toList();
         return _cart;
-      } else {
-        print('Http Request Failed');
-      }
+      } else {}
     } catch (e) {
-      print(e.toString());
+      LOG.e(e);
       throw Exception(e);
     }
   }
@@ -74,7 +73,6 @@ class CartRepository {
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(data));
       if (response.statusCode == 200) {
-
       } else {
         print('Http Request Failed');
       }
@@ -123,18 +121,18 @@ class CartRepository {
   }
 
   //Delete Cart Details
-  Future<void> deleteCartDetails(
+  Future<void> deleteCartDetails({
     String key,
-  ) async {
+    String authID,
+    String productID,
+  }) async {
     try {
       final request = await http.delete(
-        FunctionConfig.host + 'manageCart/normal/${key}',
+        FunctionConfig.host + 'manageCart/normal/${authID}/${productID}/${key}',
       );
       if (request.statusCode == 200) {
         LOG.i(_cart.length);
-        for (var e in _cart) {
-
-        }
+        for (var e in _cart) {}
         LOG.i('Removing Key ${key}');
         _cart.removeWhere((element) => element.key.compareTo(key) == 0);
         LOG.i(_cart.length);

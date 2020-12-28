@@ -137,7 +137,8 @@ class CartTotal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(Strings.discount),
-                  Text('-${cart.retailTotal - cart.discountTotal}'),
+                  Text('data'),
+                  //Text('-${cart.retailTotal - cart.discountTotal}'),
                 ],
               ),
             ),
