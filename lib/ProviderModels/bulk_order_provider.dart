@@ -224,6 +224,7 @@ class BulkOrderProvider with ChangeNotifier{
     this.bulkOrderCart.productType = bulkOrderCart.productType;
     this.bulkOrderCart.key = bulkOrderCart.key;
     this.bulkOrderCart.variantID = bulkOrderCart.variantID;
+    this.bulkOrderCart.productSubType = bulkOrderCart.productSubType;
     this.bulkOrderCart.size = bulkOrderCart.size;
     this.bulkOrderCart.quantity = bulkOrderCart.quantity;
     this.bulkOrderCart.images = List.from(bulkOrderCart.images);
@@ -264,7 +265,7 @@ class BulkOrderProvider with ChangeNotifier{
 
       for(int i=0;i<productTypeMap[bulkOrderCart.productType].length;i++){
 
-        if(productTypeMap[bulkOrderCart.productType].elementAt(i) == bulkOrderCart.variantID){
+        if(productTypeMap[bulkOrderCart.productType].elementAt(i) == bulkOrderCart.productSubType){
           selectedSubType = i;
         }
 
@@ -361,8 +362,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     productSubTypeSelected = true;
     selectedSubType = index;
-    print(subTypes.elementAt(index));
-    bulkOrderCart.variantID = subTypes.elementAt(index);
+    bulkOrderCart.productSubType = subTypes.elementAt(index);
     notifyListeners();
 
   }
@@ -486,10 +486,9 @@ class BulkOrderProvider with ChangeNotifier{
 
       bulkOrderCart.colour = colours;
 
-      print("On Update  :  " + bulkOrderCart.variantID);
-
       var data = {
         "productType": bulkOrderCart.productType,
+        "productSubType": bulkOrderCart.productSubType,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
         "colour":colours,
@@ -542,6 +541,7 @@ class BulkOrderProvider with ChangeNotifier{
 
       var data = {
         "productType": bulkOrderCart.productType,
+        "productSubType": bulkOrderCart.productSubType,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
         "colour":colours,
