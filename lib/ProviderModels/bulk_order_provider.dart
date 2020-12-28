@@ -12,6 +12,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
+import 'package:living_desire/models/StringToHexColor.dart';
 import 'package:living_desire/models/filtertags.dart';
 import 'package:living_desire/models/uploadImage.dart';
 import 'package:living_desire/service/searchapi.dart';
@@ -58,6 +59,10 @@ class BulkOrderProvider with ChangeNotifier{
 
 
   ArsProgressDialog progressDialog;
+
+  String buttonName = "ADD MORE";
+
+  int editElementIndex = -1;
 
   Color pickerColor = Color(0xffffffff);
   Color currentColor = Color(0xffffffff);
@@ -207,6 +212,77 @@ class BulkOrderProvider with ChangeNotifier{
     progressDialog.dismiss();
   }
 
+  void onEdit(BulkOrderCart bulkOrderCart,int index){
+
+    this.bulkOrderCart.reset();
+    this.bulkOrderCart.productType = bulkOrderCart.productType;
+    this.bulkOrderCart.variantID = bulkOrderCart.variantID;
+    this.bulkOrderCart.size = bulkOrderCart.size;
+    this.bulkOrderCart.quantity = bulkOrderCart.quantity;
+    this.bulkOrderCart.images = List.from(bulkOrderCart.images);
+    this.bulkOrderCart.colour = List.from(bulkOrderCart.colour);
+    this.bulkOrderCart.description = bulkOrderCart.description;
+    description = bulkOrderCart.description;
+
+    currentColor = HexColorConvert.fromHex(bulkOrderCart.colour.first);
+    itemSize = bulkOrderCart.size;
+
+    buttonName = "SAVE CHANGES";
+    editElementIndex = index;
+
+    stepTwoDone = false;
+    stepOneDone = false;
+
+    quantity = bulkOrderCart.quantity;
+    quantityController.text = quantity.toString();
+
+    selectedType = -1;
+
+    for(int i=0;i<productTypeMap.keys.length;i++){
+
+      if(productTypeMap.keys.elementAt(i) == bulkOrderCart.productType){
+        selectedType = i;
+      }
+
+    }
+
+    selectedSubType = -1;
+
+    if(selectedType != -1){
+
+      productTypeSelected = true;
+
+      subTypes = productTypeMap[bulkOrderCart.productType];
+
+      for(int i=0;i<productTypeMap[bulkOrderCart.productType].length;i++){
+
+        if(productTypeMap[bulkOrderCart.productType].elementAt(i) == bulkOrderCart.variantID){
+          selectedSubType = i;
+        }
+
+      }
+
+      if(selectedSubType !=-1){
+        productSubTypeSelected = true;
+      }
+      else{
+        productSubTypeSelected = false;
+      }
+
+    }
+    else{
+
+      subTypes = productTypeMap[productTypeMap.keys.first];
+      productTypeSelected = false;
+      productSubTypeSelected = false;
+
+    }
+
+
+    notifyListeners();
+
+  }
+
   void showProgressDialog(BuildContext context,String message){
 
     progressDialog = createProgressDialog(context,message);
@@ -278,22 +354,6 @@ class BulkOrderProvider with ChangeNotifier{
     productSubTypeSelected = true;
     selectedSubType = index;
     bulkOrderCart.variantID = subTypes.elementAt(index);
-    notifyListeners();
-
-  }
-
-  void onEnter(){
-      elevation = 20;
-      size = 1.1;
-
-      notifyListeners();
-  }
-
-  void onExit(){
-
-    elevation = 4;
-    size = 1;
-
     notifyListeners();
 
   }
@@ -482,6 +542,9 @@ class BulkOrderProvider with ChangeNotifier{
     stepOneDone = false;
     productTypeSelected = false;
     productSubTypeSelected = false;
+    editElementIndex = -1;
+    buttonName = "ADD MORE";
+    currentColor = Color(0xffffffff);
     bulkOrderCart.reset();
     notifyListeners();
 

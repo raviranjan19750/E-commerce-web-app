@@ -124,7 +124,7 @@ class BulkOrder extends StatelessWidget{
 
                                       color: Palette.secondaryColor,
 
-                                      child: Text('ADD MORE',style: TextStyle(color: Colors.white,fontSize: 24),),
+                                      child: Text(value.buttonName,style: TextStyle(color: Colors.white,fontSize: 24),),
 
                                     ),
                                   ),

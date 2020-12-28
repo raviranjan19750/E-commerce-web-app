@@ -12,7 +12,6 @@ class BulkOrderCart {
 
   DateTime addedDate,updatedDate;
 
-
   BulkOrderCart({
       this.productID,
       this.productType,
