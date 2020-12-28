@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
-import 'package:living_desire/models/BulkOrderProduct.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_cart_item.dart';
 
 class BulkOrderCart extends StatelessWidget{
