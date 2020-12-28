@@ -429,6 +429,13 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
+  void updateQuantity(String s){
+
+    quantity = int.tryParse(s);
+    bulkOrderCart.quantity = quantity;
+
+  }
+
   void decrementQuantity(int val){
 
     quantity--;

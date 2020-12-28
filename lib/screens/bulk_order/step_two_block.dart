@@ -305,8 +305,7 @@ class StepTwoBlock extends StatelessWidget{
 
                                   onChanged: (s){
 
-                                    value.quantity = int.tryParse(s);
-                                    value.bulkOrderCart.quantity = int.tryParse(s);
+                                    value.updateQuantity(s);
 
                                   },
 
