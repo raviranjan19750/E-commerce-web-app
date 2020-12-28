@@ -115,7 +115,10 @@ class BulkOrder extends StatelessWidget{
 
                                       onPressed: (){
 
-                                        value.showProgressDialog(context,"Adding to cart");
+                                        if(value.editElementIndex == -1)
+                                          value.showProgressDialog(context,"Adding to cart");
+                                        else
+                                          value.showProgressDialog(context,"Updating cart");
 
                                         value.addToCart();
 
