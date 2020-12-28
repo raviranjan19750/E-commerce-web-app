@@ -44,6 +44,7 @@ class SelectAddressContainer extends StatelessWidget {
           return true;
         }
       },
+      // ignore: missing_return
       builder: (context, state) {
         if (state is AddressDetailLoading) {
           return CircularProgressIndicator();
@@ -52,6 +53,7 @@ class SelectAddressContainer extends StatelessWidget {
             padding: const EdgeInsets.only(
               top: 16.0,
               right: 16.0,
+              left: 32
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -106,146 +108,6 @@ class SelectAddressContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Container(
-                //     width: MediaQuery.of(context).size.width * 0.2,
-                //     decoration: BoxDecoration(
-                //       border: Border.all(
-                //         width: 2.0,
-                //         style: BorderStyle.solid,
-                //       ),
-                //     ),
-                //     child: Card(
-                //       child: Column(
-                //         mainAxisAlignment: MainAxisAlignment.start,
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(address[0].name),
-                //           Text(address[0].address),
-                //           Text(address[0].pincode),
-                //           Container(
-                //             child: Row(
-                //               children: [
-                //                 FlatButton(
-                //                   child: Text('Edit'),
-                //                   onPressed: () {},
-                //                 ),
-                //                 const Divider(
-                //                   thickness: 3,
-                //                 ),
-                //                 FlatButton(
-                //                   child: Text('Delete'),
-                //                   onPressed: () {},
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // Text(
-                //   Strings.changeAddress,
-                //   style: TextStyle(
-                //     fontSize: 20,
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // Container(
-                //   child: Expanded(
-                //     child: GridView.builder(
-                //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //         crossAxisCount: 4,
-                //       ),
-                //       itemCount: addresses.length,
-                //       itemBuilder: (BuildContext context, int index) {
-                //         if (!addresses[index].isPrimary) {
-                //           return Padding(
-                //             padding: const EdgeInsets.all(8.0),
-                //             child: Container(
-                //               decoration: BoxDecoration(
-                //                 border: Border.all(
-                //                   width: 2.0,
-                //                   style: BorderStyle.solid,
-                //                 ),
-                //               ),
-                //               child: InkWell(
-                //                 onTap: () {},
-                //                 child: Column(
-                //                   mainAxisAlignment: MainAxisAlignment.start,
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(address[index].name),
-                //                     Text(address[index].address),
-                //                     Text(address[index].pincode),
-                //                     Container(
-                //                       child: Row(
-                //                         children: [
-                //                           FlatButton(
-                //                             child: Text('Edit'),
-                //                             onPressed: () {},
-                //                           ),
-                //                           const Divider(
-                //                             thickness: 3,
-                //                           ),
-                //                           FlatButton(
-                //                             child: Text('Delete'),
-                //                             onPressed: () {},
-                //                           ),
-                //                         ],
-                //                       ),
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ),
-                //             ),
-                //           );
-                //         }
-                //         if (index == addresses.length + 1) {
-                //           return Padding(
-                //             padding: const EdgeInsets.all(8.0),
-                //             child: Container(
-                //               decoration: BoxDecoration(
-                //                 border: Border.all(
-                //                   width: 2.0,
-                //                   style: BorderStyle.solid,
-                //                 ),
-                //               ),
-                //               child: InkWell(
-                //                 onTap: () {
-                //                   // Dialog Box
-                //                   showDialog(
-                //                     context: context,
-                //                     builder: (BuildContext context) {
-                //                       return NewAddressDialogBox();
-                //                     },
-                //                   );
-                //                 },
-                //                 child: Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.center,
-                //                   mainAxisAlignment: MainAxisAlignment.center,
-                //                   children: [
-                //                     Icon(Icons.add),
-                //                     Text('Add Address'),
-                //                   ],
-                //                 ),
-                //               ),
-                //             ),
-                //           );
-                //         }
-                //         return SizedBox.shrink();
-                //       },
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           );
