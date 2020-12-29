@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
+import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/productVariantColorModel.dart';
 
 class ProductVariantColorWidget extends StatefulWidget {
   final List<List<ProductVariantColor>> colorList;
   List<ProductVariantColor> selectedColor;
+  List<AllVariant> productAllVariant;
+  String variantID;
   String productID;
   String size;
   Function(String) onColorSelected;
@@ -43,6 +46,11 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
             setState(() {
               // widget.selectedVariantColor.add(widget.colorList[index]);
               widget.selectedColor = widget.colorList[index];
+              for (var i = 0; i < widget.productAllVariant.length; i++) {
+                if (widget.selectedColor ==
+                        widget.productAllVariant[i].colour &&
+                    widget.size == widget.productAllVariant[i].size) {}
+              }
               BlocProvider.of<ProductDetailBloc>(context).add(
                   LoadProductVariantDetail(
                       widget.productID, widget.selectedColor, widget.size));
