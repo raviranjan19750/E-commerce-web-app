@@ -9,6 +9,7 @@ class ProductDetail {
   final List<List<ProductVariantColor>> colourOptions;
   final List<String> images;
   final List<String> description;
+  List<AllVariant> allVariants;
 
   final bool isCustomizable;
   final bool isAvailable;
@@ -24,6 +25,7 @@ class ProductDetail {
       this.variantID,
       this.productName,
       this.sizeOptions,
+      this.allVariants,
       this.colourOptions,
       this.images,
       this.description,
@@ -51,6 +53,7 @@ class ProductDetail {
     //   colourOption.add(new ProductVariantColor(
     //       colorHexCode: strcol, colorName: col['name']));
     // }
+    print(data.toString());
 
     return ProductDetail(
       productID: data["productID"],
@@ -73,9 +76,26 @@ class ProductDetail {
       }).toList(),
       images: data["images"].cast<String>(),
       description: data["description"].cast<String>(),
-
+      allVariants: List<AllVariant>.from(
+          data["allVariants"].map((x) => AllVariant.fromJson(x))),
       isCustomizable: data["isCustomizable"],
       isAvailable: data["isAvailable"],
     );
   }
+}
+
+class AllVariant {
+  AllVariant({
+    this.variantId,
+    this.size,
+    this.colour,
+  });
+  String variantId;
+  String size;
+  List<String> colour;
+  factory AllVariant.fromJson(Map<String, dynamic> json) => AllVariant(
+        variantId: json["variantID"],
+        size: json["size"],
+        colour: List<String>.from(json["colour"].map((x) => x)),
+      );
 }
