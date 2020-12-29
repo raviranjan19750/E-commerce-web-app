@@ -1,81 +1,105 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/ProviderModels/my_bulk_order_provider.dart';
 import 'package:living_desire/screens/my_orders/my_bulk_order_item.dart';
-import 'package:living_desire/screens/my_orders/my_order_item.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
 import 'package:living_desire/widgets/button_list.dart';
+import 'package:provider/provider.dart';
 
 class MyBulkOrder extends StatelessWidget{
 
 
+  bool init = false;
+
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return ChangeNotifierProvider(
+        lazy: false,
+        create: (context) => MyBulkOrderProvider(),
+        child: Consumer<MyBulkOrderProvider>(
+          builder: (BuildContext context, MyBulkOrderProvider value, Widget child) {
 
-      appBar: CustomAppBar(size: 92,visibleMiddleAppBar: false,visibleSubAppBar: true,),
+            if (!init) {
+              Provider.of<MyBulkOrderProvider>(context, listen: false).initBulkOrders();
+              init = true;
+            }
 
-      body: Row(
-        
-        children: [
+            return Scaffold(
 
-          ButtonList(isMyOrderSelected: true,),
+              appBar: CustomAppBar(size: 92,visibleMiddleAppBar: false,visibleSubAppBar: true,),
 
-          Expanded(
+              body: Row(
 
-            child: Column(
+                children: [
 
-              crossAxisAlignment: CrossAxisAlignment.start,
+                  ButtonList(isMyOrderSelected: true,),
 
-              children: [
+                  Expanded(
 
-                Container(
+                    child: Column(
+
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+
+                        Container(
 
 
-                  margin: EdgeInsets.only(left: 32,right: 64,top: 64),
+                          margin: EdgeInsets.only(left: 32,right: 64,top: 64),
 
-                  width: double.infinity,
+                          width: double.infinity,
 
-                  height: 1,
+                          height: 1,
 
-                  color: Colors.grey[500],
+                          color: Colors.grey[500],
 
-                ),
+                        ),
 
-                Container(
+                        Container(
 
-                  color: Colors.redAccent,
+                          color: Colors.redAccent,
 
-                  margin: EdgeInsets.only(left: 32,top: 4),
+                          margin: EdgeInsets.only(left: 32,top: 4),
 
-                  padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
 
-                  child: Text('5 Orders',style: TextStyle(color: Colors.white,fontSize: 20),),
+                          child: Text('${value.bulkOrdItems.length} Orders',style: TextStyle(color: Colors.white,fontSize: 20),),
 
-                ),
+                        ),
 
-                Expanded(
+                        Expanded(
 
-                  child: ListView.builder(
+                          child: Visibility(
 
-                      itemCount: 5,
-                      itemBuilder:
-                          (BuildContext context, int index) {
-                        return Container(
+                            replacement: Center(child: CircularProgressIndicator(),),
 
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: ListView.builder(
 
-                          child: MyBulkOrderItem(),
-                        );
-                      }),
-                ),
+                                itemCount: value.bulkOrdItems.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return Container(
 
-              ],
+                                    padding: EdgeInsets.symmetric(horizontal: 16),
 
-            ),
-          ),
-        ],
-      ),
-    );
+                                    child: MyBulkOrderItem(bulkOrdItems: value.bulkOrdItems,index: index,),
+                                  );
+                                }),
+                          ),
+                        ),
+
+                      ],
+
+                    ),
+                  ),
+                ],
+              ),
+            );
+
+          },
+        ));
+
+
 
   }
 
