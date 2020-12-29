@@ -9,7 +9,7 @@ import 'package:living_desire/models/productVariantColorModel.dart';
 class ProductSizeDropdown extends StatefulWidget {
 
   final List<String> productSizeList;
-  final List<ProductVariantColor> productColor;
+  final String productColor;
   final String productID;
   final String variantID;
   final String productSize;

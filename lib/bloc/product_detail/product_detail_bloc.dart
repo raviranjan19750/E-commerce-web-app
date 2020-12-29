@@ -64,7 +64,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     yield ProductDetailLoading();
 
     try {
-      var productImageSizeDescription = await productRepository.getProductVariantSizeColorDescription(productID: event.productID, color: event.color, size: event.size);
+      var productImageSizeDescription = await productRepository.getProductVariantSizeColorDescription(productID: event.productID,variantID: event.variantID, color: event.color, size: event.size);
       yield ProductDetailLoadingSuccessful(productImageSizeDescription);
 
     } catch (e) {

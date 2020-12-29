@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'dart:ui';
+
 ProductDetail productDetailFromJson(String str) => ProductDetail.fromJson(json.decode(str));
 
-String productDetailToJson(ProductDetail data) => json.encode(data.toJson());
+
 
 class ProductDetail {
   ProductDetail({
@@ -60,24 +62,7 @@ class ProductDetail {
     isAvailable: json["isAvailable"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "productID": productId,
-    "variantID": variantId,
-    "colourOptions": List<dynamic>.from(colourOptions.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
-    "sizeOptions": List<dynamic>.from(sizeOptions.map((x) => x)),
-    "allVariants": List<dynamic>.from(allVariants.map((x) => x.toJson())),
-    "productName": productName,
-    "type": type,
-    "subType": subType,
-    "description": List<dynamic>.from(description.map((x) => x)),
-    "isCustomizable": isCustomizable,
-    "images": List<dynamic>.from(images.map((x) => x)),
-    "size": size,
-    "colour": List<dynamic>.from(colour.map((x) => x.toJson())),
-    "sellingPrice": sellingPrice,
-    "discountPrice": discountPrice,
-    "isAvailable": isAvailable,
-  };
+
 }
 
 class AllVariant {
@@ -97,11 +82,7 @@ class AllVariant {
     colour: List<String>.from(json["colour"].map((x) => x)),
   );
 
-  Map<String, dynamic> toJson() => {
-    "variantID": variantId,
-    "size": size,
-    "colour": List<dynamic>.from(colour.map((x) => x)),
-  };
+
 }
 
 class Colour {
@@ -110,16 +91,29 @@ class Colour {
     this.hexCode,
   });
 
+  Color hexCode;
   String name;
-  String hexCode;
 
-  factory Colour.fromJson(Map<String, dynamic> json) => Colour(
-    name: json["name"],
-    hexCode: json["hexCode"],
-  );
+  factory Colour.fromJson(Map<String, dynamic> json) {
 
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "hexCode": hexCode,
-  };
+    Color fromHex(String hexString) {
+      final buffer = StringBuffer();
+      if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+      buffer.write(hexString.replaceFirst('#', ''));
+      //return Color(int.parse(buffer.toString(), radix: 16));
+      return Color(int.parse(
+        buffer.toString(),
+        radix: 16,
+      ));
+    }
+
+    return Colour(
+      hexCode: fromHex((json['hexCode'] as String)),
+      name: json['name'],
+    );
+
+
+  }
+
+
 }

@@ -126,12 +126,12 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       margin: EdgeInsets.only(left: 6.0),
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Color(int.parse("FF" + state.productDetail.colour[index].toString(), radix: 16)),
+                                          color: state.productDetail.colour[index].hexCode,
                                           border: Border.all(
                                               width: 0.5, color: Colors.black)),
                                       child: CircleAvatar(
                                         radius: 10,
-                                        backgroundColor: Color(int.parse(state.productDetail.colour[index].toString(), radix: 16)),
+                                        backgroundColor:state.productDetail.colour[index].hexCode,
                                       ),
                                     ),
                                   );
