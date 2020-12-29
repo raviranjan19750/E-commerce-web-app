@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:rxdart/rxdart.dart';
 
-
 part 'search_event.dart';
 part 'search_state.dart';
 
@@ -15,7 +14,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchApi searchApi;
 
   @override
-  Stream<Transition<SearchEvent, SearchState>> transformEvents(Stream<SearchEvent> events, transitionFn) {
+  Stream<Transition<SearchEvent, SearchState>> transformEvents(
+      Stream<SearchEvent> events, transitionFn) {
     return events
         .debounceTime(const Duration(milliseconds: 350))
         .switchMap(transitionFn);
@@ -31,9 +31,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Stream<SearchState> _mapSearchTermChangedToState(
-      SearchTermChanged event,
-      SearchState state,
-      ) async* {
+    SearchTermChanged event,
+    SearchState state,
+  ) async* {
     if (event.term.isEmpty) {
       yield const SearchState.initial();
       return;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/screens/all_product/product_widgets.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
+import 'package:living_desire/widgets/home_widget/view_all_card.dart';
 
 import '../nextListHover.dart';
 
@@ -54,8 +55,15 @@ class HomeWidget extends StatelessWidget {
               ListView.builder(
                   scrollDirection: Axis.horizontal,
                   controller: homeWidgetScrollController,
-                  itemCount: this.productlist.length,
+                  itemCount: this.productlist.length + 1,
                   itemBuilder: (BuildContext context, int index) {
+                    if (index == this.productlist.length) {
+                      return Container(
+                          padding: EdgeInsets.only(left: 5, right: 5),
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          height: MediaQuery.of(context).size.width * 0.15,
+                          child: ViewAllCard());
+                    }
                     return Container(
                       padding: EdgeInsets.only(left: 5, right: 5),
                       width: MediaQuery.of(context).size.width * 0.15,

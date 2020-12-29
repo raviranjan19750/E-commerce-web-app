@@ -6,6 +6,7 @@ import 'package:living_desire/screens/all_product/product_widgets.dart';
 import 'package:living_desire/screens/screens.dart';
 import 'package:living_desire/widgets/footer/footer.dart';
 import 'package:living_desire/widgets/home_widget/home_widget.dart';
+import 'package:living_desire/widgets/home_widget/product_category_widget.dart';
 import 'package:living_desire/widgets/labeltag/label_tag.dart';
 import 'package:living_desire/widgets/nextListHover.dart';
 import '../../widgets/widgets.dart';
@@ -31,11 +32,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
       child: Container(
         padding: EdgeInsets.only(left: 75, right: 75),
         child: Column(
-          children: [
-            // Products Category Body for HomeScreen
-            // ProductsHomeOverview(),
-            HomeScreenvView()
-          ],
+          children: [HomeScreenvView()],
         ),
       ),
     );
@@ -82,51 +79,44 @@ class MyDesktopView extends StatelessWidget {
 class HomeScreenvView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is SuccessfulLoadingHomeProducts) {
-          print("OK ");
-          List<HomeWidget> widgetList = [];
-          state.productList.forEach((key, value) {
-            widgetList.add(HomeWidget(
-              labeltxt: key,
-              productlist: value,
-            ));
-          });
-          return Column(
-            children: widgetList,
-          );
-          // return HomeWidget(
-          //   labeltxt: 'Bean Bags',
-          //   productlist: state.productList['Bean Bags'],
-          // );
-          // return Container(
-          //   height: 140,
-          //   width: 140,
-          //   color: Colors.green,
-          //   child: Text("Houston eagle has landed ......."),
-          // );
-        } else if (state is HomeInitial) {
-          print("initialising home.... ");
-          BlocProvider.of<HomeBloc>(context).add(InitializeHome());
-          return Container(
-            height: 140,
-            width: 140,
-            color: Colors.blue,
-            child: Text("DEVAHISH"),
-          );
-        } else {
-          return Container(
-            height: 140,
-            width: 140,
-            color: Colors.green,
-            child: Text("DEVASHISH"),
-          );
-        }
-        // return ListView.builder(itemBuilder:
-
-        // );
-      },
+    List<String> category = [
+      "Bean Bags",
+      "T-Shirts",
+      "Coffee Mugs",
+      "Office Chairs",
+      "Curtains",
+      "Bedsheets",
+      "Gamin Chairs",
+      "Pillows"
+    ];
+    return Column(
+      children: [
+        ProductCategoryWidget(
+          catList: category,
+        ),
+        BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            if (state is SuccessfulLoadingHomeProducts) {
+              List<Widget> widgetList = [];
+              state.productList.forEach((key, value) {
+                widgetList.add(HomeWidget(
+                  labeltxt: key,
+                  productlist: value,
+                ));
+              });
+              return Column(
+                children: widgetList,
+              );
+            } else if (state is HomeInitial) {
+              // print("initialising home.... ");
+              BlocProvider.of<HomeBloc>(context).add(InitializeHome());
+              return CircularProgressIndicator();
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        ),
+      ],
     );
   }
 }
