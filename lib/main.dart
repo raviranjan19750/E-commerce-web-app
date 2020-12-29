@@ -50,7 +50,7 @@ class InitailizeAppService extends StatelessWidget {
           create: (context) => SearchApi(),
         ),
         RepositoryProvider(
-          create: (context) => AddresssRepository(),
+          create: (context) => AddressRepository(),
         ),
         RepositoryProvider(
           create: (context) => WishlistRepository(),

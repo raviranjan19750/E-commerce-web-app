@@ -5,10 +5,11 @@ import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
 class ManageAddressesScreenDesktop extends StatefulWidget {
-  final TrackingScrollController scrollController;
+  var authID = 'id1';
 
-  const ManageAddressesScreenDesktop({Key key, this.scrollController})
-      : super(key: key);
+  ManageAddressesScreenDesktop({
+    Key key,
+  }) : super(key: key);
 
   @override
   _ManageAddressesScreenDesktopState createState() =>
@@ -24,7 +25,7 @@ class _ManageAddressesScreenDesktopState
         BlocProvider(
             create: (context) => ManageAddressesBloc(
                 addresssRepository: RepositoryProvider.of(context))
-              ..add(LoadAllAddresses('id1'))),
+              ..add(LoadAllAddresses(widget.authID))),
       ],
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

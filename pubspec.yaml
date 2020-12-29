@@ -32,10 +32,12 @@ dependencies:
   badges: ^1.1.4
   flutter_bloc: ^6.1.1
   dotted_border: ^1.0.7
+  flutter_colorpicker: ^0.3.4
   # cloud_functions: ^0.7.2
   pedantic: ^1.9.2
   ars_progress_dialog: ^0.1.2
 
+  firebase_storage: ^5.0.0
   equatable: ^1.2.5
   rxdart: ^0.24.0
   http: ^0.12.2
@@ -56,6 +58,7 @@ dependencies:
 
 
 
+  jiffy: ^3.0.1
   rating_bar: ^0.2.0
   super_tooltip: ^0.9.6
   cloud_functions: "^0.7.1"

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
+import 'package:living_desire/models/StringToHexColor.dart';
 
 class BulkOrderCartItem extends StatelessWidget{
 
@@ -14,168 +15,182 @@ class BulkOrderCartItem extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return Column(
+    return Container(
 
-      children: [
+      color: (value.editElementIndex == index) ? Colors.grey[200] : Colors.white,
 
-        Row(
+      child: Column(
 
-          children: [
+        children: [
 
-            Image(
+          Row(
 
-              color: Palette.secondaryColor,
+            children: [
 
-              image: AssetImage(''),
+              Image(
 
-              height: 120,
+                color: Palette.secondaryColor,
 
-              width: 64,
+                image: AssetImage(''),
 
-            ),
+                height: 120,
 
-            Expanded(
+                width: 64,
 
-              child: Column(
+              ),
+
+              Expanded(
+
+                child: Column(
 
 
-                crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+
+                    Container(margin : EdgeInsets.only(left: 16,bottom: 8),child: Text(items.elementAt(index).productType,style: TextStyle(fontSize: 20),)),
+
+                    Row(
+                      children: [
+
+                        Container(
+
+                          margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                          width: 24.0,
+                          height: 24.0,
+                          decoration: new BoxDecoration(
+                            color: HexColorConvert.fromHex(items.elementAt(index).colour.first),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+
+                        Container(
+
+
+                          margin: EdgeInsets.only(left: 8),
+
+                          decoration: BoxDecoration(
+
+                            border: Border.all(color: Palette.secondaryColor),
+
+                            borderRadius: BorderRadius.circular(4),
+
+                            color: Colors.white,
+
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(0, 2),
+                                blurRadius: 4.0,
+                              )],
+
+                          ),
+                          padding: EdgeInsets.all(4),
+
+                          child: Row(
+                            children: [
+                              Text('Size : ',style: TextStyle(color: Palette.secondaryColor),),
+                              Text(items.elementAt(index).size,style: TextStyle(color: Palette.secondaryColor),),
+                            ],
+                          ),
+
+                        ),
+
+                        Container(
+
+                          margin: EdgeInsets.only(left: 8),
+                          decoration: BoxDecoration(
+
+                            border: Border.all(color: Palette.secondaryColor),
+
+                            borderRadius: BorderRadius.circular(4),
+
+                            color: Colors.white,
+
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(0, 2),
+                                blurRadius: 4.0,
+                              )],
+
+                          ),
+                          padding: EdgeInsets.all(4),
+
+                          child: Row(
+
+                            children: [
+
+                              Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor),),
+
+                              Text(items.elementAt(index).quantity.toString(),style: TextStyle(color: Palette.secondaryColor),),
+
+
+                            ],
+
+                          ),
+
+                        )
+
+                      ],
+
+                    )
+
+                  ],
+
+                ),
+
+              ),
+
+              Column(
 
                 children: [
 
-                  Container(margin : EdgeInsets.only(left: 16,bottom: 8),child: Text(items.elementAt(index).productType,style: TextStyle(fontSize: 20),)),
+                  IconButton(
 
-                  Row(
-                    children: [
+                    onPressed: (){
 
-                      Container(
+                      value.showProgressDialog(context, "Removing item from cart");
+                      value.deleteCustomCartItems(items.elementAt(index).key, index);
 
-                        margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-                        width: 24.0,
-                        height: 24.0,
-                        decoration: new BoxDecoration(
-                          color: Colors.redAccent,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
+                    },
 
-                      Container(
+                    icon: Icon(Icons.highlight_remove_sharp),
+                    color: Colors.grey[500],
 
+                  ),
 
-                        margin: EdgeInsets.only(left: 8),
+                  IconButton(
 
-                        decoration: BoxDecoration(
+                    onPressed: (){
 
-                          border: Border.all(color: Palette.secondaryColor),
+                      value.onEdit(items.elementAt(index),index);
 
-                          borderRadius: BorderRadius.circular(4),
+                    },
 
-                          color: Colors.white,
-
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              offset: Offset(0, 2),
-                              blurRadius: 4.0,
-                            )],
-
-                        ),
-                        padding: EdgeInsets.all(4),
-
-                        child: Text('Size : s',style: TextStyle(color: Palette.secondaryColor),),
-
-                      ),
-
-                      Container(
-
-                        margin: EdgeInsets.only(left: 8),
-                        decoration: BoxDecoration(
-
-                          border: Border.all(color: Palette.secondaryColor),
-
-                          borderRadius: BorderRadius.circular(4),
-
-                          color: Colors.white,
-
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              offset: Offset(0, 2),
-                              blurRadius: 4.0,
-                            )],
-
-                        ),
-                        padding: EdgeInsets.all(4),
-
-                        child: Row(
-
-                          children: [
-
-                            Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor),),
-
-                            Text(items.elementAt(index).quantity.toString(),style: TextStyle(color: Palette.secondaryColor),),
-
-
-                          ],
-
-                        ),
-
-                      )
-
-                    ],
+                    icon: Icon(Icons.edit),
+                    color: Colors.grey[500],
 
                   )
 
                 ],
+              )
 
-              ),
+            ],
 
-            ),
+          ),
 
-            Column(
+          Container(
 
-              children: [
+            color: Colors.grey[500],
 
-                IconButton(
+            height: 0.5,
 
-                  onPressed: (){
+          ),
 
-                    value.showProgressDialog(context, "Removing item from cart");
-                    value.deleteCustomCartItems(items.elementAt(index).key, index);
+        ],
 
-                  },
-
-                  icon: Icon(Icons.highlight_remove_sharp),
-                  color: Colors.grey[500],
-
-                ),
-
-                IconButton(
-
-                  onPressed: (){},
-
-                  icon: Icon(Icons.edit),
-                  color: Colors.grey[500],
-
-                )
-
-              ],
-            )
-
-          ],
-
-        ),
-
-        Container(
-
-          color: Colors.grey[500],
-
-          height: 0.5,
-
-        ),
-
-      ],
-
+      ),
     );
 
   }

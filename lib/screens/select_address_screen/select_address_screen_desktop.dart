@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
+import 'package:living_desire/service/sharedPreferences.dart';
 import '../../widgets/widgets.dart';
 import '../../models/models.dart';
 
 class SelectAddressScreenDesktop extends StatelessWidget {
-  final TrackingScrollController scrollController;
+
   final List<Cart> cart;
 
-  const SelectAddressScreenDesktop({
+  String authID = UserPreferences().AuthID;
+
+  bool isCustomOrder,isSampleRequested;
+
+  int totalItems;
+
+  SelectAddressScreenDesktop({
     Key key,
-    this.scrollController,
     this.cart,
+    this.isCustomOrder,
+    this.isSampleRequested,
+    this.totalItems
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -20,22 +30,17 @@ class SelectAddressScreenDesktop extends StatelessWidget {
         BlocProvider(
             create: (context) => ManageAddressesBloc(
                 addresssRepository: RepositoryProvider.of(context))
-              ..add(LoadAllAddresses('id1'))),
+              ..add(LoadAllAddresses(authID))),
       ],
-      child: Scaffold(
-        appBar: CustomAppBar(),
-        body: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: SelectAddressContainer()),
-              SelectAddressCartTotal(
-                cart: cart,
-              ),
-            ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: SelectAddressContainer()),
+          SelectAddressCartTotal(
+            cart: cart,
           ),
-        ),
+        ],
       ),
     );
   }

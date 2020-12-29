@@ -9,3 +9,5 @@ class LoadAllNormalOrders extends NormalOrderEvent {
 
   LoadAllNormalOrders(this.authID);
 }
+
+class RefreshOrder extends NormalOrderEvent {}

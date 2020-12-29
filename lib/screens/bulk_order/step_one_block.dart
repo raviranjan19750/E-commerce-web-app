@@ -57,7 +57,7 @@ class StepOneBlock extends StatelessWidget{
 
               Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productType,style: TextStyle(color: Colors.white,fontSize: 24),)),
 
-              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.variantID,style: TextStyle(color: Colors.white,fontSize: 24),)),
+              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productSubType,style: TextStyle(color: Colors.white,fontSize: 24),)),
             ],
           ),
 

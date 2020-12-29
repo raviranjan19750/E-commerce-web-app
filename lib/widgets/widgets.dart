@@ -16,7 +16,7 @@ export 'order_screen/normal_orders_container.dart';
 export 'wishlist_screen/wishlist_container.dart';
 export 'order_screen/order_item.dart';
 export 'manage_addresses_screen/address_container.dart';
-export 'order_screen/rating_container.dart';
+export 'order_screen/rating_dialog_container.dart';
 export 'order_screen/tracking_status_bar.dart';
 export 'cart_screen/cart_item.dart';
 export 'cart_screen/cart_total.dart';

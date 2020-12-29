@@ -1,4 +1,3 @@
-import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 
@@ -116,7 +115,10 @@ class BulkOrder extends StatelessWidget{
 
                                       onPressed: (){
 
-                                        value.showProgressDialog(context,"Adding to cart");
+                                        if(value.editElementIndex == -1)
+                                          value.showProgressDialog(context,"Adding to cart");
+                                        else
+                                          value.showProgressDialog(context,"Updating cart");
 
                                         value.addToCart();
 
@@ -124,7 +126,7 @@ class BulkOrder extends StatelessWidget{
 
                                       color: Palette.secondaryColor,
 
-                                      child: Text('ADD MORE',style: TextStyle(color: Colors.white,fontSize: 24),),
+                                      child: Text(value.buttonName,style: TextStyle(color: Colors.white,fontSize: 24),),
 
                                     ),
                                   ),

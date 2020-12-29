@@ -4,10 +4,6 @@ abstract class CartState {
   final List<Cart> cart;
 
   CartState({this.cart});
-
-  List<Cart> changeQuantityCartDetail(
-    int quantity,
-  ) {}
 }
 
 class CartDetailInitial extends CartState {

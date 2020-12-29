@@ -2,16 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/models/BulkOrder.dart';
 
 
 class MyBulkOrderItem extends StatelessWidget{
 
+  List<BulkOrder> bulkOrdItems;
+  int index;
+
+  MyBulkOrderItem({this.bulkOrdItems,this.index});
+
   @override
   Widget build(BuildContext context) {
 
+    BulkOrder bulkOrder = bulkOrdItems.elementAt(index);
+
     return Container(
 
-      margin: EdgeInsets.only(left: 48,right: 48,top: 16,bottom: 16),
+      margin: EdgeInsets.only(left: 32,right: 48,top: 16,bottom: 16),
       
       decoration: BoxDecoration(
         
@@ -151,7 +159,7 @@ class MyBulkOrderItem extends StatelessWidget{
 
                       Row(
                         children: [
-                          Expanded(child: Container(child: Text('Classic Filled Bean Bag with Beans',style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),)),
+                          Expanded(child: Container(child: Text(bulkOrder.productType[0],style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),)),
                           Container(
 
                             margin: EdgeInsets.only(left: 48,right: 32),
@@ -174,78 +182,14 @@ class MyBulkOrderItem extends StatelessWidget{
                         children: [
 
                           Row(
+
                             children: [
 
-                              Column(
-
-                                children: [
-                                  Text('₹ 2000',style: TextStyle(decoration: TextDecoration.lineThrough ,color: Colors.grey[500]),),
-
-                                  Text('₹ 1000',style: TextStyle(fontSize: 20,color: Palette.secondaryColor,fontWeight: FontWeight.w600),),
-
-                                ],
-
-                              ),
-
-                              Container(margin:EdgeInsets.only(left: 16),child: Text('You saved ₹ 1000 (50%)',style: TextStyle(fontSize: 16,color: Colors.green,fontWeight: FontWeight.w200),)),
+                              Text('Sample Requested  :  '),
+                              Text(bulkOrdItems.elementAt(index).isSampleRequested.toString()),
 
                             ],
 
-                          ),
-
-
-
-
-
-                          Container(
-
-                            margin: EdgeInsets.only(top: 8,bottom: 8),
-
-                            child: Row(
-
-                              children: [
-
-                                Container(
-
-                                  margin: EdgeInsets.symmetric(horizontal: 4,vertical: 4),
-                                  width: 16.0,
-                                  height: 16.0,
-                                  decoration: new BoxDecoration(
-                                    color: Colors.redAccent,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-
-                                Container(
-
-
-                                  margin: EdgeInsets.only(left: 16),
-
-                                  child: Text('Size : s',style: TextStyle(color: Palette.secondaryColor),),
-
-                                ),
-
-                                Container(
-
-                                  margin: EdgeInsets.only(left: 32),
-                                  child: Row(
-
-                                    children: [
-
-                                      Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor),),
-
-                                      Text(' 32 ',style: TextStyle(color: Palette.secondaryColor),),
-
-
-                                    ],
-
-                                  ),
-
-                                )
-
-                              ],
-
-                            ),
                           ),
 
                           Container(
