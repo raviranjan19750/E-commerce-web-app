@@ -10,6 +10,7 @@ import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeIm
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductSizeDropdownWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
+import 'package:living_desire/widgets/ProductDetailScreenWidgets/productVariantColorList.dart';
 import 'package:living_desire/widgets/bullet.dart';
 
 import 'SimilarProductsAndCombo.dart';
@@ -36,7 +37,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // list of images
-                ProductDetailEnlargeImage(imageURL: state.productDetail.images, productID: state.productDetail.productId, variantID: state.productDetail.variantId,product: product,),
+                ProductDetailEnlargeImage(imageURL: state.productDetail.images, productID: state.productDetail.productID, variantID: state.productDetail.variantID,product: product,),
 
                 // description of product
                 Container(
@@ -101,41 +102,23 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             (state.productDetail.isAvailable )? ProductAvailability(
-                              productID: state.productDetail.productId,
-                              variantID: state.productDetail.variantId,
+                              productID: state.productDetail.productID,
+                              variantID: state.productDetail.variantID,
                             ) : Container(),
 //list of color
 //todo Set lst of color
+
+
                             Container(
 //width: 150,
                               height: 50,
                               margin: EdgeInsets.only(top: 16.0),
-
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: state.productDetail.colour.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return InkWell(
-                                    onTap: () {
-//todo show selectd color
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(4.0),
-                                      margin: EdgeInsets.only(left: 6.0),
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: state.productDetail.colour[index].hexCode,
-                                          border: Border.all(
-                                              width: 0.5, color: Colors.black)),
-                                      child: CircleAvatar(
-                                        radius: 10,
-                                        backgroundColor:state.productDetail.colour[index].hexCode,
-                                      ),
-                                    ),
-                                  );
-                                },
+                              child: ProductVariantColorWidget(
+                                colorList: state.productDetail.colourOptions,
+                                initialSelectedColor: state.productDetail.colour,
+                                productID: state.productDetail.productID,
+                                productAllVariant: state.productDetail.allVariants,
+                                size: state.productDetail.size,
                               ),
                             ),
 
@@ -169,7 +152,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                           productSizeList:
                                           state.productDetail.sizeOptions,
                                           productColor: "Blue",
-                                          variantID: state.productDetail.variantId,
+                                          variantID: state.productDetail.variantID,
                                           productID: "0IeSrbsqqxiqwELq4Qqm",
                                           productSize: state.productDetail.size,
                                         ),
@@ -262,7 +245,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
               ],
             ),
 
-            SimilarProductAndCombos(type:state.productDetail.type, subType:state.productDetail.subType),
+            SimilarProductAndCombos(type:"Bean Bag", subType:"Sofa"),
 
             Container(
               height: 100,

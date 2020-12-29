@@ -53,7 +53,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
            onChanged: (value) {
              setState(() {
                dropdownValue = value;
-               BlocProvider.of<ProductDetailBloc>(context).add(LoadProductVariantDetail(widget.productID, widget.variantID, widget.productColor, dropdownValue));
+               BlocProvider.of<ProductDetailBloc>(context).add(LoadProductDetail(widget.productID, widget.variantID));
              });
            },
 

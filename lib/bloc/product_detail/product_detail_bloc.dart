@@ -9,6 +9,7 @@ import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/CheckProductAvailability.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/product.dart';
+import 'package:living_desire/models/productVariantColorModel.dart';
 import 'package:living_desire/models/product_variants.dart';
 import 'package:living_desire/models/products.dart';
 import 'package:living_desire/service/searchapi.dart';
@@ -64,7 +65,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     yield ProductDetailLoading();
 
     try {
-      var productImageSizeDescription = await productRepository.getProductVariantSizeColorDescription(productID: event.productID,variantID: event.variantID, color: event.color, size: event.size);
+      var productImageSizeDescription = await productRepository.getProductVariantDescription(productID: event.productID, variantID: event.variantID);
       yield ProductDetailLoadingSuccessful(productImageSizeDescription);
 
     } catch (e) {

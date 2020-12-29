@@ -12,8 +12,9 @@ class ProductRepository {
       {String productID, String variantID}) async {
     LOG.i(
         'Fetching Product Description for Product ID ${productID} and VarientId ${variantID}');
+    print("productID: $productID *** variantID: $variantID");
     final response = await http.get(
-        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/CogONTK3OE16XnQYIksR/ECXQCX4SXmeB5qsRy4eO");
+        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID");
     Map<String, dynamic> map = jsonDecode(response.body);
     LOG.i(map);
     print(map.toString());
