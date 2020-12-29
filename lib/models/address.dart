@@ -21,17 +21,17 @@ class Address {
 
   factory Address.fromJson(Map<String, dynamic> data) {
     if (data == null) return null;
-    print(data.toString());
-    var address = {
-      'key': data['id'],
-      'name': data['data']['name'],
-      'address': data['data']['address'],
-      'phone': data['data']['phone'],
-      'isPrimary': data['data']['isPrimary'],
-      'pincode': data['data']['pincode'],
-      'location': data['data']['location'],
-    };
-    print(address.toString());
+    // print(data.toString());
+    // var address = {
+    //   'key': data['id'],
+    //   'name': data['data']['name'],
+    //   'address': data['data']['address'],
+    //   'phone': data['data']['phone'],
+    //   'isPrimary': data['data']['isPrimary'],
+    //   'pincode': data['data']['pincode'],
+    //   'location': data['data']['location'],
+    // };
+    // print(address.toString());
     return Address(
       key: data['id'],
       name: data['data']['name'],

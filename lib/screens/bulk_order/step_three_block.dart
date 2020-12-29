@@ -85,7 +85,7 @@ class StepThreeBlock extends StatelessWidget{
 
                               if(index == value.logos.length){
 
-                                value.getImage();
+                                value.startFilePicker();
 
                               }
 
@@ -101,7 +101,9 @@ class StepThreeBlock extends StatelessWidget{
 
                 padding: EdgeInsets.symmetric(vertical: 16),
 
-                child: TextField(
+                child: TextFormField(
+
+                  initialValue: value.description,
 
 
                   onChanged: (s){

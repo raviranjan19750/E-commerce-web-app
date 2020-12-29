@@ -30,8 +30,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
           mobile:
               WishlistScreenMobile(scrollController: trackingScrollController),
           // Desktop Website
-          desktop:
-              WishlistScreenDesktop(scrollController: trackingScrollController),
+          desktop: WishlistScreenDesktop(),
         ),
       ),
     );

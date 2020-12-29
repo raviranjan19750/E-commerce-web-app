@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:living_desire/models/sorting_criteria.dart';
 
 import '../../routes.dart';
 
@@ -50,8 +52,13 @@ class ProductCardContent extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, RoutesConfiguration.PRODUCT_DETAIL,
-                        arguments: {"product": product, "productID": product.productId, "variantID": product.varientId});
+                    Navigator.pushNamed(
+                        context, RoutesConfiguration.PRODUCT_DETAIL,
+                        arguments: {
+                          "product": product,
+                          "productID": product.productId,
+                          "variantID": product.varientId
+                        });
                   },
                   child: Image.network(
                     product.imageUrls[0],
@@ -64,7 +71,7 @@ class ProductCardContent extends StatelessWidget {
               Positioned(
                 right: 0,
                 top: 0,
-                child: ProductWishlistButton(productId: product.title),
+                child: ProductWishlistButton(productId: product.varientId),
               ),
               Positioned(
                 bottom: 0,
@@ -270,13 +277,16 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
   @override
   void initState() {
     super.initState();
-    _wishHover = false;
+    // _wishHover;
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCardBloc, ProductCardState>(
         builder: (context, state) {
+      if (_wishHover == null) {
+        _wishHover = state.isItemInWishList;
+      }
       return Container(
         padding: EdgeInsets.all(6.0),
         child: MouseRegion(
@@ -330,28 +340,30 @@ class FilterDropDown extends StatefulWidget {
 }
 
 class _FilterDropDownState extends State<FilterDropDown> {
-  int _value = 1;
+  FilterSortCriteria _value = FilterSortCriteria.RELEVANCE;
 
   @override
   Widget build(BuildContext context) {
+    _value = BlocProvider.of<AllProductBloc>(context).sortCriteria;
     return Container(
       child: DropdownButton(
           value: _value,
           items: [
             DropdownMenuItem(
-              child: Text("Featured"),
-              value: 1,
+              child: Text("Relevance"),
+              value: FilterSortCriteria.RELEVANCE,
             ),
             DropdownMenuItem(
               child: Text("Price: Low To High"),
-              value: 2,
+              value: FilterSortCriteria.PRICE_LOW_TO_HIGH,
             ),
-            DropdownMenuItem(child: Text("Price: High To Low"), value: 3),
-            DropdownMenuItem(child: Text("Avg Customer Review"), value: 4),
+            DropdownMenuItem(child: Text("Price: High To Low"), value: FilterSortCriteria.PRICE_HIGH_TO_LOW,),
+            DropdownMenuItem(child: Text("Newest Arrival"), value: FilterSortCriteria.NEWEST_FIRST,),
           ],
           onChanged: (value) {
             setState(() {
               _value = value;
+              BlocProvider.of<AllProductBloc>(context).add(LoadAllProductWithSearchParams(sort: _value));
             });
           }),
     );

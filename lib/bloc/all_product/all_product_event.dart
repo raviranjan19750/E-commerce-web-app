@@ -7,8 +7,10 @@ class InitializeLoadingProduct extends AllProductEvent {}
 
 class LoadAllProductWithSearchParams extends AllProductEvent {
   final String filterText;
+  final List<Map<String, dynamic>> filters;
+  final FilterSortCriteria sort;
 
-  LoadAllProductWithSearchParams({ this.filterText });
+  LoadAllProductWithSearchParams({this.filterText, this.filters, this.sort});
 }
 
 class LoadNextProduct extends AllProductEvent {}

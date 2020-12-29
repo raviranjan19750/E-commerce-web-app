@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/models/models.dart';
 
 import '../widgets.dart';
 
@@ -25,10 +26,10 @@ class WishlistContainer extends StatelessWidget {
         } else if (state is WishlistDetailLoadingSuccessful) {
           return Padding(
             padding: const EdgeInsets.only(
-              top: 40.0,
-              left: 16.0,
-              right: 50.0,
-              bottom: 16.0,
+              top: LayoutConstraints.wishlistContainerTop,
+              left: LayoutConstraints.wishlistContainerLeft,
+              right: LayoutConstraints.wishlistContainerRight,
+              bottom: LayoutConstraints.wishlistContainerBottom,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -72,30 +73,9 @@ class WishlistContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  // Grid View to display different Products
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8.0,
-                      bottom: 8.0,
-                    ),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: itemCount,
-                        childAspectRatio:
-                            (MediaQuery.of(context).size.width * 0.15) /
-                                (MediaQuery.of(context).size.height * 0.4),
-                      ),
-                      itemCount: state.wishlist.length,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return WishlistProductItem(
-                          product: state.wishlist[index],
-                        );
-                      },
-                    ),
-                  ),
+                WishlistContainerGrid(
+                  itemCount: itemCount,
+                  wishlist: state.wishlist,
                 ),
               ],
             ),
@@ -104,6 +84,50 @@ class WishlistContainer extends StatelessWidget {
           return Container();
         }
       },
+    );
+  }
+}
+
+class WishlistContainerGrid extends StatefulWidget {
+  const WishlistContainerGrid({
+    this.wishlist,
+    Key key,
+    @required this.itemCount,
+  }) : super(key: key);
+
+  final int itemCount;
+  final List<Wishlist> wishlist;
+
+  @override
+  _WishlistContainerGridState createState() => _WishlistContainerGridState();
+}
+
+class _WishlistContainerGridState extends State<WishlistContainerGrid> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // Grid View to display different Products
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: LayoutConstraints.wishlistGridTop,
+          bottom: 8.0,
+        ),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: widget.itemCount,
+            childAspectRatio: (MediaQuery.of(context).size.width * 0.08) /
+                (MediaQuery.of(context).size.height * 0.32),
+          ),
+          itemCount: widget.wishlist.length,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return WishlistProductItem(
+              product: widget.wishlist[index],
+            );
+          },
+        ),
+      ),
     );
   }
 }

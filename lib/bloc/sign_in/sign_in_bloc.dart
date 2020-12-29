@@ -52,7 +52,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           // add auth id to local storage
           // push local changesd to firebase
           await authService.signInWithToken(token: customToken);
-          UserPreferences().setAuthID(customToken);
+          // UserPreferences().setAuthID(customToken);
           UserPreferences().AuthID;
           print("user auth id is ${UserPreferences().AuthID}");
           print("user signed in....");
@@ -74,8 +74,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     yield SendingOTP();
     try {
       HttpsCallableResult res = await authService.sendOtp(event.phoneNumber);
-      var map = jsonDecode(res.data);
-      int code = map['responseCode'];
+      // var map = jsonDecode(res.data);
+      int code = res.data['responseCode'];
       print("response : " + code.toString());
       switch (code) {
         case 200:
@@ -101,8 +101,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       HttpsCallableResult res =
           await authService.verifyOtp(event.verificationCode);
       print(res.data.toString());
-      var map = jsonDecode(res.data);
-      int code = map['responseCode'];
+      // var map = jsonDecode(res.data);
+      // int code = map['responseCode'];
+      int code = res.data['responseCode'];
       print(" verify otp response : " + code.toString());
       switch (code) {
         case 200:
@@ -131,9 +132,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     yield ResendingOTP();
     try {
       HttpsCallableResult res = await authService.resendOtp();
-      var map = jsonDecode(res.data);
-      int code = map['responseCode'];
-
+      // var map = jsonDecode(res.data);
+      // int code = map['responseCode'];
+      int code = res.data['responseCode'];
       // print(" resend otp response : " + code.toString());
       switch (code) {
         case 200:

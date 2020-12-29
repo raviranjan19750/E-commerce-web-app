@@ -36,9 +36,11 @@ class RoutesConfiguration {
         var productID = args["productID"];
         var variantID = args["variantID"];
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(
+            builder: (context) => MyDesktopView(
                     child: ProductDetailScreen(
-                  product: product,
+                  productID: productID,
+                      variantID: variantID,
+                      product: product,
                 )));
       case BULK_ORDER:
         return MaterialPageRoute(builder: (_) => BulkOrder());

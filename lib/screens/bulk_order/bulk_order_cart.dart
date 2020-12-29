@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_cart_item.dart';
 
 class BulkOrderCart extends StatelessWidget{
 
+  BulkOrderProvider value;
+
+  BulkOrderCart({this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +43,59 @@ class BulkOrderCart extends StatelessWidget{
 
           Expanded(
 
-            child: ListView.builder(
+            child: Visibility(
 
-                shrinkWrap: true,
-                itemCount: 5,
-                itemBuilder:
-                    (BuildContext context, int index) {
-                  return Container(
+              visible: value.onDataLoaded,
 
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+              replacement: Center(
 
-                    child: BulkOrderCartItem(),
-                  );
-                }),
+                child: CircularProgressIndicator(),
+
+              ),
+
+              child: Visibility(
+
+                visible: (value.customCartItems.length !=0),
+
+                replacement: Column(
+
+                  mainAxisAlignment: MainAxisAlignment.center,
+
+                  children: [
+
+                    Icon(
+                      Icons.shopping_cart,
+                      color: Colors.grey[500],
+                      size: 72,
+                    ),
+
+                    Container(
+
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.only(bottom: 16,top: 32),
+
+                      child: Text("Your Cart is empty",style: TextStyle(fontSize: 20,color: Palette.secondaryColor),),
+
+                    ),
+                  ],
+                ),
+
+                child: ListView.builder(
+
+
+                    shrinkWrap: true,
+                    itemCount: value.customCartItems.length,
+                    itemBuilder:
+                        (BuildContext context, int index) {
+                      return Container(
+
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+
+                        child: BulkOrderCartItem(items: value.customCartItems,index: index,value: value,),
+                      );
+                    }),
+              ),
+            ),
           ),
           
           Container(
@@ -67,8 +111,11 @@ class BulkOrderCart extends StatelessWidget{
                 Text('Get Sample ?',style: TextStyle(color: Colors.redAccent,fontSize: 24),),
 
                 Switch(
-                  value: false,
-                  onChanged: (value){
+
+                  value: value.sampleRequested,
+
+                  onChanged: (v){
+                    value.onSampleRequested(v);
                   },
                   activeTrackColor: Colors.black12,
                   activeColor: Palette.secondaryColor,

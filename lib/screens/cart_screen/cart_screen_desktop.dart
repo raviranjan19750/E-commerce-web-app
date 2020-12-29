@@ -8,15 +8,16 @@ import '../../config/configs.dart';
 class CartScreenDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var authID = 'id1';
     return MultiBlocProvider(
       providers: [
         BlocProvider(
             create: (context) =>
                 CartBloc(cartRepository: RepositoryProvider.of(context))
-                  ..add(LoadAllCart('id1'))),
+                  ..add(LoadAllCart(authID))),
         BlocProvider(
-          create: (context) => CartTotalBloc(
-              cartRepository: RepositoryProvider.of(context)),
+          create: (context) =>
+              CartTotalBloc(cartRepository: RepositoryProvider.of(context)),
         ),
       ],
       child: Row(

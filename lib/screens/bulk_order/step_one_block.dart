@@ -53,11 +53,11 @@ class StepOneBlock extends StatelessWidget{
           child: Row(
             children: [
 
-              Image(image: AssetImage('assets/images/logo.jpeg'),width: 80,height: 80,),
+              Image.network((value.selectedType != -1) ?value.productTypeImages.elementAt(value.selectedType) : "",width: 80,height: 80,),
 
-              Container( margin: EdgeInsets.only(left: 16),child: Text('Bean Bags',style: TextStyle(color: Colors.white,fontSize: 24),)),
+              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productType,style: TextStyle(color: Colors.white,fontSize: 24),)),
 
-              Container( margin: EdgeInsets.only(left: 16),child: Text('Sofa',style: TextStyle(color: Colors.white,fontSize: 24),)),
+              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productSubType,style: TextStyle(color: Colors.white,fontSize: 24),)),
             ],
           ),
 
@@ -97,7 +97,7 @@ class StepOneBlock extends StatelessWidget{
           Container(
 
             width: double.infinity,
-            height: 240,
+            height: 280,
 
             padding: EdgeInsets.all(16),
 
@@ -115,29 +115,36 @@ class StepOneBlock extends StatelessWidget{
             ),
 
 
-            child: ListView.builder(
+            child: Visibility(
 
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 7,
-                itemBuilder:
-                    (BuildContext context, int index) {
-                  return InkWell(
+              visible: value.onDataLoaded,
 
-                    onTap: (){
+              replacement: Center(child: CircularProgressIndicator(),),
 
-                      value.onProductTypeSelected(index);
+              child: ListView.builder(
 
-                    },
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: value.productTypeMap.keys.length,
+                  itemBuilder:
+                      (BuildContext context, int index) {
+                    return InkWell(
 
-                    child: Container(
+                      onTap: (){
 
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                        value.onProductTypeSelected(index);
 
-                      child: BulkOrderItem(value: value,index: index,),
-                    ),
-                  );
-                }),
+                      },
+
+                      child: Container(
+
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+
+                        child: BulkOrderItem(value: value,index: index,imageUrl: value.productTypeImages.elementAt(index),),
+                      ),
+                    );
+                  }),
+            ),
 
 
 
@@ -176,7 +183,7 @@ class StepOneBlock extends StatelessWidget{
 
                     GridView.builder(
                       shrinkWrap: true,
-                      itemCount: 8,
+                      itemCount: value.subTypes.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 6,
 
@@ -211,7 +218,7 @@ class StepOneBlock extends StatelessWidget{
 
                             ),
 
-                            child: Text('SubType',style: TextStyle(fontSize: 16,color: (index == value.selectedSubType) ? Colors.white :Palette.secondaryColor),),
+                            child: Text(value.subTypes.elementAt(index),style: TextStyle(fontSize: 16,color: (index == value.selectedSubType) ? Colors.white :Palette.secondaryColor),),
 
                           ),
                         );

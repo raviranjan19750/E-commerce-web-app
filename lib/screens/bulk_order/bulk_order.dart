@@ -35,7 +35,7 @@ class BulkOrder extends StatelessWidget{
 
             return Scaffold(
 
-              appBar: CustomAppBar(size: 80,visibleSubAppBar: false,visibleMiddleAppBar: false,),
+              appBar: CustomAppBar(size: 104,visibleSubAppBar: false,visibleMiddleAppBar: false,),
 
               body: Row(
 
@@ -87,6 +87,7 @@ class BulkOrder extends StatelessWidget{
                                     padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
 
                                     onPressed: (){
+
                                         value.onClear();
                                     },
 
@@ -97,27 +98,37 @@ class BulkOrder extends StatelessWidget{
                                   ),
                                 ),
 
-                                Container(
+                                Visibility(
 
-                                  margin: EdgeInsets.only(top: 16,left: 32,bottom: 64),
+                                  visible: value.stepOneDone && value.stepTwoDone,
 
-                                  alignment: Alignment.centerLeft,
+                                  child: Container(
 
-                                  child: RaisedButton(
+                                    margin: EdgeInsets.only(top: 16,left: 32,bottom: 64),
 
-                                    padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
+                                    alignment: Alignment.centerLeft,
+
+                                    child: RaisedButton(
+
+                                      padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
 
 
-                                    onPressed: (){
+                                      onPressed: (){
 
-                                      value.addToCart();
+                                        if(value.editElementIndex == -1)
+                                          value.showProgressDialog(context,"Adding to cart");
+                                        else
+                                          value.showProgressDialog(context,"Updating cart");
 
-                                    },
+                                        value.addToCart();
 
-                                    color: Palette.secondaryColor,
+                                      },
 
-                                    child: Text('ADD MORE',style: TextStyle(color: Colors.white,fontSize: 24),),
+                                      color: Palette.secondaryColor,
 
+                                      child: Text(value.buttonName,style: TextStyle(color: Colors.white,fontSize: 24),),
+
+                                    ),
                                   ),
                                 ),
 
@@ -131,7 +142,7 @@ class BulkOrder extends StatelessWidget{
                       ),
                     ),
                   ),
-                  Container(height: double.infinity ,child: BulkOrderCart())
+                  Container(height: double.infinity ,child: BulkOrderCart(value: value,))
                 ],
               ),
 

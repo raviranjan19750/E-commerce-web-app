@@ -46,7 +46,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield CartDetailLoading();
       await Future.delayed(Duration(milliseconds: 200));
       LOG.i('Total Items Length ${cartRepository.cart.length}');
-      yield CartDetailLoadingSuccessful(cartRepository.cart.map((e) => e).toList());
+      yield CartDetailLoadingSuccessful(
+          cartRepository.cart.map((e) => e).toList());
     }
   }
 
@@ -88,7 +89,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     yield DeleteCartDetailLoading();
 
     try {
-      await cartRepository.deleteCartDetails(event.key);
+      await cartRepository.deleteCartDetails(
+        authID: event.authID,
+        productID: event.productID,
+        key: event.key,
+      );
 
       yield* loadCartDetail(LoadAllCart(event.authID));
     } catch (e) {
@@ -100,7 +105,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> changeQuantityCartDetail(ChangeQuantityCart event) async* {
     try {
       yield PrdouctCardViewState(type: PrdouctCardViewType.LOADING);
-      await Future.delayed(Duration(seconds: 2));
+      // await Future.delayed(Duration(seconds: 2));
       await cartRepository.changeQuantityCartDetails(
         event.key,
         event.quantity,

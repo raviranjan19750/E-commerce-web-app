@@ -31,7 +31,7 @@ class _ManageAddressesScreenState extends State<ManageAddressesScreen> {
               scrollController: trackingScrollController),
           // Desktop Website
           desktop: ManageAddressesScreenDesktop(
-              scrollController: trackingScrollController),
+              ),
         ),
       ),
     );

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import '../../models/models.dart';
 
 class OrderTitleDeliveryStatus extends StatelessWidget {
-  final double status;
+  final String statusValue;
   final List<Tracking> tracking;
 
   const OrderTitleDeliveryStatus({
     Key key,
-    this.status,
+    this.statusValue,
     this.tracking,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(status.toString()),
+      child: Text(statusValue.toString()),
     );
   }
 }

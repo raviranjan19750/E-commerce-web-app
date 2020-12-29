@@ -29,8 +29,12 @@ class ProductAvailabilityBloc
 
     try {
       var productAvailabilityResponse =
-          await productRepository.checkProductAvailability(pincode: "110042", productID: "0IeSrbsqqxiqwELq4Qqm",warehouseID: "temp_id");
-      yield ProductDetailAvailabilityCheckingSuccessful(productAvailabilityResponse);
+          await productRepository.checkProductAvailability(
+              pincode: event.pincode,
+              productID: event.productID,
+              variantID: event.variantID);
+      yield ProductDetailAvailabilityCheckingSuccessful(
+          productAvailabilityResponse);
     } catch (e) {
       print(e.toString());
       yield ProductDetailAvailabilityCheckingFailure();

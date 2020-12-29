@@ -15,10 +15,16 @@ class LoadProductDetail extends ProductDetailEvent{
 class LoadProductVariantDetail extends ProductDetailEvent{
 
   final String productID;
-  final List<ProductVariantColor> color;
+  final String variantID;
+  final String color;
   final String size;
 
-  LoadProductVariantDetail(this.productID, this.color, this.size);
+  LoadProductVariantDetail(this.productID, this.variantID, this.color, this.size);
 
 }
 
+
+// add cart
+// buy now
+// customize with logo
+// checking availability for product

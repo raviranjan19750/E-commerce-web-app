@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:bloc/bloc.dart';
 import 'package:elastic_client/elastic_client.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:living_desire/models/sorting_criteria.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -14,11 +15,12 @@ part 'all_product_event.dart';
 part 'all_product_state.dart';
 
 class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
-
   var LOG = LogBuilder.getLogger();
 
   final SearchApi searchApi;
   var filter = "";
+  List<Map<String, dynamic>> filterCriteria;
+  FilterSortCriteria sortCriteria = FilterSortCriteria.RELEVANCE;
 
   @override
   Stream<Transition<AllProductEvent, AllProductState>> transformEvents(
@@ -54,7 +56,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       int limit = state.limit;
       int offset = state.offset + limit;
       SearchResult result = await searchApi.getFilteredProduct(filter,
-          offset: offset, limit: limit);
+          offset: offset, limit: limit, filter: filterCriteria);
       SuccessLoadingAllProduct res = _createDataFromSearch(result,
           prev: previousList, limit: limit, offset: offset);
       yield res;
@@ -69,10 +71,15 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       String filteredText =
           (event.filterText != null && event.filterText.isNotEmpty)
               ? event.filterText
-              : "";
+              : filter;
       filter = filteredText;
-      SearchResult result = await searchApi.getFilteredProduct(filteredText,
-          offset: 0, limit: 20);
+      filterCriteria = event.filters != null ? event.filters : filterCriteria;
+      sortCriteria = event.sort != null ? event.sort : sortCriteria;
+      SearchResult result = await searchApi.getFilteredProduct(filter,
+          offset: 0,
+          limit: 20,
+          filter: filterCriteria,
+          sort: Sorting.getCriteria(sortCriteria));
       yield _createDataFromSearch(result);
     } catch (e) {
       print(e);
@@ -103,19 +110,18 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
         tags.add(tag.toString());
       }
       var prod = Product(
-        title: hit.doc['name'],
-        color: colors,
-        imageUrls: imgUrls,
-        size: hit.doc['size'],
-        discountPrice: hit.doc['discountPrice'],
-        retailPrice: hit.doc['sellingPrice'],
-        productId: hit.doc['productID'],
-        varientId: hit.doc['variantID'],
-        tags: tags,
-        type: hit.doc['type'],
-        isAvailable: hit.doc['isAvailable'],
-        subType: hit.doc['subType']
-      );
+          title: hit.doc['name'],
+          color: colors,
+          imageUrls: imgUrls,
+          size: hit.doc['size'],
+          discountPrice: hit.doc['discountPrice'],
+          retailPrice: hit.doc['sellingPrice'],
+          productId: hit.doc['productID'],
+          varientId: hit.doc['variantID'],
+          tags: tags,
+          type: hit.doc['type'],
+          isAvailable: hit.doc['isAvailable'],
+          subType: hit.doc['subType']);
       result.add(prod);
     }
     List<Product> finalResult = List();

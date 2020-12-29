@@ -6,10 +6,12 @@ import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
 class AddToCartButton extends StatefulWidget {
   final String productID;
   final String variantID;
+  final authID;
 
   const AddToCartButton({
     Key key,
     this.productID,
+    this.authID = 'id1',
     this.variantID,
   }) : super(key: key);
   @override
@@ -21,7 +23,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
     return InkWell(
       onTap: () {
         BlocProvider.of<CartBloc>(context).add(AddCart(
-          authID: "id1",
+          authID: widget.authID,
           productID: widget.productID,
           variantID: widget.variantID,
           quantity: 1,

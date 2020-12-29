@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/models.dart';
 import '../../config/configs.dart';
 import '../widgets.dart';
+import 'package:intl/intl.dart';
 
 class OrderTitleContainer extends StatelessWidget {
   final Order order;
@@ -12,6 +13,7 @@ class OrderTitleContainer extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final DateFormat formatter = DateFormat('dd MMM yyyy');
     return Container(
       height: 50,
       decoration: BoxDecoration(
@@ -49,7 +51,7 @@ class OrderTitleContainer extends StatelessWidget {
                           color: Colors.black54,
                         ),
                       ),
-                      Text(order.placedDate.toString()),
+                      Text(formatter.format(order.placedDate).toString()),
                     ],
                   ),
                 ),
@@ -90,7 +92,6 @@ class OrderTitleContainer extends StatelessWidget {
                           color: Colors.black54,
                         ),
                       ),
-
                       // Delivery Address Pop up
                       OrderTitleAddress(
                         name: order.name,
@@ -124,7 +125,7 @@ class OrderTitleContainer extends StatelessWidget {
                       ),
                       // Delivery Status Pop up
                       OrderTitleDeliveryStatus(
-                        status: order.status,
+                        statusValue: order.statusValue,
                         tracking: order.tracking,
                       ),
                     ],
