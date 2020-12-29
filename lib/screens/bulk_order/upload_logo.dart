@@ -32,7 +32,7 @@ class UploadLogo extends StatelessWidget{
             elevation: 8,
             color: Palette.secondaryColor,
 
-            child: Image.memory(logos.elementAt(index).uri,height: 160,width: 120,),
+            child: (logos.elementAt(index).uri!=null) ? Image.memory(logos.elementAt(index).uri,height: 160,width: 120,) : Image.network(logos.elementAt(index).networkUri,height: 160,width: 120,),
 
           ),
 

@@ -228,6 +228,16 @@ class BulkOrderProvider with ChangeNotifier{
     this.bulkOrderCart.size = bulkOrderCart.size;
     this.bulkOrderCart.quantity = bulkOrderCart.quantity;
     this.bulkOrderCart.images = List.from(bulkOrderCart.images);
+
+    logos.clear();
+
+    for(String uri in this.bulkOrderCart.images){
+
+      UploadImage uploadImage = new UploadImage(networkUri: uri);
+      logos.add(uploadImage);
+
+    }
+
     this.bulkOrderCart.colour = List.from(bulkOrderCart.colour);
     this.bulkOrderCart.description = bulkOrderCart.description;
     description = bulkOrderCart.description;
@@ -591,13 +601,20 @@ class BulkOrderProvider with ChangeNotifier{
 
     for(int i=0;i<logos.length;i++){
 
-      String fileName = DateTime.now().toString();
-      
-      fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo/{$authID}').child(fileName);
-      fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(i).imageFile).future;
-      Uri imageUrl = await storageRef.getDownloadURL();
-      imageUrls.add(imageUrl.toString());
+      if(logos.elementAt(i).imageFile!=null){
 
+        String fileName = DateTime.now().toString();
+        fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo/{$authID}').child(fileName);
+        fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(i).imageFile).future;
+        Uri imageUrl = await storageRef.getDownloadURL();
+        imageUrls.add(imageUrl.toString());
+
+      }
+      else{
+
+        imageUrls.add(logos.elementAt(i).networkUri);
+
+      }
 
     }
 
