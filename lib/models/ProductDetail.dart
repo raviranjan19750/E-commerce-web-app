@@ -1,67 +1,125 @@
-import 'package:convert/convert.dart';
+import 'dart:convert';
+
+ProductDetail productDetailFromJson(String str) => ProductDetail.fromJson(json.decode(str));
+
+String productDetailToJson(ProductDetail data) => json.encode(data.toJson());
 
 class ProductDetail {
-  final String productID;
-  final String variantID;
-  final String productName;
-  final String type;
-  final String subType;
+  ProductDetail({
+    this.productId,
+    this.variantId,
+    this.colourOptions,
+    this.sizeOptions,
+    this.allVariants,
+    this.productName,
+    this.type,
+    this.subType,
+    this.description,
+    this.isCustomizable,
+    this.images,
+    this.size,
+    this.colour,
+    this.sellingPrice,
+    this.discountPrice,
+    this.isAvailable,
+  });
 
-  final List<String> sizeOptions;
-  final List<String> colourOptions;
-  final List<String> images;
-  final List<String> description;
+  String productId;
+  String variantId;
+  List<List<Colour>> colourOptions;
+  List<String> sizeOptions;
+  List<AllVariant> allVariants;
+  String productName;
+  String type;
+  String subType;
+  List<String> description;
+  bool isCustomizable;
+  List<String> images;
+  String size;
+  List<Colour> colour;
+  int sellingPrice;
+  int discountPrice;
+  bool isAvailable;
 
-  final bool isCustomizable;
-  final bool isAvailable;
+  factory ProductDetail.fromJson(Map<String, dynamic> json) => ProductDetail(
+    productId: json["productID"],
+    variantId: json["variantID"],
+    colourOptions: List<List<Colour>>.from(json["colourOptions"].map((x) => List<Colour>.from(x.map((x) => Colour.fromJson(x))))),
+    sizeOptions: List<String>.from(json["sizeOptions"].map((x) => x)),
+    allVariants: List<AllVariant>.from(json["allVariants"].map((x) => AllVariant.fromJson(x))),
+    productName: json["productName"],
+    type: json["type"],
+    subType: json["subType"],
+    description: List<String>.from(json["description"].map((x) => x)),
+    isCustomizable: json["isCustomizable"],
+    images: List<String>.from(json["images"].map((x) => x)),
+    size: json["size"],
+    colour: List<Colour>.from(json["colour"].map((x) => Colour.fromJson(x))),
+    sellingPrice: json["sellingPrice"],
+    discountPrice: json["discountPrice"],
+    isAvailable: json["isAvailable"],
+  );
 
-  final String size;
-  final List<String> colour;
+  Map<String, dynamic> toJson() => {
+    "productID": productId,
+    "variantID": variantId,
+    "colourOptions": List<dynamic>.from(colourOptions.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
+    "sizeOptions": List<dynamic>.from(sizeOptions.map((x) => x)),
+    "allVariants": List<dynamic>.from(allVariants.map((x) => x.toJson())),
+    "productName": productName,
+    "type": type,
+    "subType": subType,
+    "description": List<dynamic>.from(description.map((x) => x)),
+    "isCustomizable": isCustomizable,
+    "images": List<dynamic>.from(images.map((x) => x)),
+    "size": size,
+    "colour": List<dynamic>.from(colour.map((x) => x.toJson())),
+    "sellingPrice": sellingPrice,
+    "discountPrice": discountPrice,
+    "isAvailable": isAvailable,
+  };
+}
 
-  final double sellingPrice;
-  final double discountPrice;
+class AllVariant {
+  AllVariant({
+    this.variantId,
+    this.size,
+    this.colour,
+  });
 
-  ProductDetail(
-      {this.productID,
-      this.variantID,
-      this.productName,
-      this.sizeOptions,
-      this.colourOptions,
-      this.images,
-      this.description,
-      this.isCustomizable,
-      this.isAvailable,
-      this.size,
-      this.colour,
-      this.sellingPrice,
-      this.discountPrice,
-      this.type,
-      this.subType});
+  String variantId;
+  String size;
+  List<String> colour;
 
-  factory ProductDetail.fromJson(Map<String, dynamic> data) {
-    //if(data == null) return null;
-    List<String> cols = [];
-    for (var col in data["colour"]) {
-      var strcol = col['hexCode'] as String;
-      cols.add(strcol.replaceAll("#", ""));
-    }
+  factory AllVariant.fromJson(Map<String, dynamic> json) => AllVariant(
+    variantId: json["variantID"],
+    size: json["size"],
+    colour: List<String>.from(json["colour"].map((x) => x)),
+  );
 
-    return ProductDetail(
-      productID: data["productID"],
-      variantID: data["variantID"],
-      productName: data["productName"],
-      type: data["type"],
-      subType: data["subType"],
-      size: data["size"],
-      colour: cols,
-      sellingPrice: data["sellingPrice"],
-      discountPrice: data["discountPrice"],
-      sizeOptions: data["sizeOptions"].cast<String>(),
-      colourOptions: data["colourOptions"].cast<String>(),
-      images: data["images"].cast<String>(),
-      description: data["description"].cast<String>(),
-      isCustomizable: data["isCustomizable"],
-      isAvailable: data["isAvailable"],
-    );
-  }
+  Map<String, dynamic> toJson() => {
+    "variantID": variantId,
+    "size": size,
+    "colour": List<dynamic>.from(colour.map((x) => x)),
+  };
+}
+
+class Colour {
+  Colour({
+    this.name,
+    this.hexCode,
+  });
+
+  String name;
+  String hexCode;
+
+  factory Colour.fromJson(Map<String, dynamic> json) => Colour(
+    name: json["name"],
+    hexCode: json["hexCode"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "hexCode": hexCode,
+  };
 }

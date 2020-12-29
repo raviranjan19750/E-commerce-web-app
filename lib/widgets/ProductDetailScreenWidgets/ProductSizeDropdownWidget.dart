@@ -10,9 +10,10 @@ class ProductSizeDropdown extends StatefulWidget {
   final List<String> productSizeList;
   final String productColor;
   final String productID;
+  final String variantID;
   final String productSize;
 
-  const ProductSizeDropdown({Key key, this.productSizeList, this.productColor, this.productID,  this.productSize}) :  super(key: key);
+  const ProductSizeDropdown({Key key, this.productSizeList, this.productColor, this.productID, this.variantID, this.productSize}) :  super(key: key);
 
 
   @override
@@ -51,7 +52,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
            onChanged: (value) {
              setState(() {
                dropdownValue = value;
-               BlocProvider.of<ProductDetailBloc>(context).add(LoadProductVariantDetail(widget.productID, widget.productColor, dropdownValue));
+               BlocProvider.of<ProductDetailBloc>(context).add(LoadProductVariantDetail(widget.productID, widget.variantID, widget.productColor, dropdownValue));
              });
            },
 

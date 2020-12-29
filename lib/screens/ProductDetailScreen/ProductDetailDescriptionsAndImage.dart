@@ -36,7 +36,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // list of images
-                ProductDetailEnlargeImage(imageURL: state.productDetail.images, productID: state.productDetail.productID, variantID: state.productDetail.variantID,product: product,),
+                ProductDetailEnlargeImage(imageURL: state.productDetail.images, productID: state.productDetail.productId, variantID: state.productDetail.variantId,product: product,),
 
                 // description of product
                 Container(
@@ -101,8 +101,8 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             (state.productDetail.isAvailable )? ProductAvailability(
-                              productID: state.productDetail.productID,
-                              variantID: state.productDetail.variantID,
+                              productID: state.productDetail.productId,
+                              variantID: state.productDetail.variantId,
                             ) : Container(),
 //list of color
 //todo Set lst of color
@@ -126,12 +126,12 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       margin: EdgeInsets.only(left: 6.0),
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Color(int.parse("FF" + state.productDetail.colour[index], radix: 16)),
+                                          color: Color(int.parse("FF" + state.productDetail.colour[index].toString(), radix: 16)),
                                           border: Border.all(
                                               width: 0.5, color: Colors.black)),
                                       child: CircleAvatar(
                                         radius: 10,
-                                        backgroundColor: Color(int.parse(state.productDetail.colour[index], radix: 16)),
+                                        backgroundColor: Color(int.parse(state.productDetail.colour[index].toString(), radix: 16)),
                                       ),
                                     ),
                                   );
@@ -169,6 +169,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                           productSizeList:
                                           state.productDetail.sizeOptions,
                                           productColor: "Blue",
+                                          variantID: state.productDetail.variantId,
                                           productID: "0IeSrbsqqxiqwELq4Qqm",
                                           productSize: state.productDetail.size,
                                         ),
@@ -227,6 +228,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                     fontSize: 22),
                               ),
                             ),
+
                             Container(
                               alignment: Alignment.center,
                               width: MediaQuery.of(context).size.width * 0.4,

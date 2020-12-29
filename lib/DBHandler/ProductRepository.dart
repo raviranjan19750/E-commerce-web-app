@@ -22,11 +22,11 @@ class ProductRepository {
   }
 
   Future<ProductDetail> getProductVariantSizeColorDescription(
-      {String productID, String color, String size}) async {
+      {String productID,String variantID, String color, String size}) async {
     var params = {"size": size, "colour": color};
 
     var response = await http.post(
-        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID",
+        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID",
         body: params);
     Map<String, dynamic> map = jsonDecode(response.body);
     return ProductDetail.fromJson(map);
