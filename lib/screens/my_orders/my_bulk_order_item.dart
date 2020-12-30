@@ -176,17 +176,37 @@ class MyBulkOrderItem extends StatelessWidget{
 
                     ),*/
 
-                    Column(
+                    Tooltip(
 
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0, 2),
+                            blurRadius: 8,
+                          )],
 
-                      children: [
+                      ),
+                      padding: EdgeInsets.all(8),
+                      textStyle: TextStyle(color: Palette.secondaryColor,fontSize: 18),
+                      preferBelow: true,
 
-                        Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4) ,child: Text('Ship to :',style: TextStyle(color: Colors.grey[500])),),
-                        Container(margin:EdgeInsets.only(left: 32,bottom: 8) ,child: Text(bulkOrder.name,style: TextStyle(color: Palette.secondaryColor),),),
+                      message: bulkOrder.address + '\nPincode : ' + bulkOrder.pincode,
 
-                      ],
+                      child: Column(
 
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+
+                          Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4) ,child: Text('Ship to :',style: TextStyle(color: Colors.grey[500])),),
+                          Container(margin:EdgeInsets.only(left: 32,bottom: 8) ,child: Text(bulkOrder.name,style: TextStyle(color: Palette.secondaryColor),),),
+
+                        ],
+
+                      ),
                     ),
 
                     Expanded(child: Container(),),
