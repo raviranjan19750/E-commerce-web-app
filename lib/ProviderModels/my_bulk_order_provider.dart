@@ -33,7 +33,6 @@ class MyBulkOrderProvider with ChangeNotifier{
 
   Future<void> getBulkOrders(String authID) async {
 
-    print("AuthID  :  " + authID);
 
     final response =
     await http.get(FunctionConfig.host + 'manageOrders/custom-list/$authID', headers: {"Content-Type": "application/json"},);
@@ -45,6 +44,8 @@ class MyBulkOrderProvider with ChangeNotifier{
       bulkOrdItems = (jsonDecode(response.body) as List)
           .map((i) => BulkOrder.fromJson(i))
           .toList();
+
+      bulkOrdItems.sort((a,b) => b.requestDate.compareTo(a.requestDate));
 
 
     }
