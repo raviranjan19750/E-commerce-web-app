@@ -14,7 +14,12 @@ class ProductVariantColorWidget extends StatefulWidget {
   String size;
 
   ProductVariantColorWidget(
-      {Key key, this.colorList, this.initialSelectedColor,this.size, this.productID, this.productAllVariant})
+      {Key key,
+      this.colorList,
+      this.initialSelectedColor,
+      this.size,
+      this.productID,
+      this.productAllVariant})
       : super(key: key);
 
   @override
@@ -32,72 +37,36 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
     super.initState();
     selectedColorCount = widget.initialSelectedColor.length;
     variantID = "";
-
-    print("ColorOption: ${widget.colorList.toString()}");
-
-    for(var x in widget.productAllVariant) {
-      print("Variant Color : ${x.colour.toString()}");
-    }
-
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-    void getOtherProductVariantID( List<ProductVariantColor> currentSelectedColor) {
-
-      if(currentSelectedColor.length == 2) {
-
-        for(int i = 0; i<currentSelectedColor.length; i++) {
-          print("## + ${currentSelectedColor[i].colorHexCode.toString()}");
-        }
-
-        for(int i = 0; i<widget.productAllVariant.length; i++) {
-
-          if(widget.productAllVariant[i].colour.length == 2) {
-
-            //print("inside loop 12 ${widget.productAllVariant[i].colour[0]} , ${widget.productAllVariant[i].colour[1]}, ${widget.size}, ${widget.productAllVariant[i].size}");
-            if(currentSelectedColor[0].colorHexCode == widget.productAllVariant[i].colour[0] && currentSelectedColor[1].colorHexCode == widget.productAllVariant[i].colour[1] ) {
-
-              print("variantID1 : ${widget.productAllVariant[i].variantId}");
+    void getOtherProductVariantID(
+        List<ProductVariantColor> currentSelectedColor) {
+      if (currentSelectedColor.length == 2) {
+        for (int i = 0; i < widget.productAllVariant.length; i++) {
+          if (widget.productAllVariant[i].colour.length == 2) {
+            if (currentSelectedColor[0].colorHexCode ==
+                    widget.productAllVariant[i].colour[0] &&
+                currentSelectedColor[1].colorHexCode ==
+                    widget.productAllVariant[i].colour[1]) {
               variantID = widget.productAllVariant[i].variantId;
               break;
-
             }
-
           }
-
         }
-
-      }
-      else{
-
-        for(int i = 0; i<currentSelectedColor.length; i++) {
-          print("## : ${currentSelectedColor[i].colorHexCode.toString()}");
-        }
-
-        for(int i = 0; i<widget.productAllVariant.length; i++) {
-
-          if(widget.productAllVariant[i].colour.length == 1) {
-
-            if(currentSelectedColor[0].colorHexCode == widget.productAllVariant[i].colour[0] ) {
-
-              print("variantID2 : ${widget.productAllVariant[i].variantId} ");
+      } else {
+        for (int i = 0; i < widget.productAllVariant.length; i++) {
+          if (widget.productAllVariant[i].colour.length == 1) {
+            if (currentSelectedColor[0].colorHexCode ==
+                widget.productAllVariant[i].colour[0]) {
               variantID = widget.productAllVariant[i].variantId;
               break;
-
             }
-
           }
-
         }
-
       }
-
-
     }
-
 
     return ListView.builder(
       shrinkWrap: true,
@@ -110,75 +79,58 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
             setState(() {
               // widget.selectedVariantColor.add(widget.colorList[index]);
 
-
               currentSelectedColor = widget.colorList[index];
 
-              if(currentSelectedColor.length == 2) {
-
-                for(int i = 0; i<widget.productAllVariant.length; i++) {
-
-                  if(widget.productAllVariant[i].colour.length == 2) {
-
-                  //  print("inside loop 1 ${widget.productAllVariant[i].colour[0]} , ${widget.productAllVariant[i].colour[1]}, ${widget.size}, ${widget.productAllVariant[i].size}");
-                    if(currentSelectedColor[0].colorHexCode == widget.productAllVariant[i].colour[0] &&
-                        currentSelectedColor[1].colorHexCode == widget.productAllVariant[i].colour[1] &&
+              if (currentSelectedColor.length == 2) {
+                for (int i = 0; i < widget.productAllVariant.length; i++) {
+                  if (widget.productAllVariant[i].colour.length == 2) {
+                    //  print("inside loop 1 ${widget.productAllVariant[i].colour[0]} , ${widget.productAllVariant[i].colour[1]}, ${widget.size}, ${widget.productAllVariant[i].size}");
+                    if (currentSelectedColor[0].colorHexCode ==
+                            widget.productAllVariant[i].colour[0] &&
+                        currentSelectedColor[1].colorHexCode ==
+                            widget.productAllVariant[i].colour[1] &&
                         widget.size == widget.productAllVariant[i].size) {
-
-                      print("variantID3 : ${widget.productAllVariant[i].variantId}");
                       variantID = widget.productAllVariant[i].variantId;
                       break;
-
                     }
-
                   }
-
-                }
-
-                 getOtherProductVariantID(currentSelectedColor);
-
-              }else{
-
-                for(int i = 0; i<currentSelectedColor.length; i++) {
-                  print("## : ${currentSelectedColor[i].colorHexCode.toString()}");
-                }
-
-                for(int i = 0; i<widget.productAllVariant.length; i++) {
-
-                  if(widget.productAllVariant[i].colour.length == 1) {
-
-                    if(currentSelectedColor[0].colorHexCode == widget.productAllVariant[i].colour[0] && widget.size == widget.productAllVariant[i].size) {
-                      print("variantID4 : ${widget.productAllVariant[i].variantId} ");
-                      variantID = widget.productAllVariant[i].variantId;
-                      break;
-
-                    }
-
-                  }
-
                 }
 
                 getOtherProductVariantID(currentSelectedColor);
+              } else {
+                for (int i = 0; i < widget.productAllVariant.length; i++) {
+                  if (widget.productAllVariant[i].colour.length == 1) {
+                    if (currentSelectedColor[0].colorHexCode ==
+                            widget.productAllVariant[i].colour[0] &&
+                        widget.size == widget.productAllVariant[i].size) {
+                      variantID = widget.productAllVariant[i].variantId;
+                      break;
+                    }
+                  }
+                }
 
+                getOtherProductVariantID(currentSelectedColor);
               }
 
-
-              print("productID: ${widget.productID},    variantID :  $variantID" );
-
-              BlocProvider.of<ProductDetailBloc>(context).add(LoadProductDetail(widget.productID, variantID));
+              BlocProvider.of<ProductDetailBloc>(context)
+                  .add(LoadProductDetail(widget.productID, variantID));
             });
           },
           child: widget.colorList[index].length == 2
               ? Container(
                   padding: EdgeInsets.all(4.0),
                   margin: EdgeInsets.only(left: 6.0),
-                  decoration: (widget.colorList[index].contains(widget.initialSelectedColor)) ? BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    border: Border.all(
-                      width: 0.5,
-                      color: Colors.black,
-                    ),
-                  ) : BoxDecoration(),
+                  decoration: (widget.colorList[index]
+                          .contains(widget.initialSelectedColor))
+                      ? BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 0.5,
+                            color: Colors.black,
+                          ),
+                        )
+                      : BoxDecoration(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -210,14 +162,17 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
               : Container(
                   padding: EdgeInsets.all(4.0),
                   margin: EdgeInsets.only(left: 6.0),
-                  decoration: (widget.colorList[index].contains(widget.initialSelectedColor)) ? BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-              border: Border.all(
-                width: 0.5,
-                color: Colors.black,
-              ),
-            ) : BoxDecoration(),
+                  decoration: (widget.colorList[index]
+                          .contains(widget.initialSelectedColor))
+                      ? BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 0.5,
+                            color: Colors.black,
+                          ),
+                        )
+                      : BoxDecoration(),
                   child: CircleAvatar(
                     radius: 8,
                     backgroundColor: widget.colorList[index][0].colorHexCode,
