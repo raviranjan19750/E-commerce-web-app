@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/routes.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_cart_item.dart';
 
 class BulkOrderCart extends StatelessWidget{
@@ -144,6 +145,18 @@ class BulkOrderCart extends StatelessWidget{
               padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
 
               onPressed: (){
+
+                /*Navigator.pushNamed(
+                    context, RoutesConfiguration.SELECT_ADDRESS,
+                    arguments: {
+                      "totalItems": value.customCartItems.length,
+                      "sampleRequested": value.sampleRequested,
+                      "isBulkOrder": true,
+                    });*/
+
+                value.showProgressDialog(context, "Generating Quotation");
+                value.getQuotation();
+
               },
 
               color: Palette.secondaryColor,

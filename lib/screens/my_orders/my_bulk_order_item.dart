@@ -1,17 +1,131 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/models/BulkOrder.dart';
+import 'package:living_desire/routes.dart';
 
 
 class MyBulkOrderItem extends StatelessWidget{
 
+  List<BulkOrder> bulkOrdItems;
+  int index;
+
+  MyBulkOrderItem({this.bulkOrdItems,this.index});
+
+  String sampleRequestedString(bool sampleRequested){
+
+    if(sampleRequested){
+      return "YES";
+    }
+    else{
+      return "NO";
+
+    }
+
+  }
+
+  String dateStringLabel(BulkOrder bulkOrder){
+
+    if(bulkOrder.placedDate == null){
+      return "Requested On : ";
+    }
+    
+    return "Placed On : ";
+
+  }
+  
+  String dateFormatter(BulkOrder bulkOrder){
+    
+    if(bulkOrder.placedDate == null){
+      return new DateFormat.yMMMd().format(bulkOrder.requestDate);
+    }
+
+    return new DateFormat.yMMMd().format(bulkOrder.placedDate);
+    
+  }
+  
+  String idStringTag(BulkOrder bulkOrder){
+    
+    if(bulkOrder.orderID == null){
+      return "Request ID : ";
+    }
+    
+    return "Order ID : ";
+    
+  }
+  
+  String idStringValue(BulkOrder bulkOrder){
+
+    if(bulkOrder.orderID == null){
+      return bulkOrder.requestID;
+    }
+
+    return bulkOrder.orderID;
+    
+  }
+
+  String downloadInvoiceType(BulkOrder bulkOrder){
+
+    if(bulkOrder.orderInvoiceUrl == null){
+
+      if(bulkOrder.sampleInvoiceUrl !=null){
+
+        return "Download Sample Invoice";
+
+      }
+      
+      return "";
+
+    }
+    
+    return "Download Order Invoice";
+
+  }
+  
+  String deliveryStatusTag(BulkOrder bulkOrder){
+    
+    if(bulkOrder.orderTracking!=null && bulkOrder.orderTracking.isEmpty){
+      
+      if(bulkOrder.sampleTracking!=null && bulkOrder.sampleTracking.isNotEmpty){
+        
+        return "Sample Delivery Status : ";
+        
+      }
+      
+      return "";
+      
+    }
+    
+    return "Order Delivery Status : ";
+    
+  }
+  
+  String productTitle(List<dynamic> productTypes){
+    
+    String result = "";
+    
+    for(int i=0;i<productTypes.length;i++){
+      
+      if(i == productTypes.length-1)
+        result+= (productTypes.elementAt(i));
+      else
+        result+= (productTypes.elementAt(i) + ","); 
+      
+    }
+    
+    return result;
+    
+  }
+
   @override
   Widget build(BuildContext context) {
 
+    BulkOrder bulkOrder = bulkOrdItems.elementAt(index);
+
     return Container(
 
-      margin: EdgeInsets.only(left: 48,right: 48,top: 16,bottom: 16),
+      margin: EdgeInsets.only(left: 32,right: 48,top: 16,bottom: 16),
       
       decoration: BoxDecoration(
         
@@ -42,14 +156,14 @@ class MyBulkOrderItem extends StatelessWidget{
 
                       children: [
 
-                        Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4) ,child: Text('Placed On : ',style: TextStyle(color: Colors.grey[500])),),
-                        Container(margin:EdgeInsets.only(left: 32,bottom: 8) ,child: Text('20 JUN 2020',style: TextStyle(color: Palette.secondaryColor),),),
+                        Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4) ,child: Text(dateStringLabel(bulkOrder),style: TextStyle(color: Colors.grey[500])),),
+                        Container(margin:EdgeInsets.only(left: 32,bottom: 8) ,child: Text(dateFormatter(bulkOrder),style: TextStyle(color: Palette.secondaryColor),),),
 
                       ],
 
                     ),
 
-                    Column(
+                    /*Column(
 
                       crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -60,34 +174,59 @@ class MyBulkOrderItem extends StatelessWidget{
 
                       ],
 
-                    ),
+                    ),*/
 
-                    Column(
+                    Tooltip(
 
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0, 2),
+                            blurRadius: 8,
+                          )],
 
-                      children: [
+                      ),
+                      padding: EdgeInsets.all(8),
+                      textStyle: TextStyle(color: Palette.secondaryColor,fontSize: 18),
+                      preferBelow: true,
 
-                        Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4) ,child: Text('Ship to :',style: TextStyle(color: Colors.grey[500])),),
-                        Container(margin:EdgeInsets.only(left: 32,bottom: 8) ,child: Text('Ravi Ranjan',style: TextStyle(color: Palette.secondaryColor),),),
+                      message: bulkOrder.address + '\nPincode : ' + bulkOrder.pincode,
 
-                      ],
+                      child: Column(
 
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+
+                          Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4) ,child: Text('Ship to :',style: TextStyle(color: Colors.grey[500])),),
+                          Container(margin:EdgeInsets.only(left: 32,bottom: 8) ,child: Text(bulkOrder.name,style: TextStyle(color: Palette.secondaryColor),),),
+
+                        ],
+
+                      ),
                     ),
 
                     Expanded(child: Container(),),
 
-                    Column(
+                    Visibility(
+                      
+                      visible: (bulkOrder.sampleTracking!=null && bulkOrder.sampleTracking.isNotEmpty) || (bulkOrder.orderTracking!=null && bulkOrder.orderTracking.isNotEmpty),
+                      
+                      child: Column(
 
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
 
-                      children: [
+                        children: [
 
-                        Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4) ,child: Text('Delivery Status :',style: TextStyle(color: Colors.grey[500])),),
-                        Container(margin:EdgeInsets.only(left: 32,bottom: 8) ,child: Text('On the Way',style: TextStyle(color: Palette.secondaryColor),),),
+                          Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4) ,child: Text(deliveryStatusTag(bulkOrder),style: TextStyle(color: Colors.grey[500])),),
+                          Container(margin:EdgeInsets.only(left: 32,bottom: 8) ,child: Text('On the Way',style: TextStyle(color: Palette.secondaryColor),),),
 
-                      ],
+                        ],
 
+                      ),
                     ),
 
                     Column(
@@ -96,8 +235,26 @@ class MyBulkOrderItem extends StatelessWidget{
 
                       children: [
 
-                        Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4,right: 32) ,child: Text('Order ID : 110055064AD',style: TextStyle(color: Colors.grey[500])),),
-                        Container(margin:EdgeInsets.only(left: 32,bottom: 8,right: 32) ,child: Text('Download Invoice',textAlign: TextAlign.end,style: TextStyle(color: Colors.blueAccent),),),
+                        Container(margin:EdgeInsets.only(left: 32,top: 8,bottom: 4,right: 32) ,child: Text('${idStringTag(bulkOrder)} ${idStringValue(bulkOrder)}',style: TextStyle(color: Colors.grey[500])),),
+
+                        Visibility(
+
+                          visible: (bulkOrder.sampleInvoiceUrl!=null || bulkOrder.orderInvoiceUrl!=null),
+
+                          child: InkWell(
+
+                             onTap: (){},
+
+                              child: Container(
+
+                                margin:EdgeInsets.only(left: 32,bottom: 8,right: 32) ,
+
+                                child: Text(downloadInvoiceType(bulkOrder),textAlign: TextAlign.end,style: TextStyle(color: Colors.blueAccent),),
+
+                              )
+
+                          ),
+                        ),
 
                       ],
 
@@ -151,7 +308,7 @@ class MyBulkOrderItem extends StatelessWidget{
 
                       Row(
                         children: [
-                          Expanded(child: Container(child: Text('Classic Filled Bean Bag with Beans',style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),)),
+                          Expanded(child: Container(child: Text(productTitle(bulkOrder.productType),overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),)),
                           Container(
 
                             margin: EdgeInsets.only(left: 48,right: 32),
@@ -174,78 +331,14 @@ class MyBulkOrderItem extends StatelessWidget{
                         children: [
 
                           Row(
+
                             children: [
 
-                              Column(
-
-                                children: [
-                                  Text('₹ 2000',style: TextStyle(decoration: TextDecoration.lineThrough ,color: Colors.grey[500]),),
-
-                                  Text('₹ 1000',style: TextStyle(fontSize: 20,color: Palette.secondaryColor,fontWeight: FontWeight.w600),),
-
-                                ],
-
-                              ),
-
-                              Container(margin:EdgeInsets.only(left: 16),child: Text('You saved ₹ 1000 (50%)',style: TextStyle(fontSize: 16,color: Colors.green,fontWeight: FontWeight.w200),)),
+                              Text('Sample Requested  :  '),
+                              Text(sampleRequestedString(bulkOrder.isSampleRequested),style: TextStyle(color: (bulkOrder.isSampleRequested) ? Colors.green : Colors.redAccent,fontWeight: FontWeight.bold),),
 
                             ],
 
-                          ),
-
-
-
-
-
-                          Container(
-
-                            margin: EdgeInsets.only(top: 8,bottom: 8),
-
-                            child: Row(
-
-                              children: [
-
-                                Container(
-
-                                  margin: EdgeInsets.symmetric(horizontal: 4,vertical: 4),
-                                  width: 16.0,
-                                  height: 16.0,
-                                  decoration: new BoxDecoration(
-                                    color: Colors.redAccent,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-
-                                Container(
-
-
-                                  margin: EdgeInsets.only(left: 16),
-
-                                  child: Text('Size : s',style: TextStyle(color: Palette.secondaryColor),),
-
-                                ),
-
-                                Container(
-
-                                  margin: EdgeInsets.only(left: 32),
-                                  child: Row(
-
-                                    children: [
-
-                                      Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor),),
-
-                                      Text(' 32 ',style: TextStyle(color: Palette.secondaryColor),),
-
-
-                                    ],
-
-                                  ),
-
-                                )
-
-                              ],
-
-                            ),
                           ),
 
                           Container(
@@ -254,7 +347,11 @@ class MyBulkOrderItem extends StatelessWidget{
 
                             child: InkWell(
 
-                              onTap: (){},
+                              onTap: (){
+
+                                Navigator.pushNamed(context,RoutesConfiguration.BULK_ORDER_QUOTATION,arguments: {'key' : bulkOrder.key});
+
+                              },
 
                               child: Container(
 

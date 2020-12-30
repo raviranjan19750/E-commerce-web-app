@@ -8,6 +8,7 @@ import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
+import 'package:living_desire/bloc/home/home_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/service/authentication_service.dart';
@@ -49,7 +50,7 @@ class InitailizeAppService extends StatelessWidget {
           create: (context) => SearchApi(),
         ),
         RepositoryProvider(
-          create: (context) => AddresssRepository(),
+          create: (context) => AddressRepository(),
         ),
         RepositoryProvider(
           create: (context) => WishlistRepository(),
@@ -78,7 +79,8 @@ class InitailizeAppService extends StatelessWidget {
                   SearchBloc(searchApi: RepositoryProvider.of(context))),
           BlocProvider(
               create: (context) => AuthenticationBloc(
-                  authenticationRepository: RepositoryProvider.of(context)))
+                  authenticationRepository: RepositoryProvider.of(context))),
+          BlocProvider(create: (context) => HomeBloc())
         ],
         child: child,
       ),
@@ -94,6 +96,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("auth ID: " + UserPreferences().AuthID.toString());
     return InitailizeAppService(
       authRepo: authRepo,
       child: MaterialApp(

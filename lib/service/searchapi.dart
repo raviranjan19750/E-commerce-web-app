@@ -20,7 +20,10 @@ class SearchApi {
   }
 
   Future<SearchResult> getFilteredProduct(String title,
-      {int limit, int offset, List<Map<String, dynamic>> filter, List<Map<String, dynamic>> sort}) async {
+      {int limit,
+      int offset,
+      List<Map<String, dynamic>> filter,
+      List<Map<String, dynamic>> sort}) async {
     final Map<String, dynamic> query = Map();
 
     final Map<String, dynamic> queryCriteria = Map();
@@ -40,7 +43,11 @@ class SearchApi {
     query.putIfAbsent("bool", () => queryCriteria);
     LOG.i(query);
     final searchResult = await client.search(
-        index: INDEX_NAME, query: query, limit: limit, offset: offset, sort: sort);
+        index: INDEX_NAME,
+        query: query,
+        limit: limit,
+        offset: offset,
+        sort: sort);
     return searchResult;
   }
 
@@ -134,19 +141,14 @@ class SearchApi {
         index: INDEX_NAME, limit: 1, query: query, aggregations: aggregation);
     List<FilterTag> tag = List();
 
-
-
     String imageUrl = searchResult.hits.elementAt(0).doc['images'][0];
-
 
     final subTypeResult = searchResult.aggregations['subType-aggr'];
     FilterTag subTypeTag =
         FilterTag("SUB-TYPE", "subType", description: "Sub Type");
     subTypeResult.buckets.forEach((element) {
-      subTypeTag.addChild(FilterCategoryChild(
-          element.key.toString(),
-          imageUrl,
-          false));
+      subTypeTag.addChild(
+          FilterCategoryChild(element.key.toString(), imageUrl, false));
     });
     tag.add(subTypeTag);
 
@@ -187,7 +189,6 @@ class SearchApi {
 
     return terms;
   }
-
 
   Future<SearchResult> getSimilarProduct(String type, String subType) async {
     print("hogya");

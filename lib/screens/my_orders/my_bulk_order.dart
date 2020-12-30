@@ -1,65 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/ProviderModels/my_bulk_order_provider.dart';
 import 'package:living_desire/screens/my_orders/my_bulk_order_item.dart';
-import 'package:living_desire/screens/my_orders/my_order_item.dart';
+import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
+import 'package:living_desire/widgets/button_list.dart';
+import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
+import 'package:provider/provider.dart';
 
 class MyBulkOrder extends StatelessWidget{
 
 
+  bool init = false;
+
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      body: Column(
+    return ChangeNotifierProvider(
+        lazy: false,
+        create: (context) => MyBulkOrderProvider(),
+        child: Consumer<MyBulkOrderProvider>(
+          builder: (BuildContext context, MyBulkOrderProvider value, Widget child) {
 
-        crossAxisAlignment: CrossAxisAlignment.start,
+            if (!init) {
+              Provider.of<MyBulkOrderProvider>(context, listen: false).initBulkOrders();
+              init = true;
+            }
 
-        children: [
+            return Scaffold(
 
-          Container(
+              appBar: CustomAppBar(size: 92,visibleMiddleAppBar: false,visibleSubAppBar: true,),
+
+              body: Row(
+
+                children: [
+
+                  ButtonList(isMyOrderSelected: true,),
+
+                  Expanded(
+
+                    child: Column(
+
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+
+                        Container(
 
 
-            margin: EdgeInsets.only(left: 64,right: 64,top: 64),
+                          margin: EdgeInsets.only(left: 32,right: 64,top: 64),
 
-            width: double.infinity,
+                          width: double.infinity,
 
-            height: 1,
+                          height: 1,
 
-            color: Colors.grey[500],
+                          color: Colors.grey[500],
 
-          ),
+                        ),
 
-          Container(
+                        Container(
 
-            color: Colors.redAccent,
+                          margin: EdgeInsets.only(left: 16),
 
-            margin: EdgeInsets.only(left: 64,top: 4),
+                          padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
 
-            padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                          child: LabelTag('${value.bulkOrdItems.length} Orders'),
 
-            child: Text('5 Orders',style: TextStyle(color: Colors.white,fontSize: 20),),
+                        ),
 
-          ),
+                        Expanded(
 
-          Expanded(
+                          child: Visibility(
 
-            child: ListView.builder(
+                            replacement: Center(child: CircularProgressIndicator(),),
 
-                itemCount: 5,
-                itemBuilder:
-                    (BuildContext context, int index) {
-                  return Container(
+                            child: ListView.builder(
 
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                                itemCount: value.bulkOrdItems.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return Container(
 
-                    child: MyBulkOrderItem(),
-                  );
-                }),
-          ),
+                                    padding: EdgeInsets.symmetric(horizontal: 16),
 
-        ],
+                                    child: MyBulkOrderItem(bulkOrdItems: value.bulkOrdItems,index: index,),
+                                  );
+                                }),
+                          ),
+                        ),
 
-      ),
-    );
+                      ],
+
+                    ),
+                  ),
+                ],
+              ),
+            );
+
+          },
+        ));
+
+
 
   }
 

@@ -228,6 +228,16 @@ class BulkOrderProvider with ChangeNotifier{
     this.bulkOrderCart.size = bulkOrderCart.size;
     this.bulkOrderCart.quantity = bulkOrderCart.quantity;
     this.bulkOrderCart.images = List.from(bulkOrderCart.images);
+
+    logos.clear();
+
+    for(String uri in this.bulkOrderCart.images){
+
+      UploadImage uploadImage = new UploadImage(networkUri: uri);
+      logos.add(uploadImage);
+
+    }
+
     this.bulkOrderCart.colour = List.from(bulkOrderCart.colour);
     this.bulkOrderCart.description = bulkOrderCart.description;
     description = bulkOrderCart.description;
@@ -591,17 +601,60 @@ class BulkOrderProvider with ChangeNotifier{
 
     for(int i=0;i<logos.length;i++){
 
-      String fileName = DateTime.now().toString();
-      
-      fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo/{$authID}').child(fileName);
-      fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(i).imageFile).future;
-      Uri imageUrl = await storageRef.getDownloadURL();
-      imageUrls.add(imageUrl.toString());
+      if(logos.elementAt(i).imageFile!=null){
 
+        String fileName = DateTime.now().toString();
+        fb.StorageReference storageRef = fb.storage().ref('bulkOrderLogo/{$authID}').child(fileName);
+        fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(logos.elementAt(i).imageFile).future;
+        Uri imageUrl = await storageRef.getDownloadURL();
+        imageUrls.add(imageUrl.toString());
+
+      }
+      else{
+
+        imageUrls.add(logos.elementAt(i).networkUri);
+
+      }
 
     }
 
     return imageUrls;
+
+
+  }
+
+  Future<void> getQuotation() async {
+
+    String authID = UserPreferences().AuthID;
+
+    try{
+
+      var data = {
+        "isSampleRequested" : sampleRequested,
+        "deliveryAddressID" : "2QFMUXPasBweaudXKg7a"
+      };
+
+      final response =
+      await http.post(FunctionConfig.host + 'manageOrders/custom-request/$authID',
+        body: jsonEncode(data),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      dismissProgressDialog();
+
+      if(response.statusCode == 200){
+
+        customCartItems.clear();
+        onClear();
+
+      }
+
+      notifyListeners();
+
+    }
+    catch(e){
+      throw Exception(e.toString());
+    }
 
 
   }
