@@ -16,7 +16,7 @@ class LoadProductVariantDetail extends ProductDetailEvent{
 
   final String productID;
   final String variantID;
-  final String color;
+  final List<ProductVariantColor> color;
   final String size;
 
   LoadProductVariantDetail(this.productID, this.variantID, this.color, this.size);

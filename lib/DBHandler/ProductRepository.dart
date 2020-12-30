@@ -12,10 +12,12 @@ class ProductRepository {
       {String productID, String variantID}) async {
     LOG.i(
         'Fetching Product Description for Product ID ${productID} and VarientId ${variantID}');
+    print("productID: $productID *** variantID: $variantID");
     final response = await http.get(
         "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID");
     Map<String, dynamic> map = jsonDecode(response.body);
     LOG.i(map);
+    print(map.toString());
     return ProductDetail.fromJson(map);
 
     //return ProductDetail.fromJson(jsonDecode(response.body));
@@ -25,10 +27,10 @@ class ProductRepository {
       {String productID,String variantID, String color, String size}) async {
     var params = {"size": size, "colour": color};
 
-    var response = await http.post(
-        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID",
-        body: params);
+    var response = await http.get(
+        "https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID");
     Map<String, dynamic> map = jsonDecode(response.body);
+    print(map.toString());
     return ProductDetail.fromJson(map);
   }
 

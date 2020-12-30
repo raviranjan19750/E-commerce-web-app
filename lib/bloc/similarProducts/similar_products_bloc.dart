@@ -52,7 +52,6 @@ class SimilarProductsBloc extends Bloc<SimilarProductsEvent, SimilarProductsStat
   List<Product> getSimilarProductData(SearchResult searchResult) {
 
     final hits = searchResult.hits;
-    print("inside function");
 
 
     int len = hits.length;
@@ -61,7 +60,7 @@ class SimilarProductsBloc extends Bloc<SimilarProductsEvent, SimilarProductsStat
     List<Product> result = List();
     for (int x = 0; x < len; x++) {
       Doc hit = hits[x];
-      print(hit.doc.toString());
+
 
       List<String> imgUrls = List();
       for (var img in hit.doc['images']) {
