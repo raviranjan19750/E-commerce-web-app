@@ -3,6 +3,7 @@ import 'package:living_desire/ProviderModels/my_bulk_order_provider.dart';
 import 'package:living_desire/screens/my_orders/my_bulk_order_item.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
 import 'package:living_desire/widgets/button_list.dart';
+import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:provider/provider.dart';
 
 class MyBulkOrder extends StatelessWidget{
@@ -57,13 +58,11 @@ class MyBulkOrder extends StatelessWidget{
 
                         Container(
 
-                          color: Colors.redAccent,
-
-                          margin: EdgeInsets.only(left: 32,top: 4),
+                          margin: EdgeInsets.only(left: 16),
 
                           padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
 
-                          child: Text('${value.bulkOrdItems.length} Orders',style: TextStyle(color: Colors.white,fontSize: 20),),
+                          child: LabelTag('${value.bulkOrdItems.length} Orders'),
 
                         ),
 

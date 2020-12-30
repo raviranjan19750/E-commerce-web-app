@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
+import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 
 
 class BulkOrderQuotation extends StatelessWidget{
@@ -34,17 +35,15 @@ class BulkOrderQuotation extends StatelessWidget{
 
               ),
 
-              Container(
+            Container(
 
-                color: Colors.redAccent,
+              margin: EdgeInsets.only(left: 16),
 
-                margin: EdgeInsets.only(left: 64,top: 4),
+              padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
 
-                padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+              child: LabelTag('Quotation   '),
 
-                child: Text('Quotation',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-
-              ),
+            ),
 
               Container(
 
