@@ -349,7 +349,7 @@ class MyBulkOrderItem extends StatelessWidget{
 
                               onTap: (){
 
-                                Navigator.pushNamed(context,RoutesConfiguration.BULK_ORDER_QUOTATION);
+                                Navigator.pushNamed(context,RoutesConfiguration.BULK_ORDER_QUOTATION,arguments: {'key' : bulkOrder.key});
 
                               },
 

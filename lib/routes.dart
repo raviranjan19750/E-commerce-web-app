@@ -55,7 +55,11 @@ class RoutesConfiguration {
         return MaterialPageRoute(builder: (_) => MyBulkOrder());
 
       case BULK_ORDER_QUOTATION:
-        return MaterialPageRoute(builder: (_) => BulkOrderQuotation());
+
+        var args = settings.arguments as Map;
+        String key = args["key"];
+
+        return MaterialPageRoute(builder: (_) => BulkOrderQuotation(id: key,));
         
       case WISHLIST:
         return MaterialPageRoute(
