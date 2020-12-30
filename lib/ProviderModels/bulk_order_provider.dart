@@ -631,7 +631,7 @@ class BulkOrderProvider with ChangeNotifier{
 
       var data = {
         "isSampleRequested" : sampleRequested,
-        "deliveryAddressID" : "address"
+        "deliveryAddressID" : "2QFMUXPasBweaudXKg7a"
       };
 
       final response =
@@ -644,9 +644,12 @@ class BulkOrderProvider with ChangeNotifier{
 
       if(response.statusCode == 200){
 
-        print("Quotation Placed Successfully");
+        customCartItems.clear();
+        onClear();
 
       }
+
+      notifyListeners();
 
     }
     catch(e){
