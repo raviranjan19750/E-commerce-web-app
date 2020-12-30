@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/BulkOrder.dart';
+import 'package:living_desire/routes.dart';
 
 
 class MyBulkOrderItem extends StatelessWidget{
@@ -326,7 +327,11 @@ class MyBulkOrderItem extends StatelessWidget{
 
                             child: InkWell(
 
-                              onTap: (){},
+                              onTap: (){
+
+                                Navigator.pushNamed(context,RoutesConfiguration.BULK_ORDER_QUOTATION);
+
+                              },
 
                               child: Container(
 
