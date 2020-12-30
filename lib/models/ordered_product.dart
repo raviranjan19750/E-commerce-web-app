@@ -13,10 +13,15 @@ class OrderedProduct {
   final String size;
   final double discountPrice;
   final double quantity;
-  Rating rating;
+  //Rating rating;
+  double rating;
+  String review;
+  String ratingID;
 
   OrderedProduct({
     this.key,
+    this.review,
+    this.ratingID,
     this.rating,
     this.productName,
     this.imageUrl,
@@ -39,6 +44,9 @@ class OrderedProduct {
       sellingPrice: data['sellingPrice'],
       discountPrice: data['discountPrice'],
       quantity: data['quantity'],
+      rating: data['rating'],
+      review: data['review'],
+      ratingID: data['ratingID'],
       //colour: data['data']['colour'],
       //rating: Rating.fromJson(data['rating']),
       colour: GetColors.fromHex(

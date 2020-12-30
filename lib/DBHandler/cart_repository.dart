@@ -44,8 +44,9 @@ class CartRepository {
       if (response.statusCode == 200) {
         //Map<String, dynamic> map = json.decode(response.body);
         LOG.i('Http Request sucessfull ${response.body}');
-        _cart = ((jsonDecode(response.body) as List<dynamic>)
-            .map((i) => Cart.fromJson(i))).toList();
+        _cart = (jsonDecode(response.body) as List<dynamic>)
+            .map((i) => Cart.fromJson(i))
+            .toList();
         return _cart;
       } else {}
     } catch (e) {

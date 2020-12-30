@@ -58,8 +58,8 @@ class NormalOrderItemBloc
         rating: event.rating,
         review: event.review,
       );
-      state.orderedProduct.rating.rating = event.rating;
-      state.orderedProduct.rating.review = event.review;
+      state.orderedProduct.rating = event.rating;
+      state.orderedProduct.review = event.review;
       normalOrderBloc.add(RefreshOrder());
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.SUCCESS);
@@ -81,8 +81,8 @@ class NormalOrderItemBloc
         rating: event.rating,
         review: event.review,
       );
-      state.orderedProduct.rating.rating = event.rating;
-      state.orderedProduct.rating.review = event.review;
+      state.orderedProduct.rating = event.rating;
+      state.orderedProduct.review = event.review;
       normalOrderBloc.add(RefreshOrder());
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.SUCCESS);

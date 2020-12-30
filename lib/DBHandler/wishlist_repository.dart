@@ -54,13 +54,14 @@ class WishlistRepository {
 
   // Delete a wishlist
 
-  Future<void> deleteWishlistDetails(String key, String productID) async {
+  Future<void> deleteWishlistDetails(
+      String key, String productID, String authID) async {
     try {
       // var params = {
       //   "productID":productID,
       // };
       final response = await http.delete(
-        FunctionConfig.host + 'manageWishlist/${productID}/${key}',
+        FunctionConfig.host + 'manageWishlist/${authID}/${productID}/${key}',
       );
       if (response.statusCode == 200) {
         print('Http Get request sucessfull');

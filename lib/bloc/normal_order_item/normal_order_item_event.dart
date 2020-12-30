@@ -1,6 +1,11 @@
 part of 'normal_order_item_bloc.dart';
 
-abstract class NormalOrderItemEvent {}
+abstract class NormalOrderItemEvent extends Equatable {
+  const NormalOrderItemEvent();
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
+}
 
 class AddRatingNormalOrders extends NormalOrderItemEvent {
   final String key;

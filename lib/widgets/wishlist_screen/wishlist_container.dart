@@ -9,10 +9,13 @@ import '../widgets.dart';
 
 class WishlistContainer extends StatelessWidget {
   // WishList Container
+  String authID;
 
+  WishlistContainer({Key key, this.authID}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+
     int itemCount = 4;
     if (width < 1000) {
       itemCount = 2;
@@ -76,6 +79,7 @@ class WishlistContainer extends StatelessWidget {
                 WishlistContainerGrid(
                   itemCount: itemCount,
                   wishlist: state.wishlist,
+                  authID: authID,
                 ),
               ],
             ),
@@ -91,11 +95,13 @@ class WishlistContainer extends StatelessWidget {
 class WishlistContainerGrid extends StatefulWidget {
   const WishlistContainerGrid({
     this.wishlist,
+    this.authID,
     Key key,
     @required this.itemCount,
   }) : super(key: key);
 
   final int itemCount;
+  final String authID;
   final List<Wishlist> wishlist;
 
   @override
@@ -124,6 +130,7 @@ class _WishlistContainerGridState extends State<WishlistContainerGrid> {
           itemBuilder: (context, index) {
             return WishlistProductItem(
               product: widget.wishlist[index],
+              authID: widget.authID,
             );
           },
         ),

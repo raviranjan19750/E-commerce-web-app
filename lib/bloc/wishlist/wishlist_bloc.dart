@@ -34,6 +34,10 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     }
   }
 
+  // TODO: Make Wishlist add to cart function:
+  //To add wishlist to the cart: cartrepository.addCartDetails then
+  // Delete Wishlist: remove from cart
+
   // Add Wishlist Detail
   Stream<WishlistState> addWishlistDetail(AddWishlist event) async* {
     yield AddWishlistDetailLoading();
@@ -59,6 +63,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       await wishlistRepository.deleteWishlistDetails(
         event.key,
         event.productID,
+        event.authID,
       );
 
       yield* loadWishlistDetail(LoadAllWishlist(event.authID));

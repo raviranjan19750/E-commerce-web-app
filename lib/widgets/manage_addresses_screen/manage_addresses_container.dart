@@ -10,15 +10,15 @@ import '../../data/data.dart';
 import '../widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ManageAddressesContainer extends StatefulWidget {
+class ManageAddressesContainer extends StatelessWidget {
+  final String authID;
+
+  const ManageAddressesContainer({
+    Key key,
+    this.authID,
+  }) : super(key: key);
   // Manage Address Container
 
-  @override
-  _ManageAddressesContainerState createState() =>
-      _ManageAddressesContainerState();
-}
-
-class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ManageAddressesBloc, ManageAddresesState>(
@@ -29,6 +29,7 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
             context: context,
             builder: (BuildContext buildContext) {
               return NewAddressDialogBox(
+                authID: authID,
                 isAddAddress: true,
                 onActionButton: (val) =>
                     {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
@@ -41,6 +42,7 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
               context: context,
               builder: (BuildContext buildContext) {
                 return NewAddressDialogBox(
+                  authID: authID,
                   isEditAddress: true,
                   address: state.address,
                   onActionButton: (val) =>
@@ -53,6 +55,7 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
               context: context,
               builder: (BuildContext buildContext) {
                 return DeleteAddressContainer(
+                  authID: authID,
                   address: state.address,
                   onAction: (val) =>
                       {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
@@ -84,6 +87,7 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
                   AddAddressContainer(),
                   ...state.addresses.map((address) {
                     return AddressContainer(
+                      authID: authID,
                       address: address,
                     );
                   }),
@@ -102,12 +106,13 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
 class DeleteAddressContainer extends StatelessWidget {
   final Address address;
   final Function onAction;
-  var authID = 'id1';
+  String authID;
 
   DeleteAddressContainer({
     Key key,
     this.onAction,
     this.address,
+    this.authID,
   }) : super(key: key);
 
   @override

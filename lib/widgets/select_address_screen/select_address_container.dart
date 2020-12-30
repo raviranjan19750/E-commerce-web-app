@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
+import 'package:living_desire/bloc/select_address/select_address_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import '../../models/models.dart';
 import '../widgets.dart';
 
-class SelectAddressContainer extends StatefulWidget {
-  @override
-  _SelectAddressContainerState createState() => _SelectAddressContainerState();
-}
-
-class _SelectAddressContainerState extends State<SelectAddressContainer> {
+class SelectAddressContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int isSelectedCount = 0;
     return BlocConsumer<ManageAddressesBloc, ManageAddresesState>(
       listener: (context, state) {
         if (state is LaunchAddNewAddressDialogueState) {
@@ -60,69 +55,24 @@ class _SelectAddressContainerState extends State<SelectAddressContainer> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  Strings.deliveringTo,
-                  style: TextStyle(
-                    fontSize: 20,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 14,
+                  ),
+                  child: Text(
+                    Strings.deliveringTo,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-
-                // Is any Addresss Selected
-                // ...state.addresses.map((address) {
-                //   if (address.isSelected) {
-                //     isSelectedCount = isSelectedCount + 1;
-                //   }
-                // }),
-                // Selected address Primary Address
-                ...state.addresses.map((address) {
-                  if (isSelectedCount > 0 && address.isSelected) {
-                    return AddressContainer(
-                      address: address,
-                    );
-                  } else if (isSelectedCount == 0 && address.isPrimary) {
-                    return AddressContainer(
-                      address: address,
-                    );
-                  }
-                  return SizedBox.shrink();
-                }),
-
-                Text(
-                  Strings.changeAddress,
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                //GridView.builder(gridDelegate: gridDelegate, itemBuilder: itemBuilder)
 
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 16.0,
-                    left: 16.0,
-                    right: 16.0,
-                    bottom: 16.0,
-                  ),
-                  child: Container(
-                    child: Wrap(
-                      children: [
-                        ...state.addresses.map((address) {
-                          if (!address.isSelected) {
-                            return InkWell(
-                              onTap: () {
-                                setState(() {
-                                  address.isSelected = true;
-                                });
-                              },
-                              child: AddressContainer(
-                                address: address,
-                              ),
-                            );
-                          } else {
-                            return SizedBox.shrink();
-                          }
-                        }),
-                        AddAddressContainer(),
-                      ],
-                    ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: SelectAddressGrid(
+                    addresses: state.addresses,
                   ),
                 ),
               ],
@@ -131,6 +81,58 @@ class _SelectAddressContainerState extends State<SelectAddressContainer> {
         }
         return Container();
       },
+    );
+  }
+}
+
+class SelectAddressGrid extends StatefulWidget {
+  final List<Address> addresses;
+
+  Address selectedAddress;
+
+  SelectAddressGrid({
+    Key key,
+    this.addresses,
+  }) : super(key: key);
+  @override
+  _SelectAddressGridState createState() => _SelectAddressGridState();
+}
+
+class _SelectAddressGridState extends State<SelectAddressGrid> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.selectedAddress = widget.addresses[0];
+
+    // BLOC provider to select Address bloc pass the value of selected address
+    BlocProvider.of<SelectAddressBloc>(context)
+        .add(LoadAddress(widget.selectedAddress));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: [
+        ...widget.addresses.map((address) {
+          return InkWell(
+            onTap: () {
+              setState(() {
+                widget.selectedAddress = address;
+              });
+
+              // BLOC provider to select Address bloc pass the value of selected address
+              BlocProvider.of<SelectAddressBloc>(context)
+                  .add(LoadAddress(widget.selectedAddress));
+            },
+            child: AddressContainer(
+              address: address,
+              selectedAddress: widget.selectedAddress,
+            ),
+          );
+        }),
+        AddAddressContainer(),
+      ],
     );
   }
 }

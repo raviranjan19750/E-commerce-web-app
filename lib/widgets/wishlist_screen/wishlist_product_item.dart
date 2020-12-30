@@ -12,7 +12,7 @@ class WishlistProductItem extends StatelessWidget {
   const WishlistProductItem({
     Key key,
     this.product,
-    this.authID = 'id1',
+    this.authID,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -87,6 +87,8 @@ class WishlistProductItemDetail extends StatelessWidget {
                     child: AddToCartButton(
                       productID: product.productID,
                       variantID: product.variantID,
+                      authID: authID,
+                      documentID: product.key,
                     ),
                   )
                 ],
