@@ -49,33 +49,46 @@ class Cart {
 
     return Cart(
       key: data['id'],
-      pincode: data['pincode'],
-      name: data['data']['productName'],
+      //pincode: data['pincode'],
+      name: data['data']['productName'] == null
+          ? null
+          : data['data']['productName'],
       // colour: data['data']['colour'],
       // colour:
       //     (data['data']['colour'] as List<dynamic>).map((e) {
       //   return Colour.fromJson(e);
       // }).toList(),
-      colour: GetColors.fromHex((data['data']['colour'] as List<dynamic>)
-          .map((e) => (e as String))
-          .toList()),
-      dateAdded: data['data']['dateAdded'],
-      manufacturingPrice: data['data']['manufacturingPrice'],
-      imageUrl: data['data']['images'][0],
-      discountPrice: data['data']['discountPrice'],
-      sellingPrice: data['data']['sellingPrice'],
-      isCombo: data['data']['isCombo'],
-      isAvailable: data['data']['isAvailable'],
-      productID: data['data']['productID'],
-      variantID: data['data']['variantID'],
-      quantity: data['data']['quantity'],
-      productType: data['data']['productType'],
-      size: data['data']['size'],
+      colour: data['data']['colour'] == null
+          ? null
+          : GetColors.fromHex((data['data']['colour'] as List)
+              .map((e) => (e as String))
+              .toList()),
+      // //dateAdded: data['data']['dateAdded'],
+      manufacturingPrice: data['data']['manufacturingPrice'] == null
+          ? null
+          : data['data']['manufacturingPrice'],
+      imageUrl:
+          data['data']['images'] == null ? null : data['data']['images'][0],
+      discountPrice: data['data']['discountPrice'] == null
+          ? null
+          : data['data']['discountPrice'],
+      sellingPrice: data['data']['sellingPrice'] == null
+          ? null
+          : data['data']['sellingPrice'],
+      //isCombo: data['data']['isCombo'],
+      isAvailable: data['data']['isAvailable'] == null
+          ? null
+          : data['data']['isAvailable'],
+      productID:
+          data['data']['productID'] == null ? null : data['data']['productID'],
+      variantID:
+          data['data']['variantID'] == null ? null : data['data']['variantID'],
+      quantity:
+          data['data']['quantity'] == null ? null : data['data']['quantity'],
+      productType: data['data']['productType'] == null
+          ? null
+          : data['data']['productType'],
+      size: data['data']['size'] == null ? null : data['data']['size'],
     );
-  }
-
-  @override
-  String toString() {
-    return 'Cart{key: $key, dateAdded: $dateAdded, variantID: $variantID, productID: $productID, productType: $productType, quantity: $quantity, manufacturingPrice: $manufacturingPrice, discountPrice: $discountPrice, isAvailable: $isAvailable, sellingPrice: $sellingPrice, name: $name, pincode: $pincode, imageUrl: $imageUrl, colour: $colour, size: $size, isCombo: $isCombo}';
   }
 }

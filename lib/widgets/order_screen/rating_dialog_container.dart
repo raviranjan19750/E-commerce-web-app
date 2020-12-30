@@ -37,8 +37,8 @@ class _RatingDialogContainerState extends State<RatingDialogContainer> {
     // TODO: implement initState
     super.initState();
     if (widget.orderedProduct.rating != null) {
-      review = widget.orderedProduct.rating.review;
-      previousRating = widget.orderedProduct.rating.rating;
+      review = widget.orderedProduct.review;
+      previousRating = widget.orderedProduct.rating;
     } else {
       review = '';
       previousRating = 0.0;
@@ -198,7 +198,15 @@ class _RatingDialogContainerState extends State<RatingDialogContainer> {
                     ? Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            widget.onActionButton(EditRatingNormalOrders(
+                              productID: widget.orderedProduct.productID,
+                              key: widget.orderedProduct.ratingID,
+                              previousRating: widget.orderedProduct.rating,
+                              rating: rating,
+                              review: review,
+                            ));
+                          },
                           child: Material(
                             elevation: 10.0,
                             child: Container(

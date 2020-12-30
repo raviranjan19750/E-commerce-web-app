@@ -24,7 +24,7 @@ class NormalOrderBloc extends Bloc<NormalOrderEvent, NormalOrderState> {
       yield* loadNormalOrderDetail(event);
     } else if (event is RefreshOrder) {
       yield NormalOrderDetailLoading();
-      // await Future.delayed(Duration(milliseconds: 200));
+      //await Future.delayed(Duration(milliseconds: 200));
 
       yield NormalOrderDetailLoadingSuccessful(
           normalOrderRepository.order.map((e) => e).toList());

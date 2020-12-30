@@ -7,13 +7,14 @@ class AddToCartButton extends StatefulWidget {
   final String productID;
   final String variantID;
   final authID;
+  final String documentID;
 
   const AddToCartButton({
-    Key key,
+    this.documentID,
     this.productID,
-    this.authID = 'id1',
+    this.authID,
     this.variantID,
-  }) : super(key: key);
+  });
   @override
   _AddToCartButtonState createState() => _AddToCartButtonState();
 }
@@ -28,6 +29,12 @@ class _AddToCartButtonState extends State<AddToCartButton> {
           variantID: widget.variantID,
           quantity: 1,
         ));
+        BlocProvider.of<WishlistBloc>(context).add(DeleteWishlist(
+          authID: widget.authID,
+          productID: widget.productID,
+          key: widget.documentID,
+        ));
+
         // BlocBuilder<CartBloc, CartState>(builder: (context, state) {
         //   if (state is CartDetailLoading) {
         //     return CircularProgressIndicator();

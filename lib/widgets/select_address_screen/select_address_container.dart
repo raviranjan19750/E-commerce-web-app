@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
+import 'package:living_desire/bloc/select_address/select_address_bloc.dart';
 import 'package:living_desire/config/configs.dart';
-import 'package:living_desire/data/data.dart';
 import '../../models/models.dart';
 import '../widgets.dart';
 
 class SelectAddressContainer extends StatelessWidget {
-  // Get Addresses based on Auth ID
-  final List<Address> addresses = address;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ManageAddressesBloc, ManageAddresesState>(
@@ -59,60 +57,84 @@ class SelectAddressContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  Strings.deliveringTo,
-                  style: TextStyle(
-                    fontSize: 20,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 14,
+                  ),
+                  child: Text(
+                    Strings.deliveringTo,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-
-                // Primary Address
-
-                ...state.addresses.map((address) {
-                  if (address.isPrimary) {
-                    return AddressContainer(
-                      address: address,
-                    );
-                  }
-                  return SizedBox.shrink();
-                }),
-
-                Text(
-                  Strings.changeAddress,
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                //GridView.builder(gridDelegate: gridDelegate, itemBuilder: itemBuilder)
 
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 16.0,
-                    left: 16.0,
-                    right: 16.0,
-                    bottom: 16.0,
-                  ),
-                  child: Container(
-                    child: Wrap(
-                      children: [
-                        ...state.addresses.map((address) {
-                          if (!address.isPrimary) {
-                            return AddressContainer(
-                              address: address,
-                            );
-                          } else {
-                            return SizedBox.shrink();
-                          }
-                        }),
-                        AddAddressContainer(),
-                      ],
-                    ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: SelectAddressGrid(
+                    addresses: state.addresses,
                   ),
                 ),
               ],
             ),
           );
         }
+        return Container();
       },
+    );
+  }
+}
+
+class SelectAddressGrid extends StatefulWidget {
+  final List<Address> addresses;
+
+  Address selectedAddress;
+
+  SelectAddressGrid({
+    Key key,
+    this.addresses,
+  }) : super(key: key);
+  @override
+  _SelectAddressGridState createState() => _SelectAddressGridState();
+}
+
+class _SelectAddressGridState extends State<SelectAddressGrid> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.selectedAddress = widget.addresses[0];
+
+    // BLOC provider to select Address bloc pass the value of selected address
+    BlocProvider.of<SelectAddressBloc>(context)
+        .add(LoadAddress(widget.selectedAddress));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: [
+        ...widget.addresses.map((address) {
+          return InkWell(
+            onTap: () {
+              setState(() {
+                widget.selectedAddress = address;
+              });
+
+              // BLOC provider to select Address bloc pass the value of selected address
+              BlocProvider.of<SelectAddressBloc>(context)
+                  .add(LoadAddress(widget.selectedAddress));
+            },
+            child: AddressContainer(
+              address: address,
+              selectedAddress: widget.selectedAddress,
+            ),
+          );
+        }),
+        AddAddressContainer(),
+      ],
     );
   }
 }

@@ -58,8 +58,8 @@ class NormalOrderRepository {
           if (o.orderID == orderID) {
             o.orderedProducts.map((e) {
               if (e.variantID == variantID) {
-                e.rating.rating = rating;
-                e.rating.review = review;
+                e.rating = rating;
+                e.review = review;
               }
             });
           }
@@ -100,8 +100,8 @@ class NormalOrderRepository {
           if (o.key == key) {
             o.orderedProducts.map((e) {
               if (e.productID == productID) {
-                e.rating.rating = rating;
-                e.rating.review = review;
+                e.rating = rating;
+                e.review = review;
               }
             });
           }
