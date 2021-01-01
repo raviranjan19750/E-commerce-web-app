@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/home/home_bloc.dart';
 import 'package:living_desire/bloc/scroll/bloc/scroll_bloc.dart';
 import 'package:living_desire/screens/all_product/product_widgets.dart';
@@ -50,32 +51,34 @@ class MyDesktopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ScrollBloc(controller: _scrollController),
-      child: Scaffold(
-        appBar: CustomAppBar(
-          size: 66,
-          visibleMiddleAppBar: false,
-          visibleSubAppBar: true,
-        ),
-        // backgroundColor: Colors.blue,
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              child,
-              Footer()
-            ],
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+      return BlocProvider(
+        create: (context) => ScrollBloc(controller: _scrollController),
+        child: Scaffold(
+          appBar: CustomAppBar(
+            size: state.status == AuthenticationStatus.authenticated ? 90 : 66,
+            visibleMiddleAppBar: false,
+            visibleSubAppBar: true,
+          ),
+          // backgroundColor: Colors.blue,
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                child,
+                Footer()
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
-
 }
 
 class HomeScreenvView extends StatelessWidget {

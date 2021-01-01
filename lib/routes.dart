@@ -52,10 +52,8 @@ class RoutesConfiguration {
         ),
       );
     }),
-    Path(
-      r'^' + HOME_PAGE,
-      (context, data) => HomeScreen(),
-    ),
+    Path(r'^' + CART,
+        (context, data) => MyDesktopView(child: CartScreenDesktop())),
     Path(
       r'^' + BULK_ORDER,
       (context, data) => BulkOrder(),
@@ -76,9 +74,11 @@ class RoutesConfiguration {
       r'^' + MY_ORDERS,
       (context, data) => MyDesktopView(child: OrderScreenDesktop()),
     ),
+    Path(r'^' + BULK_ORDER_QUOTATION,
+        (context, data) => BulkOrderQuotation(id: data['key'])),
     Path(
-      r'^' + BULK_ORDER_QUOTATION,
-          (context, data) => BulkOrderQuotation(id: data['key'])
+      r'^' + HOME_PAGE,
+      (context, data) => HomeScreen(),
     ),
   ];
 

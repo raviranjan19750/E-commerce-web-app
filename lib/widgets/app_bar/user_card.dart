@@ -98,11 +98,18 @@ class _UserCardState extends State<UserCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Login as Vardaan Chakraborty',
+                      BlocProvider.of<AuthenticationBloc>(context)
+                              .state
+                              .user
+                              .displayName ??
+                          "Username",
                       style: TextStyle(color: Palette.primaryColor),
                     ),
                     Text(
-                      '8617878497',
+                      BlocProvider.of<AuthenticationBloc>(context)
+                          .state
+                          .user
+                          .phoneNumber,
                       style: TextStyle(color: Palette.primaryColor),
                     ),
                   ],
