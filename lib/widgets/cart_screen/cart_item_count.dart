@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 
 class CartItemCount extends StatelessWidget {
   // Cart Item COunt Container
   final int quantity;
+
   final String documentID;
   final String productID;
 
@@ -18,7 +20,7 @@ class CartItemCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authID = 'id1';
+    String authID = BlocProvider.of<AuthenticationBloc>(context).state.user.uid;
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
