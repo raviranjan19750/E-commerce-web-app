@@ -48,6 +48,7 @@ class SearchApi {
         limit: limit,
         offset: offset,
         sort: sort);
+    print(searchResult);
     return searchResult;
   }
 

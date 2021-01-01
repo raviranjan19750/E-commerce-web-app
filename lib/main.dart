@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:living_desire/DBHandler/DBHandler.dart';
 import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
@@ -12,19 +13,26 @@ import 'package:living_desire/bloc/home/home_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/service/authentication_service.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:living_desire/service/sharedPreferences.dart';
 import './config/configs.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
-import 'package:living_desire/service/authentication_service.dart';
-import 'package:living_desire/service/searchapi.dart';
-import './config/configs.dart';
 import 'bloc/wishlist_config/wishlist_bloc.dart';
+import 'config/CustomRouteObserver.dart';
+
+GetIt locator = GetIt.instance;
+
+void setupLocator() {
+  locator.registerLazySingleton(() => NavigationService());
+}
+
 
 void main() async {
   final FirebaseApp _initialization = await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
   await UserPreferences().init();
+  setupLocator();
   var authRepo = AuthenticationRepository();
   // await authRepo.signInAnony();
   runApp(MyApp(
@@ -92,7 +100,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   final AuthenticationRepository authRepo;
 
-  const MyApp({Key key, this.authRepo}) : super(key: key);
+  MyApp({Key key, this.authRepo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +113,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),
-        //home: ManageAddressesScreen(),
+        builder: (context, child) => child,
+        navigatorKey: locator<NavigationService>().navigatorKey,
+        navigatorObservers: [CustomRouteObserver()],
         onGenerateRoute: RoutesConfiguration.onGenerateRoute,
       ),
     );

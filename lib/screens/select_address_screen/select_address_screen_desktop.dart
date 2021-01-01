@@ -38,7 +38,6 @@ class SelectAddressScreenDesktop extends StatelessWidget {
         children: [
           Expanded(child: SelectAddressContainer()),
           SelectAddressCartTotal(
-            cart: cart,
           ),
         ],
       ),

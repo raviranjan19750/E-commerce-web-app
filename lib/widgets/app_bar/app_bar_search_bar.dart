@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/routes.dart';
+import 'package:living_desire/service/navigation_service.dart';
+
+import '../../main.dart';
 
 class AppBarSearchBar extends StatelessWidget {
   @override
@@ -23,8 +25,8 @@ class AppBarSearchBar extends StatelessWidget {
               context.read<SearchBloc>().add(SearchTermChanged(val));
             },
             onSubmitted: (val) {
-              print("String SUbmitted");
-              Navigator.pushNamed(context, RoutesConfiguration.SEARCH_ALL_PRODUCT, arguments: val);
+              locator<NavigationService>().navigateTo(RoutesConfiguration.SEARCH_ALL_PRODUCT, queryParams: {"search": val});
+              // Navigator.pushNamed(context, path, arguments: val);
             },
             cursorColor: Palette.secondaryColor,
             decoration: InputDecoration(

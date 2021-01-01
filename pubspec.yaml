@@ -69,6 +69,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   logger: ^0.9.4
   convert: ^2.1.1
+  get_it: ^5.0.3
 
 dev_dependencies:
   flutter_test:

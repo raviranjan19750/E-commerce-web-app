@@ -17,9 +17,12 @@ import 'SimilarProductsAndCombo.dart';
 class ProductDetailDescriptionAndImage extends StatelessWidget {
   final List<Color> itemColor;
   final List<String> itemDescriptions;
-  Product product;
 
-   ProductDetailDescriptionAndImage({Key key, this.itemColor = itemColors, this.itemDescriptions = productItemDescriptions, this.product}) : super(key: key);
+  ProductDetailDescriptionAndImage(
+      {Key key,
+      this.itemColor = itemColors,
+      this.itemDescriptions = productItemDescriptions})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +34,15 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
       } else if (state is ProductDetailLoadingSuccessful) {
         return Column(
           children: [
-
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // list of images
-                ProductDetailEnlargeImage(imageURL: state.productDetail.images, productID: state.productDetail.productID, variantID: state.productDetail.variantID,product: product,),
+                ProductDetailEnlargeImage(
+                  imageURL: state.productDetail.images,
+                  productID: state.productDetail.productID,
+                  variantID: state.productDetail.variantID,
+                ),
 
                 // description of product
                 Container(
@@ -77,22 +83,22 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                       Container(
                         child: (state.productDetail.isAvailable)
                             ? Text(
-                          "You save ₹ " +
-                              (state.productDetail.sellingPrice -
-                                  state.productDetail.discountPrice)
-                                  .toString(),
-                          style: TextStyle(
-                              color: Colors.grey[500],
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        )
+                                "You save ₹ " +
+                                    (state.productDetail.sellingPrice -
+                                            state.productDetail.discountPrice)
+                                        .toString(),
+                                style: TextStyle(
+                                    color: Colors.grey[500],
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18),
+                              )
                             : Text(
-                          Strings.outOfStock,
-                          style: TextStyle(
-                              color: Colors.red[500],
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                        ),
+                                Strings.outOfStock,
+                                style: TextStyle(
+                                    color: Colors.red[500],
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18),
+                              ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 16.0),
@@ -100,10 +106,12 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            (state.productDetail.isAvailable )? ProductAvailability(
-                              productID: state.productDetail.productID,
-                              variantID: state.productDetail.variantID,
-                            ) : Container(),
+                            (state.productDetail.isAvailable)
+                                ? ProductAvailability(
+                                    productID: state.productDetail.productID,
+                                    variantID: state.productDetail.variantID,
+                                  )
+                                : Container(),
 //list of color
 //todo Set lst of color
                             Container(
@@ -126,12 +134,18 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                       margin: EdgeInsets.only(left: 6.0),
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Color(int.parse("FF" + state.productDetail.colour[index], radix: 16)),
+                                          color: Color(int.parse(
+                                              "FF" +
+                                                  state.productDetail
+                                                      .colour[index],
+                                              radix: 16)),
                                           border: Border.all(
                                               width: 0.5, color: Colors.black)),
                                       child: CircleAvatar(
                                         radius: 10,
-                                        backgroundColor: Color(int.parse(state.productDetail.colour[index], radix: 16)),
+                                        backgroundColor: Color(int.parse(
+                                            state.productDetail.colour[index],
+                                            radix: 16)),
                                       ),
                                     ),
                                   );
@@ -167,7 +181,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                         ),
                                         ProductSizeDropdown(
                                           productSizeList:
-                                          state.productDetail.sizeOptions,
+                                              state.productDetail.sizeOptions,
                                           productColor: "Blue",
                                           productID: "0IeSrbsqqxiqwELq4Qqm",
                                           productSize: state.productDetail.size,
@@ -198,24 +212,24 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
 //customize logo button
                             state.productDetail.isCustomizable
                                 ? Container(
-                              height: 45,
-                              width: 220,
-                              margin: EdgeInsets.only(top: 12.0),
-                              child: CustomWidgetButton(
-                                onPressed: () {},
-                                text: Strings.customizeWithLogo,
-                              ),
-                            )
+                                    height: 45,
+                                    width: 220,
+                                    margin: EdgeInsets.only(top: 12.0),
+                                    child: CustomWidgetButton(
+                                      onPressed: () {},
+                                      text: Strings.customizeWithLogo,
+                                    ),
+                                  )
                                 : Container(
-                              height: 45,
-                              width: 220,
-                              color: Colors.brown,
-                              margin: EdgeInsets.only(top: 12.0),
-                              child: CustomWidgetButton(
-                                onPressed: () {},
-                                text: Strings.customizeWithLogo,
-                              ),
-                            ),
+                                    height: 45,
+                                    width: 220,
+                                    color: Colors.brown,
+                                    margin: EdgeInsets.only(top: 12.0),
+                                    child: CustomWidgetButton(
+                                      onPressed: () {},
+                                      text: Strings.customizeWithLogo,
+                                    ),
+                                  ),
 
                             Container(
                               margin: EdgeInsets.only(top: 20.0),
@@ -232,23 +246,28 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.4,
                               margin: EdgeInsets.only(top: 8.0),
                               child: Column(
-                                children: state.productDetail.description.map((e) => Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Bullets(),
-                                    Container(
-                                      width: 10,
-                                    ),
-                                    Flexible(
-                                      child: Text(
-                                        e,
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.black),
-                                      ),
-                                    ),
-                                  ],
-                                )).toList(),
+                                children: state.productDetail.description
+                                    .map((e) => Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Bullets(),
+                                            Container(
+                                              width: 10,
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                e,
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ],
+                                        ))
+                                    .toList(),
                               ),
                             )
                           ],
@@ -259,15 +278,13 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                 ),
               ],
             ),
-
-            SimilarProductAndCombos(type:state.productDetail.type, subType:state.productDetail.subType),
-
+            SimilarProductAndCombos(
+                type: state.productDetail.type,
+                subType: state.productDetail.subType),
             Container(
               height: 100,
             ),
           ],
-
-
         );
       } else {
         return Container();
