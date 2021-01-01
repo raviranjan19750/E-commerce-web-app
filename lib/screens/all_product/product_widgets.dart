@@ -94,14 +94,10 @@ class ProductCardContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Tooltip(
-                decoration: BoxDecoration(color: Colors.green.withOpacity(0.5)),
-                message: product.title.replaceAll(" ", "\n"),
-                child: Text(
-                  product.title,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              Text(
+                product.title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 2,

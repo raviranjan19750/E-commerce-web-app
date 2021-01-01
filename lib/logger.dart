@@ -6,7 +6,7 @@ class LogBuilder {
   static Logger getLogger() {
     if (_logger == null) {
       _logger = Logger(
-          //level: Level.error,
+          level: Level.verbose,
           printer: PrettyPrinter(
               printEmojis: true,
               colors: true,
