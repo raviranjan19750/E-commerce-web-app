@@ -4,7 +4,6 @@ import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 import 'package:living_desire/screens/login/login_view.dart';
-import 'package:living_desire/service/sharedPreferences.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import '../widgets.dart';
 
 class CartContainer extends StatelessWidget {
   // Cart Widget
+
   @override
   Widget build(BuildContext context) {
     //TODO: Get The cart of the same user
