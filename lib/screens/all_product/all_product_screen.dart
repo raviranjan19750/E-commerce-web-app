@@ -10,13 +10,17 @@ import 'package:living_desire/models/product.dart';
 import 'package:living_desire/screens/all_product/product_widgets.dart';
 import 'package:living_desire/screens/home_screen/home_screen_desktop.dart';
 
+import '../../logger.dart';
+
 class AllProductScreen extends StatelessWidget {
+  var LOG = LogBuilder.getLogger();
   final String searchFilter;
 
   AllProductScreen({Key key, this.searchFilter}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    LOG.i(searchFilter);
     AllProductEvent event;
     if (searchFilter != null && searchFilter.isNotEmpty) {
       event = LoadAllProductWithSearchParams(filterText: searchFilter);

@@ -15,6 +15,9 @@ class Strings {
   static const String combo = "Combo";
   static const String myCart = "My Cart";
   static const String delete = "Delete";
+  static const String areYouSure = "Are you sure?";
+  static const String no = "No";
+  static const String yes = "Yes";
   static const String setDefault = "Set as Default";
   static const String manageAddresses = "Manage Addresses";
   static const String normalOrders = "Normal Orders";

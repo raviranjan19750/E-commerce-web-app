@@ -14,10 +14,9 @@ class ProductDetailEnlargeImage extends StatefulWidget {
   final List<String> imageURL;
   String productID;
   String variantID;
-  Product product;
 
   ProductDetailEnlargeImage(
-      {Key key, this.imageURL, this.productID, this.variantID, this.product})
+      {Key key, this.imageURL, this.productID, this.variantID,})
       : super(key: key);
 
   @override
@@ -135,14 +134,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
               // enlarged image
 
-              BlocProvider(create: (context) =>
-                  ProductCardBloc(
-                    customerRepo: RepositoryProvider.of(context),
-                    wishlistBloc: BlocProvider.of(context),
-                    product: widget.product,
-                  ),
-
-              child: InkWell(
+              InkWell(
                 child: Container(
                   height: imageHeight,
                   width: imageWidth,
@@ -159,12 +151,12 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                       Positioned(
                         right: 0,
                         top: 0,
-                        child: ProductWishlistButton(productId: ""),
+                        child: Icon(Icons.favorite),
                       ),
                     ],
                   ),
                 ),
-              ),),
+              ),
 
 
 

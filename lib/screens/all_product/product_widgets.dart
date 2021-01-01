@@ -6,7 +6,9 @@ import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/models/sorting_criteria.dart';
+import 'package:living_desire/service/navigation_service.dart';
 
+import '../../main.dart';
 import '../../routes.dart';
 
 class ProductCard extends StatelessWidget {
@@ -52,13 +54,20 @@ class ProductCardContent extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, RoutesConfiguration.PRODUCT_DETAIL,
-                        arguments: {
-                          "product": product,
-                          "productID": product.productId,
-                          "variantID": product.varientId
-                        });
+                    locator<NavigationService>().navigateTo(
+                      RoutesConfiguration.PRODUCT_DETAIL,
+                      queryParams: {
+                        "pid": product.productId,
+                        "vid": product.varientId
+                      },
+                    );
+                    // Navigator.pushNamed(
+                    //     context, path,
+                    //     arguments: {
+                    //       "product": product,
+                    //       "productID": product.productId,
+                    //       "variantID": product.varientId
+                    //     });
                   },
                   child: Image.network(
                     product.imageUrls[0],
@@ -85,10 +94,14 @@ class ProductCardContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                product.title,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.bold),
+              Tooltip(
+                decoration: BoxDecoration(color: Colors.green.withOpacity(0.5)),
+                message: product.title.replaceAll(" ", "\n"),
+                child: Text(
+                  product.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               SizedBox(
                 height: 2,
@@ -357,13 +370,20 @@ class _FilterDropDownState extends State<FilterDropDown> {
               child: Text("Price: Low To High"),
               value: FilterSortCriteria.PRICE_LOW_TO_HIGH,
             ),
-            DropdownMenuItem(child: Text("Price: High To Low"), value: FilterSortCriteria.PRICE_HIGH_TO_LOW,),
-            DropdownMenuItem(child: Text("Newest Arrival"), value: FilterSortCriteria.NEWEST_FIRST,),
+            DropdownMenuItem(
+              child: Text("Price: High To Low"),
+              value: FilterSortCriteria.PRICE_HIGH_TO_LOW,
+            ),
+            DropdownMenuItem(
+              child: Text("Newest Arrival"),
+              value: FilterSortCriteria.NEWEST_FIRST,
+            ),
           ],
           onChanged: (value) {
             setState(() {
               _value = value;
-              BlocProvider.of<AllProductBloc>(context).add(LoadAllProductWithSearchParams(sort: _value));
+              BlocProvider.of<AllProductBloc>(context)
+                  .add(LoadAllProductWithSearchParams(sort: _value));
             });
           }),
     );

@@ -18,13 +18,11 @@ import 'SimilarProductsAndCombo.dart';
 class ProductDetailDescriptionAndImage extends StatelessWidget {
   final List<Color> itemColor;
   final List<String> itemDescriptions;
-  Product product;
 
   ProductDetailDescriptionAndImage(
       {Key key,
       this.itemColor = itemColors,
-      this.itemDescriptions = productItemDescriptions,
-      this.product})
+      this.itemDescriptions = productItemDescriptions})
       : super(key: key);
 
   @override
@@ -45,7 +43,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                   imageURL: state.productDetail.images,
                   productID: state.productDetail.productID,
                   variantID: state.productDetail.variantID,
-                  product: product,
+
                 ),
 
                 // description of product

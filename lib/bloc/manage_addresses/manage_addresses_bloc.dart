@@ -29,6 +29,8 @@ class ManageAddressesBloc
       yield* updateAddressDetails(event);
     } else if (event is LoadEditAddressDialogueEvent) {
       yield LaunchEditAddressDialogueState(event.address);
+    } else if (event is LoadDeleteAddressDialogueEvent) {
+      yield LaunchDeleteAddressDialogueState(event.address);
     }
   }
 
@@ -39,13 +41,7 @@ class ManageAddressesBloc
     try {
       List<Address> addresses =
           await addresssRepository.getAddressDetails(event.authID);
-      // var response = await addresssRepository.addAddressDetails(
-      //   event.authID,
-      //   "event.address",
-      //   "event.pincode",
-      //   "event.phone",
-      //   "event.name",
-      // );
+
       yield AddressDetailLoadingSuccessful(addresses);
     } catch (e) {
       print(e.toString());

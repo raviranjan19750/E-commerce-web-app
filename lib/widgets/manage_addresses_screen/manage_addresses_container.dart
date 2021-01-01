@@ -10,15 +10,15 @@ import '../../data/data.dart';
 import '../widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ManageAddressesContainer extends StatefulWidget {
+class ManageAddressesContainer extends StatelessWidget {
+  final String authID;
+
+  const ManageAddressesContainer({
+    Key key,
+    this.authID,
+  }) : super(key: key);
   // Manage Address Container
 
-  @override
-  _ManageAddressesContainerState createState() =>
-      _ManageAddressesContainerState();
-}
-
-class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ManageAddressesBloc, ManageAddresesState>(
@@ -29,6 +29,7 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
             context: context,
             builder: (BuildContext buildContext) {
               return NewAddressDialogBox(
+                authID: authID,
                 isAddAddress: true,
                 onActionButton: (val) =>
                     {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
@@ -41,9 +42,22 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
               context: context,
               builder: (BuildContext buildContext) {
                 return NewAddressDialogBox(
+                  authID: authID,
                   isEditAddress: true,
                   address: state.address,
                   onActionButton: (val) =>
+                      {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
+                );
+              });
+        } else if (state is LaunchDeleteAddressDialogueState) {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext buildContext) {
+                return DeleteAddressContainer(
+                  authID: authID,
+                  address: state.address,
+                  onAction: (val) =>
                       {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
                 );
               });
@@ -73,6 +87,7 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
                   AddAddressContainer(),
                   ...state.addresses.map((address) {
                     return AddressContainer(
+                      authID: authID,
                       address: address,
                     );
                   }),
@@ -84,6 +99,86 @@ class _ManageAddressesContainerState extends State<ManageAddressesContainer> {
           return Container();
         }
       },
+    );
+  }
+}
+
+class DeleteAddressContainer extends StatelessWidget {
+  final Address address;
+  final Function onAction;
+  String authID;
+
+  DeleteAddressContainer({
+    Key key,
+    this.onAction,
+    this.address,
+    this.authID,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.2,
+        width: MediaQuery.of(context).size.width * 0.3,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                Strings.areYouSure,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: InkWell(
+                    onTap: () {
+                      onAction(DeleteAddress(
+                        authID: authID,
+                        key: address.key,
+                      ));
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      Strings.yes,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      Strings.no,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }

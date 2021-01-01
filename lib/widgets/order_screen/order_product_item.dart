@@ -200,6 +200,7 @@ class OrderedProductRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(orderedProduct.toString());
     return Padding(
       padding: const EdgeInsets.only(
         top: 15.0,
@@ -213,11 +214,14 @@ class OrderedProductRating extends StatelessWidget {
                   onRatingChanged: (ratingValue) {
                     // Show Dialog
                     // pass rating parameters
+                    BlocProvider.of<NormalOrderItemBloc>(context).add(
+                        LoadEditRatingDialogueEvent(
+                            orderedProduct: orderedProduct));
                   },
                   filledIcon: Icons.star,
                   emptyIcon: Icons.star_border,
                   isHalfAllowed: false,
-                  initialRating: orderedProduct.rating.rating,
+                  initialRating: orderedProduct.rating,
                   filledColor: Colors.yellow[700],
                   emptyColor: Colors.black12,
                   size: MediaQuery.of(context).size.width * 0.013,
@@ -231,9 +235,14 @@ class OrderedProductRating extends StatelessWidget {
                 //   BlocProvider.of<NormalOrderBloc>(context)
                 //       .add(LoadAddRatingDialogueEvent());
                 // }
-
-                BlocProvider.of<NormalOrderItemBloc>(context)
-                    .add(LoadAddRatingDialogueEvent());
+                if (orderedProduct.rating != null) {
+                  BlocProvider.of<NormalOrderItemBloc>(context).add(
+                      LoadEditRatingDialogueEvent(
+                          orderedProduct: orderedProduct));
+                } else {
+                  BlocProvider.of<NormalOrderItemBloc>(context)
+                      .add(LoadAddRatingDialogueEvent());
+                }
 
                 // showDialog(
                 //     barrierDismissible: false,

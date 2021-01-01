@@ -9,6 +9,7 @@ import 'package:living_desire/models/product.dart';
 import 'package:living_desire/models/product_type.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailDescriptionsAndImage.dart';
 import 'package:living_desire/screens/ProductDetailScreen/SimilarProductsAndCombo.dart';
+import 'package:living_desire/screens/home_screen/home_screen_desktop.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
 import 'package:living_desire/widgets/home_screen_products/product_item.dart';
 import 'package:living_desire/widgets/nextListHover.dart';
@@ -17,42 +18,42 @@ import 'package:living_desire/widgets/productTypeBar.dart';
 class ProductDetailScreen extends StatelessWidget {
   final String productID;
   final String variantID;
-  final Product product;
 
   const ProductDetailScreen({
     Key key,
     this.productID,
     this.variantID,
-    this.product,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("Loading Product Detail");
     return MultiBlocProvider(providers: [
       BlocProvider(
-        create: (context) => ProductDetailBloc(productRepository: RepositoryProvider.of(context))..add(LoadProductDetail(productID, variantID,)),
+        create: (context) =>
+            ProductDetailBloc(productRepository: RepositoryProvider.of(context))
+              ..add(LoadProductDetail(
+                productID,
+                variantID,
+              )),
       ),
-      
-      BlocProvider(create: (context) => CartBloc(cartRepository: RepositoryProvider.of(context))),
-    ], child: ProductDetail(product: product,));
+      BlocProvider(
+          create: (context) =>
+              CartBloc(cartRepository: RepositoryProvider.of(context))),
+    ], child: ProductDetail());
   }
 }
 
 class ProductDetail extends StatelessWidget {
-   Product product;
-
-   ProductDetail({Key key, this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return ListView(
       shrinkWrap: true,
       children: [
         Container(
           margin: EdgeInsets.only(top: 64.0),
-          child: ProductDetailDescriptionAndImage(product: product,),
+          child: ProductDetailDescriptionAndImage(),
         ),
-
       ],
     );
   }

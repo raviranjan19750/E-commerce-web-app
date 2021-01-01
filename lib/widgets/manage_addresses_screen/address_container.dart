@@ -8,11 +8,14 @@ import '../widgets.dart';
 class AddressContainer extends StatelessWidget {
   // Address Container
   final Address address;
-  var authID = 'id1';
+  String authID;
+  Address selectedAddress;
 
   AddressContainer({
     Key key,
     this.address,
+    this.authID,
+    this.selectedAddress,
   }) : super(key: key);
 
   @override
@@ -26,11 +29,16 @@ class AddressContainer extends StatelessWidget {
           elevation: 3.0,
           child: Container(
             decoration: BoxDecoration(
+                color: (selectedAddress == address)
+                    ? Colors.grey[400]
+                    : Colors.white,
                 border: Border.all(
-              style: BorderStyle.solid,
-              color: Colors.grey[400],
-              width: 1.5,
-            )),
+                  style: BorderStyle.solid,
+                  color: (selectedAddress == address)
+                      ? Colors.grey[400]
+                      : Colors.white,
+                  width: 1.5,
+                )),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,11 +168,9 @@ class AddressContainer extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
+                              // Bloc Provider to Delete Address dialog box
                               BlocProvider.of<ManageAddressesBloc>(context)
-                                  .add(DeleteAddress(
-                                authID: authID,
-                                key: address.key,
-                              ));
+                                  .add(LoadDeleteAddressDialogueEvent(address));
                             },
                           ),
                         ),

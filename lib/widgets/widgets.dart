@@ -39,3 +39,4 @@ export 'order_screen/order_title_delivery_status.dart';
 export 'button_list.dart';
 export 'cart_screen/cart_item_count.dart';
 export 'wishlist_screen/add_to_cart_button.dart';
+export 'order_screen/custom_tooltip.dart';

@@ -1,21 +1,23 @@
 import 'dart:html';
 
 class Address {
-  final String key;
-  final String address;
-  final String pincode;
-  final Geolocation location;
-  final bool isPrimary;
-  final String name;
-  final String phone;
+  String key;
+  String address;
+  String pincode;
+  Geolocation location;
+  bool isPrimary;
+  String name;
+  String phone;
+  bool isSelected;
 
-  const Address({
+  Address({
     this.key,
     this.address,
     this.pincode,
     this.location,
     this.isPrimary,
     this.name,
+    this.isSelected = false,
     this.phone,
   });
 
@@ -40,6 +42,7 @@ class Address {
       isPrimary: data['data']['isPrimary'],
       pincode: data['data']['pincode'],
       location: data['data']['location'],
+      isSelected: false,
     );
   }
 }

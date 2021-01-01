@@ -54,7 +54,7 @@ class MyDesktopView extends StatelessWidget {
       create: (context) => ScrollBloc(controller: _scrollController),
       child: Scaffold(
         appBar: CustomAppBar(
-          size: 92,
+          size: 66,
           visibleMiddleAppBar: false,
           visibleSubAppBar: true,
         ),
@@ -75,6 +75,7 @@ class MyDesktopView extends StatelessWidget {
       ),
     );
   }
+
 }
 
 class HomeScreenvView extends StatelessWidget {

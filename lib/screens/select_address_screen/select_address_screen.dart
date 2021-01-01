@@ -4,30 +4,7 @@ import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
 
-class SelectAddressScreen extends StatefulWidget {
-  final List<Cart> cart;
-
-  SelectAddressScreen({
-    Key key,
-    this.cart,
-  }) : super(key: key);
-
-  @override
-  _SelectAddressScreenState createState() => _SelectAddressScreenState();
-}
-
-class _SelectAddressScreenState extends State<SelectAddressScreen> {
-  // TrackingScrollController added for tracking scroll cursor
-  final TrackingScrollController trackingScrollController =
-      TrackingScrollController();
-
-  @override
-  void dispose() {
-    // Always dispose a controller when used
-    trackingScrollController.dispose();
-    super.dispose();
-  }
-
+class SelectAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -36,12 +13,9 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
         // Using Responsive widget show mobile and desktop website
         body: Responsive(
           //Mobile Website
-          mobile: SelectAddressScreenMobile(
-              scrollController: trackingScrollController),
+          mobile: SelectAddressScreenMobile(),
           // Desktop Website
-          desktop: SelectAddressScreenDesktop(
-            cart: widget.cart,
-          ),
+          desktop: SelectAddressScreenDesktop(),
         ),
       ),
     );

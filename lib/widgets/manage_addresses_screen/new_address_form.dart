@@ -16,7 +16,7 @@ class NewAddressForm extends StatefulWidget {
   const NewAddressForm({
     Key key,
     this.address,
-    this.authID = 'id1',
+    this.authID,
     this.onActionAddress,
     this.isAddAddress = false,
     this.isEditAddress = false,

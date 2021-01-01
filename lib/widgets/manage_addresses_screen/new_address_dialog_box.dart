@@ -8,10 +8,12 @@ class NewAddressDialogBox extends StatelessWidget {
   final bool isAddAddress;
   final bool isEditAddress;
   final Address address;
+  String authID;
 
-  const NewAddressDialogBox({
+  NewAddressDialogBox({
     Key key,
     this.onActionButton,
+    this.authID,
     this.address,
     this.isAddAddress = false,
     this.isEditAddress = false,
@@ -58,6 +60,7 @@ class NewAddressDialogBox extends StatelessWidget {
                 : SizedBox.shrink(),
             // TODO:Form
             NewAddressForm(
+              authID: authID,
               address: address,
               isAddAddress: isAddAddress,
               isEditAddress: isEditAddress,

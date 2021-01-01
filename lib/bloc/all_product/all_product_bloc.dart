@@ -91,24 +91,39 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       {List<Product> prev, int offset = 0, int limit = 20}) {
     final hits = searchResult.hits;
 
+    LOG.i(searchResult.toString());
     int len = hits.length;
     List<Product> result = List();
     for (int x = 0; x < len; x++) {
       Doc hit = hits[x];
       List<String> imgUrls = List();
-      for (var img in hit.doc['images']) {
-        imgUrls.add(img.toString());
+      try {
+        for (var img in hit.doc['images']) {
+          imgUrls.add(img.toString());
+        }
+      } catch (e) {
+        LOG.e("Unable to get images for ${hit.doc}", e);
       }
 
       List<String> colors = List();
-      for (var col in hit.doc['colour']) {
-        colors.add(col['hexCode'].toString());
+
+      try {
+        for (var col in hit.doc['colour']) {
+          colors.add(col['hexCode'].toString());
+        }
+      } catch (e) {
+        LOG.e('Unable to get color for ${hit.doc}');
       }
 
       Set<String> tags = HashSet();
-      for (var tag in hit.doc['tags']) {
-        tags.add(tag.toString());
+      try {
+        for (var tag in hit.doc['tags']) {
+          tags.add(tag.toString());
+        }
+      } catch (e) {
+        LOG.e('Unable to get tags for ${hit.doc}');
       }
+
       var prod = Product(
           title: hit.doc['name'],
           color: colors,
