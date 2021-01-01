@@ -53,8 +53,6 @@ class WishlistProductItemDetail extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    // height: MediaQuery.of(context).size.height * 0.32,
-                    // width: MediaQuery.of(context).size.width * 0.12,
                     child: Image.network(
                       product.imageUrl,
                       fit: BoxFit.cover,
