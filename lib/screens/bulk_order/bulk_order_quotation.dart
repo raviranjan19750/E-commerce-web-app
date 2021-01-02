@@ -215,70 +215,75 @@ class BulkOrderQuotation extends StatelessWidget{
                               ]
                           ),
 
-                          Container(
+                          Visibility(
 
-                            margin: EdgeInsets.only(left: 200),
+                            visible: (value.bulkOrder.quotationStatus != 101),
 
-                            child: Column(
+                            child: Container(
 
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              margin: EdgeInsets.only(left: 200),
 
-                              children: [
+                              child: Column(
 
-                                Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
 
-                                  children: [
+                                children: [
 
-                                    Text('Sub Total : ',style: TextStyle(fontSize: 20,color: Colors.grey[500],),),
-                                    Text('   ₹ 3000',style: TextStyle(fontSize: 22,color: Colors.black),)
+                                  Row(
 
-                                  ],
+                                    children: [
 
-                                ),
+                                      Text('Sub Total : ',style: TextStyle(fontSize: 20,color: Colors.grey[500],),),
+                                      Text('   ₹ 3000',style: TextStyle(fontSize: 22,color: Colors.black),)
 
-                                Padding(padding: EdgeInsets.symmetric(vertical: 6),),
-
-                                RaisedButton(
-
-                                  onPressed: (){},
-
-                                  color: Palette.secondaryColor,
-
-                                  child: Container(
-
-                                    padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
-
-                                    child:Text('Check Out',style: TextStyle(color: Colors.white),),
+                                    ],
 
                                   ),
 
-                                ),
+                                  Padding(padding: EdgeInsets.symmetric(vertical: 6),),
 
-                                Padding(padding: EdgeInsets.symmetric(vertical: 12),),
+                                  RaisedButton(
 
-                                FlatButton(
+                                    onPressed: (){},
 
-                                  onPressed: (){},
+                                    color: Palette.secondaryColor,
 
-                                  child: Container(
+                                    child: Container(
 
+                                      padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
 
-                                    padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
-
-                                    decoration: BoxDecoration(
-
-                                        border: Border.all(color: Palette.secondaryColor)
+                                      child:Text('Check Out',style: TextStyle(color: Colors.white),),
 
                                     ),
 
-                                    child:Text('Continue Shopping',style: TextStyle(color: Palette.secondaryColor),),
+                                  ),
+
+                                  Padding(padding: EdgeInsets.symmetric(vertical: 12),),
+
+                                  FlatButton(
+
+                                    onPressed: (){},
+
+                                    child: Container(
+
+
+                                      padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
+
+                                      decoration: BoxDecoration(
+
+                                          border: Border.all(color: Palette.secondaryColor)
+
+                                      ),
+
+                                      child:Text('Continue Shopping',style: TextStyle(color: Palette.secondaryColor),),
+
+                                    ),
 
                                   ),
 
-                                ),
+                                ],
 
-                              ],
-
+                              ),
                             ),
                           )
                         ],
