@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/strings.dart';
-import 'package:living_desire/data/data.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductAvailablity.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
@@ -15,15 +14,6 @@ import 'package:living_desire/widgets/bullet.dart';
 import 'SimilarProductsAndCombo.dart';
 
 class ProductDetailDescriptionAndImage extends StatelessWidget {
-  final List<Color> itemColor;
-  final List<String> itemDescriptions;
-
-  ProductDetailDescriptionAndImage(
-      {Key key,
-      this.itemColor = itemColors,
-      this.itemDescriptions = productItemDescriptions})
-      : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductDetailBloc, ProductDetailState>(
@@ -42,7 +32,6 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                   imageURL: state.productDetail.images,
                   productID: state.productDetail.productID,
                   variantID: state.productDetail.variantID,
-
                 ),
 
                 // description of product
@@ -261,9 +250,9 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                 ),
               ],
             ),
-
-            SimilarProductAndCombos(type: state.productDetail.type, subType: state.productDetail.subType),
-
+            SimilarProductAndCombos(
+                type: state.productDetail.type,
+                subType: state.productDetail.subType),
             Container(
               height: 100,
             ),

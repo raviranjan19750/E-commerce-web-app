@@ -10,8 +10,9 @@ class SimilarProductsLoading extends SimilarProductsState {}
 class SimilarProductsLoadingSuccessful extends SimilarProductsState {
 
   final List<Product> product;
+  final List<ComboProduct> comboProduct;
 
-  SimilarProductsLoadingSuccessful(this.product);
+  SimilarProductsLoadingSuccessful(this.product, this.comboProduct);
 
 }
 

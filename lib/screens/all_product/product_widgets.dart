@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
+import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/models/sorting_criteria.dart';
 import 'package:living_desire/service/navigation_service.dart';
@@ -137,6 +138,135 @@ class ProductCardContent extends StatelessWidget {
   }
 }
 
+class ComboProductCard extends StatelessWidget {
+  final ComboProduct comboProduct;
+  final Product product;
+
+  const ComboProductCard({Key key, this.comboProduct, this.product}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return BlocProvider(
+      create: (context) => ProductCardBloc(
+        customerRepo: RepositoryProvider.of(context),
+        wishlistBloc: BlocProvider.of(context),
+        product: product,
+      ),
+      child: Card(
+
+          elevation: 5.0,
+          child: ComboProductCardContent(
+            comboProduct: comboProduct,
+          )),
+    );
+  }
+}
+
+class ComboProductCardContent extends StatelessWidget {
+  final ComboProduct comboProduct;
+
+  const ComboProductCardContent({Key key, this.comboProduct}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double discount = 0;
+    discount = (comboProduct.retailPrice - comboProduct.discountPrice) /
+        comboProduct.retailPrice *
+        100;
+    // print("product ID: ${product.varientId}");
+
+    return Column(
+      children: [
+        Expanded(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                child: InkWell(
+                  onTap: () {
+                    /* locator<NavigationService>().navigateTo(
+                      RoutesConfiguration.PRODUCT_DETAIL,
+                      queryParams: {
+                        "pid": product.productId,
+                        "vid": product.varientId
+                      },
+                    );*/
+                    // Navigator.pushNamed(
+                    //     context, path,
+                    //     arguments: {
+                    //       "product": product,
+                    //       "productID": product.productId,
+                    //       "variantID": product.varientId
+                    //     });
+                  },
+                  child: Image.network(
+                    comboProduct.imageUrls[0],
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                width: double.infinity,
+                height: double.infinity,
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: ProductWishlistButton(productId: comboProduct.productId),
+              ),
+              Positioned(
+                bottom: 0,
+                child: _AddToCartButton(),
+              )
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                comboProduct.title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 2,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "₹" + comboProduct.discountPrice.toString(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, color: Colors.black87),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "₹" + comboProduct.retailPrice.toString(),
+                    style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.grey),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  if (discount > 0)
+                    Text(
+                      discount.toStringAsPrecision(2) + "% Off",
+                      style: TextStyle(color: Colors.green),
+                    )
+                ],
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class FilterCard extends StatefulWidget {
   final FilterTag filters;
   final int maxFiltersToShow;
@@ -241,6 +371,7 @@ class _FilterCardState extends State<FilterCard> {
 class FilterCheckBox extends StatelessWidget {
   final ValueChanged<bool> onChanged;
   final FilterCategoryChild filterLabel;
+
   const FilterCheckBox({Key key, this.onChanged, this.filterLabel})
       : assert(filterLabel != null),
         super(key: key);

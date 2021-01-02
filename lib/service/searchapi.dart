@@ -192,8 +192,6 @@ class SearchApi {
   }
 
   Future<SearchResult> getSimilarProduct(String type, String subType) async {
-
-
     var criteria = {
       "bool": {
         "filter": [
@@ -210,8 +208,30 @@ class SearchApi {
         ]
       }
     };
-    final searchResult = await client.search(index: INDEX_NAME, limit: 18, query: criteria);
+    final searchResult =
+        await client.search(index: INDEX_NAME, limit: 18, query: criteria);
 
+    return searchResult;
+  }
+
+  Future<SearchResult> getComboProduct(String type, String subType) async {
+    var criteria = {
+      "bool": {
+        "must": [
+          {
+            "match": {"isCombo": true}
+          },
+          {
+            "match": {"items.subType": "Sofa cum Bed"}
+          },
+          {
+            "match": {"items.type": "Bean Bag"}
+          }
+        ]
+      }
+    };
+    final searchResult =
+        await client.search(index: INDEX_NAME, limit: 18, query: criteria);
     return searchResult;
   }
 }
