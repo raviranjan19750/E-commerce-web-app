@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:living_desire/models/models.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
 import 'package:meta/meta.dart';
 
@@ -21,6 +22,18 @@ class WishlistConfigBloc extends Bloc<WishlistConfigEvent, WishlistConfigState> 
   ) async* {
     if (event is UpdateWishConfigList) {
       yield UpdatedWishConfigList(customerRepository.totalItemInCart);
+    } else if (event is GetWishlistFromServer) {
+      await customerRepository.getWishlist(authID: event.uid);
+      yield UpdatedWishConfigList(customerRepository.totalItemInCart);
+    } else if (event is ResetWishList) {
+      customerRepository.resetWishList();
+      yield UpdatedWishConfigList(customerRepository.totalItemInCart);
+    } else if (event is UpdateWishList) {
+      if (event.wishlist != null) {
+        List<String> data = event.wishlist.map((e) => e.variantID).toList(growable: true);
+        customerRepository.resetWishlistWithData(data);
+      }
     }
+    yield UpdatedWishConfigList(customerRepository.totalItemInCart);
   }
 }

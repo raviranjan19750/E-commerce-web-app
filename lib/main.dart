@@ -27,7 +27,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => NavigationService());
 }
 
-
 void main() async {
   final FirebaseApp _initialization = await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
@@ -72,7 +71,9 @@ class InitailizeAppService extends StatelessWidget {
         RepositoryProvider(
           create: (context) => ProductRepository(),
         ),
-        RepositoryProvider(create: (context) => CustomerDetailRepository())
+        RepositoryProvider(
+            create: (context) =>
+                CustomerDetailRepository(RepositoryProvider.of(context)))
       ],
       child: MultiBlocProvider(
         providers: [
@@ -87,7 +88,8 @@ class InitailizeAppService extends StatelessWidget {
                   SearchBloc(searchApi: RepositoryProvider.of(context))),
           BlocProvider(
               create: (context) => AuthenticationBloc(
-                  authenticationRepository: RepositoryProvider.of(context))),
+                  authenticationRepository: RepositoryProvider.of(context),
+                  wishlistConfigBloc: BlocProvider.of(context))),
           BlocProvider(create: (context) => HomeBloc())
         ],
         child: child,

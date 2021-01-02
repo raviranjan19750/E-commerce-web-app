@@ -21,10 +21,10 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProductCardBloc(
-        customerRepo: RepositoryProvider.of(context),
-        wishlistBloc: BlocProvider.of(context),
-        product: product,
-      ),
+          customerRepo: RepositoryProvider.of(context),
+          wishlistBloc: BlocProvider.of(context),
+          product: product,
+          auth: BlocProvider.of(context)),
       child: Card(
           elevation: 5,
           child: ProductCardContent(
@@ -142,19 +142,18 @@ class ComboProductCard extends StatelessWidget {
   final ComboProduct comboProduct;
   final Product product;
 
-  const ComboProductCard({Key key, this.comboProduct, this.product}) : super(key: key);
+  const ComboProductCard({Key key, this.comboProduct, this.product})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       create: (context) => ProductCardBloc(
-        customerRepo: RepositoryProvider.of(context),
-        wishlistBloc: BlocProvider.of(context),
-        product: product,
-      ),
+          customerRepo: RepositoryProvider.of(context),
+          wishlistBloc: BlocProvider.of(context),
+          product: product,
+          auth: BlocProvider.of(context)),
       child: Card(
-
           elevation: 5.0,
           child: ComboProductCardContent(
             comboProduct: comboProduct,
@@ -432,14 +431,18 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
         padding: EdgeInsets.all(6.0),
         child: MouseRegion(
           onEnter: (event) {
-            setState(() {
-              _wishHover = !state.isItemInWishList;
-            });
+            if (!state.isItemInWishList) {
+              setState(() {
+                _wishHover = !state.isItemInWishList;
+              });
+            }
           },
           onExit: (event) {
-            setState(() {
-              _wishHover = state.isItemInWishList;
-            });
+            if (!state.isItemInWishList) {
+              setState(() {
+                _wishHover = state.isItemInWishList;
+              });
+            }
           },
           child: _wishHover
               ? GestureDetector(
@@ -455,18 +458,12 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
                     ),
                   ),
                 )
-              : GestureDetector(
-                  onTap: () {
-                    BlocProvider.of<ProductCardBloc>(context)
-                        .add(RemoveFromWishListProductEvent());
-                  },
-                  child: CircleAvatar(
-                    radius: 17.0,
-                    backgroundColor: Colors.white.withAlpha(200),
-                    child: Icon(
-                      Icons.favorite_border_outlined,
-                      color: Colors.red,
-                    ),
+              : CircleAvatar(
+                  radius: 17.0,
+                  backgroundColor: Colors.white.withAlpha(200),
+                  child: Icon(
+                    Icons.favorite_border_outlined,
+                    color: Colors.red,
                   ),
                 ),
         ),
