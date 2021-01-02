@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
 import 'package:elastic_client/elastic_client.dart';
+import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/models/product.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:meta/meta.dart';
@@ -37,9 +38,11 @@ class SimilarProductsBloc extends Bloc<SimilarProductsEvent, SimilarProductsStat
 
     try{
 
-      SearchResult searchResult = await searchApi.getSimilarProduct(event.type, event.subType);
-      var similarSearchResult = getSimilarProductData(searchResult);
-      yield SimilarProductsLoadingSuccessful(similarSearchResult);
+      SearchResult similarProductSearchResult = await searchApi.getSimilarProduct(event.type, event.subType);
+      SearchResult comboProductSearchResult = await searchApi.getComboProduct(event.type, event.subType);
+      var similarSearchResult = getSimilarProductData(similarProductSearchResult);
+      var comboSearchResult = getComboProductData(comboProductSearchResult);
+      yield SimilarProductsLoadingSuccessful(similarSearchResult, comboSearchResult);
 
     }
     catch(e) {
@@ -60,7 +63,6 @@ class SimilarProductsBloc extends Bloc<SimilarProductsEvent, SimilarProductsStat
     List<Product> result = List();
     for (int x = 0; x < len; x++) {
       Doc hit = hits[x];
-
 
       List<String> imgUrls = List();
       for (var img in hit.doc['images']) {
@@ -92,6 +94,45 @@ class SimilarProductsBloc extends Bloc<SimilarProductsEvent, SimilarProductsStat
       result.add(prod);
     }
     List<Product> finalResult = List();
+    finalResult.addAll(result);
+
+    return finalResult;
+
+
+  }
+
+  List<ComboProduct> getComboProductData(SearchResult searchResult) {
+
+    final hits = searchResult.hits;
+    int len = hits.length;
+    print( "Combo length + $len");
+
+    List<ComboProduct> result = List();
+    for (int x = 0; x < len; x++) {
+      Doc hit = hits[x];
+      print(hit.doc.toString());
+
+      List<String> imgUrls = List();
+      for (var img in hit.doc['images']) {
+        imgUrls.add(img.toString());
+      }
+
+      List<String> descriptions = List();
+      for (var desc in hit.doc['description']) {
+        descriptions.add(desc.toString());
+      }
+
+      var prod = ComboProduct(
+          title: hit.doc['name'],
+          imageUrls: imgUrls,
+          descriptions: descriptions,
+          discountPrice: hit.doc['discountPrice'],
+          retailPrice: hit.doc['sellingPrice'],
+          productId: hit.doc['productID'],
+          isAvailable: hit.doc['isAvailable'],);
+      result.add(prod);
+    }
+    List<ComboProduct> finalResult = List();
     finalResult.addAll(result);
 
     return finalResult;

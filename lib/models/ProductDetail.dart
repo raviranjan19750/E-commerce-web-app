@@ -20,41 +20,26 @@ class ProductDetail {
   final double sellingPrice;
   final double discountPrice;
 
-  ProductDetail(
-      {this.productID,
-      this.variantID,
-      this.productName,
-      this.sizeOptions,
-      this.allVariants,
-      this.colourOptions,
-      this.images,
-      this.description,
-      this.isCustomizable,
-      this.isAvailable,
-      this.size,
-      this.colour,
-      this.sellingPrice,
-      this.discountPrice,
-        this.type,
-        this.subType,});
+  ProductDetail({
+    this.productID,
+    this.variantID,
+    this.productName,
+    this.sizeOptions,
+    this.allVariants,
+    this.colourOptions,
+    this.images,
+    this.description,
+    this.isCustomizable,
+    this.isAvailable,
+    this.size,
+    this.colour,
+    this.sellingPrice,
+    this.discountPrice,
+    this.type,
+    this.subType,
+  });
 
   factory ProductDetail.fromJson(Map<String, dynamic> data) {
-    //if(data == null) return null;
-    // List<ProductVariantColor> cols = [];
-    // for (var col in data["colour"]) {
-    //   var strcol = col['hexCode'] as String;
-    //   strcol.replaceAll("#", "replace");
-    //   cols.add(new ProductVariantColor(
-    //       colorHexCode: strcol, colorName: col['name']));
-    // }
-    // List<ProductVariantColor> colourOption = [];
-    // for (var col in data["colourOptions"]) {
-    //   var strcol = col['hexCode'] as String;
-    //   strcol.replaceAll("#", "replace");
-    //   colourOption.add(new ProductVariantColor(
-    //       colorHexCode: strcol, colorName: col['name']));
-    // }
-    print(data.toString());
     return ProductDetail(
       productID: data["productID"],
       variantID: data["variantID"],
@@ -74,8 +59,7 @@ class ProductDetail {
       }).toList(),
       images: data["images"].cast<String>(),
       description: data["description"].cast<String>(),
-      allVariants: List<AllVariant>.from(
-          data["allVariants"].map((x) => AllVariant.fromJson(x))),
+      allVariants: List<AllVariant>.from(data["allVariants"].map((x) => AllVariant.fromJson(x))),
       isCustomizable: data["isCustomizable"],
       isAvailable: data["isAvailable"],
       type: data["type"],
@@ -100,18 +84,17 @@ class AllVariant {
       final buffer = StringBuffer();
       if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
       buffer.write(hexString.replaceFirst('#', ''));
-      //return Color(int.parse(buffer.toString(), radix: 16));
+
       return Color(int.parse(
         buffer.toString(),
         radix: 16,
       ));
     }
+
     return AllVariant(
       variantId: json["variantID"],
       size: json["size"],
-      colour: (json['colour'] as List)
-          .map((e) => fromHex(e))
-          .toList(),
+      colour: (json['colour'] as List).map((e) => fromHex(e)).toList(),
     );
   }
 }

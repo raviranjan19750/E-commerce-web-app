@@ -2,12 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
-import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
-
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
-import 'package:living_desire/models/product.dart';
-import 'package:living_desire/screens/all_product/product_widgets.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
 
 class ProductDetailEnlargeImage extends StatefulWidget {
@@ -39,6 +35,9 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
   @override
   Widget build(BuildContext context) {
+
+    ScrollController imageListScrollController = new ScrollController();
+
     double imageWidth = MediaQuery
         .of(context)
         .size
@@ -57,6 +56,19 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
         .size
         .height * 0.55;
 
+
+    moveUP() {
+      imageListScrollController.animateTo(imageListScrollController.offset + imageListHeight,
+          curve: Curves.linear, duration: Duration(milliseconds: 400));
+    }
+
+    moveDown() {
+      imageListScrollController.animateTo(imageListScrollController.offset - imageListHeight,
+          curve: Curves.linear, duration: Duration(milliseconds: 400));
+    }
+
+
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +84,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 height: 30,
                 color: Palette.lightGrey,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: moveUP,
                   alignment: Alignment.center,
                   icon: Icon(Icons.keyboard_arrow_up),
                   color: Colors.black,
@@ -87,7 +99,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 alignment: Alignment.center,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  controller: imageListScrollController,
                   itemCount: widget.imageURL.length,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
@@ -117,7 +129,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 height: 30,
                 color: Palette.lightGrey,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: moveDown,
                   icon: Icon(Icons.keyboard_arrow_down),
                   color: Colors.black,
                 ),
