@@ -16,7 +16,7 @@ class WishlistContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    int itemCount = 4;
+    int itemCount = 5;
     if (width < 1000) {
       itemCount = 2;
     } else if (width < 1200) {
@@ -122,7 +122,7 @@ class _WishlistContainerGridState extends State<WishlistContainerGrid> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: widget.itemCount,
             childAspectRatio: (MediaQuery.of(context).size.width * 0.08) /
-                (MediaQuery.of(context).size.height * 0.24),
+                (MediaQuery.of(context).size.height * 0.2),
           ),
           itemCount: widget.wishlist.length,
           physics: NeverScrollableScrollPhysics(),

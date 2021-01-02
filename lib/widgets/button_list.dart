@@ -45,7 +45,9 @@ class ButtonList extends StatelessWidget {
                         Text(
                           Strings.myWishlist,
                           style: TextStyle(
-                            color: isWishlistSelected ? Colors.white : Colors.black,
+                            color: isWishlistSelected
+                                ? Colors.white
+                                : Colors.black,
                             fontSize: 16,
                           ),
                         ),
@@ -59,6 +61,7 @@ class ButtonList extends StatelessWidget {
                   ),
                 ),
               ),
+
               // My Orders Button
               Container(
                 width: MediaQuery.of(context).size.width * 0.18,
@@ -77,7 +80,8 @@ class ButtonList extends StatelessWidget {
                         Text(
                           Strings.myOrders,
                           style: TextStyle(
-                            color: isMyOrderSelected ? Colors.white : Colors.black,
+                            color:
+                                isMyOrderSelected ? Colors.white : Colors.black,
                             fontSize: 16,
                           ),
                         ),
@@ -91,6 +95,7 @@ class ButtonList extends StatelessWidget {
                   ),
                 ),
               ),
+
               // My Cart Button
               Container(
                 width: MediaQuery.of(context).size.width * 0.18,
@@ -109,7 +114,8 @@ class ButtonList extends StatelessWidget {
                         Text(
                           Strings.myCart,
                           style: TextStyle(
-                            color: isMyCartSelected ? Colors.white : Colors.black,
+                            color:
+                                isMyCartSelected ? Colors.white : Colors.black,
                             fontSize: 16,
                           ),
                         ),
@@ -123,12 +129,14 @@ class ButtonList extends StatelessWidget {
                   ),
                 ),
               ),
+
               // Manage Addresses Button
               Container(
                 width: MediaQuery.of(context).size.width * 0.18,
                 height: 60,
-                color:
-                    isManageAddressesSelected ? Colors.black : Colors.transparent,
+                color: isManageAddressesSelected
+                    ? Colors.black
+                    : Colors.transparent,
                 child: InkWell(
                   onTap: () {
                     Navigator.pushNamed(
@@ -159,11 +167,10 @@ class ButtonList extends StatelessWidget {
                   ),
                 ),
               ),
-
             ],
           ),
         ),
-        Expanded(child: Container()),
+        // Expanded(child: Container()),
       ],
     );
   }
