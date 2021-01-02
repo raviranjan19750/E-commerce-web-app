@@ -88,14 +88,30 @@ class BulkOrder {
       if(data == null)
         return null;
 
-      print(data[0]);
-
       List<QuotationProducts> temp = new List();
 
       for(int i=0;i<data.length;i++){
 
         QuotationProducts quotationProducts = QuotationProducts.fromJson(data[i]);
         temp.add(quotationProducts);
+
+      }
+
+      return temp;
+
+    }
+
+    List<QuotationTracking> getQuotationTrackingList(List<dynamic> data){
+
+      if(data == null)
+        return null;
+
+      List<QuotationTracking> temp = new List();
+
+      for(int i=0;i<data.length;i++){
+
+        QuotationTracking quotationTracking = QuotationTracking.fromJson(data[i]);
+        temp.add(quotationTracking);
 
       }
 
@@ -125,7 +141,7 @@ class BulkOrder {
         quotationStatus: data['data']['quotationStatus'],
         requestID: data['data']['requestID'],
         name: data['data']['name'],
-        //quotationTracking: data['data']['quotationTracking'],
+        quotationTracking: getQuotationTrackingList(data['data']['quotationTracking']),
 
     );
   }
