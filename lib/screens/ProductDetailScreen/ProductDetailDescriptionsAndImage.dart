@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/data/data.dart';
-import 'package:living_desire/models/product.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductAvailablity.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
@@ -262,7 +261,9 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                 ),
               ],
             ),
-            SimilarProductAndCombos(type: "Bean Bag", subType: "Sofa"),
+
+            SimilarProductAndCombos(type: state.productDetail.type, subType: state.productDetail.subType),
+
             Container(
               height: 100,
             ),

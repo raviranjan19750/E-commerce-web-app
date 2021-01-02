@@ -44,6 +44,7 @@ class ProductCardContent extends StatelessWidget {
     discount = (product.retailPrice - product.discountPrice) /
         product.retailPrice *
         100;
+    print("product ID: ${product.varientId}");
 
     return Column(
       children: [

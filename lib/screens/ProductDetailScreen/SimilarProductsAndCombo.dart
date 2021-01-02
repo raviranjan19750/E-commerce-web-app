@@ -6,14 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/similarProducts/similar_products_bloc.dart';
 import 'package:living_desire/config/configs.dart';
-import 'package:living_desire/data/data.dart';
-import 'package:living_desire/models/product.dart';
-import 'package:living_desire/models/product_type.dart';
 import 'package:living_desire/screens/all_product/product_widgets.dart';
-import 'package:living_desire/widgets/home_screen_products/product_item.dart';
+import 'package:living_desire/widgets/home_widget/view_all_card.dart';
 import 'package:living_desire/widgets/labeltag/label_tag.dart';
 import 'package:living_desire/widgets/nextListHover.dart';
-import 'package:living_desire/widgets/productTypeBar.dart';
 
 class SimilarProductAndCombos extends StatelessWidget {
 
@@ -84,7 +80,7 @@ class SimilarProductAndCombos extends StatelessWidget {
                   Container(
                       margin: EdgeInsets.only(left: 32.0),
                       child: LabelTag(
-                        Strings.similarProudcts,
+                     Strings.similarProudcts,
                       )
                   ),
 
@@ -97,8 +93,18 @@ class SimilarProductAndCombos extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
                             controller: similarProductScrollController,
-                            itemCount: state.product.length,
+                            itemCount: state.product.length+1,
                             itemBuilder: (BuildContext context, int index) {
+
+                              if (index == state.product.length) {
+                                return Container(
+                                    padding: EdgeInsets.only(left: 5, right: 5),
+                                    width: MediaQuery.of(context).size.width * 0.15,
+                                    height: MediaQuery.of(context).size.width * 0.15,
+                                    child: ViewAllCard(routeString: subType,));
+                              }
+
+
                               return Container(
                                   width: MediaQuery.of(context).size.width * 0.15,
                                   height: MediaQuery.of(context).size.height * 0.15,
@@ -138,7 +144,7 @@ class SimilarProductAndCombos extends StatelessWidget {
                   Container(
                       margin: EdgeInsets.only(left: 32.0),
                       child:LabelTag(
-                        Strings.Combos,
+                       Strings.Combos,
                       )
                   ),
 
@@ -151,8 +157,18 @@ class SimilarProductAndCombos extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
                             controller: comboProductScrollController,
-                            itemCount: state.product.length,
+                            itemCount: state.product.length+1,
                             itemBuilder: (BuildContext context, int index) {
+
+
+                              if (index == state.product.length) {
+                                return Container(
+                                    padding: EdgeInsets.only(left: 5, right: 5),
+                                    width: MediaQuery.of(context).size.width * 0.15,
+                                    height: MediaQuery.of(context).size.width * 0.15,
+                                    child: ViewAllCard(routeString: subType,));
+                              }
+
                               return Container(
                                   width: MediaQuery.of(context).size.width * 0.15,
                                   height: MediaQuery.of(context).size.height * 0.15,

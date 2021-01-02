@@ -52,6 +52,7 @@ class ProductDetail extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(top: 64.0),
+
           child: ProductDetailDescriptionAndImage(),
         ),
       ],

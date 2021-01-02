@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/main.dart';
+import 'package:living_desire/routes.dart';
+import 'package:living_desire/service/navigation_service.dart';
 
 class ViewAllCard extends StatelessWidget {
+
+  final String routeString;
+
+  const ViewAllCard({Key key, this.routeString}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: ViewAllCardContent(),
+      child: ViewAllCardContent(routeString: routeString,),
     );
   }
 }
 
 class ViewAllCardContent extends StatelessWidget {
+
+
+  final String routeString;
+
+  const ViewAllCardContent({Key key, this.routeString}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,6 +36,13 @@ class ViewAllCardContent extends StatelessWidget {
             height: double.infinity,
             child: InkWell(
                 onTap: () {
+                  locator<NavigationService>().navigateTo(
+                    RoutesConfiguration.SEARCH_ALL_PRODUCT,
+                    queryParams: {
+                      "search": routeString,
+                    },
+                  );
+
                   // Navigator.pushNamed(
                   //     context, RoutesConfiguration.PRODUCT_DETAIL,
                   //     arguments: {

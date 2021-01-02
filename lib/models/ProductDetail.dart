@@ -14,6 +14,8 @@ class ProductDetail {
   final bool isCustomizable;
   final bool isAvailable;
   final String size;
+  final String type;
+  final String subType;
   final List<ProductVariantColor> colour;
   final double sellingPrice;
   final double discountPrice;
@@ -32,7 +34,9 @@ class ProductDetail {
       this.size,
       this.colour,
       this.sellingPrice,
-      this.discountPrice});
+      this.discountPrice,
+        this.type,
+        this.subType,});
 
   factory ProductDetail.fromJson(Map<String, dynamic> data) {
     //if(data == null) return null;
@@ -74,6 +78,8 @@ class ProductDetail {
           data["allVariants"].map((x) => AllVariant.fromJson(x))),
       isCustomizable: data["isCustomizable"],
       isAvailable: data["isAvailable"],
+      type: data["type"],
+      subType: data["subType"],
     );
   }
 }

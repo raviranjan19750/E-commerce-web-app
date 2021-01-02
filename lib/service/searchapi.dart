@@ -192,7 +192,7 @@ class SearchApi {
   }
 
   Future<SearchResult> getSimilarProduct(String type, String subType) async {
-    print("hogya");
+
 
     var criteria = {
       "bool": {
@@ -210,8 +210,7 @@ class SearchApi {
         ]
       }
     };
-    final searchResult =
-        await client.search(index: INDEX_NAME, limit: 50, query: criteria);
+    final searchResult = await client.search(index: INDEX_NAME, limit: 18, query: criteria);
 
     return searchResult;
   }

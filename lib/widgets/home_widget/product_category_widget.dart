@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
+import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/widgets/labeltag/label_tag.dart';
+
 
 import '../nextListHover.dart';
 
@@ -90,7 +92,7 @@ class ProductCategoryWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LabelTag("Bulk Orders"),
+        LabelTag(Strings.bulkOrder),
         Container(
           margin: EdgeInsets.only(top: 16.0),
           height: 350,
