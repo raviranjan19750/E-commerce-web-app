@@ -51,6 +51,7 @@ class BulkOrderCart {
     );
   }
 
+
   void reset(){
 
     productID = "";

@@ -15,6 +15,14 @@ class BulkOrderQuotation extends StatelessWidget{
 
   BulkOrderQuotation({this.id});
 
+  String totalPrice(int price,int quantity){
+
+    int ans = price * quantity;
+
+    return ans.toString();
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -64,7 +72,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
                     ),
 
-                    Container(
+                    (value.bulkOrder != null) ? Container(
 
                       decoration: BoxDecoration(
 
@@ -115,64 +123,24 @@ class BulkOrderQuotation extends StatelessWidget{
 
                         ],
 
-                        rows: [
-                          DataRow(
-
-                              cells: [
-
+                        rows: value.bulkOrder.products
+                            .map(
+                              (quotationProduct) => DataRow(cells: [
                                 DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text('Classic Filled Bean Bag with Beans')),
-                                DataCell(Text('100')),
-                                DataCell(Text('10')),
-                                DataCell(Text('1000')),
+                                DataCell(Text(quotationProduct.productSubType)),
+                                DataCell(Text(quotationProduct.quantity.toString())),
+                                DataCell(Text(
+                                    ((quotationProduct.discountPrice!=null)?quotationProduct.discountPrice.toString():'-'),
 
-
-                              ]
-                          ),
-                          DataRow(
-
-                              cells: [
-
-                                DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text('Classic Filled Bean')),
-                                DataCell(Text('10')),
-                                DataCell(Text('10')),
-                                DataCell(Text('100')),
-
-
-                              ]
-                          ),
-                          DataRow(
-
-                              cells: [
-
-                                DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text('Classic Filled Bean Bag with Beans')),
-                                DataCell(Text('100')),
-                                DataCell(Text('10')),
-                                DataCell(Text('1000')),
-
-
-                              ]
-                          ),
-                          DataRow(
-
-                              cells: [
-
-                                DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text('Classic Filled Bean Bag with Beans')),
-                                DataCell(Text('100')),
-                                DataCell(Text('10')),
-                                DataCell(Text('1000')),
-
-
-                              ]
-                          ),
-
-                        ],
+                                )
+                                ),
+                                DataCell(Text( ((quotationProduct.discountPrice!=null)?totalPrice(quotationProduct.discountPrice, quotationProduct.quantity):'-'))),
+                          ]),
+                        )
+                            .toList(),
 
                       ),
-                    ),
+                    ) : Container( margin: EdgeInsets.all(64),height: 200,width: 200, child: CircularProgressIndicator()),
 
                     Container(
 

@@ -31,7 +31,7 @@ class RoutesConfiguration {
   static const String MY_ORDERS = "/myorders";
   static const String MY_BULK_ORDERS = "/mybulkorders";
   static const String CART = "/cart";
-  static const String BULK_ORDER_QUOTATION = "/bulkorderquotation";
+  static const String BULK_ORDER_QUOTATION = "/customorderquotation";
   static const String MANAGE_ADDRESSES = "/manageaddresses";
   static const String SELECT_ADDRESS = "/selectaddress";
   static const String ORDER_PLACED = "/orderplaced";
@@ -133,6 +133,11 @@ class RoutesConfiguration {
 
       case MY_BULK_ORDERS:
         return MaterialPageRoute(builder: (_) => MyBulkOrder());
+
+      case BULK_ORDER_QUOTATION:
+        var args = settings.arguments as Map;
+        String key = args["key"];
+        return MaterialPageRoute(builder: (_) => BulkOrderQuotation(id: key,));
 
       case WISHLIST:
         return MaterialPageRoute(
