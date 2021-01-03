@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:living_desire/ProviderModels/bulk_order_quotation_provider.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/BulkOrder.dart';
+import 'package:living_desire/models/StringToHexColor.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:provider/provider.dart';
@@ -129,6 +130,19 @@ class BulkOrderQuotation extends StatelessWidget{
                             label: Text('Product Name',style: TextStyle(color:Palette.secondaryColor ,fontSize: 16,fontWeight: FontWeight.bold,),),
 
                           ),
+
+                          DataColumn(
+
+                            label: Text('Color',style: TextStyle(color:Palette.secondaryColor ,fontSize: 16,fontWeight: FontWeight.bold,),),
+
+                          ),
+
+                          DataColumn(
+
+                            label: Text('Size',style: TextStyle(color:Palette.secondaryColor ,fontSize: 16,fontWeight: FontWeight.bold,),),
+
+                          ),
+
                           DataColumn(
 
                             label: Text('Quantity',style: TextStyle(color:Palette.secondaryColor ,fontSize: 16,fontWeight: FontWeight.bold,),),
@@ -151,7 +165,18 @@ class BulkOrderQuotation extends StatelessWidget{
                             .map(
                               (quotationProduct) => DataRow(cells: [
                                 DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text(quotationProduct.productSubType)),
+                                DataCell(Text(quotationProduct.productType+'    '+quotationProduct.productSubType)),
+                                DataCell(Container(
+
+                                  margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                                  width: 24.0,
+                                  height: 24.0,
+                                  decoration: new BoxDecoration(
+                                    color: HexColorConvert.fromHex(quotationProduct.colour.first['hexCode']),
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),),
+                                DataCell(Text(quotationProduct.size)),
                                 DataCell(Text(quotationProduct.quantity.toString())),
                                 DataCell(Text(
                                     ((quotationProduct.discountPrice!=null)?quotationProduct.discountPrice.toString():'-'),
