@@ -12,6 +12,7 @@ class Product {
   final String type;
   final String subType;
   final bool isAvailable;
+  final bool isCombo;
 
   Product(
       {this.title,
@@ -25,5 +26,6 @@ class Product {
       this.tags,
       this.type,
       this.subType,
-      this.isAvailable});
+      this.isAvailable,
+      this.isCombo});
 }

@@ -16,4 +16,5 @@ class ComboProduct {
       this.retailPrice,
       this.productId,
       this.isAvailable});
+
 }

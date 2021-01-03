@@ -10,9 +10,10 @@ class ProductDetailEnlargeImage extends StatefulWidget {
   final List<String> imageURL;
   String productID;
   String variantID;
+  bool isCombo = false;
 
   ProductDetailEnlargeImage(
-      {Key key, this.imageURL, this.productID, this.variantID,})
+      {Key key, this.imageURL, this.productID, this.variantID, this.isCombo})
       : super(key: key);
 
   @override
@@ -22,8 +23,6 @@ class ProductDetailEnlargeImage extends StatefulWidget {
 
 class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
   int selectedImageIndex;
-  int selectedColorIndex;
-  int selectedSizeIndex;
   String selectedURI;
 
   @override
@@ -35,39 +34,27 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
   @override
   Widget build(BuildContext context) {
-
     ScrollController imageListScrollController = new ScrollController();
 
-    double imageWidth = MediaQuery
-        .of(context)
-        .size
-        .width * 0.26;
-    double imageHeight = MediaQuery
-        .of(context)
-        .size
-        .height * 0.62;
+    double imageWidth = MediaQuery.of(context).size.width * 0.26;
+    double imageHeight = MediaQuery.of(context).size.height * 0.62;
 
-    double imageListWidth = MediaQuery
-        .of(context)
-        .size
-        .width * 0.06;
-    double imageListHeight = MediaQuery
-        .of(context)
-        .size
-        .height * 0.55;
-
+    double imageListWidth = MediaQuery.of(context).size.width * 0.06;
+    double imageListHeight = MediaQuery.of(context).size.height * 0.55;
 
     moveUP() {
-      imageListScrollController.animateTo(imageListScrollController.offset + imageListHeight,
-          curve: Curves.linear, duration: Duration(milliseconds: 400));
+      imageListScrollController.animateTo(
+          imageListScrollController.offset + imageListHeight,
+          curve: Curves.linear,
+          duration: Duration(milliseconds: 400));
     }
 
     moveDown() {
-      imageListScrollController.animateTo(imageListScrollController.offset - imageListHeight,
-          curve: Curves.linear, duration: Duration(milliseconds: 400));
+      imageListScrollController.animateTo(
+          imageListScrollController.offset - imageListHeight,
+          curve: Curves.linear,
+          duration: Duration(milliseconds: 400));
     }
-
-
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -90,7 +77,6 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   color: Colors.black,
                 ),
               ),
-
               Container(
                 width: imageListWidth,
                 //height: imageListHeight,
@@ -114,16 +100,15 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                         child: (widget.imageURL[index] != null)
                             ? Image.network(widget.imageURL[index].toString())
                             : Text(
-                          widget.imageURL[index],
-                          style: TextStyle(
-                              fontSize: 16, color: Colors.black),
-                        ),
+                                widget.imageURL[index],
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
                       ),
                     );
                   },
                 ),
               ),
-
               Container(
                 width: imageListWidth,
                 height: 30,
@@ -143,7 +128,6 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
           margin: EdgeInsets.only(left: 32.0),
           child: Column(
             children: [
-
               // enlarged image
 
               InkWell(
@@ -151,13 +135,13 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   height: imageHeight,
                   width: imageWidth,
                   decoration: new BoxDecoration(
-                    //color: Palette.lightGrey,
+                      //color: Palette.lightGrey,
                       image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: (selectedURI != null)
-                            ? NetworkImage(selectedURI)
-                            : NetworkImage(widget.imageURL[0]),
-                      )),
+                    fit: BoxFit.fill,
+                    image: (selectedURI != null)
+                        ? NetworkImage(selectedURI)
+                        : NetworkImage(widget.imageURL[0]),
+                  )),
                   child: Stack(
                     children: [
                       Positioned(
@@ -169,8 +153,6 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   ),
                 ),
               ),
-
-
 
 // action buttons
               Container(

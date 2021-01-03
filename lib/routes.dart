@@ -44,11 +44,17 @@ class RoutesConfiguration {
       ),
     ),
     Path(r'^' + PRODUCT_DETAIL, (context, data) {
-      print(data);
-      return MyDesktopView(
-        child: ProductDetailScreen(
+      print("routing data : ${data['isCombo']}");
+
+       return MyDesktopView(
+        child: (data['isCombo'] == "true") ? ProductDetailScreen(
           productID: data['pid'],
           variantID: data['vid'],
+          isCombo: data['isCombo'],
+        ) : ProductDetailScreen(
+          productID: data['pid'],
+          variantID: data['vid'],
+          isCombo: data['isCombo'],
         ),
       );
     }),

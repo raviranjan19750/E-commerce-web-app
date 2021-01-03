@@ -7,25 +7,32 @@ import 'package:living_desire/screens/ProductDetailScreen/ProductDetailDescripti
 class ProductDetailScreen extends StatelessWidget {
   final String productID;
   final String variantID;
+  final String isCombo;
 
-  const ProductDetailScreen({
-    Key key,
-    this.productID,
-    this.variantID,
-  }) : super(key: key);
+  const ProductDetailScreen(
+      {Key key, this.productID, this.variantID, this.isCombo})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     print("Loading Product Detail");
     return MultiBlocProvider(providers: [
-      BlocProvider(
-        create: (context) =>
-            ProductDetailBloc(productRepository: RepositoryProvider.of(context))
-              ..add(LoadProductDetail(
-                productID,
-                variantID,
-              )),
-      ),
+      (isCombo == "True" || isCombo == "true")
+          ? BlocProvider(
+              create: (context) => ProductDetailBloc(
+                  productRepository: RepositoryProvider.of(context))
+                ..add(LoadComboProductDetail(
+                  productID,
+                )),
+            )
+          : BlocProvider(
+              create: (context) => ProductDetailBloc(
+                  productRepository: RepositoryProvider.of(context))
+                ..add(LoadProductDetail(
+                  productID,
+                  variantID,
+                )),
+            ),
       BlocProvider(
           create: (context) =>
               CartBloc(cartRepository: RepositoryProvider.of(context))),
@@ -41,7 +48,6 @@ class ProductDetail extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(top: 32.0),
-
           child: ProductDetailDescriptionAndImage(),
         ),
       ],

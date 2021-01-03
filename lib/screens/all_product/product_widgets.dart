@@ -45,7 +45,6 @@ class ProductCardContent extends StatelessWidget {
     discount = (product.retailPrice - product.discountPrice) /
         product.retailPrice *
         100;
-    print("product ID: ${product.varientId}");
 
     return Column(
       children: [
@@ -56,11 +55,22 @@ class ProductCardContent extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () {
+
+                    if(product.isCombo) {
+                      locator<NavigationService>().navigateTo(
+                        RoutesConfiguration.PRODUCT_DETAIL,
+                        queryParams: {
+                          "pid": product.productId,
+                          "isCombo": product.isCombo.toString(),
+                        }
+                      );
+                    }
                     locator<NavigationService>().navigateTo(
                       RoutesConfiguration.PRODUCT_DETAIL,
                       queryParams: {
                         "pid": product.productId,
-                        "vid": product.varientId
+                        "vid": product.varientId,
+                        "isCombo": product.isCombo.toString()
                       },
                     );
                     // Navigator.pushNamed(
@@ -173,7 +183,6 @@ class ComboProductCardContent extends StatelessWidget {
     discount = (comboProduct.retailPrice - comboProduct.discountPrice) /
         comboProduct.retailPrice *
         100;
-    // print("product ID: ${product.varientId}");
 
     return Column(
       children: [
@@ -184,13 +193,13 @@ class ComboProductCardContent extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () {
-                    /* locator<NavigationService>().navigateTo(
+                     locator<NavigationService>().navigateTo(
                       RoutesConfiguration.PRODUCT_DETAIL,
                       queryParams: {
-                        "pid": product.productId,
-                        "vid": product.varientId
+                        "pid": comboProduct.productId,
+                        "isCombo" : "true",
                       },
-                    );*/
+                    );
                     // Navigator.pushNamed(
                     //     context, path,
                     //     arguments: {
