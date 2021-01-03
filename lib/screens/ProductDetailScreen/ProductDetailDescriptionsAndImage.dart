@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/strings.dart';
+import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductAvailablity.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
@@ -19,6 +20,45 @@ import 'SimilarProductsAndCombo.dart';
 class ProductDetailDescriptionAndImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
+    List<String> comboVariantType = new List();
+    List<String> comboVariantSubType = new List();
+    List<String> variantType = new List();
+    List<String> variantSubType = new List();
+
+    List<String> getComboType(List<Variant> variant) {
+      
+      for(var typ in variant) {
+        comboVariantType.add(typ.type);
+      }
+      
+      return comboVariantType.toSet().toList();
+    }
+
+    List<String> getComboSubType(List<Variant> variant) {
+
+      for(var subTyp in variant) {
+        comboVariantSubType.add(subTyp.subType);
+      }
+
+      return comboVariantSubType.toSet().toList();
+    }
+
+    List<String> getType(String type) {
+
+      variantType.add(type);
+
+      return variantType.toSet().toList();
+    }
+
+    List<String> getSubType(String subType) {
+
+      variantSubType.add(subType);
+
+      return variantSubType.toSet().toList();
+    }
+    
+    
     return BlocBuilder<ProductDetailBloc, ProductDetailState>(
 // ignore: missing_return
         builder: (context, state) {
@@ -104,9 +144,10 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                     productID: state.productDetail.productID,
                                     variantID: state.productDetail.variantID,
                                   )
-                                : Container(),
+                                : Container(
+                              height: 0,
+                            ),
 //list of color
-//todo Set lst of color
 
                             Container(
 //width: 150,
@@ -265,8 +306,8 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
               ],
             ),
             SimilarProductAndCombos(
-                type: state.productDetail.type,
-                subType: state.productDetail.subType),
+                type: getType(state.productDetail.type),
+                subType: getSubType(state.productDetail.subType)),
             Container(
               height: 100,
             ),
@@ -350,7 +391,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                 ? ProductAvailability(
                                     productID: state.comboProduct.productId,
                                   )
-                                : Container(),
+                                : Container(height: 100,),
 
 //  quantity button
                             Container(
@@ -422,7 +463,8 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                 ),
               ],
             ),
-            SimilarProductAndCombos(type: "Bean Bag", subType: "Stool"),
+            SimilarProductAndCombos(type: getComboType(state.comboProduct.productVariant), subType: getComboSubType(state.comboProduct.productVariant)),
+
             Container(
               height: 100,
             ),

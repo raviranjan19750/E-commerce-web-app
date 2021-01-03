@@ -37,7 +37,7 @@ class SimilarProductsBloc
 
     try {
       SearchResult similarProductSearchResult =
-          await searchApi.getSimilarProduct(event.type, event.subType);
+          await searchApi.getSimilarProduct(event.type[0], event.subType[0]);
       SearchResult comboProductSearchResult =
           await searchApi.getComboProduct(event.type, event.subType);
       var similarSearchResult = getSimilarProductData(similarProductSearchResult);

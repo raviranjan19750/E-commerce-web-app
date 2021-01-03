@@ -114,7 +114,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
                 .add(LoadProductDetail(widget.productID, variantID));
           });
         },
-        items: selectedVariantSizeList
+        items: selectedVariantSizeList.toSet().toList()
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

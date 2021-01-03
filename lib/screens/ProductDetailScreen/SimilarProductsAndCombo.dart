@@ -9,8 +9,8 @@ import 'package:living_desire/widgets/labeltag/label_tag.dart';
 import 'package:living_desire/widgets/nextListHover.dart';
 
 class SimilarProductAndCombos extends StatelessWidget {
-  String type;
-  String subType;
+  List<String> type;
+  List<String> subType;
 
   SimilarProductAndCombos({Key key, this.type, this.subType}) : super(key: key);
 
@@ -100,7 +100,7 @@ class SimilarProductAndCombos extends StatelessWidget {
                                 height:
                                     MediaQuery.of(context).size.width * 0.15,
                                 child: ViewAllCard(
-                                  routeString: subType,
+                                  routeString: subType[0],
                                 ));
                           }
 
@@ -160,7 +160,7 @@ class SimilarProductAndCombos extends StatelessWidget {
                                 height:
                                     MediaQuery.of(context).size.width * 0.15,
                                 child: ViewAllCard(
-                                  routeString: subType,
+                                  routeString: subType[0],
                                 ));
                           }
 

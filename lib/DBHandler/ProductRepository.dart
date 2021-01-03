@@ -13,7 +13,6 @@ class ProductRepository {
     LOG.i('Fetching Product Description for Product ID ${productID} and VarientId ${variantID}');
     final response = await http.get("https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID");
     Map<String, dynamic> map = jsonDecode(response.body);
-    LOG.i(map);
     return ProductDetail.fromJson(map);
 
   }
@@ -41,6 +40,7 @@ class ProductRepository {
       discountPrice: result["data"]['discountPrice'],
       retailPrice: result["data"]['sellingPrice'],
       productId: result['id'],
+      productVariant: List<Variant>.from(result["data"]["variants"].map((x) => Variant.fromJson(x))),
       isAvailable: result["data"]['isAvailable']
     );
 

@@ -192,6 +192,7 @@ class SearchApi {
   }
 
   Future<SearchResult> getSimilarProduct(String type, String subType) async {
+    LOG.i("Fetching similar product of type $type and subType $subType");
     var criteria = {
       "bool": {
         "filter": [
@@ -214,7 +215,8 @@ class SearchApi {
     return searchResult;
   }
 
-  Future<SearchResult> getComboProduct(String type, String subType) async {
+  Future<SearchResult> getComboProduct(List<String> type, List<String> subType) async {
+    LOG.i("Fetching similar combo product of type ${type.toString()} and subType ${subType.toString()}");
     var criteria = {
       "bool": {
         "must": [
@@ -222,10 +224,14 @@ class SearchApi {
             "match": {"isCombo": true}
           },
           {
-            "match": {"items.subType": "Sofa cum Bed"}
+            "terms": {
+              "items.type": type
+            }
           },
           {
-            "match": {"items.type": "Bean Bag"}
+            "terms": {
+              "items.subType": subType
+            }
           }
         ]
       }

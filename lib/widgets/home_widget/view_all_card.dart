@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/main.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/service/navigation_service.dart';
@@ -57,8 +58,8 @@ class ViewAllCardContent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "VIEW ALL",
-                        style: TextStyle(fontSize: 30),
+                        Strings.viewMore.toUpperCase(),
+                        style: TextStyle(fontSize: 24),
                       ),
                       Icon(Icons.navigate_next_sharp)
                     ],
