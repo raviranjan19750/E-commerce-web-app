@@ -56,7 +56,16 @@ class RoutesConfiguration {
         (context, data) => MyDesktopView(child: CartScreenDesktop())),
     Path(
       r'^' + BULK_ORDER,
-      (context, data) => BulkOrder(),
+      (context, data) => BulkOrder(
+
+        productID: data['productID'],
+        variantID: data['variantID'],
+        productType: data['productType'],
+        productSubType: data['productSubType'],
+        size: data['size'],
+
+
+      ),
     ),
     Path(
       r'^' + ORDER,

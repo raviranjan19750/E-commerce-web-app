@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/strings.dart';
+import 'package:living_desire/routes.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductAvailablity.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductSizeDropdownWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/productVariantColorList.dart';
 import 'package:living_desire/widgets/bullet.dart';
 
+import '../../main.dart';
 import 'SimilarProductsAndCombo.dart';
 
 class ProductDetailDescriptionAndImage extends StatelessWidget {
@@ -187,7 +190,18 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                     width: 220,
                                     margin: EdgeInsets.only(top: 12.0),
                                     child: CustomWidgetButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+
+                                        locator<NavigationService>().navigateTo(RoutesConfiguration.BULK_ORDER,
+                                            queryParams: {
+                                              "productID": state.productDetail.productID,
+                                              "variantID" : state.productDetail.variantID,
+                                              "productType" : state.productDetail.type,
+                                              "productSubType":state.productDetail.subType,
+                                              "size":state.productDetail.size,
+                                            });
+
+                                      },
                                       text: Strings.customizeWithLogo,
                                     ),
                                   )
