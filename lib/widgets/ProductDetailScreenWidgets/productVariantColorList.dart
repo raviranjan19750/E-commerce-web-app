@@ -37,36 +37,70 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
     super.initState();
     selectedColorCount = widget.initialSelectedColor.length;
     variantID = "";
+
   }
 
-  @override
-  Widget build(BuildContext context) {
-    void getOtherProductVariantID(
-        List<ProductVariantColor> currentSelectedColor) {
-      if (currentSelectedColor.length == 2) {
-        for (int i = 0; i < widget.productAllVariant.length; i++) {
-          if (widget.productAllVariant[i].colour.length == 2) {
-            if (currentSelectedColor[0].colorHexCode ==
-                    widget.productAllVariant[i].colour[0] &&
-                currentSelectedColor[1].colorHexCode ==
-                    widget.productAllVariant[i].colour[1]) {
-              variantID = widget.productAllVariant[i].variantId;
-              break;
-            }
+
+  BoxDecoration compareColor (List<ProductVariantColor> colorList, List<ProductVariantColor> initialSelectedColor ) {
+
+    if(colorList.length != initialSelectedColor.length) {
+      return BoxDecoration();
+    }
+
+    for(int i  = 0; i<initialSelectedColor.length; i++) {
+
+      if(i<colorList.length) {
+
+        if(initialSelectedColor.elementAt(i).colorHexCode != colorList.elementAt(i).colorHexCode) {
+          return BoxDecoration();
+        }
+
+      }
+      else{
+        return BoxDecoration();
+      }
+
+    }
+
+    return BoxDecoration( shape: BoxShape.circle,
+      color: Colors.white,
+      border: Border.all(
+        width: 0.5,
+        color: Colors.black,
+      ),);
+
+
+}
+
+  void getOtherProductVariantID(List<ProductVariantColor> currentSelectedColor) {
+    if (currentSelectedColor.length == 2) {
+      for (int i = 0; i < widget.productAllVariant.length; i++) {
+        if (widget.productAllVariant[i].colour.length == 2) {
+          if (currentSelectedColor[0].colorHexCode ==
+              widget.productAllVariant[i].colour[0] &&
+              currentSelectedColor[1].colorHexCode ==
+                  widget.productAllVariant[i].colour[1]) {
+            variantID = widget.productAllVariant[i].variantId;
+            break;
           }
         }
-      } else {
-        for (int i = 0; i < widget.productAllVariant.length; i++) {
-          if (widget.productAllVariant[i].colour.length == 1) {
-            if (currentSelectedColor[0].colorHexCode ==
-                widget.productAllVariant[i].colour[0]) {
-              variantID = widget.productAllVariant[i].variantId;
-              break;
-            }
+      }
+    } else {
+      for (int i = 0; i < widget.productAllVariant.length; i++) {
+        if (widget.productAllVariant[i].colour.length == 1) {
+          if (currentSelectedColor[0].colorHexCode ==
+              widget.productAllVariant[i].colour[0]) {
+            variantID = widget.productAllVariant[i].variantId;
+            break;
           }
         }
       }
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
 
     return ListView.builder(
       shrinkWrap: true,
@@ -74,6 +108,7 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
       itemCount: widget.colorList.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
+        print("Color 2 :${widget.initialSelectedColor.first.colorHexCode} + ${widget.colorList[index]}");
         return InkWell(
           onTap: () {
             setState(() {
@@ -118,61 +153,43 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
           },
           child: widget.colorList[index].length == 2
               ? Container(
-                  padding: EdgeInsets.all(4.0),
-                  margin: EdgeInsets.only(left: 6.0),
-                  decoration: (widget.colorList[index]
-                          .contains(widget.initialSelectedColor))
-                      ? BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 0.5,
-                            color: Colors.black,
+                child: Container(
+                    padding: EdgeInsets.all(4.0),
+                    margin: EdgeInsets.only(left: 6.0),
+                    decoration:  compareColor(widget.colorList[index], widget.initialSelectedColor) ,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(8),
+                              topLeft: Radius.circular(8),
+                            ),
+                            color: widget.colorList[index][0].colorHexCode,
                           ),
-                        )
-                      : BoxDecoration(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(8),
-                            topLeft: Radius.circular(8),
-                          ),
-                          color: widget.colorList[index][0].colorHexCode,
+                          height: 8,
+                          width: 16,
                         ),
-                        height: 8,
-                        width: 16,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(8),
-                            bottomLeft: Radius.circular(8),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(8),
+                              bottomLeft: Radius.circular(8),
+                            ),
+                            color: widget.colorList[index][1].colorHexCode,
                           ),
-                          color: widget.colorList[index][1].colorHexCode,
+                          height: 8,
+                          width: 16,
                         ),
-                        height: 8,
-                        width: 16,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                )
+              )
               : Container(
                   padding: EdgeInsets.all(4.0),
                   margin: EdgeInsets.only(left: 6.0),
-                  decoration: (widget.colorList[index]
-                          .contains(widget.initialSelectedColor))
-                      ? BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 0.5,
-                            color: Colors.black,
-                          ),
-                        )
-                      : BoxDecoration(),
+                  decoration: compareColor(widget.colorList[index], widget.initialSelectedColor),
                   child: CircleAvatar(
                     radius: 8,
                     backgroundColor: widget.colorList[index][0].colorHexCode,
