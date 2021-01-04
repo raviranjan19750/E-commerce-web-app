@@ -6,7 +6,6 @@ class CustomerDetailRepository {
   List<String> _cartListIDs = List();
   Set<String> _wishlistSet = Set();
   //List<Product> _cartItem = List();
-
   void addToWishList(String id) {
     _wishlistSet.add(id);
   }

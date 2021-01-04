@@ -2,7 +2,9 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
+import 'package:living_desire/models/product.dart';
 import 'package:living_desire/service/sharedPreferences.dart';
 // import 'pa';
 
@@ -16,6 +18,8 @@ class AuthenticationRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
   String phone;
   String uid;
+  final _wishlist = Hive.box<Product>('wishlist_items');
+
   AuthenticationRepository({
     firebase_auth.FirebaseAuth firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
@@ -73,12 +77,20 @@ class AuthenticationRepository {
     }
   }
 
+  Future<void> sendWishlistData() async {
+    try {
+      print(_wishlist.toMap().toString());
+    } catch (e) {}
+  }
+
   Future<void> signInWithToken({String token}) async {
     assert(token != null);
     try {
       firebase_auth.UserCredential user =
           await _firebaseAuth.signInWithCustomToken(token);
-      UserPreferences().setAuthID(user.user.uid);
+
+      // UserPreferences().setAuthID(user.user.uid);
+      await sendWishlistData();
     } on Exception {
       throw LoginWithTokenFailure();
     }

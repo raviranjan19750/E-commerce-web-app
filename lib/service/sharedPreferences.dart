@@ -1,3 +1,4 @@
+import 'package:living_desire/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences {
@@ -33,4 +34,8 @@ class UserPreferences {
   get AuthID {
     return _prefs.getString('authID');
   }
+
+  // set WishlistData(String productNumber) {
+  //   _prefs.setStringList("WishList", value);
+  // }
 }

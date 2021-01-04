@@ -53,11 +53,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         print(res[itm]);
       }
 
-      List<FilterTag> tags = await searchApi.getAllCategoryTags();
-      print("ALL CATAGORIES : ");
-      for (var tag in tags) {
-        print(tag.description.toString());
-      }
+      // List<FilterTag> tags = await searchApi.getAllCategoryTags();
+      // print("ALL CATAGORIES : ");
+      // for (var tag in tags) {
+      //   print(tag.description.toString());
+      // }
       yield SuccessfulLoadingHomeProducts(res);
     } catch (e) {
       print(e.toString());

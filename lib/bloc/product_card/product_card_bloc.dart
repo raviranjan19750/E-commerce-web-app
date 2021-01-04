@@ -14,7 +14,8 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
   final CustomerDetailRepository customerRepo;
   final WishlistConfigBloc wishlistBloc;
 
-  ProductCardBloc({this.product, this.productDetail, this.customerRepo, this.wishlistBloc})
+  ProductCardBloc(
+      {this.product, this.productDetail, this.customerRepo, this.wishlistBloc})
       : assert(product != null || productDetail != null),
         assert(customerRepo != null),
         assert(wishlistBloc != null),

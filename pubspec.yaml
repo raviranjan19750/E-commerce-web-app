@@ -55,7 +55,10 @@ dependencies:
   shared_preferences_web: ^0.1.0
   localstorage: ^3.0.6+9
   intl: ^0.16.1
-
+  hive: ^1.4.4+1
+  hive_flutter: ^0.3.1
+  json_annotation: ^3.1.1
+  
 
 
   jiffy: ^3.0.1
@@ -74,6 +77,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^0.8.2
+  build_runner:
+  json_serializable: ^3.5.1
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:living_desire/DBHandler/DBHandler.dart';
 import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
@@ -11,6 +12,7 @@ import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/home/home_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
+import 'package:living_desire/models/models.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/navigation_service.dart';
@@ -27,8 +29,10 @@ void setupLocator() {
   locator.registerLazySingleton(() => NavigationService());
 }
 
-
+const wishlistBox = 'wishlist_items';
 void main() async {
+  Hive.registerAdapter<Product>(ProductAdapter());
+  await Hive.openBox<Product>(wishlistBox);
   final FirebaseApp _initialization = await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
   await UserPreferences().init();

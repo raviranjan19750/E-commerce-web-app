@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
@@ -80,7 +81,9 @@ class ProductCardContent extends StatelessWidget {
               Positioned(
                 right: 0,
                 top: 0,
-                child: ProductWishlistButton(productId: product.varientId),
+                child: ProductWishlistButton(
+                  product: product,
+                ),
               ),
               Positioned(
                 bottom: 0,
@@ -272,16 +275,24 @@ class FilterCheckBox extends StatelessWidget {
 }
 
 class ProductWishlistButton extends StatefulWidget {
-  final String productId;
+  // final String productId;
+  final Product product;
 
-  const ProductWishlistButton({Key key, this.productId}) : super(key: key);
+  const ProductWishlistButton({Key key, this.product}) : super(key: key);
 
   @override
-  _ProductWishlistButtonState createState() => _ProductWishlistButtonState();
+  _ProductWishlistButtonState createState() =>
+      _ProductWishlistButtonState(product);
 }
 
 class _ProductWishlistButtonState extends State<ProductWishlistButton> {
   bool _wishHover;
+  final Product product;
+
+  // Box<String> wishlist = Hive.box('wishlist_items');
+  final _wishlist = Hive.box<Product>('wishlist_items');
+
+  _ProductWishlistButtonState(this.product);
 
   @override
   void initState() {
@@ -312,6 +323,8 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
           child: _wishHover
               ? GestureDetector(
                   onTap: () {
+                    // wishlist.add(product.toJson().toString());
+                    _wishlist.put(product.varientId, product);
                     BlocProvider.of<ProductCardBloc>(context)
                         .add(AddToWishListProductEvent());
                   },
@@ -325,6 +338,8 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
                 )
               : GestureDetector(
                   onTap: () {
+                    // wishlist.delete();
+                    _wishlist.delete(product.varientId);
                     BlocProvider.of<ProductCardBloc>(context)
                         .add(RemoveFromWishListProductEvent());
                   },
