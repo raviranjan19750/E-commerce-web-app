@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 
@@ -15,9 +16,12 @@ class ProductDetailEnlargeImage extends StatefulWidget {
   String productID;
   String variantID;
 
-  ProductDetailEnlargeImage(
-      {Key key, this.imageURL, this.productID, this.variantID,})
-      : super(key: key);
+  ProductDetailEnlargeImage({
+    Key key,
+    this.imageURL,
+    this.productID,
+    this.variantID,
+  }) : super(key: key);
 
   @override
   _ProductDetailEnlargeImageState createState() =>
@@ -39,23 +43,11 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
   @override
   Widget build(BuildContext context) {
-    double imageWidth = MediaQuery
-        .of(context)
-        .size
-        .width * 0.26;
-    double imageHeight = MediaQuery
-        .of(context)
-        .size
-        .height * 0.62;
+    double imageWidth = MediaQuery.of(context).size.width * 0.26;
+    double imageHeight = MediaQuery.of(context).size.height * 0.62;
 
-    double imageListWidth = MediaQuery
-        .of(context)
-        .size
-        .width * 0.06;
-    double imageListHeight = MediaQuery
-        .of(context)
-        .size
-        .height * 0.55;
+    double imageListWidth = MediaQuery.of(context).size.width * 0.06;
+    double imageListHeight = MediaQuery.of(context).size.height * 0.55;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -78,7 +70,6 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   color: Colors.black,
                 ),
               ),
-
               Container(
                 width: imageListWidth,
                 //height: imageListHeight,
@@ -102,16 +93,15 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                         child: (widget.imageURL[index] != null)
                             ? Image.network(widget.imageURL[index].toString())
                             : Text(
-                          widget.imageURL[index],
-                          style: TextStyle(
-                              fontSize: 16, color: Colors.black),
-                        ),
+                                widget.imageURL[index],
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
                       ),
                     );
                   },
                 ),
               ),
-
               Container(
                 width: imageListWidth,
                 height: 30,
@@ -131,7 +121,6 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
           margin: EdgeInsets.only(left: 32.0),
           child: Column(
             children: [
-
               // enlarged image
 
               InkWell(
@@ -139,13 +128,13 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   height: imageHeight,
                   width: imageWidth,
                   decoration: new BoxDecoration(
-                    //color: Palette.lightGrey,
+                      //color: Palette.lightGrey,
                       image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: (selectedURI != null)
-                            ? NetworkImage(selectedURI)
-                            : NetworkImage(widget.imageURL[0]),
-                      )),
+                    fit: BoxFit.fill,
+                    image: (selectedURI != null)
+                        ? NetworkImage(selectedURI)
+                        : NetworkImage(widget.imageURL[0]),
+                  )),
                   child: Stack(
                     children: [
                       Positioned(
@@ -157,8 +146,6 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   ),
                 ),
               ),
-
-
 
 // action buttons
               Container(
@@ -174,6 +161,13 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                         height: double.infinity,
                         child: CustomWidgetButton(
                           onPressed: () {
+                            final _cartlist =
+                                Hive.box<Map<String, String>>('cart_items');
+                            _cartlist.put(widget.variantID, {
+                              "productID": widget.productID,
+                              "variantID": widget.variantID
+                            });
+
                             BlocProvider.of<CartBloc>(context).add(AddCart(
                               authID: "id1",
                               productID: widget.productID,

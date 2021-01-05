@@ -51,6 +51,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           // TODO :
           // add auth id to local storage
           // push local changesd to firebase
+          // await authService.sendWishlistData();
           await authService.signInWithToken(token: customToken);
           // UserPreferences().setAuthID(customToken);
           UserPreferences().AuthID;

@@ -30,9 +30,13 @@ void setupLocator() {
 }
 
 const wishlistBox = 'wishlist_items';
+const cartlistBox = 'cart_items';
+
 void main() async {
   Hive.registerAdapter<Product>(ProductAdapter());
   await Hive.openBox<Product>(wishlistBox);
+  await Hive.openBox<Map<String, String>>(cartlistBox);
+  // await Hive.openBox<Product>(cartlistBox);
   final FirebaseApp _initialization = await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
   await UserPreferences().init();
