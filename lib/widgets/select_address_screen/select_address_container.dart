@@ -7,6 +7,12 @@ import '../../models/models.dart';
 import '../widgets.dart';
 
 class SelectAddressContainer extends StatelessWidget {
+  String authID;
+
+  SelectAddressContainer({
+    Key key,
+    this.authID,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ManageAddressesBloc, ManageAddresesState>(
@@ -16,6 +22,7 @@ class SelectAddressContainer extends StatelessWidget {
             context: context,
             builder: (BuildContext buildContext) {
               return NewAddressDialogBox(
+                authID: authID,
                 isAddAddress: true,
                 onActionButton: (val) =>
                     {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
@@ -27,9 +34,22 @@ class SelectAddressContainer extends StatelessWidget {
               context: context,
               builder: (BuildContext buildContext) {
                 return NewAddressDialogBox(
+                  authID: authID,
                   isEditAddress: true,
                   address: state.address,
                   onActionButton: (val) =>
+                      {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
+                );
+              });
+        } else if (state is LaunchDeleteAddressDialogueState) {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext buildContext) {
+                return DeleteAddressContainer(
+                  authID: authID,
+                  address: state.address,
+                  onAction: (val) =>
                       {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
                 );
               });
@@ -45,14 +65,12 @@ class SelectAddressContainer extends StatelessWidget {
       // ignore: missing_return
       builder: (context, state) {
         if (state is AddressDetailLoading) {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (state is AddressDetailLoadingSuccessful) {
           return Padding(
-            padding: const EdgeInsets.only(
-              top: 16.0,
-              right: 16.0,
-              left: 32
-            ),
+            padding: const EdgeInsets.only(top: 16.0, right: 16.0, left: 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,8 +87,6 @@ class SelectAddressContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-                //GridView.builder(gridDelegate: gridDelegate, itemBuilder: itemBuilder)
-
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SelectAddressGrid(
@@ -103,10 +119,9 @@ class SelectAddressGrid extends StatefulWidget {
 class _SelectAddressGridState extends State<SelectAddressGrid> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    widget.selectedAddress = widget.addresses[0];
 
+    widget.selectedAddress = widget.addresses[0];
     // BLOC provider to select Address bloc pass the value of selected address
     BlocProvider.of<SelectAddressBloc>(context)
         .add(LoadAddress(widget.selectedAddress));
@@ -114,6 +129,7 @@ class _SelectAddressGridState extends State<SelectAddressGrid> {
 
   @override
   Widget build(BuildContext context) {
+    // print('Select Addresses' + widget.addresses.length.toString());
     return Wrap(
       children: [
         ...widget.addresses.map((address) {
@@ -122,7 +138,6 @@ class _SelectAddressGridState extends State<SelectAddressGrid> {
               setState(() {
                 widget.selectedAddress = address;
               });
-
               // BLOC provider to select Address bloc pass the value of selected address
               BlocProvider.of<SelectAddressBloc>(context)
                   .add(LoadAddress(widget.selectedAddress));

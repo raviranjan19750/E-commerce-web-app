@@ -16,50 +16,50 @@ class SelectAddressCartTotal extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 100% Purchase Protection Container
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 16.0,
-              ),
-              child: Card(
-                elevation: 3.0,
-                child: Container(
-                  color: Colors.grey[200],
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.grey,
-                        ),
-                        Container(
-                          color: Colors.grey[20],
-                          child: Column(
-                            children: [
-                              Text(
-                                Strings.purchaseProtection,
-                                softWrap: true,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                '${Strings.orignalProducts} | ${Strings.securePayments}',
-                                softWrap: true,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     bottom: 16.0,
+            //   ),
+            //   child: Card(
+            //     elevation: 3.0,
+            //     child: Container(
+            //       color: Colors.grey[200],
+            //       child: Padding(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //           children: [
+            //             CircleAvatar(
+            //               backgroundColor: Colors.grey,
+            //             ),
+            //             Container(
+            //               color: Colors.grey[20],
+            //               child: Column(
+            //                 children: [
+            //                   Text(
+            //                     Strings.purchaseProtection,
+            //                     softWrap: true,
+            //                     style: TextStyle(
+            //                       fontSize: 16,
+            //                     ),
+            //                   ),
+            //                   Text(
+            //                     '${Strings.orignalProducts} | ${Strings.securePayments}',
+            //                     softWrap: true,
+            //                     style: TextStyle(
+            //                       fontSize: 10,
+            //                       color: Colors.green,
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             Padding(
               padding: const EdgeInsets.symmetric(

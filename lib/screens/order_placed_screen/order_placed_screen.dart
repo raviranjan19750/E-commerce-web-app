@@ -14,7 +14,6 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
   final TrackingScrollController trackingScrollController =
       TrackingScrollController();
   //TODO: Later Get Order From Cart Place Order
-  final Order orders = order[0];
 
   //_OrderPlacedScreenState(this.order,);
 
@@ -36,10 +35,7 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
           mobile: OrderPlacedScreenMobile(
               scrollController: trackingScrollController),
           // Desktop Website
-          desktop: OrderPlacedScreenDesktop(
-            scrollController: trackingScrollController,
-            order: orders,
-          ),
+          desktop: OrderPlacedScreenDesktop(),
         ),
       ),
     );
