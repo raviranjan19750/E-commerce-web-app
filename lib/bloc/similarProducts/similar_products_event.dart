@@ -7,8 +7,8 @@ abstract class SimilarProductsEvent {}
 
 class LoadingSimilarProducts extends SimilarProductsEvent{
 
-  final String type;
-  final String subType;
+  final List<String> type;
+  final List<String> subType;
 
   LoadingSimilarProducts(this.type, this.subType);
 

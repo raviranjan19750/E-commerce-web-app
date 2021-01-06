@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../data/data.dart';
-import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
 

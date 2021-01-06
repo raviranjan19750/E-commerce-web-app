@@ -31,7 +31,7 @@ class RoutesConfiguration {
   static const String MY_ORDERS = "/myorders";
   static const String MY_BULK_ORDERS = "/mybulkorders";
   static const String CART = "/cart";
-  static const String BULK_ORDER_QUOTATION = "/bulkorderquotation";
+  static const String BULK_ORDER_QUOTATION = "/customorderquotation";
   static const String MANAGE_ADDRESSES = "/manageaddresses";
   static const String SELECT_ADDRESS = "/selectaddress";
   static const String ORDER_PLACED = "/orderplaced";
@@ -44,11 +44,17 @@ class RoutesConfiguration {
       ),
     ),
     Path(r'^' + PRODUCT_DETAIL, (context, data) {
-      print(data);
-      return MyDesktopView(
-        child: ProductDetailScreen(
+      print("routing data : ${data['isCombo']}");
+
+       return MyDesktopView(
+        child: (data['isCombo'] == "true") ? ProductDetailScreen(
           productID: data['pid'],
           variantID: data['vid'],
+          isCombo: data['isCombo'],
+        ) : ProductDetailScreen(
+          productID: data['pid'],
+          variantID: data['vid'],
+          isCombo: data['isCombo'],
         ),
       );
     }),
@@ -56,7 +62,16 @@ class RoutesConfiguration {
         (context, data) => MyDesktopView(child: CartScreenDesktop())),
     Path(
       r'^' + BULK_ORDER,
-      (context, data) => BulkOrder(),
+      (context, data) => BulkOrder(
+
+        productID: data['productID'],
+        variantID: data['variantID'],
+        productType: data['productType'],
+        productSubType: data['productSubType'],
+        size: data['size'],
+
+
+      ),
     ),
     Path(
       r'^' + ORDER,
@@ -133,6 +148,11 @@ class RoutesConfiguration {
 
       case MY_BULK_ORDERS:
         return MaterialPageRoute(builder: (_) => MyBulkOrder());
+
+      case BULK_ORDER_QUOTATION:
+        var args = settings.arguments as Map;
+        String key = args["key"];
+        return MaterialPageRoute(builder: (_) => BulkOrderQuotation(id: key,));
 
       case WISHLIST:
         return MaterialPageRoute(

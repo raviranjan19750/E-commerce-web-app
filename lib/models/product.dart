@@ -51,6 +51,7 @@ class Product {
   @HiveField(10)
   @JsonKey(name: 'isAvailable')
   final bool isAvailable;
+  final bool isCombo;
 
   Product(
       {this.title,
@@ -64,5 +65,6 @@ class Product {
       this.tags,
       this.type,
       this.subType,
-      this.isAvailable});
+      this.isAvailable,
+      this.isCombo});
 }

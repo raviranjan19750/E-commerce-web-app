@@ -27,7 +27,7 @@ class ProductsType extends StatelessWidget {
         // ProductTypeBar(
         //   productType: productType.type,
         // ),
-        LabelTag(productType.type),
+        LabelTag(productType.type,),
         Container(
           height: MediaQuery.of(context).size.height * 0.4,
           child: ListView.builder(

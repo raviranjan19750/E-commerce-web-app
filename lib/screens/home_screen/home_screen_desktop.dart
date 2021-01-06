@@ -105,7 +105,7 @@ class HomeScreenvView extends StatelessWidget {
               List<Widget> widgetList = [];
               state.productList.forEach((key, value) {
                 widgetList.add(HomeWidget(
-                  labeltxt: key,
+                  labelText: key,
                   productlist: value,
                 ));
               });
@@ -115,9 +115,9 @@ class HomeScreenvView extends StatelessWidget {
             } else if (state is HomeInitial) {
               // print("initialising home.... ");
               BlocProvider.of<HomeBloc>(context).add(InitializeHome());
-              return CircularProgressIndicator();
+              return LinearProgressIndicator();
             } else {
-              return CircularProgressIndicator();
+              return LinearProgressIndicator();
             }
           },
         ),

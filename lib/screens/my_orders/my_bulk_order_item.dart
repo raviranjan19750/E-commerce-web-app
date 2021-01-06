@@ -351,7 +351,7 @@ class MyBulkOrderItem extends StatelessWidget{
 
                               onTap: (){
 
-                                // Navigator.pushNamed(context,RoutesConfiguration.BULK_ORDER_QUOTATION,arguments: {'key' : bulkOrder.key});
+                                //Navigator.pushNamed(context,RoutesConfiguration.BULK_ORDER_QUOTATION,arguments: {'key' : bulkOrder.key});
                                 locator<NavigationService>().navigateTo(RoutesConfiguration.BULK_ORDER_QUOTATION, queryParams: {"key": bulkOrder.key});
 
                               },

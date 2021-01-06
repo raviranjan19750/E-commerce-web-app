@@ -12,6 +12,7 @@ import 'package:rxdart/rxdart.dart';
 import '../../logger.dart';
 
 part 'all_product_event.dart';
+
 part 'all_product_state.dart';
 
 class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
@@ -91,7 +92,6 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       {List<Product> prev, int offset = 0, int limit = 20}) {
     final hits = searchResult.hits;
 
-    LOG.i(searchResult.toString());
     int len = hits.length;
     List<Product> result = List();
     for (int x = 0; x < len; x++) {
@@ -134,6 +134,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
           productId: hit.doc['productID'],
           varientId: hit.doc['variantID'],
           tags: tags,
+          isCombo: hit.doc["isCombo"],
           type: hit.doc['type'],
           isAvailable: hit.doc['isAvailable'],
           subType: hit.doc['subType']);

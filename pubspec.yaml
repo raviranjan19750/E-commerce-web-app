@@ -55,11 +55,10 @@ dependencies:
   shared_preferences_web: ^0.1.0
   localstorage: ^3.0.6+9
   intl: ^0.16.1
-  hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   json_annotation: ^3.1.1
   
-
+  collection: ^1.14.13
 
   jiffy: ^3.0.1
   rating_bar: ^0.2.0

@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
+import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/models/sorting_criteria.dart';
 import 'package:living_desire/service/navigation_service.dart';
@@ -21,10 +22,10 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProductCardBloc(
-        customerRepo: RepositoryProvider.of(context),
-        wishlistBloc: BlocProvider.of(context),
-        product: product,
-      ),
+          customerRepo: RepositoryProvider.of(context),
+          wishlistBloc: BlocProvider.of(context),
+          product: product,
+          auth: BlocProvider.of(context)),
       child: Card(
           elevation: 5,
           child: ProductCardContent(
@@ -55,11 +56,20 @@ class ProductCardContent extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () {
+                    if (product.isCombo) {
+                      locator<NavigationService>().navigateTo(
+                          RoutesConfiguration.PRODUCT_DETAIL,
+                          queryParams: {
+                            "pid": product.productId,
+                            "isCombo": product.isCombo.toString(),
+                          });
+                    }
                     locator<NavigationService>().navigateTo(
                       RoutesConfiguration.PRODUCT_DETAIL,
                       queryParams: {
                         "pid": product.productId,
-                        "vid": product.varientId
+                        "vid": product.varientId,
+                        "isCombo": product.isCombo.toString()
                       },
                     );
                     // Navigator.pushNamed(
@@ -82,7 +92,8 @@ class ProductCardContent extends StatelessWidget {
                 right: 0,
                 top: 0,
                 child: ProductWishlistButton(
-                  product: product,
+                  productId: product.productId,
+                  varientId: product.varientId,
                 ),
               ),
               Positioned(
@@ -117,6 +128,133 @@ class ProductCardContent extends StatelessWidget {
                   ),
                   Text(
                     "₹" + product.retailPrice.toString(),
+                    style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.grey),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  if (discount > 0)
+                    Text(
+                      discount.toStringAsPrecision(2) + "% Off",
+                      style: TextStyle(color: Colors.green),
+                    )
+                ],
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ComboProductCard extends StatelessWidget {
+  final ComboProduct comboProduct;
+  final Product product;
+
+  const ComboProductCard({Key key, this.comboProduct, this.product})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ProductCardBloc(
+          customerRepo: RepositoryProvider.of(context),
+          wishlistBloc: BlocProvider.of(context),
+          product: product,
+          auth: BlocProvider.of(context)),
+      child: Card(
+          elevation: 5.0,
+          child: ComboProductCardContent(
+            comboProduct: comboProduct,
+          )),
+    );
+  }
+}
+
+class ComboProductCardContent extends StatelessWidget {
+  final ComboProduct comboProduct;
+
+  const ComboProductCardContent({Key key, this.comboProduct}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double discount = 0;
+    discount = (comboProduct.retailPrice - comboProduct.discountPrice) /
+        comboProduct.retailPrice *
+        100;
+
+    return Column(
+      children: [
+        Expanded(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                child: InkWell(
+                  onTap: () {
+                    locator<NavigationService>().navigateTo(
+                      RoutesConfiguration.PRODUCT_DETAIL,
+                      queryParams: {
+                        "pid": comboProduct.productId,
+                        "isCombo": "true",
+                      },
+                    );
+                    // Navigator.pushNamed(
+                    //     context, path,
+                    //     arguments: {
+                    //       "product": product,
+                    //       "productID": product.productId,
+                    //       "variantID": product.varientId
+                    //     });
+                  },
+                  child: Image.network(
+                    comboProduct.imageUrls[0],
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                width: double.infinity,
+                height: double.infinity,
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: ProductWishlistButton(productId: comboProduct.productId),
+              ),
+              Positioned(
+                bottom: 0,
+                child: _AddToCartButton(),
+              )
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                comboProduct.title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 2,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "₹" + comboProduct.discountPrice.toString(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, color: Colors.black87),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "₹" + comboProduct.retailPrice.toString(),
                     style: TextStyle(
                         decoration: TextDecoration.lineThrough,
                         color: Colors.grey),
@@ -243,6 +381,7 @@ class _FilterCardState extends State<FilterCard> {
 class FilterCheckBox extends StatelessWidget {
   final ValueChanged<bool> onChanged;
   final FilterCategoryChild filterLabel;
+
   const FilterCheckBox({Key key, this.onChanged, this.filterLabel})
       : assert(filterLabel != null),
         super(key: key);
@@ -275,24 +414,28 @@ class FilterCheckBox extends StatelessWidget {
 }
 
 class ProductWishlistButton extends StatefulWidget {
-  // final String productId;
-  final Product product;
+  final String productId;
+  final String varientId;
+  // final Product product;
 
-  const ProductWishlistButton({Key key, this.product}) : super(key: key);
+  const ProductWishlistButton({Key key, this.productId, this.varientId})
+      : super(key: key);
 
   @override
   _ProductWishlistButtonState createState() =>
-      _ProductWishlistButtonState(product);
+      _ProductWishlistButtonState(productId, varientId);
 }
 
 class _ProductWishlistButtonState extends State<ProductWishlistButton> {
   bool _wishHover;
-  final Product product;
+  // final Product product;
+  final String p_id;
+  final String v_id;
 
   // Box<String> wishlist = Hive.box('wishlist_items');
-  final _wishlist = Hive.box<Product>('wishlist_items');
+  final _wishlist = Hive.box<Map<String, String>>('wishlist_items');
 
-  _ProductWishlistButtonState(this.product);
+  _ProductWishlistButtonState(this.p_id, this.v_id);
 
   @override
   void initState() {
@@ -310,49 +453,62 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
       return Container(
         padding: EdgeInsets.all(6.0),
         child: MouseRegion(
-          onEnter: (event) {
-            setState(() {
-              _wishHover = !state.isItemInWishList;
-            });
-          },
-          onExit: (event) {
-            setState(() {
-              _wishHover = state.isItemInWishList;
-            });
-          },
-          child: _wishHover
-              ? GestureDetector(
-                  onTap: () {
-                    // wishlist.add(product.toJson().toString());
-                    _wishlist.put(product.varientId, product);
-                    BlocProvider.of<ProductCardBloc>(context)
-                        .add(AddToWishListProductEvent());
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white.withAlpha(200),
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.red,
+            onEnter: (event) {
+              if (!state.isItemInWishList) {
+                setState(() {
+                  _wishHover = !state.isItemInWishList;
+                });
+              }
+            },
+            onExit: (event) {
+              if (!state.isItemInWishList) {
+                setState(() {
+                  _wishHover = state.isItemInWishList;
+                });
+              }
+            },
+            child: _wishHover
+                ? GestureDetector(
+                    onTap: () {
+                      // wishlist.add(product.toJson().toString());
+                      // _wishlist.put(product.varientId, product);
+                      _wishlist
+                          .put(p_id, {"productID": p_id, "variantID": v_id});
+                      BlocProvider.of<ProductCardBloc>(context)
+                          .add(AddToWishListProductEvent());
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white.withAlpha(200),
+                      child: Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      ),
                     ),
-                  ),
-                )
-              : GestureDetector(
-                  onTap: () {
-                    // wishlist.delete();
-                    _wishlist.delete(product.varientId);
-                    BlocProvider.of<ProductCardBloc>(context)
-                        .add(RemoveFromWishListProductEvent());
-                  },
-                  child: CircleAvatar(
-                    radius: 17.0,
-                    backgroundColor: Colors.white.withAlpha(200),
-                    child: Icon(
-                      Icons.favorite_border_outlined,
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-        ),
+                  )
+                : GestureDetector(
+                    onTap: () {
+                      // wishlist.delete();
+                      _wishlist.delete(v_id);
+                      BlocProvider.of<ProductCardBloc>(context)
+                          .add(RemoveFromWishListProductEvent());
+                    },
+                    child: CircleAvatar(
+                      radius: 17.0,
+                      backgroundColor: Colors.white.withAlpha(200),
+                      child: Icon(
+                        Icons.favorite_border_outlined,
+                        color: Colors.red,
+                      ),
+                    ))
+            // : CircleAvatar(
+            //     radius: 17.0,
+            //     backgroundColor: Colors.white.withAlpha(200),
+            //     child: Icon(
+            //       Icons.favorite_border_outlined,
+            //       color: Colors.red,
+            //     ),
+            //   ),
+            ),
       );
     });
   }

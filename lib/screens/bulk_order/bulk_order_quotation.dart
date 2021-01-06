@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:living_desire/ProviderModels/bulk_order_quotation_provider.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/models/BulkOrder.dart';
+import 'package:living_desire/models/StringToHexColor.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +17,36 @@ class BulkOrderQuotation extends StatelessWidget{
   bool init = false;
 
   BulkOrderQuotation({this.id});
+
+  String totalPrice(int price,int quantity){
+
+    int ans = price * quantity;
+
+    return ans.toString();
+
+  }
+
+  String dateFormatter(BulkOrder bulkOrder){
+
+    if(bulkOrder.placedDate == null){
+      return new DateFormat.yMMMd().format(bulkOrder.requestDate);
+    }
+
+    return new DateFormat.yMMMd().format(bulkOrder.placedDate);
+
+  }
+
+  String sampleRequestedString(bool sampleRequested){
+
+    if(sampleRequested){
+      return "YES";
+    }
+    else{
+      return "NO";
+
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +66,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
               appBar: CustomAppBar(size: 140,visibleSubAppBar: true,visibleMiddleAppBar: true,),
 
-              body: SingleChildScrollView(
+              body: (value.bulkOrder != null) ?SingleChildScrollView(
 
                 child: Column(
 
@@ -97,6 +130,19 @@ class BulkOrderQuotation extends StatelessWidget{
                             label: Text('Product Name',style: TextStyle(color:Palette.secondaryColor ,fontSize: 16,fontWeight: FontWeight.bold,),),
 
                           ),
+
+                          DataColumn(
+
+                            label: Text('Color',style: TextStyle(color:Palette.secondaryColor ,fontSize: 16,fontWeight: FontWeight.bold,),),
+
+                          ),
+
+                          DataColumn(
+
+                            label: Text('Size',style: TextStyle(color:Palette.secondaryColor ,fontSize: 16,fontWeight: FontWeight.bold,),),
+
+                          ),
+
                           DataColumn(
 
                             label: Text('Quantity',style: TextStyle(color:Palette.secondaryColor ,fontSize: 16,fontWeight: FontWeight.bold,),),
@@ -115,61 +161,32 @@ class BulkOrderQuotation extends StatelessWidget{
 
                         ],
 
-                        rows: [
-                          DataRow(
-
-                              cells: [
-
+                        rows: value.bulkOrder.products
+                            .map(
+                              (quotationProduct) => DataRow(cells: [
                                 DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text('Classic Filled Bean Bag with Beans')),
-                                DataCell(Text('100')),
-                                DataCell(Text('10')),
-                                DataCell(Text('1000')),
+                                DataCell(Text(quotationProduct.productType+'    '+quotationProduct.productSubType)),
+                                DataCell(Container(
 
+                                  margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                                  width: 24.0,
+                                  height: 24.0,
+                                  decoration: new BoxDecoration(
+                                    color: HexColorConvert.fromHex(quotationProduct.colour.first['hexCode']),
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),),
+                                DataCell(Text(quotationProduct.size)),
+                                DataCell(Text(quotationProduct.quantity.toString())),
+                                DataCell(Text(
+                                    ((quotationProduct.discountPrice!=null)?quotationProduct.discountPrice.toString():'-'),
 
-                              ]
-                          ),
-                          DataRow(
-
-                              cells: [
-
-                                DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text('Classic Filled Bean')),
-                                DataCell(Text('10')),
-                                DataCell(Text('10')),
-                                DataCell(Text('100')),
-
-
-                              ]
-                          ),
-                          DataRow(
-
-                              cells: [
-
-                                DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text('Classic Filled Bean Bag with Beans')),
-                                DataCell(Text('100')),
-                                DataCell(Text('10')),
-                                DataCell(Text('1000')),
-
-
-                              ]
-                          ),
-                          DataRow(
-
-                              cells: [
-
-                                DataCell(Image(image: AssetImage('assets/images/logo.jpeg'),height: 64,width: 64,)),
-                                DataCell(Text('Classic Filled Bean Bag with Beans')),
-                                DataCell(Text('100')),
-                                DataCell(Text('10')),
-                                DataCell(Text('1000')),
-
-
-                              ]
-                          ),
-
-                        ],
+                                )
+                                ),
+                                DataCell(Text( ((quotationProduct.discountPrice!=null)?totalPrice(quotationProduct.discountPrice, quotationProduct.quantity):'-'))),
+                          ]),
+                        )
+                            .toList(),
 
                       ),
                     ),
@@ -191,9 +208,10 @@ class BulkOrderQuotation extends StatelessWidget{
 
                                 Row(
                                   children: [
+                                    
                                     Text('Quotation Status ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
 
-                                    Text('    Received',style: TextStyle(color: Colors.green,fontSize: 22),),
+                                    Text('    '+ value.bulkOrder.quotationTracking.first.statusValue ,style: TextStyle(color: Colors.green,fontSize: 22),),
                                   ],
                                 ),
 
@@ -203,7 +221,7 @@ class BulkOrderQuotation extends StatelessWidget{
                                   children: [
                                     Text('Date of Order ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
 
-                                    Text('        12/12/2020 7:45',style: TextStyle(color: Palette.secondaryColor,fontSize: 22),),
+                                    Text('        '+dateFormatter(value.bulkOrder),style: TextStyle(color: Palette.secondaryColor,fontSize: 22),),
                                   ],
                                 ),
 
@@ -213,7 +231,7 @@ class BulkOrderQuotation extends StatelessWidget{
                                   children: [
                                     Text('Sample Requested ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
 
-                                    Text('  NO',style: TextStyle(color: Palette.secondaryColor,fontSize: 22),),
+                                    Text('  '+ sampleRequestedString(value.bulkOrder.isSampleRequested),style: TextStyle(color: Palette.secondaryColor,fontSize: 22),),
                                   ],
                                 ),
 
@@ -222,70 +240,75 @@ class BulkOrderQuotation extends StatelessWidget{
                               ]
                           ),
 
-                          Container(
+                          Visibility(
 
-                            margin: EdgeInsets.only(left: 200),
+                            visible: (value.bulkOrder.quotationStatus != 101),
 
-                            child: Column(
+                            child: Container(
 
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              margin: EdgeInsets.only(left: 200),
 
-                              children: [
+                              child: Column(
 
-                                Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
 
-                                  children: [
+                                children: [
 
-                                    Text('Sub Total : ',style: TextStyle(fontSize: 20,color: Colors.grey[500],),),
-                                    Text('   ₹ 3000',style: TextStyle(fontSize: 22,color: Colors.black),)
+                                  Row(
 
-                                  ],
+                                    children: [
 
-                                ),
+                                      Text('Sub Total : ',style: TextStyle(fontSize: 20,color: Colors.grey[500],),),
+                                      Text('   ₹ 3000',style: TextStyle(fontSize: 22,color: Colors.black),)
 
-                                Padding(padding: EdgeInsets.symmetric(vertical: 6),),
-
-                                RaisedButton(
-
-                                  onPressed: (){},
-
-                                  color: Palette.secondaryColor,
-
-                                  child: Container(
-
-                                    padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
-
-                                    child:Text('Check Out',style: TextStyle(color: Colors.white),),
+                                    ],
 
                                   ),
 
-                                ),
+                                  Padding(padding: EdgeInsets.symmetric(vertical: 6),),
 
-                                Padding(padding: EdgeInsets.symmetric(vertical: 12),),
+                                  RaisedButton(
 
-                                FlatButton(
+                                    onPressed: (){},
 
-                                  onPressed: (){},
+                                    color: Palette.secondaryColor,
 
-                                  child: Container(
+                                    child: Container(
 
+                                      padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
 
-                                    padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
-
-                                    decoration: BoxDecoration(
-
-                                        border: Border.all(color: Palette.secondaryColor)
+                                      child:Text('Check Out',style: TextStyle(color: Colors.white),),
 
                                     ),
 
-                                    child:Text('Continue Shopping',style: TextStyle(color: Palette.secondaryColor),),
+                                  ),
+
+                                  Padding(padding: EdgeInsets.symmetric(vertical: 12),),
+
+                                  FlatButton(
+
+                                    onPressed: (){},
+
+                                    child: Container(
+
+
+                                      padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
+
+                                      decoration: BoxDecoration(
+
+                                          border: Border.all(color: Palette.secondaryColor)
+
+                                      ),
+
+                                      child:Text('Continue Shopping',style: TextStyle(color: Palette.secondaryColor),),
+
+                                    ),
 
                                   ),
 
-                                ),
+                                ],
 
-                              ],
-
+                              ),
                             ),
                           )
                         ],
@@ -297,7 +320,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
                 ),
 
-              ),
+              ) : Center(child: CircularProgressIndicator(),),
 
             );
 

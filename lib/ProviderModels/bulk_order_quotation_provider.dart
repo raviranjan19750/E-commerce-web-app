@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:living_desire/config/function_config.dart';
+import 'package:living_desire/models/BulkOrder.dart';
 
 class BulkOrderQuotationProvider with ChangeNotifier{
 
+
+  BulkOrder bulkOrder;
 
   void initQuotation(String key) async {
 
@@ -20,8 +25,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
 
     if(response.statusCode == 200){
 
-      print("Quatation  :  "  + response.body);
-
+      bulkOrder = BulkOrder.fromJson(jsonDecode(response.body));
 
     }
 

@@ -12,9 +12,9 @@ import 'bulk_order_cart.dart';
 
 class BulkOrder extends StatelessWidget{
 
-  final String productType, productSubType, color, size ;
+  final String productType, productSubType, size,productID,variantID;
 
-  BulkOrder({this.productType, this.productSubType, this.color, this.size});
+  BulkOrder({this.productID,this.variantID,this.productType, this.productSubType, this.size});
 
   bool init = false;
 
@@ -29,7 +29,7 @@ class BulkOrder extends StatelessWidget{
           builder: (BuildContext context, BulkOrderProvider value, Widget child) {
 
             if (!init) {
-              Provider.of<BulkOrderProvider>(context, listen: false).initStepOne(productType, productSubType);
+              Provider.of<BulkOrderProvider>(context, listen: false).initStepOne(productID,variantID,size,productType, productSubType);
               init = true;
             }
 

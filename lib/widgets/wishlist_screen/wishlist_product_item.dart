@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/widgets/wishlist_screen/add_to_cart_button.dart';
 import '../../bloc/wishlist/wishlist_bloc.dart';
+import '../../main.dart';
+import '../../routes.dart';
 
 class WishlistProductItem extends StatelessWidget {
   final Wishlist product;
@@ -42,9 +45,10 @@ class WishlistProductItemDetail extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.12,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed('/product', arguments: {
-            "product": product,
-          });
+          locator<NavigationService>().navigateTo(RoutesConfiguration.PRODUCT_DETAIL, queryParams: { "pid": product.productID, "vid": product.variantID});
+          // Navigator.of(context).pushNamed('/product', arguments: {
+          //   "product": product,
+          // });
         },
         child: Card(
           elevation: 2,

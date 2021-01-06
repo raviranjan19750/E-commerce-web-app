@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/BulkOrderProduct.dart';
+import 'package:living_desire/models/QuotationProducts.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/models/order_payment.dart';
 import 'package:living_desire/models/quotation_tracking.dart';
 import 'package:living_desire/models/sample_payment.dart';
 import 'package:living_desire/models/sample_tracking.dart';
 import 'package:living_desire/models/samples.dart';
+import 'package:living_desire/screens/bulk_order/bulk_order_item.dart';
 
 class BulkOrder {
 
@@ -20,6 +22,7 @@ class BulkOrder {
 
   var productType;
 
+  final List<QuotationProducts> products;
 
   final List<Tracking> orderTracking;
 
@@ -43,6 +46,7 @@ class BulkOrder {
       this.pincode,
       this.placedDate,
       this.deliveryDate,
+      this.products,
       this.deliveryAddressID,
       this.isSampleRequested,
       this.assignedPersonID,
@@ -67,10 +71,9 @@ class BulkOrder {
       this.orderPayment});
 
   factory BulkOrder.fromJson(Map<String, dynamic> data) {
+
     if (data == null) return null;
 
-
-    print(data['data']);
     DateTime getDate(Map<String, dynamic> data){
 
       if(data == null)
@@ -80,11 +83,48 @@ class BulkOrder {
 
     }
 
+    List<QuotationProducts> getProductsList(List<dynamic> data){
+
+      if(data == null)
+        return null;
+
+      List<QuotationProducts> temp = new List();
+
+      for(int i=0;i<data.length;i++){
+
+        QuotationProducts quotationProducts = QuotationProducts.fromJson(data[i]);
+        temp.add(quotationProducts);
+
+      }
+
+      return temp;
+
+    }
+
+    List<QuotationTracking> getQuotationTrackingList(List<dynamic> data){
+
+      if(data == null)
+        return null;
+
+      List<QuotationTracking> temp = new List();
+
+      for(int i=0;i<data.length;i++){
+
+        QuotationTracking quotationTracking = QuotationTracking.fromJson(data[i]);
+        temp.add(quotationTracking);
+
+      }
+
+      return temp;
+
+    }
+
     return BulkOrder(
         key: data['id'],
         requestDate: getDate(data['data']['requestDate']),
         placedDate: getDate(data['data']['placedDate']),
         deliveryDate: getDate(data['data']['deliveryDate']),
+        products: getProductsList(data['data']['products'])  ,
         authID: data['data']['authID'],
         orderID: data['data']['orderID'],
         address: data['data']['address'],
@@ -101,7 +141,7 @@ class BulkOrder {
         quotationStatus: data['data']['quotationStatus'],
         requestID: data['data']['requestID'],
         name: data['data']['name'],
-        //quotationTracking: data['data']['quotationTracking'],
+        quotationTracking: getQuotationTrackingList(data['data']['quotationTracking']),
 
     );
   }

@@ -58,6 +58,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       // for (var tag in tags) {
       //   print(tag.description.toString());
       // }
+      /* List<FilterTag> tags = await searchApi.getAllCategoryTags();
+      print("ALL CATAGORIES : ");
+      for (var tag in tags) {
+        print(tag.description.toString());
+      }*/
       yield SuccessfulLoadingHomeProducts(res);
     } catch (e) {
       print(e.toString());
@@ -109,6 +114,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           productId: hit.doc['productID'],
           varientId: hit.doc['variantID'],
           tags: tags,
+          isCombo: hit.doc['isCombo'],
           type: hit.doc['type'],
           isAvailable: hit.doc['isAvailable'],
           subType: hit.doc['subType']);

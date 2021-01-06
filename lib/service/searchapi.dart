@@ -192,8 +192,7 @@ class SearchApi {
   }
 
   Future<SearchResult> getSimilarProduct(String type, String subType) async {
-    print("hogya");
-
+    LOG.i("Fetching similar product of type $type and subType $subType");
     var criteria = {
       "bool": {
         "filter": [
@@ -211,8 +210,34 @@ class SearchApi {
       }
     };
     final searchResult =
-        await client.search(index: INDEX_NAME, limit: 50, query: criteria);
+        await client.search(index: INDEX_NAME, limit: 18, query: criteria);
 
+    return searchResult;
+  }
+
+  Future<SearchResult> getComboProduct(List<String> type, List<String> subType) async {
+    LOG.i("Fetching similar combo product of type ${type.toString()} and subType ${subType.toString()}");
+    var criteria = {
+      "bool": {
+        "must": [
+          {
+            "match": {"isCombo": true}
+          },
+          {
+            "terms": {
+              "items.type": type
+            }
+          },
+          {
+            "terms": {
+              "items.subType": subType
+            }
+          }
+        ]
+      }
+    };
+    final searchResult =
+        await client.search(index: INDEX_NAME, limit: 18, query: criteria);
     return searchResult;
   }
 }

@@ -9,28 +9,19 @@ class ProductDetailLoading extends ProductDetailState {}
 
 // ignore: must_be_immutable
 class ProductDetailLoadingSuccessful extends ProductDetailState {
-
   final ProductDetail productDetail;
 
   ProductDetailLoadingSuccessful(this.productDetail);
-
 }
 
 class ProductDetailLoadingFailure extends ProductDetailState {}
 
-class SimilarProductDetailLoadingSuccessful extends ProductDetailState {
+class ComboProductDetailLoadingSuccessful extends ProductDetailState {
+  final ComboProduct comboProduct;
 
-  final List<Product> productDetail;
-
-  SimilarProductDetailLoadingSuccessful(this.productDetail);
-
+  ComboProductDetailLoadingSuccessful(this.comboProduct);
 }
 
-
+class ComboProductDetailLoadingFailure extends ProductDetailState {}
 
 // check availability of product
-
-
-
-
-

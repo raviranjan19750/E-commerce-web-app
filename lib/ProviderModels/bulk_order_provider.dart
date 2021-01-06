@@ -117,7 +117,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
-  void initStepOne(String productType, String productSubType) async {
+  void initStepOne(String productID,String variantID,String size,String productType, String productSubType) async {
 
     SearchApi searchApi = new SearchApi();
 
@@ -154,16 +154,51 @@ class BulkOrderProvider with ChangeNotifier{
 
     await getCustomCart(UserPreferences().AuthID);
 
-    if(productType == null || productType.isEmpty){
+    if(productID == null || productID.isEmpty){
 
       stepOneDone = false;
     }
     else{
 
+      productTypeSelected = true;
+      productSubTypeSelected = true;
       stepOneDone = true;
 
-      bulkOrderCart.productID = productType;
-      bulkOrderCart.variantID = productSubType;
+      bulkOrderCart.productID = productID;
+      bulkOrderCart.variantID = variantID;
+      bulkOrderCart.productType = productType;
+      bulkOrderCart.productSubType = productSubType;
+      bulkOrderCart.size = size;
+      itemSize = size;
+
+      selectedType = -1;
+
+      for(int i=0;i<productTypeMap.keys.length;i++){
+
+        if(productTypeMap.keys.elementAt(i) == bulkOrderCart.productType){
+          selectedType = i;
+        }
+
+      }
+
+      selectedSubType = -1;
+
+      if(selectedType != -1){
+
+        subTypes = productTypeMap[bulkOrderCart.productType];
+
+        for(int i=0;i<productTypeMap[bulkOrderCart.productType].length;i++){
+
+          if(productTypeMap[bulkOrderCart.productType].elementAt(i) == bulkOrderCart.productSubType){
+            selectedSubType = i;
+          }
+
+        }
+
+      }
+      else{
+        subTypes = productTypeMap[productTypeMap.keys.first];
+      }
 
     }
 

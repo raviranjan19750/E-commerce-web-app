@@ -26,7 +26,8 @@ class WishlistScreenDesktop extends StatelessWidget {
             providers: [
               BlocProvider(
                   create: (context) => WishlistBloc(
-                      wishlistRepository: RepositoryProvider.of(context))
+                      wishlistRepository: RepositoryProvider.of(context),
+                      configBloc: BlocProvider.of(context))
                     ..add(LoadAllWishlist(state.user.uid))),
               BlocProvider(
                   create: (context) =>

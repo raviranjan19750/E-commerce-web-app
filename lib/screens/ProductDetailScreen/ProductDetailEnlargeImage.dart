@@ -3,25 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/bloc.dart';
-import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
-
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
-import 'package:living_desire/models/product.dart';
-import 'package:living_desire/screens/all_product/product_widgets.dart';
+import 'package:living_desire/models/localNormalCart.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
 
 class ProductDetailEnlargeImage extends StatefulWidget {
   final List<String> imageURL;
   String productID;
   String variantID;
+  bool isCombo = false;
 
-  ProductDetailEnlargeImage({
-    Key key,
-    this.imageURL,
-    this.productID,
-    this.variantID,
-  }) : super(key: key);
+  ProductDetailEnlargeImage(
+      {Key key, this.imageURL, this.productID, this.variantID, this.isCombo})
+      : super(key: key);
 
   @override
   _ProductDetailEnlargeImageState createState() =>
@@ -30,8 +25,6 @@ class ProductDetailEnlargeImage extends StatefulWidget {
 
 class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
   int selectedImageIndex;
-  int selectedColorIndex;
-  int selectedSizeIndex;
   String selectedURI;
 
   @override
@@ -43,11 +36,27 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController imageListScrollController = new ScrollController();
+
     double imageWidth = MediaQuery.of(context).size.width * 0.26;
     double imageHeight = MediaQuery.of(context).size.height * 0.62;
 
     double imageListWidth = MediaQuery.of(context).size.width * 0.06;
     double imageListHeight = MediaQuery.of(context).size.height * 0.55;
+
+    moveUP() {
+      imageListScrollController.animateTo(
+          imageListScrollController.offset + imageListHeight,
+          curve: Curves.linear,
+          duration: Duration(milliseconds: 400));
+    }
+
+    moveDown() {
+      imageListScrollController.animateTo(
+          imageListScrollController.offset - imageListHeight,
+          curve: Curves.linear,
+          duration: Duration(milliseconds: 400));
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -64,7 +73,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 height: 30,
                 color: Palette.lightGrey,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: moveUP,
                   alignment: Alignment.center,
                   icon: Icon(Icons.keyboard_arrow_up),
                   color: Colors.black,
@@ -78,7 +87,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 alignment: Alignment.center,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  controller: imageListScrollController,
                   itemCount: widget.imageURL.length,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
@@ -107,7 +116,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 height: 30,
                 color: Palette.lightGrey,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: moveDown,
                   icon: Icon(Icons.keyboard_arrow_down),
                   color: Colors.black,
                 ),
@@ -162,11 +171,24 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                         child: CustomWidgetButton(
                           onPressed: () {
                             final _cartlist =
-                                Hive.box<Map<String, String>>('cart_items');
-                            _cartlist.put(widget.variantID, {
-                              "productID": widget.productID,
-                              "variantID": widget.variantID
-                            });
+                                Hive.box<NormalCartLocal>('cart_items');
+                            // _cartlist.put(widget.variantID, {
+
+                            // });
+                            if (!_cartlist.containsKey(widget.variantID)) {
+                              _cartlist.put(
+                                  widget.variantID,
+                                  NormalCartLocal(
+                                      productId: widget.productID,
+                                      variantId: widget.variantID,
+                                      quantity: 1));
+                            } else {
+                              NormalCartLocal itm =
+                                  _cartlist.get(widget.variantID);
+                              itm.quantity += 1;
+                              print("===> " + itm.quantity.toString());
+                              // update the quantity field in the existing entry
+                            }
 
                             BlocProvider.of<CartBloc>(context).add(AddCart(
                               authID: "id1",
