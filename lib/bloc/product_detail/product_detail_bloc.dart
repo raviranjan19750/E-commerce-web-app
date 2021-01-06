@@ -54,8 +54,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       LoadComboProductDetail event) async* {
     yield ProductDetailLoading();
     try {
-      var comboProductDescription = await productRepository
-          .getComboProductDescription(productID: event.productID);
+      var comboProductDescription = await productRepository.getComboProductDescription(productID: event.productID);
       yield ComboProductDetailLoadingSuccessful(comboProductDescription);
     } catch (e) {
       print(e.toString());

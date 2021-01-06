@@ -56,20 +56,11 @@ class ProductCardContent extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () {
-                    if (product.isCombo) {
-                      locator<NavigationService>().navigateTo(
-                          RoutesConfiguration.PRODUCT_DETAIL,
-                          queryParams: {
-                            "pid": product.productId,
-                            "isCombo": product.isCombo.toString(),
-                          });
-                    }
                     locator<NavigationService>().navigateTo(
                       RoutesConfiguration.PRODUCT_DETAIL,
                       queryParams: {
                         "pid": product.productId,
                         "vid": product.varientId,
-                        "isCombo": product.isCombo.toString()
                       },
                     );
                     // Navigator.pushNamed(
@@ -199,7 +190,7 @@ class ComboProductCardContent extends StatelessWidget {
                       RoutesConfiguration.PRODUCT_DETAIL,
                       queryParams: {
                         "pid": comboProduct.productId,
-                        "isCombo": "true",
+                        "vid" : comboProduct.productId,
                       },
                     );
                     // Navigator.pushNamed(
