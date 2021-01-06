@@ -35,7 +35,6 @@ class RazorPayWeb extends StatelessWidget {
           print('PAYMENT SUCCESSFULL!!!!!!!');
         } else if (element.data.toString().contains('pay_id')) {
           razorpayPaymentID = element.data.toString().substring(6);
-
           print(razorpayPaymentID);
         } else if (element.data.toString().contains('order_id')) {
           razorpayOrderID = element.data.toString().substring(8);
@@ -60,7 +59,7 @@ class RazorPayWeb extends StatelessWidget {
           "name": "Living Desire",
           "description": "Test Transaction",
           "image": "https://example.com/your_logo",
-          "order_id": "${orderData["razorpayOrderID"]}",
+          "order_id": "",
           "handler": function (response){
              window.parent.postMessage("SUCCESS","*"); 
                   //2 
@@ -69,14 +68,10 @@ class RazorPayWeb extends StatelessWidget {
              window.parent.postMessage("sign"+response.razorpay_signature);   
              
           },    
-          "prefill": {        
-             "name": "Gaurav Kumar",        
-             "email": "gaurav.kumar@example.com",
-             "contact": "9999999999"   
-           },   
+             
            "notes": {
-             "orderID":"${orderData["notes"]["orderID"]}",
-             "authID":"${orderData["notes"]["authID"]}",
+             "orderID":"",
+             "authID":"",
            },    
           "theme": {
              "color": "#DF0145"    

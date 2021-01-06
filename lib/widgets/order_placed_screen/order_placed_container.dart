@@ -10,62 +10,55 @@ class OrderPlacedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Total Product Price
-    double total = 0;
-    for (int i = 0; i < order.orderedProducts.length; i++) {
-      total = total + order.orderedProducts[i].discountPrice;
-    }
+    // double total = 0;
+    // for (int i = 0; i < order.orderedProducts.length; i++) {
+    //   total = total + order.orderedProducts[i].discountPrice;
+    // }
     return Container(
-      child: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 25.0,
-            right: 25.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(Strings.orderPlaced),
-              Expanded(
-                child: Container(
-                  child: Column(
-                    children: [
-                      ...order.orderedProducts.map((e) {
-                        return OrderPlacedItem(
-                          orderedProduct: e,
-                        );
-                      }),
-                    ],
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 25.0,
+          right: 25.0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              Strings.orderPlaced,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+              ),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: order.orderedProducts.length,
+                  itemBuilder: (context, index) {
+                    return OrderPlacedItem(
+                      orderedProduct: order.orderedProducts[index],
+                    );
+                  }),
+            ),
+
+            // Total Price of the products
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  Strings.total + '(${order.orderedProducts.length} Items): ₹',
+                  style: TextStyle(
+                    fontSize: 25,
                   ),
-                  // child: ListView.builder(
-                  //   // shrinkWrap: true,
-                  //   // physics: const NeverScrollableScrollPhysics(),
-                  //   itemCount: order.orderedProducts.length,
-                  //   itemBuilder: (context, index) {
-                  //     return OrderPlacedItem(
-                  //         orderedProduct: order.orderedProducts[index]);
-                  //   },
-                  // ),
                 ),
-              ),
-              // Total Price of the products
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      Strings.total +
-                          '${order.orderedProducts.length}: ₹' +
-                          total.toString(),
-                      style: TextStyle(
-                        fontSize: 25,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

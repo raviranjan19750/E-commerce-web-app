@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/screens/login/login_view.dart';
-import '../screens.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
