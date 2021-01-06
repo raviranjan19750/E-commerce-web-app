@@ -55,8 +55,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           await authService.signInWithToken(token: customToken);
           // UserPreferences().setAuthID(customToken);
           UserPreferences().AuthID;
-          print("user auth id is ${UserPreferences().AuthID}");
-          print("user signed in....");
+          // print("user auth id is ${UserPreferences().AuthID}");
+          // print("user signed in....");
           break;
         case 401:
           break;

@@ -88,6 +88,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
     type: json['type'] as String,
     subType: json['subType'] as String,
     isAvailable: json['isAvailable'] as bool,
+    isCombo: json['isCombo'] as bool,
   );
 }
 
@@ -104,4 +105,5 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'type': instance.type,
       'subType': instance.subType,
       'isAvailable': instance.isAvailable,
+      'isCombo': instance.isCombo,
     };

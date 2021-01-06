@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/config/function_config.dart';
+import 'package:living_desire/models/localCustomCart.dart';
+import 'package:living_desire/models/localNormalCart.dart';
 import 'package:living_desire/models/product.dart';
 import 'package:living_desire/service/sharedPreferences.dart';
 // import 'pa';
@@ -22,8 +24,9 @@ class AuthenticationRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
   String phone;
   String uid;
-  final _wishlist = Hive.box<Product>('wishlist_items');
-  final _cartlist = Hive.box<Map<String, String>>('cart_items');
+  final _wishlist = Hive.box<Map<String, String>>('wishlist_items');
+  final _cartlist = Hive.box<NormalCartLocal>('cart_items');
+  final _customcartlist = Hive.box<CustomCartLocal>('custom_cart_items');
 
   // final _cartlist = Hive.box<Product>('cart_items');
   // final _customCartlist = Hive.box<Product>('wishlist_items');
@@ -87,52 +90,39 @@ class AuthenticationRepository {
 
   Future<void> sendWishlistData(String authID) async {
     try {
-      Map<dynamic, Product> wsh = _wishlist.toMap();
-      Map<dynamic, Map<String, String>> cart = _cartlist.toMap();
+      Map<dynamic, Map<String, String>> wsh = _wishlist.toMap();
+      Map<dynamic, NormalCartLocal> cart = _cartlist.toMap();
+      Map<dynamic, CustomCartLocal> customCart = _customcartlist.toMap();
 
       List<Map<String, String>> wshlist = [];
-      List<Map<String, String>> cartlist = [];
+      List<NormalCartLocal> cartlist = [];
+      List<CustomCartLocal> customcartlist = [];
 
       wsh.forEach((key, value) {
-        // var data = {"productID": value.productId, "variantID": value.varientId};
-        Map<String, String> data = {
-          "productID": value.productId,
-          "variantID": value.varientId
-        };
-        wshlist.add(data);
-        // print(value.toString());
-        // print(value.productId.toString() + " >< " + value.varientId);
+        wshlist.add(value);
+        json.encode(value);
       });
       cart.forEach((key, value) {
         cartlist.add(value);
       });
-      var fdata = {
+      customCart.forEach((key, value) {
+        customcartlist.add(value);
+      });
+      var data = {
         "authID": authID,
         "wishlistData": wshlist,
         "normalCartData": cartlist,
-        "customCartData": [],
+        "customCartData": customcartlist,
       };
-      print(fdata);
-      print(json.encode(fdata));
-      final response = await http.put(
-        FunctionConfig.host + 'saveAnonymousDataToUser/$authID',
-        body: jsonEncode(fdata),
+      print(data);
+      print(json.encode(data));
+      final response = await http.post(
+        FunctionConfig.host + 'sendAnonymousDataToUser/$authID',
+        body: jsonEncode(data),
         headers: {"Content-Type": "application/json"},
+        // body: data
       );
-
-      print(response.body);
-
-      // wshlist.forEach((element) {
-      //   print(element);
-      // });
-      // try {
-      //   final response = await http.post(
-      //     FunctionConfig.host + 'saveAnonymousDataToUser/$authID',
-      //     body: json.encode(fdata),
-      //   );
-      // } catch (e) {
-      //   print(e.toString());
-      // }
+      print("===================>     " + response.body);
     } catch (e) {
       print(e.toString());
     }
@@ -161,9 +151,3 @@ class AuthenticationRepository {
     }
   }
 }
-
-// extension on firebase_auth.User {
-//   User get toUser {
-//     return User(id: uid, email: email, name: displayName, photo: photoURL);
-//   }
-// }
