@@ -4,7 +4,6 @@ import 'dart:collection';
 import 'package:bloc/bloc.dart';
 import 'package:elastic_client/elastic_client.dart';
 import 'package:equatable/equatable.dart';
-import 'package:living_desire/models/filtertags.dart';
 import 'package:living_desire/models/product.dart';
 import 'package:living_desire/service/searchapi.dart';
 
