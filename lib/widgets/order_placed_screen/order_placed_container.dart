@@ -30,13 +30,22 @@ class OrderPlacedContainer extends StatelessWidget {
 
             Row(
 
+              crossAxisAlignment: CrossAxisAlignment.center,
+
               children: [
 
-                Expanded(child: Text(
+                Container(margin: EdgeInsets.only(right: 16),child: Icon(Icons.check_circle_outline_rounded,color: Colors.green,size: 48)),
+
+                Expanded(
+
+                  child: Text(
+
                   Strings.orderPlaced,
+
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
+
+                    color: Colors.green,
+                    fontSize: 32,
                     fontWeight: FontWeight.w600,
                   ),
                 ),),
