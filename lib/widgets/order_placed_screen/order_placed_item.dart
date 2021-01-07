@@ -36,13 +36,13 @@ class OrderPlacedItem extends StatelessWidget {
 
                 ),
 
-                child: Image(
+                child: Image.network(
 
-                  height: 200,
+                  orderedProduct.imageUrl,
 
-                  width: 150,
+                  width: 120,
 
-                  image: AssetImage('assets/images/logo.jpeg'),
+                  height: 160,
 
                 ),
 
@@ -60,7 +60,7 @@ class OrderPlacedItem extends StatelessWidget {
 
                     children: [
 
-                      Container(child: Text('Classic Filled Bean Bag with Beans',style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),),
+                      Container(child: Text(orderedProduct.productName,style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),),
 
 
 
@@ -88,7 +88,7 @@ class OrderPlacedItem extends StatelessWidget {
                                       width: 40,
                                       height: 40,
                                       decoration: new BoxDecoration(
-                                        color: Colors.redAccent,
+                                        color: orderedProduct.colour.first,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -102,7 +102,7 @@ class OrderPlacedItem extends StatelessWidget {
 
                                           Text(' Size : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20),),
 
-                                          Text(' S ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20,fontWeight: FontWeight.bold),),
+                                          Text(' ${orderedProduct.size} ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20,fontWeight: FontWeight.bold),),
 
 
                                         ],
@@ -120,7 +120,7 @@ class OrderPlacedItem extends StatelessWidget {
 
                                           Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20),),
 
-                                          Text(' 32 ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20,fontWeight: FontWeight.bold),),
+                                          Text(' ${orderedProduct.quantity} ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20,fontWeight: FontWeight.bold),),
 
 
                                         ],
@@ -162,7 +162,7 @@ class OrderPlacedItem extends StatelessWidget {
 
                       margin: EdgeInsets.only(bottom: 64),
 
-                      child: Visibility(visible : true,child: Text('Rs 5000',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),)),
+                      child: Visibility(visible : true,child: Text('₹ ${orderedProduct.discountPrice}',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),)),
 
                     ),
 
@@ -189,75 +189,5 @@ class OrderPlacedItem extends StatelessWidget {
 
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          width: double.infinity,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // Product Image
-              //Text('Product Image'),
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: 8.0,
-                ),
-                child: Image.network(
-                  orderedProduct.imageUrl,
-                  fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  width: MediaQuery.of(context).size.width * 0.1,
-                ),
-              ),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(orderedProduct.productName),
-                      Text(orderedProduct.discountPrice.toString()),
-                    ],
-                  ),
-                  Container(
-                    child: Row(
-                      children: [
-                        //TODO: Color of the product
-                        CircleAvatar(
-                          backgroundColor: Colors.black,
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        // Get Size from product variants
-                        Text(Strings.size),
-                        SizedBox(
-                          width: 15,
-                        ),
-
-                        // Order product Quantity
-                        Text(Strings.qty + orderedProduct.quantity.toString()),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 25,
-        ),
-        Divider(
-          thickness: 0.5,
-          color: Colors.black,
-        ),
-      ],
-    );
   }
 }

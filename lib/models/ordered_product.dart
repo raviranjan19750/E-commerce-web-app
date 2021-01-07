@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/get_colors.dart';
+import 'package:living_desire/models/StringToHexColor.dart';
 import 'package:living_desire/models/models.dart';
 
 class OrderedProduct {
@@ -10,6 +11,7 @@ class OrderedProduct {
   final double sellingPrice;
   final String imageUrl;
   final List<Color> colour;
+  var color;
   final String size;
   final double discountPrice;
   final double quantity;
@@ -27,6 +29,7 @@ class OrderedProduct {
     this.imageUrl,
     this.colour,
     this.size,
+    this.color,
     @required this.productID,
     @required this.variantID,
     @required this.sellingPrice,
@@ -36,7 +39,22 @@ class OrderedProduct {
 
   factory OrderedProduct.fromJson(dynamic data) {
     if (data == null) return null;
-    print(data.toString());
+
+    List<Color> getColors(List<dynamic> data){
+
+      List<Color> temp = new List();
+
+      for(int i=0;i<data.length;i++){
+        String hexColor = data[i]['hexCode'];
+        Color color = HexColor.hexToColor(hexColor);
+        temp.add(color);
+      }
+
+      return temp;
+
+    }
+
+    print("Hex Color   :  " + data['colour'][0]['hexCode']);
 
     return OrderedProduct(
       productID: data['productID'],
@@ -47,12 +65,9 @@ class OrderedProduct {
       rating: data['rating'],
       review: data['review'],
       ratingID: data['ratingID'],
-      //colour: data['data']['colour'],
-      //rating: Rating.fromJson(data['rating']),
-      colour: GetColors.fromHex(
-          (data['colour'] as List).map((e) => (e as String)).toList()),
+      colour: getColors(data['colour']),
       size: data['size'],
-      imageUrl: data['imageURL'],
+      imageUrl: data['productImage'],
       productName: data['productName'],
     );
   }

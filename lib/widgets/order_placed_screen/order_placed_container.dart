@@ -7,13 +7,20 @@ class OrderPlacedContainer extends StatelessWidget {
   final Order order;
   //Order Placed Container: List of Products
   const OrderPlacedContainer({Key key, this.order}) : super(key: key);
+
+  double calcTotal(){
+    double total = 0;
+    for (int i = 0; i < order.orderedProducts.length; i++) {
+      total = total + order.orderedProducts[i].discountPrice;
+    }
+
+    return total;
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Total Product Price
-    // double total = 0;
-    // for (int i = 0; i < order.orderedProducts.length; i++) {
-    //   total = total + order.orderedProducts[i].discountPrice;
-    // }
+
     return Container(
 
       child: Padding(
@@ -50,7 +57,7 @@ class OrderPlacedContainer extends StatelessWidget {
                   ),
                 ),),
                 Container(child: Text('Order ID : ',style: TextStyle(fontSize: 20,color: Colors.grey[500],fontWeight: FontWeight.w600,),),),
-                Container(child: Text('1100156515AD',style: TextStyle(fontSize: 24,color: Palette.secondaryColor),),),
+                Container(child: Text(order.orderID,style: TextStyle(fontSize: 24,color: Palette.secondaryColor),),),
 
               ],
 
@@ -80,7 +87,7 @@ class OrderPlacedContainer extends StatelessWidget {
                   margin: EdgeInsets.only(right: 80),
 
                   child: Text(
-                    Strings.total + '(${order.orderedProducts.length} Items) : ₹ 1600',
+                    Strings.total + '(${order.orderedProducts.length} Items) : ₹ ${calcTotal()}',
                     style: TextStyle(
                       fontSize: 32,
                     ),

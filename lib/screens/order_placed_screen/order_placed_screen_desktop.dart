@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/ProviderModels/PlacedOrderProvider.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/screens/login/login_view.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/widgets.dart';
 import '../../models/models.dart';
 
 class OrderPlacedScreenDesktop extends StatelessWidget {
   // Desktop Website Order Placed Screen
 
-  final Order order = orders[0];
 
-  // const OrderPlacedScreenDesktop({
-  //   Key key,
-  //   this.order,
-  // }) : super(key: key);
+  bool init = false;
+  String orderKey;
+  OrderPlacedScreenDesktop({this.orderKey});
 
   void _showLoginDialog(BuildContext context) async {
     await showDialog(
@@ -31,18 +31,36 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
         builder: (context, state) {
       switch (state.status) {
         case AuthenticationStatus.authenticated:
-          return Row(
-            children: [
-              Expanded(
-                child: OrderPlacedContainer(
-                  order: order,
-                ),
-              ),
-              OrderPlacedStatusContainer(
-                order: order,
-              ),
-            ],
-          );
+          return ChangeNotifierProvider(
+              lazy: false,
+              create: (context) => PlacedOrderProvider(),
+              child: Consumer<PlacedOrderProvider>(
+                builder: (BuildContext context, PlacedOrderProvider value, Widget child) {
+
+                  if (!init) {
+                    Provider.of<PlacedOrderProvider>(context, listen: false).initOrder("cUnWh3cVAWOLDwBw9zJc");
+                    init = true;
+                  }
+
+                  if(value.isInitialized)
+                    return Row(
+                    children: [
+                      Expanded(
+                        child: OrderPlacedContainer(
+                          order: value.order,
+                        ),
+                      ),
+                      OrderPlacedStatusContainer(
+                        order: value.order,
+                      ),
+                    ],
+                  );
+                  else
+                    return Center(child: CircularProgressIndicator(),);
+
+                },
+              ));
+
         case AuthenticationStatus.unauthenticated:
           return Center(
             child: Container(

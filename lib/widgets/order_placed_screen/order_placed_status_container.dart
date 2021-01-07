@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../config/configs.dart';
 import '../widgets.dart';
 import '../../models/models.dart';
 
 class OrderPlacedStatusContainer extends StatelessWidget {
   final Order order;
+
+  String dateFormatter(DateTime date){
+
+
+    return new DateFormat.yMMMd().format(date);
+
+  }
 
   const OrderPlacedStatusContainer({Key key, this.order}) : super(key: key);
   @override
@@ -53,7 +61,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
   
                       margin: EdgeInsets.only(left: 24),
   
-                      child: Text(' 20 JUN 2020',style: TextStyle(color: Palette.secondaryColor),),
+                      child: Text(' ${dateFormatter(order.placedDate)}',style: TextStyle(color: Palette.secondaryColor),),
   
                     ),
   
@@ -75,11 +83,12 @@ class OrderPlacedStatusContainer extends StatelessWidget {
                 ),
   
                 Container(
-  
+
+                  width: 320,
   
                   margin: EdgeInsets.only(left: 24),
   
-                  child: Text(' Ravi Ranjan \n 682/1, house no 7 , street no 5, Deoli village , \n Satya sai public school New Delhi - 110062, Delhi',style: TextStyle(color: Palette.secondaryColor),),
+                  child: Text('${order.address} \nPincode : ${order.pincode}',style: TextStyle(color: Palette.secondaryColor),),
   
                 ),
   
@@ -104,7 +113,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
   
                   margin: EdgeInsets.only(left: 24),
   
-                  child: Text(' 9821951461',style: TextStyle(color: Palette.secondaryColor),),
+                  child: Text(' ${order.phone}',style: TextStyle(color: Palette.secondaryColor),),
   
                 ),
   
