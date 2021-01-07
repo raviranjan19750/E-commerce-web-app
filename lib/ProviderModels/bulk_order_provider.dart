@@ -2,10 +2,9 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:html';
-import 'dart:io' as io;
-import 'dart:typed_data';
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase/firebase.dart' as fb;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -17,7 +16,6 @@ import 'package:living_desire/models/filtertags.dart';
 import 'package:living_desire/models/uploadImage.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:http/http.dart' as http;
-import 'package:living_desire/service/sharedPreferences.dart';
 
 class BulkOrderProvider with ChangeNotifier{
 
@@ -152,7 +150,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     hexColor ='#${currentColor.value.toRadixString(16)}';
 
-    await getCustomCart(UserPreferences().AuthID);
+    await getCustomCart(FirebaseAuth.instance.currentUser.uid);
 
     if(productID == null || productID.isEmpty){
 
@@ -229,7 +227,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     print("Key  :  " + key);
 
-    String authID = UserPreferences().AuthID;
+    String authID = FirebaseAuth.instance.currentUser.uid;
 
     final response =
         await http.delete(FunctionConfig.host + 'manageCart/custom/$authID/$key');
@@ -503,7 +501,7 @@ class BulkOrderProvider with ChangeNotifier{
 
     bulkOrderCart.description = description;
 
-    String authID = UserPreferences().AuthID;
+    String authID = FirebaseAuth.instance.currentUser.uid;
 
     if(authID!=null && authID.isNotEmpty){
 
@@ -660,7 +658,7 @@ class BulkOrderProvider with ChangeNotifier{
 
   Future<void> getQuotation() async {
 
-    String authID = UserPreferences().AuthID;
+    String authID = FirebaseAuth.instance.currentUser.uid;
 
     try{
 
