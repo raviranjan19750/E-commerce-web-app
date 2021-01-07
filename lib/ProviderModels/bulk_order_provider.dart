@@ -275,8 +275,6 @@ class BulkOrderProvider with ChangeNotifier{
       final response =
       await http.delete(FunctionConfig.host + 'manageCart/custom/$authID/$key');
 
-      print("Status Code  :  "+ response.statusCode.toString());
-
       dismissProgressDialog();
 
       if(response.statusCode == 200){
@@ -289,6 +287,16 @@ class BulkOrderProvider with ChangeNotifier{
 
     }
     else{
+
+      CustomCartLocalStorage customCartLocalStorage = new CustomCartLocalStorage();
+
+      customCartLocalStorage.deleteFromLocalStorage(key);
+
+      customCartItems.removeAt(index);
+
+      dismissProgressDialog();
+
+      notifyListeners();
 
     }
 
@@ -572,10 +580,11 @@ class BulkOrderProvider with ChangeNotifier{
     }
     else{
 
-
       String key = _getAutoId();
 
-      bulkOrderCart.key = key;
+      if(editElementIndex == -1)
+        bulkOrderCart.key = key;
+      
       bulkOrderCart.images = logos;
 
       List<String> colours = new List();
@@ -584,7 +593,7 @@ class BulkOrderProvider with ChangeNotifier{
 
       bulkOrderCart.colour = colours;
 
-      CustomCartLocalStorage customCartLocalStorage = new CustomCartLocalStorage(bulkOrderCart);
+      CustomCartLocalStorage customCartLocalStorage = new CustomCartLocalStorage(itm: bulkOrderCart);
 
       customCartLocalStorage.saveToLocalStorage();
 
@@ -779,6 +788,8 @@ class BulkOrderProvider with ChangeNotifier{
     selectedType = -1;
     selectedSubType = -1;
     quantity = 50;
+    itemSize = "S";
+    description = "";
     quantityController.text = quantity.toString();
     stepTwoDone = false;
     stepOneDone = false;
