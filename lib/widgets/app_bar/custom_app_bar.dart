@@ -10,31 +10,41 @@ import '../widgets.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
-  double size = 160;
   bool visibleMiddleAppBar = true;
   bool visibleSubAppBar = true;
 
+  double setAppBarHeight(bool visibleMiddleAppBar,bool visibleSubAppBar){
+
+    double size = 88;
+
+    if(visibleMiddleAppBar)
+      size = 136;
+
+    return size;
+
+  }
+
   CustomAppBar(
-      {this.size = 136,
+      {
       this.visibleMiddleAppBar = true,
       this.visibleSubAppBar = true});
 
   // AppBar has a preferred Size, need to extend Preferred Size widget
-  Size get preferredSize => Size.fromHeight(size);
+  Size get preferredSize => Size.fromHeight(setAppBarHeight(visibleMiddleAppBar, visibleSubAppBar));
+
   @override
   _CustomAppBarState createState() => _CustomAppBarState(
-      size: size,
       visibleMiddleAppBar: visibleMiddleAppBar,
       visibleSubAppBar: visibleSubAppBar);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  double size;
   bool visibleMiddleAppBar;
   bool visibleSubAppBar;
 
+
+
   _CustomAppBarState({
-    this.size,
     this.visibleMiddleAppBar,
     this.visibleSubAppBar,
   });

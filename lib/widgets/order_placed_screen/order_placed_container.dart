@@ -19,8 +19,8 @@ class OrderPlacedContainer extends StatelessWidget {
       child: Padding(
 
         padding: const EdgeInsets.only(
-          left: 25.0,
-          right: 25.0,
+          left: 32.0,
+          right: 32.0,
         ),
 
         child: Column(
@@ -36,12 +36,12 @@ class OrderPlacedContainer extends StatelessWidget {
                   Strings.orderPlaced,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 20,
+                    fontSize: 24,
                     fontWeight: FontWeight.w600,
                   ),
                 ),),
-                Container(child: Text('Order ID : ',style: TextStyle(fontSize: 16,color: Colors.grey[500],fontWeight: FontWeight.w100),),),
-                Container(child: Text('1100156515AD',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),),),
+                Container(child: Text('Order ID : ',style: TextStyle(fontSize: 20,color: Colors.grey[500],fontWeight: FontWeight.w600,),),),
+                Container(child: Text('1100156515AD',style: TextStyle(fontSize: 24,color: Palette.secondaryColor),),),
 
               ],
 

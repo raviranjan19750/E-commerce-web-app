@@ -59,7 +59,6 @@ class MyDesktopView extends StatelessWidget {
         create: (context) => ScrollBloc(controller: _scrollController),
         child: Scaffold(
           appBar: CustomAppBar(
-            size: state.status == AuthenticationStatus.authenticated ? 90 : 66,
             visibleMiddleAppBar: visibleMiddleAppBar,
             visibleSubAppBar: visibleSubAppBar,
           ),

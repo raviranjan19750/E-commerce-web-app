@@ -64,7 +64,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
             return Scaffold(
 
-              appBar: CustomAppBar(size: 140,visibleSubAppBar: true,visibleMiddleAppBar: true,),
+              appBar: CustomAppBar(visibleSubAppBar: true,visibleMiddleAppBar: true,),
 
               body: (value.bulkOrder != null) ?SingleChildScrollView(
 

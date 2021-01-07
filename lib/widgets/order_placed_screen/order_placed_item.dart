@@ -17,7 +17,7 @@ class OrderPlacedItem extends StatelessWidget {
 
     return Container(
 
-      margin: EdgeInsets.only(left: 64,right: 64,top: 16,bottom: 16),
+      margin: EdgeInsets.only(left: 32,right: 64,top: 16,bottom: 16),
 
       child: Column(
 
