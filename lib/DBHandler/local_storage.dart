@@ -14,8 +14,9 @@ class CustomCartLocalStorage {
 
     // });
     _customcartlist.put(
-        itm.variantID,
+        itm.key,
         CustomCartLocal(
+            key: itm.key,
             productId: itm.productID,
             variantId: itm.variantID,
             quantity: itm.quantity,

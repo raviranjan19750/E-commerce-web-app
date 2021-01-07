@@ -6,6 +6,7 @@ part 'localCustomCart.g.dart';
 @JsonSerializable(nullable: false)
 class CustomCartLocal {
   CustomCartLocal({
+    this.key,
     this.productId,
     this.variantId,
     this.quantity,
@@ -44,4 +45,7 @@ class CustomCartLocal {
   @HiveField(9)
   @JsonKey(name: 'images')
   var images = new List.empty();
+  @HiveField(10)
+  @JsonKey(name: 'key')
+  String key;
 }

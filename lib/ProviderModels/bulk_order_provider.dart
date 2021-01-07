@@ -2,22 +2,30 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:html';
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:living_desire/DBHandler/local_storage.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/StringToHexColor.dart';
 import 'package:living_desire/models/filtertags.dart';
+import 'package:living_desire/models/localCustomCart.dart';
 import 'package:living_desire/models/uploadImage.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:http/http.dart' as http;
 
 class BulkOrderProvider with ChangeNotifier{
+
+  static const AUTO_ID_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  static const AUTO_ID_LENGTH = 20;
 
   double elevation = 4;
   double size = 1;
@@ -150,7 +158,12 @@ class BulkOrderProvider with ChangeNotifier{
 
     hexColor ='#${currentColor.value.toRadixString(16)}';
 
-    await getCustomCart(FirebaseAuth.instance.currentUser.uid);
+    String authID ;
+
+    if(FirebaseAuth.instance.currentUser!=null)
+      authID = FirebaseAuth.instance.currentUser.uid;
+
+    await getCustomCart(authID);
 
     if(productID == null || productID.isEmpty){
 
@@ -208,41 +221,77 @@ class BulkOrderProvider with ChangeNotifier{
 
   Future<void> getCustomCart(String authID) async {
 
-    final response =
-        await http.get(FunctionConfig.host + 'manageCart/custom/$authID', headers: {"Content-Type": "application/json"},);
+    if(authID !=null){
 
-    if(response.statusCode == 200){
+      final response =
+      await http.get(FunctionConfig.host + 'manageCart/custom/$authID', headers: {"Content-Type": "application/json"},);
 
-      customCartItems.clear();
+      if(response.statusCode == 200){
 
-      customCartItems = (jsonDecode(response.body) as List)
-          .map((i) => BulkOrderCart.fromJson(i))
-          .toList();
+        customCartItems.clear();
+
+        customCartItems = (jsonDecode(response.body) as List)
+            .map((i) => BulkOrderCart.fromJson(i))
+            .toList();
+
+      }
 
     }
+    else{
+
+     final _customcartlist = Hive.box<CustomCartLocal>('custom_cart_items');
+
+     Map<dynamic, CustomCartLocal> customCart = _customcartlist.toMap();
+
+
+     customCartItems.clear();
+
+     customCart.forEach((key, value) {
+
+       print("Custom Cart Map  :  " + key);
+
+       BulkOrderCart bulkOrderCart = new BulkOrderCart(key:key,productID: value.productId,productType: value.productType,productSubType: value.productSubType,variantID: value.variantId,description: value.description,size: value.size,quantity: value.quantity,colour: value.colour,images: value.images);
+
+       customCartItems.add(bulkOrderCart);
+
+
+     });
+
+    }
+
+
 
   }
 
   Future<void> deleteCustomCartItems(String key,int index) async {
 
-    print("Key  :  " + key);
+    String authID ;
 
-    String authID = FirebaseAuth.instance.currentUser.uid;
+    if(FirebaseAuth.instance.currentUser!=null)
+      authID = FirebaseAuth.instance.currentUser.uid;
 
-    final response =
-        await http.delete(FunctionConfig.host + 'manageCart/custom/$authID/$key');
+    if(authID !=null){
 
-    print("Status Code  :  "+ response.statusCode.toString());
+      final response =
+      await http.delete(FunctionConfig.host + 'manageCart/custom/$authID/$key');
 
-    dismissProgressDialog();
+      print("Status Code  :  "+ response.statusCode.toString());
 
-    if(response.statusCode == 200){
+      dismissProgressDialog();
 
-      print("item deleted");
-      customCartItems.removeAt(index);
-      notifyListeners();
+      if(response.statusCode == 200){
+
+        print("item deleted");
+        customCartItems.removeAt(index);
+        notifyListeners();
+
+      }
 
     }
+    else{
+
+    }
+
 
 
   }
@@ -501,7 +550,12 @@ class BulkOrderProvider with ChangeNotifier{
 
     bulkOrderCart.description = description;
 
-    String authID = FirebaseAuth.instance.currentUser.uid;
+
+
+    String authID ;
+
+    if(FirebaseAuth.instance.currentUser!=null)
+      authID = FirebaseAuth.instance.currentUser.uid;
 
     if(authID!=null && authID.isNotEmpty){
 
@@ -514,6 +568,31 @@ class BulkOrderProvider with ChangeNotifier{
         addCustomCart(authID,imageUrls);
       }
 
+
+    }
+    else{
+
+
+      String key = _getAutoId();
+
+      bulkOrderCart.key = key;
+      bulkOrderCart.images = logos;
+
+      List<String> colours = new List();
+
+      colours.add(hexColor);
+
+      bulkOrderCart.colour = colours;
+
+      CustomCartLocalStorage customCartLocalStorage = new CustomCartLocalStorage(bulkOrderCart);
+
+      customCartLocalStorage.saveToLocalStorage();
+
+      await getCustomCart(authID);
+
+      dismissProgressDialog();
+
+      onClear();
 
     }
 
@@ -658,7 +737,10 @@ class BulkOrderProvider with ChangeNotifier{
 
   Future<void> getQuotation() async {
 
-    String authID = FirebaseAuth.instance.currentUser.uid;
+    String authID ;
+
+    if(FirebaseAuth.instance.currentUser!=null)
+      authID = FirebaseAuth.instance.currentUser.uid;
 
     try{
 
@@ -709,6 +791,18 @@ class BulkOrderProvider with ChangeNotifier{
     bulkOrderCart.reset();
     notifyListeners();
 
+  }
+
+  String _getAutoId() {
+    final buffer = StringBuffer();
+    final random = Random.secure();
+
+    final maxRandom = AUTO_ID_ALPHABET.length;
+
+    for (int i = 0; i < AUTO_ID_LENGTH; i++) {
+      buffer.write(AUTO_ID_ALPHABET[random.nextInt(maxRandom)]);
+    }
+    return buffer.toString();
   }
 
 }
