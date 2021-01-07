@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
+import 'package:living_desire/models/user_detail.dart';
 import 'package:living_desire/screens/login/login.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/screens/login/login_view.dart';
@@ -71,7 +72,7 @@ class _UserCardState extends State<UserCard> {
     );
   }
 
-  Container returnView(bool loggedIn, BuildContext context) {
+  Container returnView(bool loggedIn, BuildContext context, String username) {
     if (loggedIn) {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -102,7 +103,7 @@ class _UserCardState extends State<UserCard> {
                               .state
                               .user
                               .displayName ??
-                          "Username",
+                          username,
                       style: TextStyle(color: Palette.primaryColor),
                     ),
                     Text(
@@ -150,6 +151,7 @@ class _UserCardState extends State<UserCard> {
 
   @override
   Widget build(BuildContext context) {
+    String username = "";
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
       print("user state" +
@@ -158,10 +160,12 @@ class _UserCardState extends State<UserCard> {
           state.status.toString());
       switch (state.status) {
         case AuthenticationStatus.authenticated:
-          return returnView(true, context);
+          var response =
+              AuthenticationRepository().getUserDetailsData(state.user.uid);
+          return returnView(true, context, username);
         case AuthenticationStatus.unauthenticated:
         default:
-          return returnView(false, context);
+          return returnView(false, context, username);
       }
     });
   }

@@ -11,6 +11,7 @@ import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/localCustomCart.dart';
 import 'package:living_desire/models/localNormalCart.dart';
 import 'package:living_desire/models/product.dart';
+import 'package:living_desire/models/user_detail.dart';
 import 'package:living_desire/service/sharedPreferences.dart';
 // import 'pa';
 
@@ -155,6 +156,19 @@ class AuthenticationRepository {
         headers: {"Content-Type": "application/json"},
       );
       return response.body;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<UserDetail> getUserDetailsData(String uid) async {
+    try {
+      final response = await http.get(
+        FunctionConfig.host + 'manageCustomerInfo/${this.uid}',
+        headers: {"Content-Type": "application/json"},
+      );
+      Map<String, dynamic> data = jsonDecode(response.body);
+      return UserDetail.fromJson(data);
     } catch (e) {
       print(e.toString());
     }
