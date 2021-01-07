@@ -6,8 +6,8 @@ import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/scroll/bloc/scroll_bloc.dart';
 import 'package:living_desire/models/product.dart';
-
 import 'package:living_desire/screens/all_product/product_widgets.dart';
+import 'package:living_desire/screens/emptyState/SearchResultNotFound.dart';
 import 'package:living_desire/screens/home_screen/home_screen_desktop.dart';
 
 import '../../logger.dart';
@@ -105,12 +105,7 @@ class AllProductScreen extends StatelessWidget {
                       ),
                       child: LinearProgressIndicator());
                 } else if (state is AllProductLoaded) {
-                  return Container(
-                    margin: EdgeInsets.all(20),
-                    child: Center(
-                      child: Text("No More Product To Display"),
-                    ),
-                  );
+                  return SearchResultNotFound();
                 }
                 return Container();
               }),
@@ -223,9 +218,7 @@ class BuildAllProductView extends StatelessWidget {
           return ProductLoadingView();
         } else if (state is SuccessLoadingAllProduct) {
           if (state.productList.isEmpty) {
-            return Center(
-              child: Text("No Product To Display"),
-            );
+            return SearchResultNotFound();
           }
 
           BlocProvider.of<ScrollBloc>(context).controller.addListener(() {

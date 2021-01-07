@@ -1,5 +1,19 @@
 class Strings {
   // Strings containing all texts
+
+  // for empty screens
+  static const String searchPrimaryText = "We couldn't find any matches";
+  static const String searchSecondaryText = "Please check the spelling or try searching something else";
+  static const String wishListLoginText = "Login to view items in your wishlist";
+  static const String cartLoginText = "Login to view items in your cart";
+  static const String orderLoginText = "Login to view your orders";
+  static const String wishListPrimaryText = "Your wishlist is empty";
+  static const String wishListSecondaryText = "Add items that you like to your wishlist.Review them anytime and easily move them to the bag";
+  static const String cartPrimaryText = "There is nothing in your cart. Let's add some items";
+  static const String orderPrimaryText = "You haven't placed any order yet!";
+  static const String orderSecondaryText = "Order section is empty. After placing order, You can track them here!";
+
+  //
   static const String websiteName = "Living Desire";
   static const String loginText = "Login/SignUp";
   static const String whyUs = "Why Us?";
@@ -84,4 +98,5 @@ class Strings {
   static const String deliveredBy = "Order will be delivered by ";
   static const String writeReview = "Write a Review Here(Optional)...";
   static const String bulkOrder = "Bulk Order";
+
 }
