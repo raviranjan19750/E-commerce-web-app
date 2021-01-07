@@ -19,6 +19,8 @@ class ProductDetail {
   final List<ProductVariantColor> colour;
   final double sellingPrice;
   final double discountPrice;
+  final bool isInCart;
+  final bool isInWishlist;
 
   ProductDetail({
     this.productID,
@@ -37,6 +39,8 @@ class ProductDetail {
     this.discountPrice,
     this.type,
     this.subType,
+    this.isInCart,
+    this.isInWishlist
   });
 
   factory ProductDetail.fromJson(Map<String, dynamic> data) {
@@ -64,6 +68,8 @@ class ProductDetail {
       isAvailable: data["isAvailable"],
       type: data["type"],
       subType: data["subType"],
+      isInCart: data["isInCart"],
+      isInWishlist: data["isInWishlist"],
     );
   }
 }

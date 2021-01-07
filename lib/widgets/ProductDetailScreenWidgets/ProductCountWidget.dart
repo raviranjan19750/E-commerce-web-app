@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductQuantityCount extends StatefulWidget {
+   Function(int) onItemCountChanged;
+
+   ProductQuantityCount({Key key, this.onItemCountChanged}) : super(key: key);
   @override
   _ProductQuantityCountState createState() => _ProductQuantityCountState();
 }
@@ -9,7 +12,7 @@ class ProductQuantityCount extends StatefulWidget {
 class _ProductQuantityCountState extends State<ProductQuantityCount> {
 
 
-  int itemQuantityCount = 0;
+  int itemQuantityCount = 1;
 
   int incrementItemQuantity(int count ) {
     return ++count;
@@ -34,6 +37,7 @@ class _ProductQuantityCountState extends State<ProductQuantityCount> {
             onPressed: () {
               setState(() {
                 itemQuantityCount = decrementItemQuantity(itemQuantityCount);
+                widget.onItemCountChanged(itemQuantityCount);
               });
             },
             iconSize: 14,
@@ -58,6 +62,8 @@ class _ProductQuantityCountState extends State<ProductQuantityCount> {
             onPressed: () {
               setState(() {
                 itemQuantityCount = incrementItemQuantity(itemQuantityCount);
+                print(itemQuantityCount);
+                widget.onItemCountChanged(itemQuantityCount);
               });
             },
             iconSize: 14,

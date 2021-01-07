@@ -47,6 +47,7 @@ class Strings {
   static const String selectAddressNextStep = "Select Address on Next Step";
   static const String orderPlaced = "Order Placed";
   static const String addToCart = "Add To Cart";
+  static const String goToCart = "Go To Cart";
   static const String buyNow = "Buy Now";
   static const String check = "CHECK";
   static const String available = "Available";

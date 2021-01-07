@@ -10,6 +10,7 @@ class ProductSizeDropdown extends StatefulWidget {
   List<String> productSizeList;
   String productID;
   String productSize;
+  String authID;
 
   List<ProductVariantColor> initialSelectedColor;
   List<AllVariant> productAllVariant;
@@ -20,6 +21,7 @@ class ProductSizeDropdown extends StatefulWidget {
       this.productID,
       this.productSize,
       this.initialSelectedColor,
+      this.authID,
       this.productAllVariant})
       : super(key: key);
 
@@ -111,7 +113,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
             dropdownValue = value;
             variantID = getVariantID(dropdownValue);
             BlocProvider.of<ProductDetailBloc>(context)
-                .add(LoadProductDetail(widget.productID, variantID));
+                .add(LoadProductDetail(productID: widget.productID, variantID: variantID, authID: widget.authID));
           });
         },
         items: selectedVariantSizeList.toSet().toList()
