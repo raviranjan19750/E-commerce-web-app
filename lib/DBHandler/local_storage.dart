@@ -31,6 +31,11 @@ class CustomCartLocalStorage {
     _customcartlist.delete(key);
   }
 
+  void deleteAll(){
+    final _customcartlist = Hive.box<CustomCartLocal>('custom_cart_items');
+    _customcartlist.deleteFromDisk();
+  }
+
 }
 
 class NormalLocalStorage {
