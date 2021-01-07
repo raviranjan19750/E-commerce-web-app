@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:living_desire/widgets/OrderTimeline.dart';
 import '../../config/configs.dart';
 import '../widgets.dart';
 import '../../models/models.dart';
@@ -17,6 +18,9 @@ class OrderPlacedStatusContainer extends StatelessWidget {
   const OrderPlacedStatusContainer({Key key, this.order}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+
+
+
     return Container(
 
       padding: EdgeInsets.only(left: 32,right: 32,top: 16,bottom: 32),
@@ -126,7 +130,12 @@ class OrderPlacedStatusContainer extends StatelessWidget {
           //Phone Number
           Text(Strings.phoneNumber + order.phone),*/
 
-          TrackingStatusBar(),
+          Container(
+            width: 400,
+            height: 100,
+            margin: EdgeInsets.only(bottom: 16,top: 8),
+            child: OrderTimeline(processIndex: 0,),
+          ),
 
 
           Container(

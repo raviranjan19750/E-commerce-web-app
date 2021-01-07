@@ -16,7 +16,7 @@ class Order {
   final List<OrderedProduct> orderedProducts;
   final DateTime expectedDeliveryDate;
   final DateTime deliveryDate;
-  final double status;
+  final int status;
   final String address;
   final String phone;
   final String pincode;
@@ -75,9 +75,9 @@ class Order {
       status: data['data']['status'],
       statusValue: data['data']['statusValue'],
       amount: data['data']['amount'],
-      /*tracking: (((data['data']['tracking']) as List<dynamic>)
+      tracking: (((data['data']['tracking']) as List<dynamic>)
           .map((tracking) => Tracking.fromJson(tracking))
-          .toList()),*/
+          .toList()),
       orderedProducts: ((data['data']['products']) as List<dynamic>)
           .map((product) => OrderedProduct.fromJson(product))
           .toList(),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/strings.dart';
+import 'package:living_desire/models/models.dart';
+import 'package:living_desire/widgets/OrderTimeline.dart';
 
 class TrackingStatusBar extends StatelessWidget {
   // Tacking Status Bar
@@ -31,11 +33,8 @@ class TrackingStatusBar extends StatelessWidget {
     return Container(
       width: 400,
       height: 100,
-      child: Stepper(
-        steps: steps,
-        type: StepperType.horizontal,
-
-      ),
+      margin: EdgeInsets.only(bottom: 16,top: 8),
+      child: OrderTimeline(),
     );
   }
 }
