@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:living_desire/widgets/CustomContainer.dart';
 import '../../models/models.dart';
 import '../../data/data.dart';
 import '../../config/configs.dart';
@@ -81,8 +82,14 @@ class OrderPlacedItem extends StatelessWidget {
                                 child: Row(
 
                                   children: [
-
-                                    Container(
+                                    
+                                    (orderedProduct.colour.length > 1)?
+                                      MyCustomContainer(
+                                        progress: 0.5,
+                                        size: 40,
+                                        progressColor: orderedProduct.colour.first,
+                                        backgroundColor: orderedProduct.colour.elementAt(1),
+                                      ) : Container(
 
                                       margin: EdgeInsets.symmetric(horizontal: 4,vertical: 4),
                                       width: 40,
