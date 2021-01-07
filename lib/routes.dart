@@ -50,19 +50,25 @@ class RoutesConfiguration {
                 productID: data['pid'],
                 variantID: data['vid'],
               ),
+        visibleMiddleAppBar: true,
+        visibleSubAppBar: false,
       );
     }),
     Path(r'^' + CART,
-        (context, data) => MyDesktopView(child: CartScreenDesktop())),
+        (context, data) => MyDesktopView(visibleMiddleAppBar:true,visibleSubAppBar: false,child: CartScreenDesktop())),
     Path(
         r'^' + ORDER_PLACED,
         (context, data) => MyDesktopView(
               child: OrderPlacedScreenDesktop(),
+              visibleSubAppBar: false,
+              visibleMiddleAppBar: false,
             )),
     Path(
         r'^' + SELECT_ADDRESS,
         (context, data) => MyDesktopView(
               child: SelectAddressScreenDesktop(),
+          visibleSubAppBar: false,
+          visibleMiddleAppBar: false,
             )),
     Path(
       r'^' + BULK_ORDER,
@@ -84,11 +90,13 @@ class RoutesConfiguration {
     ),
     Path(
       r'^' + WISHLIST,
-      (context, data) => MyDesktopView(child: WishlistScreenDesktop()),
+      (context, data) => MyDesktopView(child: WishlistScreenDesktop(),visibleSubAppBar: false,
+        visibleMiddleAppBar: false,),
     ),
     Path(
       r'^' + MY_ORDERS,
-      (context, data) => MyDesktopView(child: OrderScreenDesktop()),
+      (context, data) => MyDesktopView(child: OrderScreenDesktop(),visibleSubAppBar: false,
+        visibleMiddleAppBar: false,),
     ),
     Path(r'^' + BULK_ORDER_QUOTATION,
         (context, data) => BulkOrderQuotation(id: data['key'])),
@@ -138,6 +146,8 @@ class RoutesConfiguration {
         var variantID = args["variantID"];
         return MaterialPageRoute(
             builder: (context) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
                     child: ProductDetailScreen(
                   productID: productID,
                   variantID: variantID,
@@ -160,17 +170,21 @@ class RoutesConfiguration {
 
       case WISHLIST:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: WishlistScreenDesktop()));
+            builder: (_) => MyDesktopView(visibleSubAppBar: false,
+                visibleMiddleAppBar: false,child: WishlistScreenDesktop()));
       case MY_ORDERS:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: OrderScreenDesktop()));
+            builder: (_) => MyDesktopView(visibleSubAppBar: false,
+                visibleMiddleAppBar: false,child: OrderScreenDesktop()));
       case CART:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: CartScreenDesktop()));
+            builder: (_) => MyDesktopView(visibleSubAppBar: false,
+                visibleMiddleAppBar: false,child: CartScreenDesktop()));
       case MANAGE_ADDRESSES:
         return MaterialPageRoute(
             builder: (_) =>
-                MyDesktopView(child: ManageAddressesScreenDesktop()));
+                MyDesktopView(visibleSubAppBar: false,
+                    visibleMiddleAppBar: false,child: ManageAddressesScreenDesktop()));
       case SELECT_ADDRESS:
         var args = settings.arguments as Map;
         bool sampleRequested = args["sampleRequested"];
@@ -178,6 +192,8 @@ class RoutesConfiguration {
         int totalItems = args["totalItems"];
         return MaterialPageRoute(
             builder: (_) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
                 child: SelectAddressScreenDesktop(
                     // isCustomOrder: isBulkOrder,
                     // isSampleRequested: sampleRequested,
@@ -185,7 +201,8 @@ class RoutesConfiguration {
                     )));
       case ORDER_PLACED:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: OrderPlacedScreenDesktop()));
+            builder: (_) => MyDesktopView(visibleSubAppBar: false,
+                visibleMiddleAppBar: false,child: OrderPlacedScreenDesktop()));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

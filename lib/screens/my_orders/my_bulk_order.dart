@@ -27,7 +27,7 @@ class MyBulkOrder extends StatelessWidget{
 
             return Scaffold(
 
-              appBar: CustomAppBar(size: 92,visibleMiddleAppBar: false,visibleSubAppBar: true,),
+              appBar: CustomAppBar(visibleMiddleAppBar: false,visibleSubAppBar: false,),
 
               body: Row(
 

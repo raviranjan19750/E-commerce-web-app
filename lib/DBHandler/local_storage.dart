@@ -6,16 +6,15 @@ import 'package:hive/hive.dart';
 class CustomCartLocalStorage {
   final BulkOrderCart itm;
 
-  CustomCartLocalStorage(this.itm);
+  CustomCartLocalStorage({this.itm});
 
   void saveToLocalStorage() {
     final _customcartlist = Hive.box<CustomCartLocal>('custom_cart_items');
     // _cartlist.put(widget.variantID, {
 
     // });
-    _customcartlist.put(
-        itm.variantID,
-        CustomCartLocal(
+    _customcartlist.put(itm.key, CustomCartLocal(
+            key: itm.key,
             productId: itm.productID,
             variantId: itm.variantID,
             quantity: itm.quantity,
@@ -26,6 +25,17 @@ class CustomCartLocalStorage {
             productType: itm.productType,
             size: itm.size));
   }
+
+  void deleteFromLocalStorage(String key){
+    final _customcartlist = Hive.box<CustomCartLocal>('custom_cart_items');
+    _customcartlist.delete(key);
+  }
+
+  void deleteAll(){
+    final _customcartlist = Hive.box<CustomCartLocal>('custom_cart_items');
+    _customcartlist.deleteFromDisk();
+  }
+
 }
 
 class NormalLocalStorage {

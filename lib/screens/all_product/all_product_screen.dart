@@ -41,6 +41,8 @@ class AllProductScreen extends StatelessWidget {
                 ..add(InitializeDummyFilter())),
         ],
         child: MyDesktopView(
+          visibleSubAppBar: true,
+          visibleMiddleAppBar: true,
           child: ListView(
             shrinkWrap: true,
             primary: false,

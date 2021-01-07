@@ -15,23 +15,48 @@ class OrderPlacedContainer extends StatelessWidget {
     //   total = total + order.orderedProducts[i].discountPrice;
     // }
     return Container(
+
       child: Padding(
+
         padding: const EdgeInsets.only(
-          left: 25.0,
-          right: 25.0,
+          left: 32.0,
+          right: 32.0,
         ),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              Strings.orderPlaced,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
+
+            Row(
+
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+              children: [
+
+                Container(margin: EdgeInsets.only(right: 16),child: Icon(Icons.check_circle_outline_rounded,color: Colors.green,size: 48)),
+
+                Expanded(
+
+                  child: Text(
+
+                  Strings.orderPlaced,
+
+                  style: TextStyle(
+
+                    color: Colors.green,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),),
+                Container(child: Text('Order ID : ',style: TextStyle(fontSize: 20,color: Colors.grey[500],fontWeight: FontWeight.w600,),),),
+                Container(child: Text('1100156515AD',style: TextStyle(fontSize: 24,color: Palette.secondaryColor),),),
+
+              ],
+
             ),
+
+
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 16.0,
@@ -50,10 +75,15 @@ class OrderPlacedContainer extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  Strings.total + '(${order.orderedProducts.length} Items): ₹',
-                  style: TextStyle(
-                    fontSize: 25,
+                Container(
+
+                  margin: EdgeInsets.only(right: 80),
+
+                  child: Text(
+                    Strings.total + '(${order.orderedProducts.length} Items) : ₹ 1600',
+                    style: TextStyle(
+                      fontSize: 32,
+                    ),
                   ),
                 ),
               ],
