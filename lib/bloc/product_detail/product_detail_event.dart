@@ -6,14 +6,16 @@ abstract class ProductDetailEvent {}
 class LoadProductDetail extends ProductDetailEvent {
   final String productID;
   final String variantID;
+  final String authID;
 
-  LoadProductDetail(this.productID, this.variantID);
+  LoadProductDetail({this.productID, this.variantID, this.authID});
 }
 
 class LoadComboProductDetail extends ProductDetailEvent {
   final String productID;
+  final String authID;
 
-  LoadComboProductDetail(this.productID);
+  LoadComboProductDetail({this.productID, this.authID});
 }
 
 // add cart

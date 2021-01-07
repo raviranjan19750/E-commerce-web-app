@@ -12,6 +12,7 @@ class ProductVariantColorWidget extends StatefulWidget {
   List<AllVariant> productAllVariant;
   String productID;
   String size;
+  String authID;
 
   ProductVariantColorWidget(
       {Key key,
@@ -19,6 +20,7 @@ class ProductVariantColorWidget extends StatefulWidget {
       this.initialSelectedColor,
       this.size,
       this.productID,
+      this.authID,
       this.productAllVariant})
       : super(key: key);
 
@@ -148,7 +150,7 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
               }
 
               BlocProvider.of<ProductDetailBloc>(context)
-                  .add(LoadProductDetail(widget.productID, variantID));
+                  .add(LoadProductDetail(productID: widget.productID, variantID: variantID, authID: widget.authID ));
             });
           },
           child: widget.colorList[index].length == 2

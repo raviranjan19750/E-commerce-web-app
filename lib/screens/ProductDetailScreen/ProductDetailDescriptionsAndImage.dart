@@ -17,21 +17,33 @@ import 'package:living_desire/widgets/bullet.dart';
 import '../../main.dart';
 import 'SimilarProductsAndCombo.dart';
 
-class ProductDetailDescriptionAndImage extends StatelessWidget {
+class ProductDetailDescriptionAndImage extends StatefulWidget {
+
+   String authID;
+
+   ProductDetailDescriptionAndImage({Key key, this.authID}) : super(key: key);
+
+  @override
+  _ProductDetailDescriptionAndImageState createState() => _ProductDetailDescriptionAndImageState();
+}
+
+class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescriptionAndImage> {
+   int itemCount = 1;
+
   @override
   Widget build(BuildContext context) {
-    
+
     List<String> comboVariantType = new List();
     List<String> comboVariantSubType = new List();
     List<String> variantType = new List();
     List<String> variantSubType = new List();
 
     List<String> getComboType(List<Variant> variant) {
-      
+
       for(var typ in variant) {
         comboVariantType.add(typ.type);
       }
-      
+
       return comboVariantType.toSet().toList();
     }
 
@@ -57,8 +69,8 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
 
       return variantSubType.toSet().toList();
     }
-    
-    
+
+
     return BlocBuilder<ProductDetailBloc, ProductDetailState>(
 // ignore: missing_return
         builder: (context, state) {
@@ -75,6 +87,8 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                   imageURL: state.productDetail.images,
                   productID: state.productDetail.productID,
                   variantID: state.productDetail.variantID,
+                  isInCart: state.productDetail.isInCart,
+                  itemCount: itemCount,
                 ),
 
                 // description of product
@@ -161,6 +175,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                 productAllVariant:
                                     state.productDetail.allVariants,
                                 size: state.productDetail.size,
+                                authID: widget.authID,
                               ),
                             ),
 
@@ -200,6 +215,7 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                               state.productDetail.colour,
                                           productAllVariant:
                                               state.productDetail.allVariants,
+                                          authID: widget.authID,
                                         ),
                                       ],
                                     ),
@@ -216,7 +232,14 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                         )),
                                     child: Row(
                                       children: [
-                                        ProductQuantityCount(),
+                                        ProductQuantityCount(
+                                          onItemCountChanged: (val) {
+                                            setState(() {
+                                              itemCount = val;
+                                            });
+
+                                          },
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -323,6 +346,8 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                 ProductDetailEnlargeImage(
                   imageURL: state.comboProduct.imageUrls,
                   productID: state.comboProduct.productId,
+                  isInCart: state.comboProduct.isInCart,
+                  itemCount: itemCount,
                 ),
 
                 // description of product
@@ -407,7 +432,14 @@ class ProductDetailDescriptionAndImage extends StatelessWidget {
                                         )),
                                     child: Row(
                                       children: [
-                                        ProductQuantityCount(),
+                                        ProductQuantityCount(
+                                          onItemCountChanged: (val) {
+                                            setState(() {
+                                              itemCount = val;
+                                            });
+
+                                          },
+                                        ),
                                       ],
                                     ),
                                   ),

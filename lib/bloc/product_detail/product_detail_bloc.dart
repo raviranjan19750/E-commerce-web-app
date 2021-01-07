@@ -41,8 +41,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     yield ProductDetailLoading();
     try {
       var productDescription =
-          await productRepository.getProductVariantDescription(
-              productID: event.productID, variantID: event.variantID);
+          await productRepository.getProductVariantDescription(productID: event.productID, variantID: event.variantID, authID: event.authID);
       yield ProductDetailLoadingSuccessful(productDescription);
     } catch (e) {
       print(e.toString());
@@ -54,7 +53,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       LoadComboProductDetail event) async* {
     yield ProductDetailLoading();
     try {
-      var comboProductDescription = await productRepository.getComboProductDescription(productID: event.productID);
+      var comboProductDescription = await productRepository.getComboProductDescription(productID: event.productID, authID: event.authID);
       yield ComboProductDetailLoadingSuccessful(comboProductDescription);
     } catch (e) {
       print(e.toString());
