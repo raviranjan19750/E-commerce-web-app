@@ -18,10 +18,10 @@ class CustomCartLocal {
   });
 
   @HiveField(0)
-  @JsonKey(name: 'productId')
+  @JsonKey(name: 'productID')
   String productId;
   @HiveField(1)
-  @JsonKey(name: 'varientId')
+  @JsonKey(name: 'varientID')
   String variantId;
   @HiveField(2)
   @JsonKey(name: 'quantity')

@@ -32,6 +32,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       yield* _resendotp(event);
     } else if (event is SignOut) {
       yield SignInInitial();
+    } else if (event is GetUserDetailsEvent) {
+      yield* _userdetail(event);
     }
   }
 
@@ -155,6 +157,28 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       }
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Stream<SignInState> _userdetail(GetUserDetailsEvent event) async* {
+    yield SendingOTP();
+    try {
+      String res =
+          await authService.sendUserDetailsData(event.Name, event.Email);
+      // var map = jsonDecode(res.data);
+      print("response : " + res);
+      switch (res) {
+        case "Success":
+          yield GetUserDetailSuccessful();
+          break;
+
+        case "Failure":
+          yield GetUserDetailFaliure();
+          break;
+      }
+    } catch (e) {
+      print(e);
+      yield SendingOTPFailed();
     }
   }
 }

@@ -135,9 +135,28 @@ class AuthenticationRepository {
           await _firebaseAuth.signInWithCustomToken(token);
 
       // UserPreferences().setAuthID(user.user.uid);
+      this.uid = user.user.uid;
       await sendWishlistData(user.user.uid);
     } on Exception {
       throw LoginWithTokenFailure();
+    }
+  }
+
+  Future<String> sendUserDetailsData(String name, String email) async {
+    try {
+      var data = {
+        "name": name,
+        "email": email,
+        "phone": this.phone,
+      };
+      final response = await http.post(
+        FunctionConfig.host + 'manageCustomerInfo/${this.uid}',
+        body: jsonEncode(data),
+        headers: {"Content-Type": "application/json"},
+      );
+      return response.body;
+    } catch (e) {
+      print(e.toString());
     }
   }
 

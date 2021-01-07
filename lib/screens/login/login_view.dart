@@ -1,7 +1,9 @@
+import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
+import 'package:living_desire/models/user.dart';
 import 'package:living_desire/widgets/app_bar/user_card.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 
@@ -155,11 +157,25 @@ class LoginStatusWidget extends StatelessWidget {
           ],
         );
       }
+
+      if (state is GetUserDetail) {
+        return UserDataWidget();
+      }
+
       if (state is VerificationSuccess) {
-        return Icon(
-          Icons.check_circle_outline,
-          size: 60,
-          color: Colors.green,
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.check_circle_outline,
+              size: 60,
+              color: Colors.green,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            UserDataWidget(),
+          ],
         );
       }
       return Container();
@@ -183,6 +199,16 @@ class OTPWidget extends StatelessWidget {
       }
       return Container();
     });
+  }
+}
+
+class UserDataWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.red,
+      child: Text("USR DATA FORM HERE"),
+    );
   }
 }
 

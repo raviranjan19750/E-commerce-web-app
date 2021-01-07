@@ -215,8 +215,10 @@ class SearchApi {
     return searchResult;
   }
 
-  Future<SearchResult> getComboProduct(List<String> type, List<String> subType) async {
-    LOG.i("Fetching similar combo product of type ${type.toString()} and subType ${subType.toString()}");
+  Future<SearchResult> getComboProduct(
+      List<String> type, List<String> subType) async {
+    LOG.i(
+        "Fetching similar combo product of type ${type.toString()} and subType ${subType.toString()}");
     var criteria = {
       "bool": {
         "must": [
@@ -224,20 +226,32 @@ class SearchApi {
             "match": {"isCombo": true}
           },
           {
-            "terms": {
-              "items.type": type
-            }
+            "terms": {"items.type": type}
           },
           {
-            "terms": {
-              "items.subType": subType
-            }
+            "terms": {"items.subType": subType}
           }
         ]
       }
     };
     final searchResult =
         await client.search(index: INDEX_NAME, limit: 18, query: criteria);
+    return searchResult;
+  }
+
+  Future<SearchResult> getAppBarProducts(String type) async {
+    LOG.i("Fetching $type of products}");
+    var criteria = {
+      "bool": {
+        "must": [
+          {
+            "match": {"tags": type}
+          }
+        ]
+      }
+    };
+    final searchResult =
+        await client.search(index: INDEX_NAME, limit: 50, query: criteria);
     return searchResult;
   }
 }

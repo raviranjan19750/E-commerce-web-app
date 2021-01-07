@@ -70,8 +70,8 @@ class CustomCartLocalAdapter extends TypeAdapter<CustomCartLocal> {
 
 CustomCartLocal _$CustomCartLocalFromJson(Map<String, dynamic> json) {
   return CustomCartLocal(
-    productId: json['productId'] as String,
-    variantId: json['varientId'] as String,
+    productId: json['productID'] as String,
+    variantId: json['varientID'] as String,
     quantity: json['quantity'] as int,
     productType: json['productType'] as String,
     productSubType: json['productSubType'] as String,
@@ -84,8 +84,8 @@ CustomCartLocal _$CustomCartLocalFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$CustomCartLocalToJson(CustomCartLocal instance) =>
     <String, dynamic>{
-      'productId': instance.productId,
-      'varientId': instance.variantId,
+      'productID': instance.productId,
+      'varientID': instance.variantId,
       'quantity': instance.quantity,
       'productType': instance.productType,
       'productSubType': instance.productSubType,

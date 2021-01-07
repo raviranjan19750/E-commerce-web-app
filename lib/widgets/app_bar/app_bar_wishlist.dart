@@ -10,14 +10,14 @@ import '../../main.dart';
 import '../../routes.dart';
 
 class AppBarWishlist extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(right: 12),
         child: FlatButton(
           onPressed: () {
-            locator<NavigationService>().navigateTo(RoutesConfiguration.WISHLIST);
+            locator<NavigationService>()
+                .navigateTo(RoutesConfiguration.WISHLIST);
           },
           child: Container(
             padding: EdgeInsets.all(8),

@@ -29,3 +29,9 @@ class LoggedInState extends SignInState {}
 class LoggedOutState extends SignInState {}
 
 class SignInSuccessful extends SignInState {}
+
+class GetUserDetail extends SignInState {}
+
+class GetUserDetailSuccessful extends SignInState {}
+
+class GetUserDetailFaliure extends SignInState {}
