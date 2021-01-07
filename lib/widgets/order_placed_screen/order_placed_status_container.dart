@@ -10,51 +10,163 @@ class OrderPlacedStatusContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
+      padding: EdgeInsets.only(left: 32,right: 32,top: 16,bottom: 32),
+
+      decoration: BoxDecoration(
+
+        color: Colors.white,
+
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0, 2),
+            blurRadius: 4.0,
+          )],
+
+      ),
+
       child: Column(
+
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
-          Text(Strings.deliveryAddress + order.name + order.address),
-          //Phone Number
-          Text(Strings.phoneNumber + order.phone),
-          TrackingStatusBar(),
+
+
+
           Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Palette.secondaryColor,
-              borderRadius: BorderRadius.circular(4.0),
+  
+                margin : EdgeInsets.only(top: 8,bottom: 8),
+  
+                child: Row(
+  
+                  children: [
+  
+                    Container(
+  
+                      child: Text('Placed On           :',style: TextStyle(color: Colors.grey[500]),),
+  
+                    ),
+  
+                    Container(
+  
+                      margin: EdgeInsets.only(left: 24),
+  
+                      child: Text(' 20 JUN 2020',style: TextStyle(color: Palette.secondaryColor),),
+  
+                    ),
+  
+                  ],
+  
+                ),
+              ),
+          Container(
+  
+            margin : EdgeInsets.only(top: 8,bottom: 8),
+            child: Row(
+  
+              children: [
+  
+                Container(
+  
+                  child: Text('Delivery Address :',style: TextStyle(color: Colors.grey[500]),),
+  
+                ),
+  
+                Container(
+  
+  
+                  margin: EdgeInsets.only(left: 24),
+  
+                  child: Text(' Ravi Ranjan \n 682/1, house no 7 , street no 5, Deoli village , \n Satya sai public school New Delhi - 110062, Delhi',style: TextStyle(color: Palette.secondaryColor),),
+  
+                ),
+  
+              ],
+  
             ),
-            // Place Order Button
+          ),
+          Container(
+  
+            margin : EdgeInsets.only(top: 8,bottom: 8),
+            child: Row(
+  
+              children: [
+  
+                Container(
+  
+                  child: Text('Phone Number   :',style: TextStyle(color: Colors.grey[500]),),
+  
+                ),
+  
+                Container(
+  
+                  margin: EdgeInsets.only(left: 24),
+  
+                  child: Text(' 9821951461',style: TextStyle(color: Palette.secondaryColor),),
+  
+                ),
+  
+              ],
+  
+            ),
+          ),
+
+           /*   Text(Strings.deliveryAddress + order.name + order.address),
+          //Phone Number
+          Text(Strings.phoneNumber + order.phone),*/
+
+          TrackingStatusBar(),
+
+
+          Container(
             child: InkWell(
-              onTap: () {},
-              child: Text(
-                Strings.downloadInvoice,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+              onTap: (){},
+
+              child: Container(
+                width: 400,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Palette.secondaryColor,
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                // Place Order Button
+                child: Text(
+                  Strings.downloadInvoice,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),
           ),
+
           SizedBox(
             height: 20,
           ),
-          Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(4.0),
-              border: Border.all(
-                width: 0.5,
-                color: Colors.black,
-                style: BorderStyle.solid,
+
+
+          InkWell(
+            onTap: (){},
+            child: Container(
+              width: 400,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(4.0),
+                border: Border.all(
+                  width: 0.5,
+                  color: Colors.black,
+                  style: BorderStyle.solid,
+                ),
               ),
-            ),
-            // Place Order Button
-            child: InkWell(
-              onTap: () {},
+              // Place Order Button
               child: Text(
                 Strings.continueShopping,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -64,6 +176,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
           ),
         ],
       ),
+
     );
   }
 }

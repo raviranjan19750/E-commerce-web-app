@@ -24,7 +24,7 @@ class TrackingStatusBar extends StatelessWidget {
         title: Text(
           Strings.delivered,
         ),
-        state: StepState.complete,
+        isActive: true,
         content: Text('Date'),
       ),
     ];
@@ -34,6 +34,7 @@ class TrackingStatusBar extends StatelessWidget {
       child: Stepper(
         steps: steps,
         type: StepperType.horizontal,
+
       ),
     );
   }

@@ -42,10 +42,12 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
 
 class MyDesktopView extends StatelessWidget {
   final Widget child;
+  bool visibleMiddleAppBar = false;
+  bool visibleSubAppBar  = true;
 
   ScrollController _scrollController = ScrollController();
 
-  MyDesktopView({Key key, this.child})
+  MyDesktopView({Key key, this.child,this.visibleMiddleAppBar,this.visibleSubAppBar})
       : assert(child != null),
         super(key: key);
 
@@ -58,8 +60,8 @@ class MyDesktopView extends StatelessWidget {
         child: Scaffold(
           appBar: CustomAppBar(
             size: state.status == AuthenticationStatus.authenticated ? 90 : 66,
-            visibleMiddleAppBar: false,
-            visibleSubAppBar: true,
+            visibleMiddleAppBar: visibleMiddleAppBar,
+            visibleSubAppBar: visibleSubAppBar,
           ),
           // backgroundColor: Colors.blue,
           body: SingleChildScrollView(
