@@ -253,9 +253,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                         _showLoginDialog(context);
 
                                       },
-                                      backGroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      text: Strings.buyNow,
+                                      text: (widget.isInCart) ? Strings.goToCart : Strings.addToCart,
                                     ),
                                   ),
                                 ),
