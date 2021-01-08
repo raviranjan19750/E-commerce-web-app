@@ -46,7 +46,8 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
     getAvailableVariantColorList(widget.productAllVariant, widget.size);
   }
 
-  void getAvailableVariantColorList(List<AllVariant> productAllVariant, String size) {
+  void getAvailableVariantColorList(
+      List<AllVariant> productAllVariant, String size) {
     for (var val in productAllVariant) {
       if (val.size == size) {
         availableVariantColorList.add(val.colour);
@@ -54,7 +55,8 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
     }
   }
 
-  bool isVariantColorAvailable(List<List<Color>> availableVariantColorList, List<ProductVariantColor> colorList) {
+  bool isVariantColorAvailable(List<List<Color>> availableVariantColorList,
+      List<ProductVariantColor> colorList) {
     for (int i = 0; i < availableVariantColorList.length; i++) {
       if (availableVariantColorList.elementAt(i).length == colorList.length) {
         if (colorList.length == 2) {
@@ -75,7 +77,8 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
     return false;
   }
 
-  bool colorCompare(List<ProductVariantColor> selectedColor, List<ProductVariantColor> initialSelectedColor) {
+  bool colorCompare(List<ProductVariantColor> selectedColor,
+      List<ProductVariantColor> initialSelectedColor) {
     if (selectedColor.length != initialSelectedColor.length) {
       return false;
     }
@@ -94,7 +97,8 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
     return true;
   }
 
-  BoxDecoration compareColor(List<ProductVariantColor> colorList, List<ProductVariantColor> initialSelectedColor) {
+  BoxDecoration compareColor(List<ProductVariantColor> colorList,
+      List<ProductVariantColor> initialSelectedColor) {
     if (colorList.length != initialSelectedColor.length) {
       return BoxDecoration();
     }
@@ -115,12 +119,13 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
       color: Colors.white,
       border: Border.all(
         width: 0.5,
-        color: Colors.black,
+        color: Colors.orange,
       ),
     );
   }
 
-  String getOtherProductVariantID(List<ProductVariantColor> currentSelectedColor) {
+  String getOtherProductVariantID(
+      List<ProductVariantColor> currentSelectedColor) {
     if (currentSelectedColor.length == 2) {
       for (int i = 0; i < widget.productAllVariant.length; i++) {
         if (widget.productAllVariant[i].colour.length == 2) {
@@ -153,11 +158,11 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
       itemCount: widget.colorList.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-
         return InkWell(
           onTap: () {
             setState(() {
-              if (isVariantColorAvailable(availableVariantColorList, widget.colorList[index])) {
+              if (isVariantColorAvailable(
+                  availableVariantColorList, widget.colorList[index])) {
                 currentSelectedColor = widget.colorList[index];
 
                 if (!(colorCompare(
@@ -200,8 +205,7 @@ class _ProductVariantColorState extends State<ProductVariantColorWidget> {
                     },
                   );
                 }
-              }
-              else {
+              } else {
                 final snackBar = SnackBar(
                   content: Text(Strings.currentlyProductNotAvailable,
                       textAlign: TextAlign.center,

@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
-import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/productVariantColorModel.dart';
 import 'package:living_desire/service/navigation_service.dart';
@@ -41,7 +38,6 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
 
   @override
   void initState() {
-
     super.initState();
     getSizeList();
     dropdownValue = widget.productSize;
@@ -112,7 +108,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
         value: dropdownValue,
         elevation: 0,
         onChanged: (value) {
-          if(dropdownValue != value) {
+          if (dropdownValue != value) {
             setState(() {
               dropdownValue = value;
               variantID = getVariantID(dropdownValue);
@@ -125,9 +121,10 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
               );
             });
           }
-
         },
-        items: selectedVariantSizeList.toSet().toList()
+        items: selectedVariantSizeList
+            .toSet()
+            .toList()
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

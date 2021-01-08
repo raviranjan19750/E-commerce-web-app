@@ -9,38 +9,37 @@ import 'package:living_desire/screens/ProductDetailScreen/ProductAvailablity.dar
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailEnlargeImage.dart';
 import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductCountWidget.dart';
-import 'package:living_desire/widgets/ProductDetailScreenWidgets/ProductSizeDropdownWidget.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/productVariantColorList.dart';
+import 'package:living_desire/widgets/ProductDetailScreenWidgets/productVariantSizeList.dart';
 import 'package:living_desire/widgets/bullet.dart';
 
 import '../../main.dart';
 import 'SimilarProductsAndCombo.dart';
 
 class ProductDetailDescriptionAndImage extends StatefulWidget {
+  String authID;
 
-   String authID;
-
-   ProductDetailDescriptionAndImage({Key key, this.authID}) : super(key: key);
+  ProductDetailDescriptionAndImage({Key key, this.authID}) : super(key: key);
 
   @override
-  _ProductDetailDescriptionAndImageState createState() => _ProductDetailDescriptionAndImageState();
+  _ProductDetailDescriptionAndImageState createState() =>
+      _ProductDetailDescriptionAndImageState();
 }
 
-class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescriptionAndImage> {
-   int itemCount = 1;
+class _ProductDetailDescriptionAndImageState
+    extends State<ProductDetailDescriptionAndImage> {
+  int itemCount = 1;
 
   @override
   Widget build(BuildContext context) {
-
     List<String> comboVariantType = new List();
     List<String> comboVariantSubType = new List();
     List<String> variantType = new List();
     List<String> variantSubType = new List();
 
     List<String> getComboType(List<Variant> variant) {
-
-      for(var typ in variant) {
+      for (var typ in variant) {
         comboVariantType.add(typ.type);
       }
 
@@ -48,8 +47,7 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
     }
 
     List<String> getComboSubType(List<Variant> variant) {
-
-      for(var subTyp in variant) {
+      for (var subTyp in variant) {
         comboVariantSubType.add(subTyp.subType);
       }
 
@@ -57,19 +55,16 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
     }
 
     List<String> getType(String type) {
-
       variantType.add(type);
 
       return variantType.toSet().toList();
     }
 
     List<String> getSubType(String subType) {
-
       variantSubType.add(subType);
 
       return variantSubType.toSet().toList();
     }
-
 
     return BlocBuilder<ProductDetailBloc, ProductDetailState>(
 // ignore: missing_return
@@ -148,7 +143,7 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
                               ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 16.0),
+                        margin: EdgeInsets.only(top: 12.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,14 +154,14 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
                                     variantID: state.productDetail.variantID,
                                   )
                                 : Container(
-                              height: 0,
-                            ),
+                                    height: 0,
+                                  ),
 //list of color
 
                             Container(
 //width: 150,
-                              height: 50,
-                              margin: EdgeInsets.only(top: 16.0),
+                              height: 25,
+                              margin: EdgeInsets.only(top: 32.0),
                               child: ProductVariantColorWidget(
                                 colorList: state.productDetail.colourOptions,
                                 initialSelectedColor:
@@ -179,50 +174,24 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
                               ),
                             ),
 
+                            Container(
+                              height: 45,
+                              margin: EdgeInsets.only(top: 16.0),
+                              child: ProductVariantSizeList(
+                                sizeOptionsList:
+                                    state.productDetail.sizeOptions,
+                                productID: state.productDetail.productID,
+                                variantSize: state.productDetail.size,
+                                selectedColor: state.productDetail.colour,
+                                allVariantList: state.productDetail.allVariants,
+                              ),
+                            ),
+
 // setting size and quantity button
                             Container(
-                              margin: EdgeInsets.only(top: 8.0),
+                              margin: EdgeInsets.only(top: 12.0),
                               child: Row(
                                 children: [
-//dropdown menu for sizes
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 0.5,
-                                        )),
-                                    height: 40,
-                                    padding: EdgeInsets.only(left: 8.0),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          child: Text(
-                                            Strings.size + ": ",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ),
-                                        ProductSizeDropdown(
-                                          productSizeList:
-                                              state.productDetail.sizeOptions,
-                                          productID:
-                                              state.productDetail.productID,
-                                          productSize: state.productDetail.size,
-                                          initialSelectedColor:
-                                              state.productDetail.colour,
-                                          productAllVariant:
-                                              state.productDetail.allVariants,
-                                          authID: widget.authID,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-                                  SizedBox(width: 12),
-
                                   Container(
                                     decoration: BoxDecoration(
                                         color: Colors.white,
@@ -237,7 +206,6 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
                                             setState(() {
                                               itemCount = val;
                                             });
-
                                           },
                                         ),
                                       ],
@@ -255,16 +223,19 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
                                     margin: EdgeInsets.only(top: 12.0),
                                     child: CustomWidgetButton(
                                       onPressed: () {
-
-                                        locator<NavigationService>().navigateTo(RoutesConfiguration.BULK_ORDER,
+                                        locator<NavigationService>().navigateTo(
+                                            RoutesConfiguration.BULK_ORDER,
                                             queryParams: {
-                                              "productID": state.productDetail.productID,
-                                              "variantID" : state.productDetail.variantID,
-                                              "productType" : state.productDetail.type,
-                                              "productSubType":state.productDetail.subType,
-                                              "size":state.productDetail.size,
+                                              "productID":
+                                                  state.productDetail.productID,
+                                              "variantID":
+                                                  state.productDetail.variantID,
+                                              "productType":
+                                                  state.productDetail.type,
+                                              "productSubType":
+                                                  state.productDetail.subType,
+                                              "size": state.productDetail.size,
                                             });
-
                                       },
                                       text: Strings.customizeWithLogo,
                                     ),
@@ -416,7 +387,9 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
                                 ? ProductAvailability(
                                     productID: state.comboProduct.productId,
                                   )
-                                : Container(height: 100,),
+                                : Container(
+                                    height: 100,
+                                  ),
 
 //  quantity button
                             Container(
@@ -437,7 +410,6 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
                                             setState(() {
                                               itemCount = val;
                                             });
-
                                           },
                                         ),
                                       ],
@@ -495,8 +467,9 @@ class _ProductDetailDescriptionAndImageState extends State<ProductDetailDescript
                 ),
               ],
             ),
-            SimilarProductAndCombos(type: getComboType(state.comboProduct.productVariant), subType: getComboSubType(state.comboProduct.productVariant)),
-
+            SimilarProductAndCombos(
+                type: getComboType(state.comboProduct.productVariant),
+                subType: getComboSubType(state.comboProduct.productVariant)),
             Container(
               height: 100,
             ),
