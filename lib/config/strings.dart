@@ -98,5 +98,6 @@ class Strings {
   static const String deliveredBy = "Order will be delivered by ";
   static const String writeReview = "Write a Review Here(Optional)...";
   static const String bulkOrder = "Bulk Order";
+  static const String currentlyProductNotAvailable = 'Currently product not available';
 
 }

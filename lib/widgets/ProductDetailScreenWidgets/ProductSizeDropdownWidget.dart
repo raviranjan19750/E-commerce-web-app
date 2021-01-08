@@ -41,7 +41,7 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
     super.initState();
 
     getSizeList();
-    dropdownValue = selectedVariantSizeList.last;
+    dropdownValue = widget.productSize;
   }
 
   void getSizeList() {
@@ -109,12 +109,14 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
         value: dropdownValue,
         elevation: 0,
         onChanged: (value) {
-          setState(() {
-            dropdownValue = value;
-            variantID = getVariantID(dropdownValue);
-            BlocProvider.of<ProductDetailBloc>(context)
-                .add(LoadProductDetail(productID: widget.productID, variantID: variantID, authID: widget.authID));
-          });
+          if(dropdownValue != value) {
+            setState(() {
+              dropdownValue = value;
+              variantID = getVariantID(dropdownValue);
+              BlocProvider.of<ProductDetailBloc>(context).add(LoadProductDetail(productID: widget.productID, variantID: variantID, authID: widget.authID));
+            });
+          }
+
         },
         items: selectedVariantSizeList.toSet().toList()
             .map<DropdownMenuItem<String>>((String value) {
