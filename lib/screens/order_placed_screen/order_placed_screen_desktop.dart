@@ -42,21 +42,34 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
                     init = true;
                   }
 
-                  if(value.isInitialized)
-                    return Row(
-                    children: [
-                      Expanded(
-                        child: OrderPlacedContainer(
+                  return Scaffold(
+
+                    appBar: CustomAppBar(visibleSubAppBar: false,visibleMiddleAppBar: false,),
+                    
+                    body: (value.isInitialized)?Row(
+
+                      children: [
+
+                        Expanded(
+                          child: SingleChildScrollView(
+
+                            child: OrderPlacedContainer(
+                              order: value.order,
+                            ),
+                          ),
+                        ),
+
+                        OrderPlacedStatusContainer(
                           order: value.order,
                         ),
-                      ),
-                      OrderPlacedStatusContainer(
-                        order: value.order,
-                      ),
-                    ],
+
+                      ],
+                    ) :Center(child: CircularProgressIndicator(),),
+
+
+
                   );
-                  else
-                    return Center(child: CircularProgressIndicator(),);
+
 
                 },
               ));

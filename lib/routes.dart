@@ -58,11 +58,7 @@ class RoutesConfiguration {
         (context, data) => MyDesktopView(visibleMiddleAppBar:true,visibleSubAppBar: false,child: CartScreenDesktop())),
     Path(
         r'^' + ORDER_PLACED,
-        (context, data) => MyDesktopView(
-              child: OrderPlacedScreenDesktop(),
-              visibleSubAppBar: false,
-              visibleMiddleAppBar: false,
-            )),
+        (context, data) => OrderPlacedScreenDesktop(orderKey: data['key'],)),
     Path(
         r'^' + SELECT_ADDRESS,
         (context, data) => MyDesktopView(
