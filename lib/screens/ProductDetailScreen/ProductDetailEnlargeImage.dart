@@ -7,11 +7,15 @@ import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
+import 'package:living_desire/main.dart';
 import 'package:living_desire/models/localNormalCart.dart';
 import 'package:living_desire/models/product.dart';
 import 'package:living_desire/screens/all_product/product_widgets.dart';
 import 'package:living_desire/screens/login/login_view.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
+
+import '../../routes.dart';
 
 class ProductDetailEnlargeImage extends StatefulWidget {
   final List<String> imageURL;
@@ -199,42 +203,41 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                   height: double.infinity,
                                   child: CustomWidgetButton(
                                     onPressed: () {
-                                      final _cartlist =
-                                      Hive.box<NormalCartLocal>('cart_items');
-                                      // _cartlist.put(widget.variantID, {
 
-                                      // });
-                                      if (!_cartlist.containsKey(widget.variantID)) {
-                                        _cartlist.put(
-                                            widget.variantID,
-                                            NormalCartLocal(
-                                                productId: widget.productID,
-                                                variantId: widget.variantID,
-                                                quantity: 1));
-                                      } else {
-                                        NormalCartLocal itm =
-                                        _cartlist.get(widget.variantID);
-                                        itm.quantity += 1;
-                                        print("===> " + itm.quantity.toString());
-                                        // update the quantity field in the existing entry
+                                      if(widget.isInCart) {
+
+                                        locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
+
+                                      }else{
+
+                                        final _cartlist = Hive.box<NormalCartLocal>('cart_items');
+
+                                        if (!_cartlist.containsKey(widget.variantID)) {
+                                          _cartlist.put(
+                                              widget.variantID,
+                                              NormalCartLocal(
+                                                  productId: widget.productID,
+                                                  variantId: widget.variantID,
+                                                  quantity: 1));
+                                        }
+                                        else {
+                                          NormalCartLocal itm =
+                                          _cartlist.get(widget.variantID);
+                                          itm.quantity += 1;
+                                          print("===> " + itm.quantity.toString());
+                                          // update the quantity field in the existing entry
+                                        }
+
+                                        BlocProvider.of<CartBloc>(context).add(AddCart(
+                                          authID: state.user.uid,
+                                          productID: widget.productID,
+                                          variantID: widget.variantID,
+                                          quantity: widget.itemCount,
+                                        ));
+
+                                        locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
                                       }
 
-                                      BlocProvider.of<CartBloc>(context).add(AddCart(
-                                        authID: state.user.uid,
-                                        productID: widget.productID,
-                                        variantID: widget.variantID,
-                                        quantity: widget.itemCount,
-                                      ));
-
-                                      // BlocBuilder<CartBloc, CartState>(builder: (context, state) {
-                                      //   if (state is CartDetailLoading) {
-                                      //     return CircularProgressIndicator();
-                                      //   } else if (state is CartDetailLoadingSuccessful) {
-                                      //     return SnackBar(
-                                      //       content: Text('Item added to cart'),
-                                      //     );
-                                      //   }
-                                      // });
                                     },
                                     text: (widget.isInCart) ? Strings.goToCart : Strings.addToCart,
                                   ),
