@@ -524,6 +524,11 @@ class BulkOrderProvider with ChangeNotifier{
 
   }
 
+  void onStepTwoReverse(){
+    stepTwoDone = false;
+    notifyListeners();
+  }
+
   void onStepOneReverse(){
       stepOneDone = false;
       notifyListeners();
