@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
+import 'package:living_desire/screens/emptyState/EmptyStateScreen.dart';
 import 'package:living_desire/screens/login/login_view.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
@@ -45,24 +46,14 @@ class CartScreenDesktop extends StatelessWidget {
             ),
           );
         case AuthenticationStatus.unauthenticated:
-          return Center(
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Palette.secondaryColor,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              // Login Button
-              child: InkWell(
-                onTap: () {
-                  _showLoginDialog(context);
-                },
-                child: Text(
-                  Strings.loginText,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+          return EmptyStateScreen(
+              primaryText: Strings.cartLoginText,
+              actionButtonText: Strings.loginText,
+              secondaryText: "",
+              assetPath: 'assets/images/cart_empty_state.png',
+              onPressed: () {
+                _showLoginDialog(context);
+              }
           );
         default:
           return Container();

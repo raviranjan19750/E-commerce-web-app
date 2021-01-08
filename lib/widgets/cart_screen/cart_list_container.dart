@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
+import 'package:living_desire/screens/emptyState/EmptyStateScreen.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import '../../config/configs.dart';
+import '../../main.dart';
+import '../../routes.dart';
 import '../widgets.dart';
 
 class CartListContainer extends StatelessWidget {
@@ -20,6 +24,17 @@ class CartListContainer extends StatelessWidget {
       if (state is CartDetailLoadingSuccessful) {
         // Bloc Provider to cart total bloc
         // No. of items in cart
+        if(state.cart.length == 0) {
+          return EmptyStateScreen(
+            primaryText: Strings.cartPrimaryText,
+            secondaryText: "",
+            actionButtonText: Strings.continueShopping,
+            assetPath: 'assets/images/cart_empty_state.png',
+            onPressed: () {
+              locator<NavigationService>().navigateTo(RoutesConfiguration.SEARCH_ALL_PRODUCT, queryParams: {"search": ""});
+            },
+          );
+        }
         BlocProvider.of<CartTotalBloc>(context).add(UpdateCartTotal());
         return Padding(
           padding: const EdgeInsets.only(

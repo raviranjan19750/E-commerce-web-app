@@ -4,7 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:living_desire/routes.dart';
+import 'package:living_desire/screens/emptyState/EmptyStateScreen.dart';
+import 'package:living_desire/service/navigation_service.dart';
 
+import '../../main.dart';
 import '../widgets.dart';
 
 class WishlistContainer extends StatelessWidget {
@@ -27,6 +31,18 @@ class WishlistContainer extends StatelessWidget {
         if (state is WishlistDetailLoading) {
           return CircularProgressIndicator();
         } else if (state is WishlistDetailLoadingSuccessful) {
+
+          if(state.wishlist.length == 0) {
+            return EmptyStateScreen(
+              primaryText: Strings.wishListPrimaryText,
+              secondaryText: Strings.wishListSecondaryText,
+              actionButtonText: Strings.continueShopping,
+              assetPath: 'assets/images/wishlist_empty_state.png',
+              onPressed: () {
+                locator<NavigationService>().navigateTo(RoutesConfiguration.SEARCH_ALL_PRODUCT, queryParams: {"search": ""});
+              },
+            );
+          }
           return Padding(
             padding: const EdgeInsets.only(
               top: LayoutConstraints.wishlistContainerTop,

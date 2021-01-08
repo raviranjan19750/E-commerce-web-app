@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/normal_order/normal_order_bloc.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/screens/emptyState/EmptyStateScreen.dart';
+import 'package:living_desire/service/navigation_service.dart';
+import '../../main.dart';
+import '../../routes.dart';
 import '../widgets.dart';
 
 class NormalOrdersContainer extends StatelessWidget {
@@ -17,6 +21,19 @@ class NormalOrdersContainer extends StatelessWidget {
         }
         // Orders acquired in state
         else if (state is NormalOrderDetailLoadingSuccessful) {
+
+          if(state.order.length == 0) {
+            return EmptyStateScreen(
+              primaryText: Strings.orderPrimaryText,
+              secondaryText: Strings.orderSecondaryText,
+              actionButtonText: Strings.continueShopping,
+              assetPath: 'assets/images/order_empty_state.png',
+              onPressed: () {
+                locator<NavigationService>().navigateTo(RoutesConfiguration.SEARCH_ALL_PRODUCT, queryParams: {"search": ""});
+              },
+            );
+          }
+
           return Padding(
             padding: const EdgeInsets.only(
               top: 40.0,

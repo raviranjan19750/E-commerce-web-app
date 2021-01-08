@@ -8,12 +8,11 @@ class EmptyStateScreen extends StatelessWidget {
   final String actionButtonText;
   final String assetPath;
   final VoidCallback onPressed;
-  final bool toShowLoginButton = false;
 
   const EmptyStateScreen(
       {Key key,
       this.primaryText,
-      this.secondaryText,
+      this.secondaryText = "",
       this.actionButtonText,
       this.assetPath = 'assets/images/logo.jpeg',
       this.onPressed})
@@ -28,8 +27,8 @@ class EmptyStateScreen extends StatelessWidget {
         Container(
           child: Image(
             image: AssetImage(assetPath),
-            width: MediaQuery.of(context).size.width * 0.45,
-            height: MediaQuery.of(context).size.height * 0.45,
+            width: MediaQuery.of(context).size.width * 0.40,
+            height: MediaQuery.of(context).size.height * 0.40,
           ),
         ),
         SizedBox(
@@ -56,17 +55,19 @@ class EmptyStateScreen extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 20,
+          height: 40,
         ),
         Container(
-          height: double.infinity,
+          height: 50,
           child: CustomWidgetButton(
             onPressed: onPressed,
             backGroundColor: Colors.black,
             textColor: Colors.white,
             text: actionButtonText,
           ),
-        )
+        ),
+
+        SizedBox(height: 50,)
       ],
     );
   }
