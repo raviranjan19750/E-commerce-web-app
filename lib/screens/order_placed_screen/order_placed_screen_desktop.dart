@@ -42,27 +42,40 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
                     init = true;
                   }
 
-                  if(value.isInitialized)
-                    return Row(
-                    children: [
-                      Expanded(
-                        child: OrderPlacedContainer(
+                  return Scaffold(
+
+                    appBar: CustomAppBar(visibleSubAppBar: false,visibleMiddleAppBar: false,),
+                    
+                    body: (value.isInitialized)?Row(
+
+                      children: [
+
+                        Expanded(
+                          child: SingleChildScrollView(
+
+                            child: OrderPlacedContainer(
+                              order: value.order,
+                            ),
+                          ),
+                        ),
+
+                        OrderPlacedStatusContainer(
                           order: value.order,
                         ),
-                      ),
-                      OrderPlacedStatusContainer(
-                        order: value.order,
-                      ),
-                    ],
+
+                      ],
+                    ) :Center(child: CircularProgressIndicator(),),
+
+
+
                   );
-                  else
-                    return Center(child: CircularProgressIndicator(),);
+
 
                 },
               ));
 
         case AuthenticationStatus.unauthenticated:
-          return Center(
+          return Scaffold(appBar: CustomAppBar(visibleMiddleAppBar: false,visibleSubAppBar: false,),body: Center(
             child: Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -80,9 +93,9 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
                 ),
               ),
             ),
-          );
+          ),);
         default:
-          return Container();
+          return Scaffold(appBar: CustomAppBar(visibleMiddleAppBar: false,visibleSubAppBar: false,),body: Container(),);
       }
     });
   }

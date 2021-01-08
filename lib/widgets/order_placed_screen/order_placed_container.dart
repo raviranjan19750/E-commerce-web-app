@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/widgets/footer/footer.dart';
 import '../../config/configs.dart';
 import '../../models/models.dart';
 import '../widgets.dart';
@@ -28,6 +29,7 @@ class OrderPlacedContainer extends StatelessWidget {
         padding: const EdgeInsets.only(
           left: 32.0,
           right: 32.0,
+          top: 32,
         ),
 
         child: Column(
@@ -84,7 +86,7 @@ class OrderPlacedContainer extends StatelessWidget {
               children: [
                 Container(
 
-                  margin: EdgeInsets.only(right: 80),
+                  margin: EdgeInsets.only(right: 80,bottom: 64),
 
                   child: Text(
                     Strings.total + '(${order.orderedProducts.length} Items) : ₹ ${calcTotal()}',
@@ -95,6 +97,8 @@ class OrderPlacedContainer extends StatelessWidget {
                 ),
               ],
             ),
+
+            Footer(),
           ],
         ),
       ),

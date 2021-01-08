@@ -93,29 +93,35 @@ class StepTwoBlock extends StatelessWidget{
 
       children: [
 
-        Container(
+        Padding(padding: EdgeInsets.only(top: 32)),
 
-          width: double.infinity,
+        InkWell(
 
-          padding: EdgeInsets.all(16),
+          onTap: (){value.onStepTwoReverse();},
 
-          decoration: BoxDecoration(
+          child: Container(
 
-            color: Palette.secondaryColor,
+            width: double.infinity,
 
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0, 2),
-                blurRadius: 4.0,
-              )],
+            padding: EdgeInsets.all(16),
+
+            decoration: BoxDecoration(
+
+              color: Palette.secondaryColor,
+
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0, 2),
+                  blurRadius: 4.0,
+                )],
+
+            ),
+
+
+            child: Text('Select Customization',style: TextStyle(color: Colors.white,fontSize: 24),),
 
           ),
-
-          margin: EdgeInsets.only(top: 32),
-
-          child: Text('Select Customization',style: TextStyle(color: Colors.white,fontSize: 24),),
-
         ),
 
         Visibility(
@@ -441,7 +447,7 @@ class StepTwoBlock extends StatelessWidget{
                     ),
                     padding: EdgeInsets.all(8),
 
-                    child: Text('Size : s',style: TextStyle(color: Palette.secondaryColor),),
+                    child: Text('Size : ${value.itemSize}',style: TextStyle(color: Palette.secondaryColor),),
 
                   ),
 
