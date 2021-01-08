@@ -101,6 +101,7 @@ flutter:
     - assets/images/order_empty_state.png
     - assets/images/wishlist_empty_state.png
     - assets/images/cart_empty_state.png
+    - assets/images/something_went_wrong_empty_state.png
 
   #   - images/a_dot_ham.jpeg
 
