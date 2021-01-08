@@ -98,6 +98,7 @@ flutter:
     - assets/images/logo.jpeg
     - assets/images/logo_old.jpeg
     - assets/images/search_result_not_match.jpg
+    - assets/images/order_empty_state.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

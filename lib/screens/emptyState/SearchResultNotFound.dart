@@ -12,7 +12,7 @@ class SearchResultNotFound extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(top: 64.0),
           child: Image(
-            image: AssetImage('assets/images/logo.jpeg'),
+            image: AssetImage('assets/images/search_result_not_match.jpg'),
             width: MediaQuery.of(context).size.width * 0.40,
             height: MediaQuery.of(context).size.height * 0.40,
           ),
