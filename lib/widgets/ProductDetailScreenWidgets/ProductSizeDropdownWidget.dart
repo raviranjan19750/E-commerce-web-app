@@ -5,6 +5,10 @@ import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/productVariantColorModel.dart';
+import 'package:living_desire/service/navigation_service.dart';
+
+import '../../main.dart';
+import '../../routes.dart';
 
 class ProductSizeDropdown extends StatefulWidget {
   List<String> productSizeList;
@@ -37,11 +41,10 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
 
+    super.initState();
     getSizeList();
-    dropdownValue = selectedVariantSizeList.last;
+    dropdownValue = widget.productSize;
   }
 
   void getSizeList() {
@@ -109,12 +112,20 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
         value: dropdownValue,
         elevation: 0,
         onChanged: (value) {
-          setState(() {
-            dropdownValue = value;
-            variantID = getVariantID(dropdownValue);
-            BlocProvider.of<ProductDetailBloc>(context)
-                .add(LoadProductDetail(productID: widget.productID, variantID: variantID, authID: widget.authID));
-          });
+          if(dropdownValue != value) {
+            setState(() {
+              dropdownValue = value;
+              variantID = getVariantID(dropdownValue);
+              locator<NavigationService>().navigateTo(
+                RoutesConfiguration.PRODUCT_DETAIL,
+                queryParams: {
+                  "pid": widget.productID,
+                  "vid": variantID,
+                },
+              );
+            });
+          }
+
         },
         items: selectedVariantSizeList.toSet().toList()
             .map<DropdownMenuItem<String>>((String value) {
