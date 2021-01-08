@@ -75,7 +75,7 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
               ));
 
         case AuthenticationStatus.unauthenticated:
-          return Center(
+          return Scaffold(appBar: CustomAppBar(visibleMiddleAppBar: false,visibleSubAppBar: false,),body: Center(
             child: Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -93,9 +93,9 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
                 ),
               ),
             ),
-          );
+          ),);
         default:
-          return Container();
+          return Scaffold(appBar: CustomAppBar(visibleMiddleAppBar: false,visibleSubAppBar: false,),body: Container(),);
       }
     });
   }
