@@ -143,36 +143,28 @@ class AuthenticationRepository {
     }
   }
 
-  Future<String> sendUserDetailsData(String name, String email) async {
-    try {
-      var data = {
-        "name": name,
-        "email": email,
-        "phone": this.phone,
-      };
-      final response = await http.post(
-        FunctionConfig.host + 'manageCustomerInfo/${this.uid}',
-        body: jsonEncode(data),
-        headers: {"Content-Type": "application/json"},
-      );
-      return response.body;
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+  // Future<String> sendUserDetailsData(String name, String email) async {
+  //   var data = {
+  //     "name": name,
+  //     "email": email,
+  //     "phone": this.phone,
+  //   };
+  //   final response = await http.post(
+  //     FunctionConfig.host + 'manageCustomerInfo/${this.uid}',
+  //     body: jsonEncode(data),
+  //     headers: {"Content-Type": "application/json"},
+  //   );
+  //   return response.body;
+  // }
 
-  Future<UserDetail> getUserDetailsData(String uid) async {
-    try {
-      final response = await http.get(
-        FunctionConfig.host + 'manageCustomerInfo/${this.uid}',
-        headers: {"Content-Type": "application/json"},
-      );
-      Map<String, dynamic> data = jsonDecode(response.body);
-      return UserDetail.fromJson(data);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+  // Future<UserDetail> getUserDetailsData(String uid) async {
+  //   final response = await http.get(
+  //     FunctionConfig.host + 'manageCustomerInfo/$uid',
+  //   );
+  //   Map<String, dynamic> data = jsonDecode(response.body);
+  //   print("!!!!!!!!!!!!!!!!! " + response.body.toString());
+  //   return UserDetail.fromJson(data);
+  // }
 
   Future<void> logout() async {
     try {

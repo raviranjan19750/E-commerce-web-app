@@ -2,6 +2,7 @@ import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/cart.dart';
 import 'package:living_desire/models/localCustomCart.dart';
 import 'package:hive/hive.dart';
+import 'package:living_desire/models/localNormalCart.dart';
 
 class CustomCartLocalStorage {
   final BulkOrderCart itm;
@@ -34,13 +35,11 @@ class NormalLocalStorage {
   NormalLocalStorage(this.itm);
 
   void saveToLocalStorage() {
-    final _cartlist = Hive.box<CustomCartLocal>('cart_items');
-    // _cartlist.put(widget.variantID, {
+    final _cartlist = Hive.box<NormalCartLocal>('cart_items');
 
-    // });
     _cartlist.put(
         itm.variantID,
-        CustomCartLocal(
+        NormalCartLocal(
           productId: itm.productID,
           variantId: itm.variantID,
           quantity: itm.quantity,

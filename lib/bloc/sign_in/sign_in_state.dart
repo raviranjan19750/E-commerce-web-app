@@ -16,6 +16,8 @@ class VerifyingOTP extends SignInState {}
 
 class VerificationSuccess extends SignInState {}
 
+class VerificationSuccessNew extends SignInState {}
+
 class VerificationFailure extends SignInState {}
 
 class ResendingOTP extends SignInState {}

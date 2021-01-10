@@ -32,11 +32,19 @@ class SignIn extends SignInEvent {
 class SignOut extends SignInEvent {}
 
 class GetUserDetailsEvent extends SignInEvent {
-  final String Email;
-  final String Name;
+  final String email;
+  final String name;
+  final String phone;
+  final String uid;
 
   GetUserDetailsEvent(
-    this.Email,
-    this.Name,
-  ) : assert(Name != null && Email != null);
+    this.email,
+    this.name,
+    this.phone,
+    this.uid,
+  ) : assert(name != null && email != null && phone != null && uid != null);
+}
+
+class MovetoUserDetailEvent extends SignInEvent {
+  MovetoUserDetailEvent();
 }

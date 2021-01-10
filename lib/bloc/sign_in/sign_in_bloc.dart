@@ -5,6 +5,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/sharedPreferences.dart';
+import 'package:living_desire/service/user_details.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -37,7 +38,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }
   }
 
-  Future<void> newUserCreation() async {
+  Future<int> newUserCreation() async {
     try {
       HttpsCallableResult res = await authService.createUser();
       // print("inside signinsucc" + res.data.toString());
@@ -50,6 +51,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           // print("new user created... signing in");
           // print(res.data['token']);
           String customToken = res.data['token'];
+          int usertype = res.data['userType'];
           // TODO :
           // add auth id to local storage
           // push local changesd to firebase
@@ -57,6 +59,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           await authService.signInWithToken(token: customToken);
           // UserPreferences().setAuthID(customToken);
           UserPreferences().AuthID;
+          return usertype;
           // print("user auth id is ${UserPreferences().AuthID}");
           // print("user signed in....");
           break;
@@ -111,8 +114,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       switch (code) {
         case 200:
           this.isSignedIn = true;
-          await newUserCreation();
-          yield VerificationSuccess();
+          int usrType = await newUserCreation();
+          if (usrType == 101)
+            yield VerificationSuccessNew();
+          else if (usrType == 102) yield VerificationSuccess();
           break;
 
         case 401:
@@ -163,8 +168,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Stream<SignInState> _userdetail(GetUserDetailsEvent event) async* {
     yield SendingOTP();
     try {
-      String res =
-          await authService.sendUserDetailsData(event.Name, event.Email);
+      String res = await UserdetailsRepository()
+          .sendUserDetailsData(event.name, event.email, event.phone, event.uid);
       // var map = jsonDecode(res.data);
       print("response : " + res);
       switch (res) {

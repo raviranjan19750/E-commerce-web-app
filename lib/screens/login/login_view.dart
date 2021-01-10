@@ -2,9 +2,11 @@ import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/models/user.dart';
 import 'package:living_desire/widgets/app_bar/user_card.dart';
+import 'package:living_desire/widgets/promo/promo.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -15,8 +17,11 @@ class LoginScreen extends StatelessWidget {
       // insetAnimationCurve: ,
       child: Container(
         decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-        height: 500,
-        width: 700,
+        // height: 700,
+        // width: 900,
+        height: MediaQuery.of(context).size.height / 1.5,
+        width: MediaQuery.of(context).size.width / 2,
+
         child: Row(
           children: [
             Expanded(
@@ -78,9 +83,10 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Column(
+    return Center(child: Container(
+        child: BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+      if (state is SignInInitial) {
+        return Column(
           children: [
             TextField(
               controller: _controller,
@@ -132,9 +138,65 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
             ),
             LoginStatusWidget()
           ],
-        ),
-      ),
-    );
+        );
+      } else if (state is SendingOTP || state is ResendingOTP) {
+        return CircularProgressIndicator();
+      } else if (state is SendingOTPFailed) {
+        return Icon(
+          Icons.warning,
+          color: Colors.red,
+        );
+      } else if (state is OTPSentToUser) {
+        return OTPBox();
+      } else if (state is VerificationSuccessNew) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.check_circle_outline,
+              size: 60,
+              color: Colors.green,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            UserDataWidget(),
+          ],
+        );
+      } else if (state is VerificationSuccess) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.check_circle_outline,
+              size: 60,
+              color: Colors.green,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            // UserDataWidget(),
+          ],
+        );
+      } else if (state is VerifyingOTP) {
+        return CircularProgressIndicator();
+      } else if (state is VerificationFailure) {
+        return Row(
+          children: [
+            Text(
+              "Unable to verify your otp",
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+          ],
+        );
+      }
+      return Container();
+      // if (state is ver){
+
+      // }
+    })));
   }
 }
 
@@ -160,6 +222,10 @@ class LoginStatusWidget extends StatelessWidget {
 
       if (state is GetUserDetail) {
         return UserDataWidget();
+      } else if (state is GetUserDetailSuccessful) {
+        return Container(
+          child: Text("Ho gaya panjikaran"),
+        );
       }
 
       if (state is VerificationSuccess) {
@@ -202,12 +268,83 @@ class OTPWidget extends StatelessWidget {
   }
 }
 
-class UserDataWidget extends StatelessWidget {
+class UserDataWidget extends StatefulWidget {
+  @override
+  _UserDataWidgetState createState() => _UserDataWidgetState();
+}
+
+class _UserDataWidgetState extends State<UserDataWidget> {
+  String name = "";
+  String email = "";
+  final _formkey = GlobalKey<FormState>();
+  TextEditingController _namecontroller = TextEditingController();
+  TextEditingController _emailcontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
-      child: Text("USR DATA FORM HERE"),
+      // color: Colors.red,
+      child: Form(
+        key: _formkey,
+        child: Column(
+          children: [
+            PromoCodeLabel(),
+            TextFormField(
+              controller: _emailcontroller,
+              validator: (val) => val.isEmpty ? "enter email " : null,
+              onChanged: (val) {
+                setState((() => email = val));
+              },
+              decoration: InputDecoration(
+                  labelText: 'Enter Email',
+                  filled: true,
+                  focusColor: Colors.pink),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              validator: (val) => val.isEmpty ? "enter name " : null,
+              controller: _namecontroller,
+              onChanged: (val) {
+                setState((() => name = val));
+              },
+              decoration: InputDecoration(
+                  labelText: 'Enter name',
+                  filled: true,
+                  focusColor: Colors.pink),
+            ),
+            RaisedButton(
+              color: Colors.black,
+              onPressed: _emailcontroller.text.length > 0 &&
+                      _namecontroller.text.length > 0
+                  ? () {
+                      BlocProvider.of<SignInBloc>(context).add(
+                          GetUserDetailsEvent(
+                              _emailcontroller.text,
+                              _emailcontroller.text,
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .state
+                                  .user
+                                  .phoneNumber,
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .state
+                                  .user
+                                  .uid));
+                    }
+                  : null,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                child: Text(
+                  "Submit",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -312,7 +449,7 @@ class LoginStepper extends StatelessWidget {
   }
 
   int getStateNumber(SignInState state) {
-    if (state is VerificationSuccess) {
+    if (state is VerificationSuccess || state is VerificationSuccessNew) {
       return 2;
     } else if (state is SendingOTP ||
         state is OTPSentToUser ||

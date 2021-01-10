@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
+import 'package:living_desire/models/user.dart';
 import 'package:living_desire/models/user_detail.dart';
 import 'package:living_desire/screens/login/login.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/screens/login/login_view.dart';
+import 'package:living_desire/service/user_details.dart';
 import '../../config/configs.dart';
 
 class UserCard extends StatefulWidget {
@@ -160,9 +162,13 @@ class _UserCardState extends State<UserCard> {
           state.status.toString());
       switch (state.status) {
         case AuthenticationStatus.authenticated:
+          // UserDetail usr;
+          String usr = "";
           var response =
-              AuthenticationRepository().getUserDetailsData(state.user.uid);
-          return returnView(true, context, username);
+              UserdetailsRepository().getUserDetailsData(state.user.uid);
+          // break;
+          // print("here" + usr);
+          return returnView(true, context, "Devashish(hard_coded)");
         case AuthenticationStatus.unauthenticated:
         default:
           return returnView(false, context, username);
