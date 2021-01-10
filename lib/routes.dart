@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/routing_data.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailScreeen.dart';
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
@@ -54,6 +55,16 @@ class RoutesConfiguration {
         visibleSubAppBar: false,
       );
     }),
+
+    Path(r'^' + MANAGE_ADDRESSES, (context, data) {
+
+      return MyDesktopView(
+        child: ManageAddressesScreenDesktop(),
+        visibleMiddleAppBar: true,
+        visibleSubAppBar: false,
+      );
+    }),
+
     Path(r'^' + CART,
         (context, data) => MyDesktopView(visibleMiddleAppBar:true,visibleSubAppBar: false,child: CartScreenDesktop())),
     Path(
