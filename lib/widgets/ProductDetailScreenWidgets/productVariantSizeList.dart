@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/DBHandler/ProductRepository.dart';
+import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/dialog/sizeChartDialog.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/productVariantColorModel.dart';
 import 'package:living_desire/service/navigation_service.dart';
+import 'package:living_desire/widgets/ProductDetailScreenWidgets/customButtonWidgets.dart';
 
 import '../../main.dart';
 import '../../routes.dart';
@@ -109,9 +114,28 @@ class ProductVariantSizeList extends StatelessWidget {
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: sizeOptionsList.length,
+        itemCount: sizeOptionsList.length +1,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
+
+          if(index == sizeOptionsList.length) {
+            return Container(
+              height: 45,
+              width: 220,
+              child: CustomWidgetButton(
+                text: Strings.sizeChart,
+                onPressed: () {
+
+                  showDialog(
+                      context: context,
+                    builder: (BuildContext buildContext) {
+                        return SizeChartDialog();
+                    }
+                  );
+                },
+              ),
+            );
+          }
           return Container(
             margin: EdgeInsets.only(right: 12.0),
             child: InkWell(

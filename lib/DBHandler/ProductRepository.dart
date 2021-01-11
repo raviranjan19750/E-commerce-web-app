@@ -25,7 +25,6 @@ class ProductRepository {
   Future<ComboProduct> getComboProductDescription({String productID, String authID}) async {
     LOG.i('Fetching Combo Product Description for Product ID $productID and #$authID)');
 
-
     Map<String, dynamic> data = {
       "authID": authID,
     };
@@ -56,21 +55,7 @@ class ProductRepository {
         isAvailable: result["data"]['isAvailable']);
   }
 
-/*
-  Future<ProductDetail> getProductVariantSizeColorDescription(
-      {String productID, String variantID, String color, String size, String authID}) async {
-    LOG.i('Fetching Product Variant Description for Product ID $productID Variant I $variantID Color $color and Size $size ');
-    Map<String, dynamic> data = {
-      "authID": authID,
-    };
-    var response = await http.post("https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID", body: data);
-    Map<String, dynamic> map = jsonDecode(response.body);
-    return ProductDetail.fromJson(map);
-  }
-*/
-
-  Future<CheckProductAvailability> checkProductAvailability(
-      {String pincode, String productID, String variantID}) async {
+  Future<CheckProductAvailability> checkProductAvailability({String pincode, String productID, String variantID}) async {
     Map<String, dynamic> data = {
       "pincode": pincode,
       "productID": productID,
@@ -80,5 +65,21 @@ class ProductRepository {
     var callable = FirebaseFunctions.instance.httpsCallable("checkPincodeAvailability");
     var result = await callable(data);
     return CheckProductAvailability.fromJson(result.data);
+  }
+
+  Future<dynamic> getSizeChart({String type, String subType}) async {
+
+    LOG.i('Fetching size chart for type $type and #$subType)');
+
+    Map<String, dynamic> data = {
+      "type": type,
+      "subType" : subType
+    };
+    
+    final response = await http.post("https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageSizeChart/details", body: (data));
+    var result = jsonDecode(response.body);
+    print(result.toString());
+    return result;
+
   }
 }

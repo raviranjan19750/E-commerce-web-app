@@ -59,6 +59,10 @@ class EmptyStateScreen extends StatelessWidget {
         ),
         Container(
           height: 50,
+          width: 250,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20))
+          ),
           child: CustomWidgetButton(
             onPressed: onPressed,
             backGroundColor: Colors.black,

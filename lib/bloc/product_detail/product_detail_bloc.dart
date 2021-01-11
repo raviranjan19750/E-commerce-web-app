@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
 import 'package:elastic_client/elastic_client.dart';
+import 'package:http/http.dart';
 import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/ProductDetail.dart';
@@ -34,6 +35,8 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       yield* loadProductDetail(event);
     } else if (event is LoadComboProductDetail) {
       yield* loadComboProductDetail(event);
+    }else if(event is LoadSizeChart) {
+      yield* loadSizeChart(event);
     }
   }
 
@@ -59,6 +62,20 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       print(e.toString());
       yield ProductDetailLoadingFailure();
     }
+  }
+
+  Stream<ProductDetailState> loadSizeChart(LoadSizeChart event) async* {
+
+    yield SizeChartLoading();
+    try {
+      var sizeChart = await productRepository.getSizeChart(type: event.type, subType: event.subType);
+      print("size Chart data Bloc " + sizeChart.toString());
+      yield SizeChartLoadingSuccessful(sizeChart);
+    } catch (e) {
+      print(e.toString());
+      yield SizeChartLoadingFailure();
+    }
+
   }
 
 }

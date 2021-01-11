@@ -151,36 +151,27 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
             children: [
               // enlarged image
 
-              BlocProvider(create: (context) =>
-                  ProductCardBloc(
-                    customerRepo: RepositoryProvider.of(context),
-                    wishlistBloc: BlocProvider.of(context),
-                    product: widget.product,
-                  ),
-
-              child: InkWell(
-                child: Container(
-                  height: imageHeight,
-                  width: imageWidth,
-                  decoration: new BoxDecoration(
-                    //color: Palette.lightGrey,
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: (selectedURI != null)
-                            ? NetworkImage(selectedURI)
-                            : NetworkImage(widget.imageURL[0]),
-                      )),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        right: 0,
-                        top: 0,
-                        child: ProductWishlistButton(productId: ""),
-                      ),
-                    ],
-                  ),
+              Container(
+                height: imageHeight,
+                width: imageWidth,
+                decoration: new BoxDecoration(
+                  //color: Palette.lightGrey,
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: (selectedURI != null)
+                          ? NetworkImage(selectedURI)
+                          : NetworkImage(widget.imageURL[0]),
+                    )),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: ProductWishlistButton(productId: widget.productID, varientId: widget.variantID,),
+                    ),
+                  ],
                 ),
-              ),),
+              ),
 
 
 

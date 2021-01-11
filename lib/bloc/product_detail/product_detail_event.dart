@@ -18,6 +18,16 @@ class LoadComboProductDetail extends ProductDetailEvent {
   LoadComboProductDetail({this.productID, this.authID});
 }
 
+class LoadSizeChart extends ProductDetailEvent {
+
+  final String type;
+  final String subType;
+
+  LoadSizeChart(this.type, this.subType);
+
+}
+
+
 // add cart
 // buy now
 // customize with logo

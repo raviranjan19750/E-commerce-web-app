@@ -196,6 +196,7 @@ class ComboProductCardContent extends StatelessWidget {
                         "pid": comboProduct.productId,
                         "vid" : comboProduct.productId,
                       },
+                      newTab: true
                     );
                     // Navigator.pushNamed(
                     //     context, path,

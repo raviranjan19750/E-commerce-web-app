@@ -24,4 +24,15 @@ class ComboProductDetailLoadingSuccessful extends ProductDetailState {
 
 class ComboProductDetailLoadingFailure extends ProductDetailState {}
 
+class SizeChartLoading extends ProductDetailState {}
+
+class SizeChartLoadingSuccessful extends ProductDetailState {
+
+  final response;
+
+  SizeChartLoadingSuccessful(this.response);
+}
+
+class SizeChartLoadingFailure extends ProductDetailState {}
+
 // check availability of product

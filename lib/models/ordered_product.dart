@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:living_desire/config/get_colors.dart';
 import 'package:living_desire/models/StringToHexColor.dart';
-import 'package:living_desire/models/models.dart';
+
 
 class OrderedProduct {
   final String key;
@@ -53,8 +52,6 @@ class OrderedProduct {
       return temp;
 
     }
-
-    print("Hex Color   :  " + data['colour'][0]['hexCode']);
 
     return OrderedProduct(
       productID: data['productID'],
