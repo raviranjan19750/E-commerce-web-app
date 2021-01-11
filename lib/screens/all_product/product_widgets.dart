@@ -13,6 +13,9 @@ import 'package:living_desire/service/navigation_service.dart';
 import '../../main.dart';
 import '../../routes.dart';
 
+import 'dart:js' as js;
+
+
 class ProductCard extends StatelessWidget {
   final Product product;
 
@@ -62,6 +65,7 @@ class ProductCardContent extends StatelessWidget {
                         "pid": product.productId,
                         "vid": product.varientId,
                       },
+                        newTab: true
                     );
                     // Navigator.pushNamed(
                     //     context, path,

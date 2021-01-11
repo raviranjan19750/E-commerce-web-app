@@ -11,6 +11,9 @@ import 'package:living_desire/screens/my_orders/my_order.dart';
 import 'package:living_desire/screens/screens.dart';
 import 'package:living_desire/extension/string_extension.dart';
 
+import 'dart:js' as js;
+
+
 import 'logger.dart';
 
 class Path {
@@ -45,7 +48,6 @@ class RoutesConfiguration {
       ),
     ),
     Path(r'^' + PRODUCT_DETAIL, (context, data) {
-
       return MyDesktopView(
         child: ProductDetailScreen(
                 productID: data['pid'],
