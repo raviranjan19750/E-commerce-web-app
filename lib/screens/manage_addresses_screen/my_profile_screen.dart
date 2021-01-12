@@ -220,6 +220,7 @@ class MyProfileScreen extends StatelessWidget{
             ),
           ),
 
+          Container(margin:EdgeInsets.only(top: 32),child: Text('Manage Address',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
 
         ],
 

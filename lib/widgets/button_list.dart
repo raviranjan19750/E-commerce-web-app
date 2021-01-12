@@ -149,7 +149,7 @@ class ButtonList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          Strings.manageAddresses,
+                          'My Account',
                           style: TextStyle(
                             color: isManageAddressesSelected
                                 ? Colors.white
