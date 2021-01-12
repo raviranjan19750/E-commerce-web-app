@@ -14,13 +14,13 @@ class QuotationPayment{
 
 
     return QuotationPayment(
-      payingAmount: data['data']['payingAmount'],
-      tax: data['data']['tax'],
-      totalPayingAmount: data['data']['totalPayingAmount'],
-      unpaidAmount: data['data']['unpaidAmount'],
-      razorpayOrderID: data['data']['paymentData']['razorpayOrderID'],
-      orderID: data['data']['paymentData']['orderID'],
-      paidAmount: data['data']['paidAmount'],
+      payingAmount: data['payingAmount'],
+      tax: data['tax'],
+      totalPayingAmount: data['totalPayingAmount'],
+      unpaidAmount: data['unpaidAmount'],
+      razorpayOrderID: data['paymentData']['razorpayOrderID'],
+      orderID: data['paymentData']['orderID'],
+      paidAmount: data['paidAmount'],
 
     );
   }
