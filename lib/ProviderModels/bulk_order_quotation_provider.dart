@@ -18,6 +18,8 @@ class BulkOrderQuotationProvider with ChangeNotifier{
 
   QuotationPayment quotationPayment;
 
+  bool isInitialized = false;
+
   void initQuotation(String key) async {
 
     await getQuotation(key);
@@ -28,6 +30,8 @@ class BulkOrderQuotationProvider with ChangeNotifier{
     await getSamplePaymentData(key, authID);
 
     await getQuotationPaymentData(key, authID);
+
+    isInitialized = true;
 
     notifyListeners();
 
@@ -51,7 +55,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
     final response =
     await http.post(FunctionConfig.host + 'managePayments/get-sample-order/$authID/$key', headers: {"Content-Type": "application/json"},);
 
-    print("Sample Payment Data  : "  + response.statusCode.toString());
+    print("Sample Payment Data  : "  + response.body);
 
     if(response.statusCode == 200){
 
@@ -66,6 +70,8 @@ class BulkOrderQuotationProvider with ChangeNotifier{
 
     final response =
     await http.post(FunctionConfig.host + 'managePayments/get-custom-order/$authID/$key', headers: {"Content-Type": "application/json"},);
+
+    print("Quotation Payment Data  : "  + response.statusCode.toString());
 
     if(response.statusCode == 200){
 
