@@ -22,7 +22,8 @@ class MyProfileScreen extends StatelessWidget{
               init = true;
             }
 
-            return Container(
+            if(value.isInitialized)
+              return Container(
 
               margin: EdgeInsets.all(32),
 
@@ -35,93 +36,7 @@ class MyProfileScreen extends StatelessWidget{
                   Row(
                     children: [
                       Container(margin:EdgeInsets.only(bottom: 16),child: Text('Personal Information',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
-                      Container(margin:EdgeInsets.only(bottom: 16,left: 32),child: InkWell(onTap:(){},child: Text('Edit',style: TextStyle(fontSize: 16,color: Colors.blueAccent),))),
-                    ],
-                  ),
-
-                  Row(
-
-                    children: [
-
-                      Container(
-
-                        width: 400 ,
-
-                        child: TextFormField(
-
-                          enabled: false,
-
-                          decoration: InputDecoration(
-
-
-                            labelText: 'First Name',
-
-                            border: OutlineInputBorder(
-
-                              borderRadius: BorderRadius.circular(4),
-
-                            ),
-
-
-                          ),
-
-                        ),
-                      ),
-
-                      Container(
-
-                        width: 400,
-
-
-                        margin: EdgeInsets.only(left: 32,right: 32),
-
-                        child: TextFormField(
-
-                          decoration: InputDecoration(
-
-
-                            enabled: false,
-
-                            labelText: 'Last Name',
-
-                            border: OutlineInputBorder(
-
-                              borderRadius: BorderRadius.circular(4),
-
-                            ),
-
-
-                          ),
-
-                        ),
-                      ),
-
-
-
-                      RaisedButton(
-
-                        onPressed: (){},
-                        color: Palette.secondaryColor,
-
-                        child: Container(
-
-
-                          padding: EdgeInsets.symmetric(vertical: 16,horizontal: 64),
-                          child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
-
-                        ),
-
-                      ),
-
-
-                    ],
-
-                  ),
-
-                  Row(
-                    children: [
-                      Container(margin:EdgeInsets.only(bottom: 16,top: 48),child: Text('Email Address',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
-                      Container(margin:EdgeInsets.only(bottom: 16,left: 32,top: 48),child: InkWell(onTap:(){},child: Text('Edit',style: TextStyle(fontSize: 16,color: Colors.blueAccent),))),
+                      Container(margin:EdgeInsets.only(bottom: 16,left: 32),child: InkWell(onTap:(){value.onNameEdit();},child: Text((value.isNameEdit)?'Cancel':'Edit',style: TextStyle(fontSize: 16,color: Colors.blueAccent),))),
                     ],
                   ),
 
@@ -137,7 +52,77 @@ class MyProfileScreen extends StatelessWidget{
 
                         child: TextFormField(
 
-                          enabled: false,
+                          controller: value.nameTextEditingController,
+
+                          enabled: value.isNameEdit,
+
+                          decoration: InputDecoration(
+
+
+                            labelText: 'Username',
+
+                            border: OutlineInputBorder(
+
+                              borderRadius: BorderRadius.circular(4),
+
+                            ),
+
+
+                          ),
+
+                        ),
+                      ),
+
+
+                      Visibility(
+
+                        visible: value.isNameEdit,
+
+                        child: RaisedButton(
+
+                          onPressed: (){
+                            value.onNameSave(context);
+                          },
+                          color: Palette.secondaryColor,
+
+                          child: Container(
+
+
+                            padding: EdgeInsets.symmetric(vertical: 16,horizontal: 64),
+                            child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
+
+                          ),
+
+                        ),
+                      ),
+
+
+                    ],
+
+                  ),
+
+                  Row(
+                    children: [
+                      Container(margin:EdgeInsets.only(bottom: 16,top: 48),child: Text('Email Address',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
+                      Container(margin:EdgeInsets.only(bottom: 16,left: 32,top: 48),child: InkWell(onTap:(){value.onEmailEdit();},child: Text((value.isEmailEdit)?'Cancel':'Edit',style: TextStyle(fontSize: 16,color: Colors.blueAccent),))),
+                    ],
+                  ),
+
+                  Row(
+
+                    children: [
+
+                      Container(
+
+                        width: 400 ,
+
+                        margin: EdgeInsets.only(right: 32),
+
+                        child: TextFormField(
+
+                          controller: value.emailTextEditingController,
+
+                          enabled: value.isEmailEdit,
 
                           decoration: InputDecoration(
 
@@ -156,19 +141,26 @@ class MyProfileScreen extends StatelessWidget{
                         ),
                       ),
 
-                      RaisedButton(
+                      Visibility(
 
-                        onPressed: (){},
-                        color: Palette.secondaryColor,
+                        visible: value.isEmailEdit,
 
-                        child: Container(
+                        child: RaisedButton(
+
+                          onPressed: (){
+                            value.onEmailSave(context);
+                          },
+                          color: Palette.secondaryColor,
+
+                          child: Container(
 
 
-                          padding: EdgeInsets.symmetric(vertical: 16,horizontal: 64),
-                          child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
+                            padding: EdgeInsets.symmetric(vertical: 16,horizontal: 64),
+                            child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
+
+                          ),
 
                         ),
-
                       ),
 
 
@@ -241,6 +233,8 @@ class MyProfileScreen extends StatelessWidget{
 
               ),
             );
+            else
+              return CircularProgressIndicator();
 
           },
         ));
