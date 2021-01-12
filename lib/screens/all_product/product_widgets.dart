@@ -522,33 +522,47 @@ class _FilterDropDownState extends State<FilterDropDown> {
   Widget build(BuildContext context) {
     _value = BlocProvider.of<AllProductBloc>(context).sortCriteria;
     return Container(
-      child: DropdownButton(
-          value: _value,
-          items: [
-            DropdownMenuItem(
-              child: Text("Relevance"),
-              value: FilterSortCriteria.RELEVANCE,
-            ),
-            DropdownMenuItem(
-              child: Text("Price: Low To High"),
-              value: FilterSortCriteria.PRICE_LOW_TO_HIGH,
-            ),
-            DropdownMenuItem(
-              child: Text("Price: High To Low"),
-              value: FilterSortCriteria.PRICE_HIGH_TO_LOW,
-            ),
-            DropdownMenuItem(
-              child: Text("Newest Arrival"),
-              value: FilterSortCriteria.NEWEST_FIRST,
-            ),
-          ],
-          onChanged: (value) {
-            setState(() {
-              _value = value;
-              BlocProvider.of<AllProductBloc>(context)
-                  .add(LoadAllProductWithSearchParams(sort: _value));
-            });
-          }),
+      padding: EdgeInsets.only(left: 10, top: 3, right: 3, bottom: 3),
+      margin: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 1.0),
+        borderRadius: BorderRadius.circular(5.0)
+      ),
+      child: Row(
+        children: [
+          Text("Sort By  "),
+          DropdownButtonHideUnderline(
+            child: DropdownButton(
+              isDense: true,
+                value: _value,
+                items: [
+                  DropdownMenuItem(
+                    child: Text("Relevance"),
+                    value: FilterSortCriteria.RELEVANCE,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("Price: Low To High"),
+                    value: FilterSortCriteria.PRICE_LOW_TO_HIGH,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("Price: High To Low"),
+                    value: FilterSortCriteria.PRICE_HIGH_TO_LOW,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("Newest Arrival"),
+                    value: FilterSortCriteria.NEWEST_FIRST,
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _value = value;
+                    BlocProvider.of<AllProductBloc>(context)
+                        .add(LoadAllProductWithSearchParams(sort: _value));
+                  });
+                }),
+          ),
+        ],
+      ),
     );
   }
 }
