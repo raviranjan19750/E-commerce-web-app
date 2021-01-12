@@ -136,7 +136,7 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
             SizedBox(
               height: 20,
             ),
-            LoginStatusWidget()
+            // LoginStatusWidget()
           ],
         );
       } else if (state is SendingOTP || state is ResendingOTP) {
@@ -148,21 +148,6 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
         );
       } else if (state is OTPSentToUser) {
         return OTPBox();
-      } else if (state is VerificationSuccessNew) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.check_circle_outline,
-              size: 60,
-              color: Colors.green,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            UserDataWidget(),
-          ],
-        );
       } else if (state is VerificationSuccess) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -173,9 +158,29 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
               color: Colors.green,
             ),
             SizedBox(
-              height: 30,
+              height: 15,
             ),
-            // UserDataWidget(),
+            UserDataWidget(),
+          ],
+        );
+      } else if (state is VerificationSuccessNew) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.check_circle_outline,
+              size: 60,
+              color: Colors.green,
+            ),
+            Container(
+              child: Text(
+                  "Congratulations !!! Your referalll code is : ${state.referallcode}"),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            PromoCodeLabel(),
+            UserDataWidget(),
           ],
         );
       } else if (state is VerifyingOTP) {
@@ -200,54 +205,54 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
   }
 }
 
-class LoginStatusWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
-      if (state is VerifyingOTP) {
-        return CircularProgressIndicator();
-      }
-      if (state is VerificationFailure) {
-        return Row(
-          children: [
-            Text(
-              "Unable to verify your otp",
-              style: TextStyle(
-                color: Colors.red,
-              ),
-            ),
-          ],
-        );
-      }
+// class LoginStatusWidget extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+//       if (state is VerifyingOTP) {
+//         return CircularProgressIndicator();
+//       }
+//       if (state is VerificationFailure) {
+//         return Row(
+//           children: [
+//             Text(
+//               "Unable to verify your otp",
+//               style: TextStyle(
+//                 color: Colors.red,
+//               ),
+//             ),
+//           ],
+//         );
+//       }
 
-      if (state is GetUserDetail) {
-        return UserDataWidget();
-      } else if (state is GetUserDetailSuccessful) {
-        return Container(
-          child: Text("Ho gaya panjikaran"),
-        );
-      }
+//       if (state is GetUserDetail) {
+//         return UserDataWidget();
+//       } else if (state is GetUserDetailSuccessful) {
+//         return Container(
+//           child: Text("Ho gaya panjikaran"),
+//         );
+//       }
 
-      if (state is VerificationSuccess) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.check_circle_outline,
-              size: 60,
-              color: Colors.green,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            UserDataWidget(),
-          ],
-        );
-      }
-      return Container();
-    });
-  }
-}
+//       if (state is VerificationSuccess) {
+//         return Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [
+//             Icon(
+//               Icons.check_circle_outline,
+//               size: 60,
+//               color: Colors.green,
+//             ),
+//             SizedBox(
+//               height: 30,
+//             ),
+//             UserDataWidget(),
+//           ],
+//         );
+//       }
+//       return Container();
+//     });
+//   }
+// }
 
 class OTPWidget extends StatelessWidget {
   @override
@@ -288,7 +293,6 @@ class _UserDataWidgetState extends State<UserDataWidget> {
         key: _formkey,
         child: Column(
           children: [
-            PromoCodeLabel(),
             TextFormField(
               controller: _emailcontroller,
               validator: (val) => val.isEmpty ? "enter email " : null,
@@ -322,7 +326,7 @@ class _UserDataWidgetState extends State<UserDataWidget> {
                       BlocProvider.of<SignInBloc>(context).add(
                           GetUserDetailsEvent(
                               _emailcontroller.text,
-                              _emailcontroller.text,
+                              _namecontroller.text,
                               BlocProvider.of<AuthenticationBloc>(context)
                                   .state
                                   .user

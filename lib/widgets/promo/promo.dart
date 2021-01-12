@@ -11,15 +11,19 @@ class _PromoCodeLabelState extends State<PromoCodeLabel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(30.0),
+      margin: const EdgeInsets.all(15.0),
       padding: const EdgeInsets.all(10.0),
       // height: 250,
       // width: 500,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
             "Do You have a PROMO CODE ??",
             style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(
+            height: 10,
           ),
           TextFormField(
             controller: _codeController,
@@ -55,9 +59,9 @@ class _PromoCodeLabelState extends State<PromoCodeLabel> {
         ],
       ),
       decoration: BoxDecoration(
-          // border: Border.all(color: Colors.black, width: 0.5),
-          // borderRadius: BorderRadius.all(Radius.circular(15.0)),
-          ),
+        border: Border.all(color: Colors.black, width: 2),
+        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+      ),
     );
   }
 }

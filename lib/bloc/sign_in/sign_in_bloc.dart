@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:living_desire/DBHandler/promocode_repository.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/sharedPreferences.dart';
 import 'package:living_desire/service/user_details.dart';
@@ -115,9 +116,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         case 200:
           this.isSignedIn = true;
           int usrType = await newUserCreation();
-          if (usrType == 101)
-            yield VerificationSuccessNew();
-          else if (usrType == 102) yield VerificationSuccess();
+          if (usrType == 101) {
+            var refCode =
+                await PromoCodeUtils().getUserReferallCode(authService.uid);
+            print(refCode.toString());
+            yield VerificationSuccessNew(refCode['referralCode']);
+          } else if (usrType == 102) yield VerificationSuccess();
           break;
 
         case 401:
@@ -183,7 +187,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       }
     } catch (e) {
       print(e);
-      yield SendingOTPFailed();
+      yield GetUserDetailFaliure();
     }
   }
 }

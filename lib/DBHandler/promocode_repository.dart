@@ -1,14 +1,18 @@
+import 'dart:convert';
+
 import 'package:living_desire/config/function_config.dart';
 import 'package:http/http.dart' as http;
 
 class PromoCodeUtils {
-  Future<String> getUserReferallCode(String authID) async {
+  Future<dynamic> getUserReferallCode(String authID) async {
     try {
       final response = await http.get(
-          FunctionConfig.host + 'manageCouponDiscounts/my-referral/$authID');
-      return response.body.toString();
+          FunctionConfig.host + 'manageDiscountCoupons/my-referral/$authID');
+      print(response.body);
+      var ref = jsonDecode(response.body);
+      return ref;
     } catch (e) {
-      print(e.toString());
+      print(e.toString() + "getuserreferaalcode");
       throw Exception(e);
     }
   }

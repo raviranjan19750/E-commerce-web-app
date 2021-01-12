@@ -167,8 +167,21 @@ class _UserCardState extends State<UserCard> {
           var response =
               UserdetailsRepository().getUserDetailsData(state.user.uid);
           // break;
-          // print("here" + usr);
-          return returnView(true, context, "Devashish(hard_coded)");
+          return FutureBuilder(
+              future:
+                  UserdetailsRepository().getUserDetailsData(state.user.uid),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  debugPrint('Step 3, build widget: ${snapshot.data}');
+                  return returnView(true, context, snapshot.data["name"]);
+                } else {
+                  // We can show the loading view until the data comes back.
+                  debugPrint('build loading widget');
+                  return CircularProgressIndicator();
+                }
+              });
+        // print("here" + response.toString());
+        // return returnView(true, context, "SomeName");
         case AuthenticationStatus.unauthenticated:
         default:
           return returnView(false, context, username);

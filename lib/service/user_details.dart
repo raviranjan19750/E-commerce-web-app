@@ -14,23 +14,35 @@ class UserdetailsRepository {
     };
     final response = await http.post(
       FunctionConfig.host + 'manageCustomerInfo/$uid',
-      // body: jsonEncode(data),
-      body: json.encode({
-        "name": name,
-        "email": email,
-        "phone": phone,
-      }),
+      body: jsonEncode(data),
       headers: {"Content-Type": "application/json"},
     );
+    print(response.body);
     return response.body;
   }
 
-  Future<UserDetail> getUserDetailsData(String uid) async {
-    final response = await http.get(
-      FunctionConfig.host + 'manageCustomerInfo/$uid',
-    );
-    Map<String, dynamic> data = jsonDecode(response.body);
-    print("!!!!!!!!!!!!!!!!! " + response.body.toString());
-    return UserDetail.fromJson(data);
+  // Future<dynamic> getUserDetailsData(String uid) async {
+  //   final response = await http.get(
+  //     FunctionConfig.host + 'manageCustomerInfo/$uid',
+  //   );
+  //   print("!!!!!!!!!!!!!!!!! " + response.body.toString());
+  //   // print(response.body);
+  //   var ref = jsonDecode(response.body);
+  //   return ref;
+  //   // Map<String, dynamic> data = jsonDecode(response.body);
+  //   // return UserDetail.fromJson(data);
+  // }
+
+  Future<dynamic> getUserDetailsData(String uid) async {
+    try {
+      final response =
+          await http.get(FunctionConfig.host + 'manageCustomerInfo/$uid');
+      print(response.body);
+      var ref = jsonDecode(response.body);
+      return ref;
+    } catch (e) {
+      print(e.toString() + "getUserDetail");
+      throw Exception(e);
+    }
   }
 }

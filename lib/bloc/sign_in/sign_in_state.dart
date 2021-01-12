@@ -16,7 +16,11 @@ class VerifyingOTP extends SignInState {}
 
 class VerificationSuccess extends SignInState {}
 
-class VerificationSuccessNew extends SignInState {}
+class VerificationSuccessNew extends SignInState {
+  final String referallcode;
+
+  VerificationSuccessNew(this.referallcode);
+}
 
 class VerificationFailure extends SignInState {}
 
