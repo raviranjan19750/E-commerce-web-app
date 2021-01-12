@@ -6,4 +6,6 @@ class SamplePayment {
 
   SamplePayment({this.transactionID, this.price, this.paymentMode,
       this.deliveryCharges, this.status});
+
+
 }

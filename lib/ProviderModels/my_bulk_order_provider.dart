@@ -38,7 +38,7 @@ class MyBulkOrderProvider with ChangeNotifier{
 
 
     final response =
-    await http.get(FunctionConfig.host + 'manageOrders/custom-list/$authID', headers: {"Content-Type": "application/json"},);
+    await http.get(FunctionConfig.host + 'manageCustomOrder/custom-list/$authID', headers: {"Content-Type": "application/json"},);
 
     if(response.statusCode == 200){
 
