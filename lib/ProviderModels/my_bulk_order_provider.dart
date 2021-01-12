@@ -40,6 +40,8 @@ class MyBulkOrderProvider with ChangeNotifier{
     final response =
     await http.get(FunctionConfig.host + 'manageCustomOrder/custom-list/$authID', headers: {"Content-Type": "application/json"},);
 
+    print("My Bulk Order  :  " + response.statusCode.toString());
+
     if(response.statusCode == 200){
 
       bulkOrdItems.clear();

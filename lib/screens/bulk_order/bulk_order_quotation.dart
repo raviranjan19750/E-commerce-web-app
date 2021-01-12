@@ -64,9 +64,9 @@ class BulkOrderQuotation extends StatelessWidget{
 
             return Scaffold(
 
-              appBar: CustomAppBar(visibleSubAppBar: true,visibleMiddleAppBar: true,),
+              appBar: CustomAppBar(visibleSubAppBar: false,visibleMiddleAppBar: true,),
 
-              body: (value.bulkOrder != null) ?SingleChildScrollView(
+              body: (value.isInitialized) ?SingleChildScrollView(
 
                 child: Column(
 
@@ -77,7 +77,7 @@ class BulkOrderQuotation extends StatelessWidget{
                     Container(
 
 
-                      margin: EdgeInsets.only(left: 64,right: 64,top: 120),
+                      margin: EdgeInsets.only(left: 64,right: 64,top: 32),
 
                       width: double.infinity,
 
@@ -89,7 +89,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
                     Container(
 
-                      margin: EdgeInsets.only(left: 16),
+                      margin: EdgeInsets.only(left: 48),
 
                       padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
 

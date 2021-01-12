@@ -226,6 +226,8 @@ class BulkOrderProvider with ChangeNotifier{
       final response =
       await http.get(FunctionConfig.host + 'manageCart/custom/$authID', headers: {"Content-Type": "application/json"},);
 
+      print("Manage Cart  :  " + response.statusCode.toString());
+
       if(response.statusCode == 200){
 
         customCartItems.clear();
@@ -764,7 +766,7 @@ class BulkOrderProvider with ChangeNotifier{
       };
 
       final response =
-      await http.post(FunctionConfig.host + 'manageOrders/custom-request/$authID',
+      await http.post(FunctionConfig.host + 'manageCustomOrder/custom-request/$authID',
         body: jsonEncode(data),
         headers: {"Content-Type": "application/json"},
       );

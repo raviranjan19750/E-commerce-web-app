@@ -14,12 +14,12 @@ class SamplePayment{
 
 
     return SamplePayment(
-      payingAmount: data['data']['payingAmount'],
-      tax: data['data']['tax'],
-      totalPayingAmount: data['data']['totalPayingAmount'],
-      deliveryCharges: data['data']['deliveryCharges'],
-      razorpayOrderID: data['data']['paymentData']['razorpayOrderID'],
-      orderID: data['data']['paymentData']['orderID'],
+      payingAmount: data['payingAmount'],
+      tax: data['tax'],
+      totalPayingAmount: data['totalPayingAmount'],
+      deliveryCharges: data['deliveryCharges'],
+      razorpayOrderID: data['paymentData']['razorpayOrderID'],
+      orderID: data['paymentData']['orderID'],
 
     );
   }
