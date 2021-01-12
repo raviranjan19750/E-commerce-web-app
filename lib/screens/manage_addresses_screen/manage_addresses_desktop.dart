@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import 'package:living_desire/screens/login/login_view.dart';
+import 'package:living_desire/screens/manage_addresses_screen/my_profile_screen.dart';
+import 'package:living_desire/screens/manage_addresses_screen/my_wallet.dart';
 import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
@@ -35,10 +37,23 @@ class ManageAddressesScreenDesktop extends StatelessWidget {
                 ButtonList(
                   isManageAddressesSelected: true,
                 ),
+
                 Expanded(
-                    child: ManageAddressesContainer(
+                    child: Column(
+
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+
+                        MyProfileScreen(),
+
+                        ManageAddressesContainer(
                   authID: state.user.uid,
-                )),
+                ),
+                      ],
+                    )),
+
+                MyWallet(),
               ],
             ),
           );
