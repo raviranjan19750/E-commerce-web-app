@@ -17,6 +17,7 @@ class MyProfileProvider with ChangeNotifier{
   String referralCode;
 
 
+
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController nameTextEditingController = TextEditingController();
 
@@ -85,6 +86,8 @@ class MyProfileProvider with ChangeNotifier{
     }
 
   }
+
+
 
   Future<void> saveProfileDetails(String authID,String name,String email) async {
 
