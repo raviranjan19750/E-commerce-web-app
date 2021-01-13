@@ -5,6 +5,7 @@ import 'package:living_desire/ProviderModels/bulk_order_quotation_provider.dart'
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/BulkOrder.dart';
 import 'package:living_desire/models/StringToHexColor.dart';
+import 'package:living_desire/screens/bulk_order/bulk_order_samples.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:provider/provider.dart';
@@ -74,6 +75,12 @@ class BulkOrderQuotation extends StatelessWidget{
 
                   children: [
 
+                    Visibility(
+
+                        visible: (value.bulkOrder.samples.isNotEmpty),
+                        child: BulkOrderSamples(sampleList: value.bulkOrder.samples,)
+                    ),
+
                     Container(
 
 
@@ -106,7 +113,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
                       ),
 
-                      margin: EdgeInsets.only(left: 64,top: 64),
+                      margin: EdgeInsets.only(left: 64,top: 32),
 
                       child: DataTable(
 
