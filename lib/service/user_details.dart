@@ -5,7 +5,7 @@ import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/user_detail.dart';
 
 class UserdetailsRepository {
-  Future<String> sendUserDetailsData(
+  Future<dynamic> sendUserDetailsData(
       String name, String email, String phone, String uid) async {
     var data = {
       "name": name,
@@ -17,8 +17,12 @@ class UserdetailsRepository {
       body: jsonEncode(data),
       headers: {"Content-Type": "application/json"},
     );
-    print(response.body);
-    return response.body;
+    // re render the user card
+
+    var res = jsonDecode(response.body);
+    return res;
+    // print(response.body);
+    // return response.body;
   }
 
   // Future<dynamic> getUserDetailsData(String uid) async {
@@ -38,8 +42,8 @@ class UserdetailsRepository {
       final response =
           await http.get(FunctionConfig.host + 'manageCustomerInfo/$uid');
       print(response.body);
-      var ref = jsonDecode(response.body);
-      return ref;
+      var res = jsonDecode(response.body);
+      return res;
     } catch (e) {
       print(e.toString() + "getUserDetail");
       throw Exception(e);

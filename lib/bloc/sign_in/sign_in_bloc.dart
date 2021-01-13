@@ -172,12 +172,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Stream<SignInState> _userdetail(GetUserDetailsEvent event) async* {
     yield SendingOTP();
     try {
-      String res = await UserdetailsRepository()
+      var res = await UserdetailsRepository()
           .sendUserDetailsData(event.name, event.email, event.phone, event.uid);
       // var map = jsonDecode(res.data);
-      print("response : " + res);
-      switch (res) {
-        case "Success":
+      print("response : " + res['message']);
+      switch (res['message']) {
+        case "OK":
           yield GetUserDetailSuccessful();
           break;
 

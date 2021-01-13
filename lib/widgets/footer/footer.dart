@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Footer extends StatelessWidget {
+  final ScrollController scrollController;
+  _moveUp() {
+    scrollController.animateTo(0,
+        curve: Curves.linear, duration: Duration(milliseconds: 500));
+  }
+
+  const Footer({Key key, this.scrollController}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,32 +17,47 @@ class Footer extends StatelessWidget {
             Text(""),
             Text(""),
             FooterRowWidgets(),
-            SizedBox(height: 30,),
+            SizedBox(
+              height: 30,
+            ),
             Divider(),
             Row(
               children: [
-              Text("2020 Living Desire"),
-              Expanded(child: Center(
-                child: Row(children: [
-                  Icon(Icons.face_retouching_natural),
-                  Icon(Icons.face_retouching_natural),
-                  Icon(Icons.face_retouching_natural),
-                  Icon(Icons.face_retouching_natural),
-                  Icon(Icons.face_retouching_natural),
-                ],),
-              )),
-              Text("Go Up"),
-            ],)
+                Text("2020 Living Desire"),
+                Expanded(
+                    child: Center(
+                  child: Row(
+                    children: [
+                      Icon(Icons.face_retouching_natural),
+                      Icon(Icons.face_retouching_natural),
+                      Icon(Icons.face_retouching_natural),
+                      Icon(Icons.face_retouching_natural),
+                      Icon(Icons.face_retouching_natural),
+                    ],
+                  ),
+                )),
+                InkWell(
+                  child: Text("Go Up"),
+                  onTap: () {
+                    _moveUp();
+                  },
+                ),
+              ],
+            )
           ],
         ));
   }
 }
 
 class FooterRowWidgets extends StatelessWidget {
-
   final List<String> rent = ["About Us", "Culture", "Investor", "Contact Us"];
   final List<String> info = ["Blog", "FAQ", "Docs"];
-  final List<String> policy = ["Shipping Policy", "Cancellation & Return", "Privacy Policy", "Terms and Condition"];
+  final List<String> policy = [
+    "Shipping Policy",
+    "Cancellation & Return",
+    "Privacy Policy",
+    "Terms and Condition"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +65,22 @@ class FooterRowWidgets extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: FooterSiteMapColumn(header: "RENTMOJO", links: rent,),
+          child: FooterSiteMapColumn(
+            header: "RENTMOJO",
+            links: rent,
+          ),
         ),
         Expanded(
-          child: FooterSiteMapColumn(header: "INFORMATION", links: info,),
+          child: FooterSiteMapColumn(
+            header: "INFORMATION",
+            links: info,
+          ),
         ),
         Expanded(
-          child: FooterSiteMapColumn(header: "POLICIES", links: policy,),
+          child: FooterSiteMapColumn(
+            header: "POLICIES",
+            links: policy,
+          ),
         ),
         Expanded(
           child: ContactUs(),
@@ -62,10 +93,9 @@ class FooterRowWidgets extends StatelessWidget {
 class ContactUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text("NEED HELP"),
-      Text("1800 4234 423")
-    ],);
+    return Column(
+      children: [Text("NEED HELP"), Text("1800 4234 423")],
+    );
   }
 }
 

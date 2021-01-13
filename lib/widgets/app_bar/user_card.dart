@@ -164,20 +164,25 @@ class _UserCardState extends State<UserCard> {
         case AuthenticationStatus.authenticated:
           // UserDetail usr;
           String usr = "";
-          var response =
-              UserdetailsRepository().getUserDetailsData(state.user.uid);
+          // var response =
+          //     UserdetailsRepository().getUserDetailsData(state.user.uid);
           // break;
           return FutureBuilder(
               future:
                   UserdetailsRepository().getUserDetailsData(state.user.uid),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  debugPrint('Step 3, build widget: ${snapshot.data}');
-                  return returnView(true, context, snapshot.data["name"]);
+                  try {
+                    debugPrint('Step 3, build widget: ${snapshot.data}');
+                    return returnView(true, context, snapshot.data["name"]);
+                  } catch (e) {
+                    print(e.toString());
+                    return returnView(true, context, "Guest");
+                  }
                 } else {
                   // We can show the loading view until the data comes back.
                   debugPrint('build loading widget');
-                  return CircularProgressIndicator();
+                  return returnView(true, context, "Guest");
                 }
               });
         // print("here" + response.toString());

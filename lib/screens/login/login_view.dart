@@ -160,7 +160,7 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
             SizedBox(
               height: 15,
             ),
-            UserDataWidget(),
+            // UserDataWidget(),
           ],
         );
       } else if (state is VerificationSuccessNew) {
@@ -195,6 +195,14 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
               ),
             ),
           ],
+        );
+      } else if (state is GetUserDetailSuccessful) {
+        return Container(
+          child: Text("Ho gaya panjikaran"),
+        );
+      } else if (state is GetUserDetailFaliure) {
+        Container(
+          child: Text("Try again"),
         );
       }
       return Container();

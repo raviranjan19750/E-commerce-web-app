@@ -71,7 +71,9 @@ class MyDesktopView extends StatelessWidget {
                   height: 20,
                 ),
                 child,
-                Footer()
+                Footer(
+                  scrollController: _scrollController,
+                )
               ],
             ),
           ),
