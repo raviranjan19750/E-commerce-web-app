@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/CheckProductAvailability.dart';
 import 'package:living_desire/models/ProductDetail.dart';
@@ -15,7 +16,7 @@ class ProductRepository {
     Map<String, dynamic> data = {
       "authID": authID,
     };
-    final response = await http.post("https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageProductDetails/details/$productID/$variantID",
+    final response = await http.post(FunctionConfig.host + "manageProductDetails/details/$productID/$variantID",
         body: jsonEncode(data));
 
     Map<String, dynamic> map = jsonDecode(response.body);
@@ -28,7 +29,7 @@ class ProductRepository {
     Map<String, dynamic> data = {
       "authID": authID,
     };
-    final response = await http.post("https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageCombo/details/$productID/", body: jsonEncode(data));
+    final response = await http.post(FunctionConfig.host + "manageCombo/details/$productID/", body: jsonEncode(data));
     var result = jsonDecode(response.body);
 
     List<String> imgUrls = List();
@@ -76,7 +77,7 @@ class ProductRepository {
       "subType" : subType
     };
     
-    final response = await http.post("https://us-central1-livingdesire-2107-dev.cloudfunctions.net/manageSizeChart/details", body: (data));
+    final response = await http.post(FunctionConfig.host + "manageSizeChart/details", body: (data));
     var result = jsonDecode(response.body);
     print(result.toString());
     return result;

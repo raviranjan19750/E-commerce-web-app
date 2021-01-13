@@ -29,7 +29,7 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
         assert(customerRepo != null),
         assert(wishlistBloc != null),
         super(ProductCardInitial(
-            product,
+            (product != null) ? product : ((productDetail != null) ? productDetail : comboProduct),
             product != null ? customerRepo.contains(product.varientId) : (productDetail != null ? customerRepo.contains(productDetail.variantID) : customerRepo.contains(comboProduct.productId))));
 
   @override
@@ -42,14 +42,38 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
         uid = auth.state.user.uid;
       }
 
-      await customerRepo.addToWishList(product.productId, product.varientId,
-          authID: uid);
-      yield UpdatedProductCard(product, true);
+      if(productDetail != null) {
+        customerRepo.addToWishList(productDetail.productID, productDetail.variantID, authID: uid);
+        yield UpdatedProductCard(productDetail, true);
+      }
+      else if(comboProduct != null) {
+        customerRepo.addToWishList(comboProduct.productId, comboProduct.productId, authID: uid);
+        yield UpdatedProductCard(comboProduct, true);
+      }
+      else {
+        customerRepo.addToWishList(product.productId, product.varientId, authID: uid);
+        yield UpdatedProductCard(product, true);
+      }
+
       wishlistBloc.add(UpdateWishConfigList());
+
     } else if (event is RemoveFromWishListProductEvent) {
-      customerRepo.removeFromWishList(product.varientId);
-      yield UpdatedProductCard(product, false);
+
+      if(productDetail != null) {
+        customerRepo.removeFromWishList(productDetail.variantID);
+        yield UpdatedProductCard(productDetail, false);
+      }
+      else if (comboProduct != null) {
+        customerRepo.removeFromWishList(comboProduct.productId);
+        yield UpdatedProductCard(comboProduct, false);
+      }
+      else{
+        customerRepo.removeFromWishList(product.varientId);
+        yield UpdatedProductCard(product, false);
+      }
+
       wishlistBloc.add(UpdateWishConfigList());
+
     }
   }
 }
