@@ -35,42 +35,41 @@ class MyBulkOrder extends StatelessWidget{
 
                   ButtonList(isMyOrderSelected: true,),
 
-                  Expanded(
+                  Visibility(
+                    visible: value.isInitialized,
+                    replacement: Expanded(child: Center(child: CircularProgressIndicator(),)),
+                    child: Expanded(
 
-                    child: Column(
+                      child: Column(
 
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
 
-                      children: [
+                        children: [
 
-                        Container(
+                          Container(
 
 
-                          margin: EdgeInsets.only(left: 32,right: 64,top: 64),
+                            margin: EdgeInsets.only(left: 32,right: 64,top: 64),
 
-                          width: double.infinity,
+                            width: double.infinity,
 
-                          height: 1,
+                            height: 1,
 
-                          color: Colors.grey[500],
+                            color: Colors.grey[500],
 
-                        ),
+                          ),
 
-                        Container(
+                          Container(
 
-                          margin: EdgeInsets.only(left: 16),
+                            margin: EdgeInsets.only(left: 16),
 
-                          padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                            padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
 
-                          child: LabelTag('${value.bulkOrdItems.length} Orders'),
+                            child: LabelTag('${value.bulkOrdItems.length} Orders'),
 
-                        ),
+                          ),
 
-                        Expanded(
-
-                          child: Visibility(
-
-                            replacement: Center(child: CircularProgressIndicator(),),
+                          Expanded(
 
                             child: ListView.builder(
 
@@ -85,10 +84,10 @@ class MyBulkOrder extends StatelessWidget{
                                   );
                                 }),
                           ),
-                        ),
 
-                      ],
+                        ],
 
+                      ),
                     ),
                   ),
                 ],

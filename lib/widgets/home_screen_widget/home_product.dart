@@ -66,7 +66,8 @@ class LabelTag extends StatelessWidget {
         decoration: BoxDecoration(color: Color.fromARGB(255, 184, 68, 68)),
         child: Text(
           this.labeltext,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white
+          ),
         ),
       ),
     );
