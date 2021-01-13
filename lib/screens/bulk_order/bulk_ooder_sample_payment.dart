@@ -8,7 +8,9 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
   SamplePayment samplePayment;
 
-  BulkOrderSamplePayment({this.samplePayment});
+  bool isPaid;
+
+  BulkOrderSamplePayment({this.samplePayment,this.isPaid});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +111,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
           Visibility(
 
-            visible: true,
+            visible: !isPaid,
 
             child: Container(
 

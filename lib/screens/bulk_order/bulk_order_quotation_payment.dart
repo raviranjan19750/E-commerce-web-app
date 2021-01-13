@@ -7,7 +7,9 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
   QuotationPayment quotationPayment;
 
-  BulkOrderQuotationPayment({this.quotationPayment});
+  bool isPaid;
+
+  BulkOrderQuotationPayment({this.quotationPayment,this.isPaid});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +123,7 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
         Visibility(
 
-          visible: true,
+          visible: !isPaid,
 
           child: Container(
 

@@ -171,126 +171,45 @@ class BulkOrderQuotationProducts extends StatelessWidget{
 
           margin: EdgeInsets.only(left: 64,top: 16),
 
-          child: Row(
+          child:  Column(
 
-            children: [
-
-              Column(
-
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
 
 
+              children: [
+
+                Row(
                   children: [
 
-                    Row(
-                      children: [
+                    Text('Quotation Status ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
 
-                        Text('Quotation Status ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
-
-                        Text('    '+ bulkOrder.quotationTracking.first.statusValue ,style: TextStyle(color: Colors.green,fontSize: 22),),
-                      ],
-                    ),
-
-                    Padding(padding: EdgeInsets.symmetric(vertical: 6),),
-
-                    Row(
-                      children: [
-                        Text('Date of Order ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
-
-                        Text('        '+dateFormatter(bulkOrder),style: TextStyle(color: Palette.secondaryColor,fontSize: 22),),
-                      ],
-                    ),
-
-                    Padding(padding: EdgeInsets.symmetric(vertical: 6),),
-
-                    Row(
-                      children: [
-                        Text('Sample Requested ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
-
-                        Text('  '+ sampleRequestedString(bulkOrder.isSampleRequested),style: TextStyle(color: Palette.secondaryColor,fontSize: 22),),
-                      ],
-                    ),
-
-                    Padding(padding: EdgeInsets.symmetric(vertical: 6),),
-
-                  ]
-              ),
-
-              Visibility(
-
-                visible: (bulkOrder.quotationStatus != 101),
-
-                child: Container(
-
-                  margin: EdgeInsets.only(left: 200),
-
-                  child: Column(
-
-                    crossAxisAlignment: CrossAxisAlignment.center,
-
-                    children: [
-
-                      Row(
-
-                        children: [
-
-                          Text('Sub Total : ',style: TextStyle(fontSize: 20,color: Colors.grey[500],),),
-                          Text('   ₹ 3000',style: TextStyle(fontSize: 22,color: Colors.black),)
-
-                        ],
-
-                      ),
-
-                      Padding(padding: EdgeInsets.symmetric(vertical: 6),),
-
-                      RaisedButton(
-
-                        onPressed: (){},
-
-                        color: Palette.secondaryColor,
-
-                        child: Container(
-
-                          padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
-
-                          child:Text('Check Out',style: TextStyle(color: Colors.white),),
-
-                        ),
-
-                      ),
-
-                      Padding(padding: EdgeInsets.symmetric(vertical: 12),),
-
-                      FlatButton(
-
-                        onPressed: (){},
-
-                        child: Container(
-
-
-                          padding: EdgeInsets.symmetric(horizontal: 32,vertical: 16),
-
-                          decoration: BoxDecoration(
-
-                              border: Border.all(color: Palette.secondaryColor)
-
-                          ),
-
-                          child:Text('Continue Shopping',style: TextStyle(color: Palette.secondaryColor),),
-
-                        ),
-
-                      ),
-
-                      Padding(padding: EdgeInsets.symmetric(vertical: 12),),
-
-                    ],
-
-                  ),
+                    Text('    '+ bulkOrder.quotationTracking.first.statusValue ,style: TextStyle(color: Colors.green,fontSize: 22),),
+                  ],
                 ),
-              )
-            ],
 
+                Padding(padding: EdgeInsets.symmetric(vertical: 6),),
+
+                Row(
+                  children: [
+                    Text('Date of Order ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
+
+                    Text('        '+dateFormatter(bulkOrder),style: TextStyle(color: Palette.secondaryColor,fontSize: 22),),
+                  ],
+                ),
+
+                Padding(padding: EdgeInsets.symmetric(vertical: 6),),
+
+                Row(
+                  children: [
+                    Text('Sample Requested ',style: TextStyle(color: Colors.grey[500],fontSize: 20),),
+
+                    Text('  '+ sampleRequestedString(bulkOrder.isSampleRequested),style: TextStyle(color: Palette.secondaryColor,fontSize: 22),),
+                  ],
+                ),
+
+                Padding(padding: EdgeInsets.symmetric(vertical: 6),),
+
+              ]
           ),
         )
 
