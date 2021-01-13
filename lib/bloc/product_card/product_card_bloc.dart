@@ -29,7 +29,7 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
         assert(customerRepo != null),
         assert(wishlistBloc != null),
         super(ProductCardInitial(
-            product,
+            (product != null) ? product : ((productDetail != null) ? productDetail : comboProduct),
             product != null ? customerRepo.contains(product.varientId) : (productDetail != null ? customerRepo.contains(productDetail.variantID) : customerRepo.contains(comboProduct.productId))));
 
   @override
