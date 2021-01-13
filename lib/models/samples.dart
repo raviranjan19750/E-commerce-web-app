@@ -21,6 +21,7 @@ class Samples {
       quantity: data['quantity'],
       productType: data['productType'],
       productSubtype: data['productSubtype'],
+      discountPrice: data['discountPrice'],
 
     );
 
