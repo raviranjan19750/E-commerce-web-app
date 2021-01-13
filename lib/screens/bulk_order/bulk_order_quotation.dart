@@ -175,6 +175,8 @@ class BulkOrderQuotation extends StatelessWidget{
 
                       width: 480,
 
+                      height: double.infinity,
+
                       decoration: BoxDecoration(
 
                           boxShadow: const [
