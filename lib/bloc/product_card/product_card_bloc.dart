@@ -45,38 +45,34 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
       if(productDetail != null) {
         customerRepo.addToWishList(productDetail.productID, productDetail.variantID, authID: uid);
         yield UpdatedProductCard(productDetail, true);
-        wishlistBloc.add(UpdateWishConfigList());
       }
       else if(comboProduct != null) {
         customerRepo.addToWishList(comboProduct.productId, comboProduct.productId, authID: uid);
         yield UpdatedProductCard(comboProduct, true);
-        wishlistBloc.add(UpdateWishConfigList());
       }
       else {
         customerRepo.addToWishList(product.productId, product.varientId, authID: uid);
         yield UpdatedProductCard(product, true);
-        wishlistBloc.add(UpdateWishConfigList());
       }
+
+      wishlistBloc.add(UpdateWishConfigList());
 
     } else if (event is RemoveFromWishListProductEvent) {
 
       if(productDetail != null) {
         customerRepo.removeFromWishList(productDetail.variantID);
         yield UpdatedProductCard(productDetail, false);
-        wishlistBloc.add(UpdateWishConfigList());
       }
       else if (comboProduct != null) {
         customerRepo.removeFromWishList(comboProduct.productId);
         yield UpdatedProductCard(comboProduct, false);
-        wishlistBloc.add(UpdateWishConfigList());
       }
       else{
         customerRepo.removeFromWishList(product.varientId);
         yield UpdatedProductCard(product, false);
-        wishlistBloc.add(UpdateWishConfigList());
-
       }
 
+      wishlistBloc.add(UpdateWishConfigList());
 
     }
   }
