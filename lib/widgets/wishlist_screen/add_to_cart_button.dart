@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/wishlist/wishlist_bloc.dart';
+import 'package:living_desire/main.dart';
+import 'package:living_desire/routes.dart';
+import 'package:living_desire/service/navigation_service.dart';
 
 class AddToCartButton extends StatefulWidget {
   final String productID;
@@ -35,6 +38,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
           key: widget.documentID,
         ));
 
+        locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
         // BlocBuilder<CartBloc, CartState>(builder: (context, state) {
         //   if (state is CartDetailLoading) {
         //     return CircularProgressIndicator();
