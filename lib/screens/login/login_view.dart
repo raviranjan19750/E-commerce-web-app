@@ -8,6 +8,8 @@ import 'package:living_desire/models/user.dart';
 import 'package:living_desire/widgets/app_bar/user_card.dart';
 import 'package:living_desire/widgets/promo/promo.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
+import 'dart:html' as html;
+import 'package:clipboard/clipboard.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -160,6 +162,10 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
             SizedBox(
               height: 15,
             ),
+            RaisedButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Continue Shopping"),
+            )
             // UserDataWidget(),
           ],
         );
@@ -175,6 +181,13 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
             Container(
               child: Text(
                   "Congratulations !!! Your referalll code is : ${state.referallcode}"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                FlutterClipboard.copy(state.referallcode)
+                    .then((value) => print('copied'));
+              },
+              child: Text("Copy"),
             ),
             SizedBox(
               height: 15,
@@ -197,9 +210,21 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
           ],
         );
       } else if (state is GetUserDetailSuccessful) {
-        return Container(
-          child: Text("Ho gaya panjikaran"),
-        );
+        Navigator.pop(context);
+        html.window.location.reload();
+        // return Container(
+        //   child: Column(
+        //     children: [
+        //       Text("All set"),
+        //       RaisedButton(
+        //         onPressed: () {
+
+        //         },
+        //         child: Text("Continue Shopping"),
+        //       )
+        //     ],
+        //   ),
+        // );
       } else if (state is GetUserDetailFaliure) {
         Container(
           child: Text("Try again"),
