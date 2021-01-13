@@ -26,7 +26,10 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
         assert(customerRepo != null),
         assert(wishlistBloc != null),
         super(ProductCardInitial(
-            product, customerRepo.contains(product.varientId)));
+            product,
+            product != null
+                ? customerRepo.contains(product.varientId)
+                : customerRepo.contains(productDetail.variantID)));
 
   @override
   Stream<ProductCardState> mapEventToState(

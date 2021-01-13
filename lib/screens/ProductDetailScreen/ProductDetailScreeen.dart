@@ -14,7 +14,7 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Loading Product Detail");
+    // print("Loading Product Detail");
 
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
