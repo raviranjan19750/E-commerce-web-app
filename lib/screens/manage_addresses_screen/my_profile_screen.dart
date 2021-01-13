@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:living_desire/ProviderModels/MyProfileProvider.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:provider/provider.dart';
@@ -203,7 +204,7 @@ class MyProfileScreen extends StatelessWidget{
 
                             child: Text(
 
-                              '1564564ADSADDV',
+                              (value.referralCode!=null)?value.referralCode:'1564564ADSADDV',
                               style: TextStyle(fontSize: 20),
 
 
@@ -218,7 +219,11 @@ class MyProfileScreen extends StatelessWidget{
                           child: IconButton(
 
                             icon: Icon(Icons.copy_outlined),
-                            onPressed: (){},
+                            onPressed: (){
+
+                              Clipboard.setData(new ClipboardData(text: value.referralCode));
+
+                            },
 
                           ),
                         )
