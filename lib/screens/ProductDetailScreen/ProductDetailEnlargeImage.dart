@@ -22,10 +22,9 @@ class ProductDetailEnlargeImage extends StatefulWidget {
   String productID;
   String variantID;
   bool isInCart = false;
-  Product product;
   int itemCount;
 
-  ProductDetailEnlargeImage({Key key, this.imageURL, this.productID, this.variantID, this.isInCart, this.product, this.itemCount})
+  ProductDetailEnlargeImage({Key key, this.imageURL, this.productID, this.variantID, this.isInCart,  this.itemCount})
       : super(key: key);
 
   @override

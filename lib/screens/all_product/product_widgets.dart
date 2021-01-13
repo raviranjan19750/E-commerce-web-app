@@ -147,9 +147,8 @@ class ProductCardContent extends StatelessWidget {
 
 class ComboProductCard extends StatelessWidget {
   final ComboProduct comboProduct;
-  final Product product;
 
-  const ComboProductCard({Key key, this.comboProduct, this.product})
+  const ComboProductCard({Key key, this.comboProduct})
       : super(key: key);
 
   @override
@@ -158,7 +157,7 @@ class ComboProductCard extends StatelessWidget {
       create: (context) => ProductCardBloc(
           customerRepo: RepositoryProvider.of(context),
           wishlistBloc: BlocProvider.of(context),
-          product: product,
+          comboProduct: comboProduct,
           auth: BlocProvider.of(context)),
       child: Card(
           elevation: 5.0,
@@ -217,7 +216,7 @@ class ComboProductCardContent extends StatelessWidget {
               Positioned(
                 right: 0,
                 top: 0,
-                child: ProductWishlistButton(productId: comboProduct.productId),
+                child: ProductWishlistButton(productId: comboProduct.productId, varientId: comboProduct.productId,),
               ),
               Positioned(
                 bottom: 0,
