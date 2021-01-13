@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/models/QuotationPayment.dart';
+import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:living_desire/widgets/order_screen/tracking_status_bar.dart';
 
 class BulkOrderQuotationPayment extends StatelessWidget{
@@ -23,9 +24,11 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
         Container(
 
-          margin: EdgeInsets.only(left: 32,top: 32,bottom: 8),
+          margin: EdgeInsets.only(left: 16,top: 16,bottom: 8),
 
-          child: Text('Quotation Payment',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+          padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+
+          child: LabelTag('Quotation Payment'),
 
         ),
 

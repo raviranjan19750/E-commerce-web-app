@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/SamplePayment.dart';
+import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:living_desire/widgets/order_screen/tracking_status_bar.dart';
 
 
@@ -23,11 +24,14 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
           Container(
 
-            margin: EdgeInsets.only(left: 32,top: 32,bottom: 8),
+            margin: EdgeInsets.only(left: 16,top: 16,bottom: 8),
 
-            child: Text('Sample Payment',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+            padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+
+            child: LabelTag('Sample Payment'),
 
           ),
+
 
           Container(
 
