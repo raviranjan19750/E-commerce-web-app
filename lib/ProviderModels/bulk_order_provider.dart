@@ -212,6 +212,8 @@ class BulkOrderProvider with ChangeNotifier {
         headers: {"Content-Type": "application/json"},
       );
 
+      print("Manage Cart  :  " + response.statusCode.toString());
+
       if (response.statusCode == 200) {
         customCartItems.clear();
 

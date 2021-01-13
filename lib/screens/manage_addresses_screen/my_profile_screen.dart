@@ -1,231 +1,250 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:living_desire/ProviderModels/MyProfileProvider.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:provider/provider.dart';
 
 class MyProfileScreen extends StatelessWidget{
 
 
+  bool init = false;
+
   @override
   Widget build(BuildContext context) {
 
-    return Container(
+    return ChangeNotifierProvider(
+        lazy: false,
+        create: (context) => MyProfileProvider(),
+        child: Consumer<MyProfileProvider>(
+          builder: (BuildContext context, MyProfileProvider value, Widget child) {
 
-      margin: EdgeInsets.all(32),
+            if (!init) {
+              Provider.of<MyProfileProvider>(context, listen: false).initProle();
+              init = true;
+            }
 
-      child: Column(
+            if(value.isInitialized)
+              return Container(
 
-        crossAxisAlignment: CrossAxisAlignment.start,
+              margin: EdgeInsets.all(32),
 
-        children: [
+              child: Column(
 
-          Row(
-            children: [
-              Container(margin:EdgeInsets.only(bottom: 16),child: Text('Personal Information',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
-              Container(margin:EdgeInsets.only(bottom: 16,left: 32),child: InkWell(onTap:(){},child: Text('Edit',style: TextStyle(fontSize: 16,color: Colors.blueAccent),))),
-            ],
-          ),
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-          Row(
+                children: [
 
-            children: [
+                  Row(
+                    children: [
+                      Container(margin:EdgeInsets.only(bottom: 16),child: Text('Personal Information',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
+                      Container(margin:EdgeInsets.only(bottom: 16,left: 32),child: InkWell(onTap:(){value.onNameEdit();},child: Text((value.isNameEdit)?'Cancel':'Edit',style: TextStyle(fontSize: 16,color: Colors.blueAccent),))),
+                    ],
+                  ),
 
-              Container(
+                  Row(
 
-                width: 400 ,
+                    children: [
 
-                child: TextFormField(
+                      Container(
 
-                  enabled: false,
+                        width: 400 ,
 
-                  decoration: InputDecoration(
+                        margin: EdgeInsets.only(right: 32),
+
+                        child: TextFormField(
+
+                          controller: value.nameTextEditingController,
+
+                          enabled: value.isNameEdit,
+
+                          decoration: InputDecoration(
 
 
-                    labelText: 'First Name',
+                            labelText: 'Username',
 
-                    border: OutlineInputBorder(
+                            border: OutlineInputBorder(
 
-                      borderRadius: BorderRadius.circular(4),
+                              borderRadius: BorderRadius.circular(4),
+
+                            ),
+
+
+                          ),
+
+                        ),
+                      ),
+
+
+                      Visibility(
+
+                        visible: value.isNameEdit,
+
+                        child: RaisedButton(
+
+                          onPressed: (){
+                            value.onNameSave(context);
+                          },
+                          color: Palette.secondaryColor,
+
+                          child: Container(
+
+
+                            padding: EdgeInsets.symmetric(vertical: 16,horizontal: 64),
+                            child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
+
+                          ),
+
+                        ),
+                      ),
+
+
+                    ],
+
+                  ),
+
+                  Row(
+                    children: [
+                      Container(margin:EdgeInsets.only(bottom: 16,top: 48),child: Text('Email Address',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
+                      Container(margin:EdgeInsets.only(bottom: 16,left: 32,top: 48),child: InkWell(onTap:(){value.onEmailEdit();},child: Text((value.isEmailEdit)?'Cancel':'Edit',style: TextStyle(fontSize: 16,color: Colors.blueAccent),))),
+                    ],
+                  ),
+
+                  Row(
+
+                    children: [
+
+                      Container(
+
+                        width: 400 ,
+
+                        margin: EdgeInsets.only(right: 32),
+
+                        child: TextFormField(
+
+                          controller: value.emailTextEditingController,
+
+                          enabled: value.isEmailEdit,
+
+                          decoration: InputDecoration(
+
+
+                            labelText: 'Email Address',
+
+                            border: OutlineInputBorder(
+
+                              borderRadius: BorderRadius.circular(4),
+
+                            ),
+
+
+                          ),
+
+                        ),
+                      ),
+
+                      Visibility(
+
+                        visible: value.isEmailEdit,
+
+                        child: RaisedButton(
+
+                          onPressed: (){
+                            value.onEmailSave(context);
+                          },
+                          color: Palette.secondaryColor,
+
+                          child: Container(
+
+
+                            padding: EdgeInsets.symmetric(vertical: 16,horizontal: 64),
+                            child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
+
+                          ),
+
+                        ),
+                      ),
+
+
+                    ],
+
+                  ),
+
+                  Row(
+                    children: [
+                      Container(margin:EdgeInsets.only(bottom: 16,top: 48),child: Text('Referral Code',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
+                      Container(margin:EdgeInsets.only(bottom: 16,left: 32,top: 48),child: Text('7 times used',style: TextStyle(fontSize: 16,color: Colors.blueAccent),)),
+                    ],
+                  ),
+
+                  Container(
+
+                    width: 400 ,
+
+                    height: 56,
+
+                    margin: EdgeInsets.only(right: 32),
+
+                    decoration: BoxDecoration(
+
+                        border: Border.all(color: Colors.grey[500]),
+
+                        borderRadius: BorderRadius.circular(4)
 
                     ),
 
+                    alignment: Alignment.centerLeft,
 
-                  ),
+                    child: Row(
 
-                ),
-              ),
+                      children: [
 
-              Container(
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 12),
 
-                width: 400,
+                            child: Text(
 
+                              (value.referralCode!=null)?value.referralCode:'1564564ADSADDV',
+                              style: TextStyle(fontSize: 20),
 
-                margin: EdgeInsets.only(left: 32,right: 32),
 
-                child: TextFormField(
+                            ),
+                          ),
+                        ),
 
-                  decoration: InputDecoration(
+                        Container(
 
+                          margin: EdgeInsets.only(right: 8),
 
-                    enabled: false,
+                          child: IconButton(
 
-                    labelText: 'Last Name',
+                            icon: Icon(Icons.copy_outlined),
+                            onPressed: (){
 
-                    border: OutlineInputBorder(
+                              Clipboard.setData(new ClipboardData(text: value.referralCode));
 
-                      borderRadius: BorderRadius.circular(4),
+                            },
 
-                    ),
+                          ),
+                        )
 
-
-                  ),
-
-                ),
-              ),
-
-
-
-              RaisedButton(
-
-                onPressed: (){},
-                color: Palette.secondaryColor,
-
-                child: Container(
-
-
-                  padding: EdgeInsets.symmetric(vertical: 16,horizontal: 64),
-                  child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
-
-                ),
-
-              ),
-
-
-            ],
-
-          ),
-
-          Row(
-            children: [
-              Container(margin:EdgeInsets.only(bottom: 16,top: 48),child: Text('Email Address',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
-              Container(margin:EdgeInsets.only(bottom: 16,left: 32,top: 48),child: InkWell(onTap:(){},child: Text('Edit',style: TextStyle(fontSize: 16,color: Colors.blueAccent),))),
-            ],
-          ),
-
-          Row(
-
-            children: [
-
-              Container(
-
-                width: 400 ,
-
-                margin: EdgeInsets.only(right: 32),
-
-                child: TextFormField(
-
-                  enabled: false,
-
-                  decoration: InputDecoration(
-
-
-                    labelText: 'Email Address',
-
-                    border: OutlineInputBorder(
-
-                      borderRadius: BorderRadius.circular(4),
-
-                    ),
-
-
-                  ),
-
-                ),
-              ),
-
-              RaisedButton(
-
-                onPressed: (){},
-                color: Palette.secondaryColor,
-
-                child: Container(
-
-
-                  padding: EdgeInsets.symmetric(vertical: 16,horizontal: 64),
-                  child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
-
-                ),
-
-              ),
-
-
-            ],
-
-          ),
-
-          Row(
-            children: [
-              Container(margin:EdgeInsets.only(bottom: 16,top: 48),child: Text('Referral Code',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
-              Container(margin:EdgeInsets.only(bottom: 16,left: 32,top: 48),child: Text('7 times used',style: TextStyle(fontSize: 16,color: Colors.blueAccent),)),
-            ],
-          ),
-
-          Container(
-
-            width: 400 ,
-
-            height: 56,
-
-            margin: EdgeInsets.only(right: 32),
-
-            decoration: BoxDecoration(
-
-              border: Border.all(color: Colors.grey[500]),
-              
-              borderRadius: BorderRadius.circular(4)
-
-            ),
-
-            alignment: Alignment.centerLeft,
-
-            child: Row(
-
-              children: [
-
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 12),
-
-                    child: Text(
-
-                      '1564564ADSADDV',
-                      style: TextStyle(fontSize: 20),
-
-
+                      ],
                     ),
                   ),
-                ),
-                
-                Container(
 
-                  margin: EdgeInsets.only(right: 8),
+                  Container(margin:EdgeInsets.only(top: 32),child: Text('Manage Address',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
 
-                  child: IconButton(
+                ],
 
-                    icon: Icon(Icons.copy_outlined),
-                    onPressed: (){},
+              ),
+            );
+            else
+              return CircularProgressIndicator();
 
-                  ),
-                )
+          },
+        ));
 
-              ],
-            ),
-          ),
 
-          Container(margin:EdgeInsets.only(top: 32),child: Text('Manage Address',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
-
-        ],
-
-      ),
-    );
 
   }
 

@@ -170,7 +170,6 @@ class SimilarProductAndCombos extends StatelessWidget {
                               padding: EdgeInsets.only(right: 8.0),
                               child: ComboProductCard(
                                 comboProduct: state.comboProduct[index],
-                                product: state.product[index],
                               ));
                         },
                       ),

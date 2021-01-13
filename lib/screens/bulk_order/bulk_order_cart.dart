@@ -3,6 +3,7 @@ import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_cart_item.dart';
+import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 
 class BulkOrderCart extends StatelessWidget {
   BulkOrderProvider value;
@@ -14,6 +15,7 @@ class BulkOrderCart extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(left: 32),
       width: 400,
+      height: double.infinity,
       decoration: BoxDecoration(boxShadow: const [
         BoxShadow(
           color: Colors.black12,
@@ -24,12 +26,11 @@ class BulkOrderCart extends StatelessWidget {
       child: Column(
         children: [
           Container(
-              margin: EdgeInsets.only(top: 32, left: 16),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Bulk Order in Cart',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              )),
+            margin: EdgeInsets.only(top: 8, bottom: 8),
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: LabelTag('Bulk Order in Cart'),
+          ),
           Expanded(
             child: Visibility(
               visible: value.onDataLoaded,
