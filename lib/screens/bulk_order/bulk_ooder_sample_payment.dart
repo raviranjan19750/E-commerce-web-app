@@ -99,7 +99,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
                 Expanded(child: Text('Total Amount  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
 
-                Text('₹ ${samplePayment.totalPayingAmount + samplePayment.deliveryCharges}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
+                Text('₹ ${samplePayment.totalPayingAmount}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
 
               ],
 

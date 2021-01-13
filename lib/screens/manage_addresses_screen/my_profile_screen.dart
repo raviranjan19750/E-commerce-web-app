@@ -203,7 +203,7 @@ class MyProfileScreen extends StatelessWidget{
 
                             child: Text(
 
-                              '1564564ADSADDV',
+                              (value.referralCode!=null)?value.referralCode:'1564564ADSADDV',
                               style: TextStyle(fontSize: 20),
 
 

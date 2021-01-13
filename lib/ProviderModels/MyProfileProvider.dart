@@ -14,6 +14,7 @@ class MyProfileProvider with ChangeNotifier{
 
   String name;
   String email;
+  String referralCode;
 
 
   TextEditingController emailTextEditingController = TextEditingController();
@@ -35,6 +36,8 @@ class MyProfileProvider with ChangeNotifier{
     phone = FirebaseAuth.instance.currentUser.phoneNumber;
 
     await getProfileDetails(authID);
+
+    await getReferralCode(authID);
 
     isInitialized = true;
 
@@ -60,6 +63,24 @@ class MyProfileProvider with ChangeNotifier{
 
         emailTextEditingController.text = email;
         nameTextEditingController.text = name;
+
+    }
+
+  }
+
+  Future<void> getReferralCode(String authID) async{
+
+    final response =
+    await http.get(FunctionConfig.host + 'manageDiscountCoupons/my-referral/$authID', headers: {"Content-Type": "application/json"},);
+
+    print("Referral Code  :  " + response.body);
+
+    if(response.statusCode == 200){
+
+
+      Map<String,dynamic> map = jsonDecode(response.body);
+
+      referralCode = map['referralCode'];
 
     }
 
