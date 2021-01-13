@@ -80,7 +80,7 @@ class BulkOrderQuotation extends StatelessWidget{
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black12,
-                            offset: Offset(0, 2),
+                            offset: Offset(0, -2),
                             blurRadius: 4.0,
                           )],
 

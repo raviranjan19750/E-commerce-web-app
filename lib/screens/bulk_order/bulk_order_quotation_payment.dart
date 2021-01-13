@@ -68,23 +68,30 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
           ),
         ),
-        Container(
-
-          margin: EdgeInsets.only(left: 32,top: 8),
-
-          child: Row(
 
 
-            children: [
+        Visibility(
 
-              Expanded(child: Text('Paid Amount  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
+          visible: (quotationPayment.paidAmount > 0),
 
-              Text('₹ ${quotationPayment.paidAmount}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
+          child: Container(
 
-            ],
+            margin: EdgeInsets.only(left: 32,top: 8),
+
+            child: Row(
+
+
+              children: [
+
+                Expanded(child: Text('Paid Amount  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
+
+                Text('- ₹ ${quotationPayment.paidAmount}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
+
+              ],
+
+            ),
 
           ),
-
         ),
 
         Container(
