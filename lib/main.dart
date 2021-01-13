@@ -90,6 +90,9 @@ class InitailizeAppService extends StatelessWidget {
           create: (context) => ProductRepository(),
         ),
         RepositoryProvider(
+          create: (context) => SelectAddressTypeRepository(),
+        ),
+        RepositoryProvider(
             create: (context) =>
                 CustomerDetailRepository(RepositoryProvider.of(context)))
       ],

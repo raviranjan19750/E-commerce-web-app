@@ -48,7 +48,9 @@ class CartRepository {
             .map((i) => Cart.fromJson(i))
             .toList();
         return _cart;
-      } else {}
+      } else {
+        LOG.i(response.statusCode);
+      }
     } catch (e) {
       LOG.e(e);
       throw Exception(e);

@@ -1,9 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
+import 'package:living_desire/bloc/select_address/select_address_bloc.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/main.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:living_desire/routes.dart';
+import 'package:living_desire/service/navigation_service.dart';
+import 'package:provider/provider.dart';
 
 import '../../logger.dart';
 
@@ -174,30 +180,56 @@ class CartTotal extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {},
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.22,
+            MultiProvider(
+              providers: [
+                BlocProvider(create: (context) => SelectAddressBloc()),
+              ],
+              child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) {
+                switch (state.status) {
+                  case AuthenticationStatus.authenticated:
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          // BlocProvider.of<SelectAddressBloc>(context)
+                          //     .add(LoadNormalCartDetails(
+                          //   authID: state.user.uid,
+                          //   totalItems: cart.totalQuantity,
+                          // ));
+                          locator<NavigationService>().navigateTo(
+                              RoutesConfiguration.SELECT_ADDRESS,
+                              queryParams: {
+                                "isNormalCart": "true",
+                              });
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.22,
 
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Palette.secondaryColor,
-                  ),
-                  // Place Order Button
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Palette.secondaryColor,
+                          ),
+                          // Place Order Button
 
-                  child: Center(
-                    child: Text(
-                      Strings.placeOrder,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
+                          child: Center(
+                            child: Text(
+                              Strings.placeOrder,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
+                    );
+                  case AuthenticationStatus.unauthenticated:
+                    return Container();
+                  default:
+                    return Container();
+                }
+              }),
             ),
 
             Row(
