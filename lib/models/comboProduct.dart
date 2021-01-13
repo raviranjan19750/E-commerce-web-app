@@ -11,16 +11,20 @@ class ComboProduct {
   final double retailPrice;
   final String productId;
   final bool isAvailable;
+  final bool isInCart;
+  final bool isInWishlist;
 
-  ComboProduct({this.title,
-    this.imageUrls,
-    this.descriptions,
-    this.discountPrice,
-    this.retailPrice,
-    this.productId,
-    this.productVariant,
-    this.isAvailable});
-
+  ComboProduct(
+      {this.title,
+      this.imageUrls,
+      this.descriptions,
+      this.discountPrice,
+      this.retailPrice,
+      this.productId,
+      this.productVariant,
+      this.isAvailable,
+      this.isInCart,
+      this.isInWishlist});
 }
 
 class Variant {
@@ -38,13 +42,12 @@ class Variant {
   String type;
   String subType;
 
-  factory Variant.fromJson(Map<String, dynamic> json) =>
-      Variant(
+  factory Variant.fromJson(Map<String, dynamic> json) => Variant(
         variantId: json["variantID"],
         size: json["size"],
-        colour: List<ProductVariantColor>.from(json["colour"].map((x) => ProductVariantColor.fromJson(x))),
+        colour: List<ProductVariantColor>.from(
+            json["colour"].map((x) => ProductVariantColor.fromJson(x))),
         type: json["type"],
         subType: json["subType"],
       );
-
 }

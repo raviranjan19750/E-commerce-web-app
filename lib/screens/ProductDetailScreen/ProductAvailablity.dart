@@ -42,16 +42,15 @@ class ProductAvailabilitySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime expectedDeliveryDate;
-    String availabilityResponseStatus;
+
     String pincode;
 
     TextEditingController textEditingController;
 
     textEditingController = TextEditingController();
-    availabilityResponseStatus = "0";
+
     pincode = "";
-    expectedDeliveryDate = DateTime.now();
+
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -132,7 +131,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                       Strings.available.toUpperCase() + " (Delivery by " + DateFormat('dd MMM, EEEE').format(state.checkProductAvailability.expectedDeliveryDate) + " )",
                       style: TextStyle(
                           color: Palette.green,
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.w500,
                           fontSize: 14),
                     )
                   else if (state.checkProductAvailability.responseCode == 402)

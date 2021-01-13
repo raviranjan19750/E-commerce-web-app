@@ -6,6 +6,7 @@ import 'package:living_desire/screens/bulk_order/step_one_block.dart';
 import 'package:living_desire/screens/bulk_order/step_three_block.dart';
 import 'package:living_desire/screens/bulk_order/step_two_block.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
+import 'package:living_desire/widgets/footer/footer.dart';
 import 'package:provider/provider.dart';
 
 import 'bulk_order_cart.dart';
@@ -35,7 +36,7 @@ class BulkOrder extends StatelessWidget{
 
             return Scaffold(
 
-              appBar: CustomAppBar(size: 104,visibleSubAppBar: false,visibleMiddleAppBar: false,),
+              appBar: CustomAppBar(visibleSubAppBar: false,visibleMiddleAppBar: false,),
 
               body: Row(
 
@@ -134,7 +135,9 @@ class BulkOrder extends StatelessWidget{
 
                               ],
 
-                            )
+                            ),
+
+                            Footer(),
 
                           ],
 

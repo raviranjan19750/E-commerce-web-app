@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/routing_data.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailScreeen.dart';
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
@@ -9,6 +10,9 @@ import 'package:living_desire/screens/my_orders/my_bulk_order.dart';
 import 'package:living_desire/screens/my_orders/my_order.dart';
 import 'package:living_desire/screens/screens.dart';
 import 'package:living_desire/extension/string_extension.dart';
+
+import 'dart:js' as js;
+
 
 import 'logger.dart';
 
@@ -44,33 +48,36 @@ class RoutesConfiguration {
       ),
     ),
     Path(r'^' + PRODUCT_DETAIL, (context, data) {
-      print("routing data : ${data['isCombo']}");
-
       return MyDesktopView(
-        child: (data['isCombo'] == "true")
-            ? ProductDetailScreen(
+        child: ProductDetailScreen(
                 productID: data['pid'],
                 variantID: data['vid'],
-                isCombo: data['isCombo'],
-              )
-            : ProductDetailScreen(
-                productID: data['pid'],
-                variantID: data['vid'],
-                isCombo: data['isCombo'],
               ),
+        visibleMiddleAppBar: true,
+        visibleSubAppBar: false,
       );
     }),
+
+    Path(r'^' + MANAGE_ADDRESSES, (context, data) {
+
+      return MyDesktopView(
+        child: ManageAddressesScreenDesktop(),
+        visibleMiddleAppBar: true,
+        visibleSubAppBar: false,
+      );
+    }),
+
     Path(r'^' + CART,
-        (context, data) => MyDesktopView(child: CartScreenDesktop())),
+        (context, data) => MyDesktopView(visibleMiddleAppBar:true,visibleSubAppBar: false,child: CartScreenDesktop())),
     Path(
         r'^' + ORDER_PLACED,
-        (context, data) => MyDesktopView(
-              child: OrderPlacedScreenDesktop(),
-            )),
+        (context, data) => OrderPlacedScreenDesktop()),
     Path(
         r'^' + SELECT_ADDRESS,
         (context, data) => MyDesktopView(
               child: SelectAddressScreenDesktop(),
+          visibleSubAppBar: false,
+          visibleMiddleAppBar: false,
             )),
     Path(
       r'^' + BULK_ORDER,
@@ -92,11 +99,13 @@ class RoutesConfiguration {
     ),
     Path(
       r'^' + WISHLIST,
-      (context, data) => MyDesktopView(child: WishlistScreenDesktop()),
+      (context, data) => MyDesktopView(child: WishlistScreenDesktop(),visibleSubAppBar: false,
+        visibleMiddleAppBar: false,),
     ),
     Path(
       r'^' + MY_ORDERS,
-      (context, data) => MyDesktopView(child: OrderScreenDesktop()),
+      (context, data) => MyDesktopView(child: OrderScreenDesktop(),visibleSubAppBar: false,
+        visibleMiddleAppBar: false,),
     ),
     Path(r'^' + BULK_ORDER_QUOTATION,
         (context, data) => BulkOrderQuotation(id: data['key'])),
@@ -146,6 +155,8 @@ class RoutesConfiguration {
         var variantID = args["variantID"];
         return MaterialPageRoute(
             builder: (context) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
                     child: ProductDetailScreen(
                   productID: productID,
                   variantID: variantID,
@@ -168,17 +179,21 @@ class RoutesConfiguration {
 
       case WISHLIST:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: WishlistScreenDesktop()));
+            builder: (_) => MyDesktopView(visibleSubAppBar: false,
+                visibleMiddleAppBar: false,child: WishlistScreenDesktop()));
       case MY_ORDERS:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: OrderScreenDesktop()));
+            builder: (_) => MyDesktopView(visibleSubAppBar: false,
+                visibleMiddleAppBar: false,child: OrderScreenDesktop()));
       case CART:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: CartScreenDesktop()));
+            builder: (_) => MyDesktopView(visibleSubAppBar: false,
+                visibleMiddleAppBar: false,child: CartScreenDesktop()));
       case MANAGE_ADDRESSES:
         return MaterialPageRoute(
             builder: (_) =>
-                MyDesktopView(child: ManageAddressesScreenDesktop()));
+                MyDesktopView(visibleSubAppBar: false,
+                    visibleMiddleAppBar: false,child: ManageAddressesScreenDesktop()));
       case SELECT_ADDRESS:
         var args = settings.arguments as Map;
         bool sampleRequested = args["sampleRequested"];
@@ -186,6 +201,8 @@ class RoutesConfiguration {
         int totalItems = args["totalItems"];
         return MaterialPageRoute(
             builder: (_) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
                 child: SelectAddressScreenDesktop(
                     // isCustomOrder: isBulkOrder,
                     // isSampleRequested: sampleRequested,
@@ -193,7 +210,8 @@ class RoutesConfiguration {
                     )));
       case ORDER_PLACED:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(child: OrderPlacedScreenDesktop()));
+            builder: (_) => MyDesktopView(visibleSubAppBar: false,
+                visibleMiddleAppBar: false,child: OrderPlacedScreenDesktop()));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

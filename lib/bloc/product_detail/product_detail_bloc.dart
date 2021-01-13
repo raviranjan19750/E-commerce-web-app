@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
 import 'package:elastic_client/elastic_client.dart';
+import 'package:http/http.dart';
 import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/ProductDetail.dart';
@@ -34,6 +35,8 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       yield* loadProductDetail(event);
     } else if (event is LoadComboProductDetail) {
       yield* loadComboProductDetail(event);
+    }else if(event is LoadSizeChart) {
+      yield* loadSizeChart(event);
     }
   }
 
@@ -41,8 +44,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     yield ProductDetailLoading();
     try {
       var productDescription =
-          await productRepository.getProductVariantDescription(
-              productID: event.productID, variantID: event.variantID);
+          await productRepository.getProductVariantDescription(productID: event.productID, variantID: event.variantID, authID: event.authID);
       yield ProductDetailLoadingSuccessful(productDescription);
     } catch (e) {
       print(e.toString());
@@ -54,13 +56,26 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       LoadComboProductDetail event) async* {
     yield ProductDetailLoading();
     try {
-      var comboProductDescription = await productRepository
-          .getComboProductDescription(productID: event.productID);
+      var comboProductDescription = await productRepository.getComboProductDescription(productID: event.productID, authID: event.authID);
       yield ComboProductDetailLoadingSuccessful(comboProductDescription);
     } catch (e) {
       print(e.toString());
       yield ProductDetailLoadingFailure();
     }
+  }
+
+  Stream<ProductDetailState> loadSizeChart(LoadSizeChart event) async* {
+
+    yield SizeChartLoading();
+    try {
+      var sizeChart = await productRepository.getSizeChart(type: event.type, subType: event.subType);
+      print("size Chart data Bloc " + sizeChart.toString());
+      yield SizeChartLoadingSuccessful(sizeChart);
+    } catch (e) {
+      print(e.toString());
+      yield SizeChartLoadingFailure();
+    }
+
   }
 
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,9 @@ class MyBulkOrderProvider with ChangeNotifier{
 
   void initBulkOrders() async {
 
-    authID = UserPreferences().AuthID;
+
+
+    authID = FirebaseAuth.instance.currentUser.uid;
 
     await getBulkOrders(authID);
 
@@ -35,7 +38,9 @@ class MyBulkOrderProvider with ChangeNotifier{
 
 
     final response =
-    await http.get(FunctionConfig.host + 'manageOrders/custom-list/$authID', headers: {"Content-Type": "application/json"},);
+    await http.get(FunctionConfig.host + 'manageCustomOrder/custom-list/$authID', headers: {"Content-Type": "application/json"},);
+
+    print("My Bulk Order  :  " + response.statusCode.toString());
 
     if(response.statusCode == 200){
 

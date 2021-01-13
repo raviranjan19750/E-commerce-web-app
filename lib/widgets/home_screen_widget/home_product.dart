@@ -59,13 +59,14 @@ class LabelTag extends StatelessWidget {
       child: Container(
         // height: MediaQuery.of(context).size.height * 0.025,
         // width: MediaQuery.of(context).size.width * 0.08,
-        height: 30,
-        width: 120,
+        height: 36,
+        alignment: Alignment.centerLeft,
+        width: this.labeltext.length * 10.0,
+        padding: EdgeInsets.only(left: 8),
         decoration: BoxDecoration(color: Color.fromARGB(255, 184, 68, 68)),
-        child: Center(
-          child: Text(
-            this.labeltext,
-            style: TextStyle(color: Colors.white),
+        child: Text(
+          this.labeltext,
+          style: TextStyle(color: Colors.white
           ),
         ),
       ),

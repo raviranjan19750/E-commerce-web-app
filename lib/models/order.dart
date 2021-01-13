@@ -16,7 +16,7 @@ class Order {
   final List<OrderedProduct> orderedProducts;
   final DateTime expectedDeliveryDate;
   final DateTime deliveryDate;
-  final double status;
+  final int status;
   final String address;
   final String phone;
   final String pincode;
@@ -46,7 +46,6 @@ class Order {
 
   factory Order.fromJson(dynamic data) {
     if (data == null) return null;
-    print('Data Model: ' + data.toString());
 
     return Order(
       key: data['id'],

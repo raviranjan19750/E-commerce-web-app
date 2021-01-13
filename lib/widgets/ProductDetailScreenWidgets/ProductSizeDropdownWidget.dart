@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
-import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/productVariantColorModel.dart';
+import 'package:living_desire/service/navigation_service.dart';
+
+import '../../main.dart';
+import '../../routes.dart';
 
 class ProductSizeDropdown extends StatefulWidget {
   List<String> productSizeList;
   String productID;
   String productSize;
+  String authID;
 
   List<ProductVariantColor> initialSelectedColor;
   List<AllVariant> productAllVariant;
@@ -20,6 +22,7 @@ class ProductSizeDropdown extends StatefulWidget {
       this.productID,
       this.productSize,
       this.initialSelectedColor,
+      this.authID,
       this.productAllVariant})
       : super(key: key);
 
@@ -35,11 +38,9 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     getSizeList();
-    dropdownValue = selectedVariantSizeList.last;
+    dropdownValue = widget.productSize;
   }
 
   void getSizeList() {
@@ -107,14 +108,23 @@ class _ProductSizeDropdownState extends State<ProductSizeDropdown> {
         value: dropdownValue,
         elevation: 0,
         onChanged: (value) {
-          setState(() {
-            dropdownValue = value;
-            variantID = getVariantID(dropdownValue);
-            BlocProvider.of<ProductDetailBloc>(context)
-                .add(LoadProductDetail(widget.productID, variantID));
-          });
+          if (dropdownValue != value) {
+            setState(() {
+              dropdownValue = value;
+              variantID = getVariantID(dropdownValue);
+              locator<NavigationService>().navigateTo(
+                RoutesConfiguration.PRODUCT_DETAIL,
+                queryParams: {
+                  "pid": widget.productID,
+                  "vid": variantID,
+                },
+              );
+            });
+          }
         },
-        items: selectedVariantSizeList.toSet().toList()
+        items: selectedVariantSizeList
+            .toSet()
+            .toList()
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

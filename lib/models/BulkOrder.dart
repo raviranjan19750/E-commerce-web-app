@@ -101,6 +101,24 @@ class BulkOrder {
 
     }
 
+    List<Samples> getSamplesList(List<dynamic> data){
+
+      if(data == null)
+        return null;
+
+      List<Samples> temp = new List();
+
+      for(int i=0;i<data.length;i++){
+
+        Samples samples = Samples.fromJson(data[i]);
+        temp.add(samples);
+
+      }
+
+      return temp;
+
+    }
+
     List<QuotationTracking> getQuotationTrackingList(List<dynamic> data){
 
       if(data == null)
@@ -142,6 +160,7 @@ class BulkOrder {
         requestID: data['data']['requestID'],
         name: data['data']['name'],
         quotationTracking: getQuotationTrackingList(data['data']['quotationTracking']),
+        samples: getSamplesList(data['data']['samples']),
 
     );
   }

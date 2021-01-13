@@ -2,16 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
-import 'package:living_desire/models/user.dart';
-import 'package:living_desire/models/user_detail.dart';
 import 'package:living_desire/screens/login/login.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/screens/login/login_view.dart';
 import 'package:living_desire/service/user_details.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import '../../config/configs.dart';
+import '../../main.dart';
+import '../../routes.dart';
 
 class UserCard extends StatefulWidget {
   bool isLoggedIn = false;
@@ -49,7 +50,12 @@ class _UserCardState extends State<UserCard> {
       position: RelativeRect.fromLTRB(offset.dx, offset.dy + 16, 64, 0),
       items: [
         PopupMenuItem(
-          child: Text("My Account"),
+          child: InkWell(
+              onTap: () {
+                locator<NavigationService>()
+                    .navigateTo(RoutesConfiguration.MANAGE_ADDRESSES);
+              },
+              child: Text("My Account")),
         ),
         PopupMenuItem(
           child: Text("My Orders"),
