@@ -39,6 +39,7 @@ class _UserCardState extends State<UserCard> {
   void _showLoginDialog(BuildContext context) async {
     await showDialog(
         context: context,
+        // barrierDismissible: true,
         builder: (BuildContext context) {
           return LoginScreen();
         });

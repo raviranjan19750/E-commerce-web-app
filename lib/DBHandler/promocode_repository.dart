@@ -17,10 +17,41 @@ class PromoCodeUtils {
     }
   }
 
-  Future<void> manageDiscountCoupons(String authID, String promoCode) async {
+  Future<String> manageDiscountCoupons(String authID, String promoCode) async {
     try {
-      final response = await http.get(FunctionConfig.host +
+      print(FunctionConfig.host +
+          'manageDiscountCoupons/check-validity/$authID/$promoCode'.toString());
+      final response = await http.post(FunctionConfig.host +
           'manageDiscountCoupons/check-validity/$authID/$promoCode');
-    } catch (e) {}
+      print(response.statusCode);
+      switch (response.statusCode) {
+        case 200:
+          return response.body.toString();
+          break;
+        case 501:
+          return response.body.toString();
+          break;
+        case 502:
+          return response.body.toString();
+          break;
+        case 503:
+          return response.body.toString();
+          break;
+        case 504:
+          return response.body.toString();
+          break;
+        case 505:
+          return response.body.toString();
+          break;
+        case 506:
+          return response.body.toString();
+          break;
+        default:
+          return "Can't Apply Coupon";
+          return "Can't Apply Coupon";
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
