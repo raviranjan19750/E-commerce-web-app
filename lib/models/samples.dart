@@ -1,6 +1,8 @@
 class Samples {
 
-  final String color,size,productID,variantID,warehouseID,factoryID,productType,productSubtype;
+  final String size,productID,variantID,warehouseID,factoryID,productType,productSubtype;
+
+  var color = new List.empty();
 
   final quantity;
 
@@ -20,7 +22,7 @@ class Samples {
       size: data['size'],
       quantity: data['quantity'],
       productType: data['productType'],
-      productSubtype: data['productSubtype'],
+      productSubtype: data['productSubType'],
       discountPrice: data['discountPrice'],
 
     );

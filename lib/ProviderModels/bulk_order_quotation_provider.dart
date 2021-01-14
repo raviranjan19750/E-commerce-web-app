@@ -55,7 +55,6 @@ class BulkOrderQuotationProvider with ChangeNotifier{
     if(response.statusCode == 200){
 
       bulkOrder = BulkOrder.fromJson(jsonDecode(response.body));
-
     }
 
   }

@@ -99,6 +99,7 @@ class BulkOrderQuotation extends StatelessWidget{
           Visibility(
 
               visible: (value.bulkOrder.samples.isNotEmpty),
+
               child: BulkOrderSamples(sampleList: value.bulkOrder.samples,)
           ),
 

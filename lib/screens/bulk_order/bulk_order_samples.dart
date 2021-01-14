@@ -114,7 +114,7 @@ class BulkOrderSamples extends StatelessWidget{
                   width: 24.0,
                   height: 24.0,
                   decoration: new BoxDecoration(
-                    color: HexColorConvert.fromHex(sample.color),
+                    color: HexColorConvert.fromHex(sample.color.first['hexCode']),
                     shape: BoxShape.circle,
                   ),
                 ),),
