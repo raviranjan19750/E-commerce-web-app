@@ -17,10 +17,22 @@ class PromoCodeUtils {
     }
   }
 
-  Future<void> manageDiscountCoupons(String authID, String promoCode) async {
+  Future<String> manageDiscountCoupons(String authID, String promoCode) async {
     try {
       final response = await http.get(FunctionConfig.host +
           'manageDiscountCoupons/check-validity/$authID/$promoCode');
-    } catch (e) {}
+      print(response.statusCode);
+      switch (response.statusCode) {
+        case 200:
+          return "Congratulations! Rs. X has been added to your wallet. Happy shopping!";
+
+          break;
+        default:
+          return "Can't Apply Coupon";
+          return "Can't Apply Coupon";
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

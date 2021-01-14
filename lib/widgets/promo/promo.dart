@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/DBHandler/promocode_repository.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PromoCodeLabel extends StatefulWidget {
   @override
@@ -7,6 +10,7 @@ class PromoCodeLabel extends StatefulWidget {
 
 class _PromoCodeLabelState extends State<PromoCodeLabel> {
   String code = "";
+  String res = "";
   TextEditingController _codeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -40,11 +44,24 @@ class _PromoCodeLabelState extends State<PromoCodeLabel> {
             height: 15,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               RaisedButton(
                 color: Colors.black,
-                onPressed: _codeController.text.length > 6 ? () {} : null,
+                onPressed: _codeController.text.length > 6
+                    ? () async {
+                        String ans = await PromoCodeUtils()
+                            .manageDiscountCoupons(
+                                BlocProvider.of<AuthenticationBloc>(context)
+                                    .state
+                                    .user
+                                    .uid,
+                                _codeController.text);
+                        setState(() {
+                          res = ans;
+                        });
+                      }
+                    : null,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
@@ -53,6 +70,9 @@ class _PromoCodeLabelState extends State<PromoCodeLabel> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
+              ),
+              Container(
+                child: Text(res),
               ),
             ],
           ),

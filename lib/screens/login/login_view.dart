@@ -178,16 +178,21 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
               size: 60,
               color: Colors.green,
             ),
-            Container(
-              child: Text(
-                  "Congratulations !!! Your referalll code is : ${state.referallcode}"),
-            ),
-            RaisedButton(
-              onPressed: () {
-                FlutterClipboard.copy(state.referallcode)
-                    .then((value) => print('copied'));
-              },
-              child: Text("Copy"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  child: Text(
+                      "Congratulations !!! Your referalll code is : ${state.referallcode}"),
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    FlutterClipboard.copy(state.referallcode)
+                        .then((value) => print('copied'));
+                  },
+                  child: Text("Copy"),
+                ),
+              ],
             ),
             SizedBox(
               height: 15,
