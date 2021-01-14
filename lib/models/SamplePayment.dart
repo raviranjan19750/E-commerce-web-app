@@ -18,8 +18,8 @@ class SamplePayment{
       tax: data['tax'],
       totalPayingAmount: data['totalPayingAmount'],
       deliveryCharges: data['deliveryCharges'],
-      razorpayOrderID: data['paymentData']['razorpayOrderID'],
-      orderID: data['paymentData']['orderID'],
+      razorpayOrderID:(data['paymentData']!=null)? data['paymentData']['razorpayOrderID']:null,
+      orderID: (data['paymentData']!=null)?data['paymentData']['orderID']:null,
 
     );
   }

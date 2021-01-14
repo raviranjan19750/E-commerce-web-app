@@ -34,7 +34,7 @@ class TrackingStatusBar extends StatelessWidget {
       width: 400,
       height: 100,
       margin: EdgeInsets.only(bottom: 16,top: 8),
-      child: OrderTimeline(),
+      child: OrderTimeline(processIndex: 0,),
     );
   }
 }

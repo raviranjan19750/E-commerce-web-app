@@ -193,23 +193,28 @@ class BulkOrderSamplePayment extends StatelessWidget{
             color: Palette.secondaryColor,
           ),
 
-          Container(
+          Visibility(
 
-            margin: EdgeInsets.only(left: 32,top: 8),
+            visible: samplePayment.totalPayingAmount>0,
 
-            child: Row(
+            child: Container(
+
+              margin: EdgeInsets.only(left: 32,top: 8),
+
+              child: Row(
 
 
-              children: [
+                children: [
 
-                Expanded(child: Text('Total Amount  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
+                  Expanded(child: Text('Total Amount  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
 
-                Text('₹ ${samplePayment.totalPayingAmount}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
+                  Text('₹ ${samplePayment.totalPayingAmount}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
 
-              ],
+                ],
+
+              ),
 
             ),
-
           ),
 
           Visibility(

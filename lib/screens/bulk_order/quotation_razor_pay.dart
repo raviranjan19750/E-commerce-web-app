@@ -98,13 +98,11 @@ class QuotationRazorPay extends StatelessWidget {
     var data = {
 
         "sampleOrderID" : orderID,
-        "deliveryCharges" : deliveryCharges,
         "razorpayData" : {
 
             "razorpayPaymentID":razorpayID,
             "razorpaySignature":razorpaySignature,
             "razorpayOrderID":razorPayOrderID,
-            "amount": payingAmount,
             "paymentMode" : 101,
 
         },
