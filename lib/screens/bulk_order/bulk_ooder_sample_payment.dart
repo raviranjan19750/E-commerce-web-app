@@ -20,11 +20,11 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
   ArsProgressDialog progressDialog;
 
+  BulkOrderSamplePayment({this.samplePayment,this.isPaid,this.orderKey});
+
   void dismissProgressDialog(){
     progressDialog.dismiss();
   }
-
-  BulkOrderSamplePayment({this.samplePayment,this.isPaid,this.orderKey});
 
   void showProgressDialog(BuildContext context,String message){
 

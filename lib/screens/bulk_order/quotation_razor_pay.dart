@@ -133,6 +133,7 @@ class QuotationRazorPay extends StatelessWidget {
     var data = {
 
       "sampleOrderID" : razorpayOrderID,
+      "deliveryCharges" : deliveryCharges,
       "razorpayData " : {
 
         "razorpayPaymentID":razorpayID,
@@ -191,7 +192,8 @@ class QuotationRazorPay extends StatelessWidget {
             updateSamplePaymentData(razorpayPaymentID, razorpayOrderID, razorpaySignature);
           }
           else{
-
+            showProgressDialog(context, "Transaction Successful\n\nRedirecting...");
+            updateQuotationPaymentData(razorpayPaymentID, razorpayOrderID, razorpaySignature);
           }
 
 

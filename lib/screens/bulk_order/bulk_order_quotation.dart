@@ -30,7 +30,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
         children: [
 
-          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,)),
+          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,)),
 
           Visibility(
 
@@ -73,7 +73,7 @@ class BulkOrderQuotation extends StatelessWidget{
             ),
           ),
 
-          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,)),
+          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,)),
 
 
         ],
