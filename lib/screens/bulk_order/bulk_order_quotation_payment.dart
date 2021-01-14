@@ -74,6 +74,30 @@ class BulkOrderQuotationPayment extends StatelessWidget{
           ),
         ),
 
+        Visibility(
+
+          visible: (quotationPayment.deliveryCharges > 0),
+
+          child: Container(
+
+            margin: EdgeInsets.only(left: 32,top: 8),
+
+            child: Row(
+
+
+              children: [
+
+                Expanded(child: Text('Delivery Charges  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
+
+                Text('₹ ${quotationPayment.deliveryCharges}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
+
+              ],
+
+            ),
+
+          ),
+        ),
+
 
         Visibility(
 

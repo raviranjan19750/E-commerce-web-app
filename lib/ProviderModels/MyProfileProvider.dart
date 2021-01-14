@@ -52,7 +52,6 @@ class MyProfileProvider with ChangeNotifier{
     final response =
         await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json"},);
 
-    print("Account Info  : " + response.statusCode.toString());
 
     if(response.statusCode == 200){
 
@@ -74,7 +73,6 @@ class MyProfileProvider with ChangeNotifier{
     final response =
     await http.get(FunctionConfig.host + 'manageDiscountCoupons/my-referral/$authID', headers: {"Content-Type": "application/json"},);
 
-    print("Referral Code  :  " + response.body);
 
     if(response.statusCode == 200){
 
