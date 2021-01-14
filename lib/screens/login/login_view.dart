@@ -183,14 +183,19 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
               children: [
                 Container(
                   child: Text(
-                      "Congratulations !!! Your referalll code is : ${state.referallcode}"),
+                    "Congratulations !!! Your referalll code is : \n${state.referallcode}",
+                    style: TextStyle(fontSize: 20, color: Colors.green),
+                  ),
                 ),
-                RaisedButton(
-                  onPressed: () {
-                    FlutterClipboard.copy(state.referallcode)
-                        .then((value) => print('copied'));
-                  },
-                  child: Text("Copy"),
+                Container(
+                  height: 20,
+                  child: RaisedButton(
+                    onPressed: () {
+                      FlutterClipboard.copy(state.referallcode).then((value) =>
+                          print('copied' + state.referallcode.toString()));
+                    },
+                    child: Text("Copy"),
+                  ),
                 ),
               ],
             ),
@@ -330,6 +335,7 @@ class _UserDataWidgetState extends State<UserDataWidget> {
       child: Form(
         key: _formkey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextFormField(
               controller: _emailcontroller,
@@ -355,6 +361,9 @@ class _UserDataWidgetState extends State<UserDataWidget> {
                   labelText: 'Enter name',
                   filled: true,
                   focusColor: Colors.pink),
+            ),
+            SizedBox(
+              height: 20,
             ),
             RaisedButton(
               color: Colors.black,

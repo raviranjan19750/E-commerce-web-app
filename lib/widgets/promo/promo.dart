@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:living_desire/DBHandler/promocode_repository.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
@@ -10,7 +12,7 @@ class PromoCodeLabel extends StatefulWidget {
 
 class _PromoCodeLabelState extends State<PromoCodeLabel> {
   String code = "";
-  String res = "";
+  String res = " ";
   TextEditingController _codeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -41,10 +43,10 @@ class _PromoCodeLabelState extends State<PromoCodeLabel> {
                 focusColor: Colors.pink),
           ),
           SizedBox(
-            height: 15,
+            height: 10,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               RaisedButton(
                 color: Colors.black,
@@ -58,7 +60,7 @@ class _PromoCodeLabelState extends State<PromoCodeLabel> {
                                     .uid,
                                 _codeController.text);
                         setState(() {
-                          res = ans;
+                          res = jsonDecode(ans)['message'];
                         });
                       }
                     : null,
@@ -71,8 +73,13 @@ class _PromoCodeLabelState extends State<PromoCodeLabel> {
                   ),
                 ),
               ),
-              Container(
-                child: Text(res),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 40,
+                  width: 280,
+                  child: Text(res),
+                ),
               ),
             ],
           ),
