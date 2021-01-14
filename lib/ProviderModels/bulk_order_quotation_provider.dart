@@ -66,6 +66,8 @@ class BulkOrderQuotationProvider with ChangeNotifier{
     await http.post(FunctionConfig.host + 'managePayments/get-sample-order/$authID/$key', headers: {"Content-Type": "application/json"},);
 
 
+    print(response.body);
+
     if(response.statusCode == 200){
 
       samplePayment = SamplePayment.fromJson(jsonDecode(response.body));

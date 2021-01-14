@@ -5,25 +5,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/palette.dart';
+import 'package:living_desire/main.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/services/razorpay/ui_fake.dart' if (dart.library.html) 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+
+import '../../routes.dart';
 
 class QuotationRazorPay extends StatelessWidget {
 
   String phone,name,email,authID,orderID;
-  double payingAmount;
+  double payingAmount,deliveryCharges;
   bool samplePayment;
+  String orderKey;
 
   QuotationRazorPay({
-    Key key,
     this.phone,
     this.payingAmount,
     this.name,
     this.email,
+    this.orderKey,
     this.authID,
     this.orderID,
+    this.deliveryCharges,
     this.samplePayment,
-  }) : super(key: key);
+  });
 
 
   ArsProgressDialog progressDialog;
@@ -74,7 +80,7 @@ class QuotationRazorPay extends StatelessWidget {
                     padding: EdgeInsets.all(8),
                     margin: EdgeInsets.only(bottom: 16,top: 8),
 
-                    child: Text(message,style: TextStyle(fontSize: 20,color: Palette.secondaryColor),),
+                    child: Text(message,style: TextStyle(fontSize: 20,color: Palette.secondaryColor),textAlign: TextAlign.center,),
 
                   ),
                   CircularProgressIndicator(),
@@ -86,34 +92,55 @@ class QuotationRazorPay extends StatelessWidget {
 
   }
 
-  Future<void> updateSamplePaymentData(String razorpayID) async {
+  Future<void> updateSamplePaymentData(String razorpayID,String razorpayOrderID,String razorpaySignature) async {
 
     var data = {
 
+        "sampleOrderID" : razorpayOrderID,
+        "deliveryCharges" : deliveryCharges,
+        "razorpayData " : {
+
+            "razorpayPaymentID":razorpayID,
+            "razorpaySignature":razorpaySignature,
+            "amount": payingAmount,
+            "paymentMode" : "Net Banking",
+
+        },
 
 
     };
 
     final response =
-        await http.post(FunctionConfig.host + 'managePayments/sample-payment-done/$authID/$key',body: jsonEncode(data), headers: {"Content-Type": "application/json"},);
+        await http.post(FunctionConfig.host + 'managePayments/sample-payment-done/$authID/$orderKey',body: jsonEncode(data), headers: {"Content-Type": "application/json"},);
 
+    dismissProgressDialog();
 
     if(response.statusCode == 200){
 
 
       Map<String,dynamic> map = jsonDecode(response.body);
 
+      locator<NavigationService>().navigateTo(RoutesConfiguration.BULK_ORDER_QUOTATION, queryParams: {"key": orderKey});
+
     }
 
-    dismissProgressDialog();
 
 
   }
 
-  Future<void> updateQuotationPaymentData(String razorpayID) async {
+  Future<void> updateQuotationPaymentData(String razorpayID,String razorpayOrderID,String razorpaySignature) async {
 
     var data = {
 
+      "sampleOrderID" : razorpayOrderID,
+      "razorpayData " : {
+
+        "razorpayPaymentID":razorpayID,
+        "razorpaySignature":razorpaySignature,
+        "amount": payingAmount,
+        "paymentMode" : "Net Banking",
+
+      },
 
 
     };
@@ -151,7 +178,6 @@ class QuotationRazorPay extends StatelessWidget {
         }
         else if (element.data.toString().contains('SUCCESS')) {
 
-
           String data = element.data.toString().substring(8);
 
           List<String> response = data.split(' ');
@@ -159,6 +185,14 @@ class QuotationRazorPay extends StatelessWidget {
           String razorpayPaymentID = response[0];
           String razorpayOrderID = response[1];
           String razorpaySignature = response[2];
+
+          if(samplePayment){
+            showProgressDialog(context, "Transaction Successful\n\nRedirecting...");
+            updateSamplePaymentData(razorpayPaymentID, razorpayOrderID, razorpaySignature);
+          }
+          else{
+
+          }
 
 
         }
@@ -181,7 +215,7 @@ class QuotationRazorPay extends StatelessWidget {
           "name": "Living Desire",
           "description": "Test Transaction",
           "image": "https://example.com/your_logo",
-          "order_id": "",
+          "order_id": "$orderID",
           "handler": function (response){
        
              window.parent.postMessage("SUCCESS" + " " + response.razorpay_payment_id + " " + response.razorpay_order_id + " " + response.razorpay_signature);  

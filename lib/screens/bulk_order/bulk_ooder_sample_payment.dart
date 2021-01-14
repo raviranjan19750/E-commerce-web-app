@@ -16,7 +16,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
   bool isPaid;
 
-  String name,email;
+  String name,email,orderKey;
 
   ArsProgressDialog progressDialog;
 
@@ -24,7 +24,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
     progressDialog.dismiss();
   }
 
-  BulkOrderSamplePayment({this.samplePayment,this.isPaid});
+  BulkOrderSamplePayment({this.samplePayment,this.isPaid,this.orderKey});
 
   void showProgressDialog(BuildContext context,String message){
 
@@ -101,8 +101,10 @@ class BulkOrderSamplePayment extends StatelessWidget{
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuotationRazorPay(phone: FirebaseAuth.instance.currentUser.phoneNumber,
       payingAmount: samplePayment.totalPayingAmount,
       authID:FirebaseAuth.instance.currentUser.uid,
-      orderID: samplePayment.orderID,
+      orderID: samplePayment.razorpayOrderID,
+      deliveryCharges: samplePayment.deliveryCharges,
       samplePayment: true,
+      orderKey: orderKey,
       name: (name!=null)?name:"",
       email: (email!=null)?email:"",)));
 
