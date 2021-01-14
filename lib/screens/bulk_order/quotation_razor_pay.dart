@@ -14,7 +14,7 @@ import '../../routes.dart';
 
 class QuotationRazorPay extends StatelessWidget {
 
-  String phone,name,email,authID,orderID;
+  String phone,name,email,authID,orderID,razorPayOrderID;
   double payingAmount,deliveryCharges;
   bool samplePayment;
   String orderKey;
@@ -27,6 +27,7 @@ class QuotationRazorPay extends StatelessWidget {
     this.orderKey,
     this.authID,
     this.orderID,
+    this.razorPayOrderID,
     this.deliveryCharges,
     this.samplePayment,
   });
@@ -96,14 +97,15 @@ class QuotationRazorPay extends StatelessWidget {
 
     var data = {
 
-        "sampleOrderID" : razorpayOrderID,
+        "sampleOrderID" : orderID,
         "deliveryCharges" : deliveryCharges,
-        "razorpayData " : {
+        "razorpayData" : {
 
             "razorpayPaymentID":razorpayID,
             "razorpaySignature":razorpaySignature,
+            "razorpayOrderID":razorPayOrderID,
             "amount": payingAmount,
-            "paymentMode" : "Net Banking",
+            "paymentMode" : 101,
 
         },
 
@@ -114,6 +116,8 @@ class QuotationRazorPay extends StatelessWidget {
         await http.post(FunctionConfig.host + 'managePayments/sample-payment-done/$authID/$orderKey',body: jsonEncode(data), headers: {"Content-Type": "application/json"},);
 
     dismissProgressDialog();
+
+    print("Payment Status  : " + response.statusCode.toString() + "Message  : " + response.body);
 
     if(response.statusCode == 200){
 
@@ -132,14 +136,14 @@ class QuotationRazorPay extends StatelessWidget {
 
     var data = {
 
-      "sampleOrderID" : razorpayOrderID,
+      "orderID" : orderID,
       "deliveryCharges" : deliveryCharges,
-      "razorpayData " : {
+      "razorpayData" : {
 
         "razorpayPaymentID":razorpayID,
         "razorpaySignature":razorpaySignature,
         "amount": payingAmount,
-        "paymentMode" : "Net Banking",
+        "paymentMode" :101,
 
       },
 
@@ -181,11 +185,14 @@ class QuotationRazorPay extends StatelessWidget {
 
           String data = element.data.toString().substring(8);
 
+          print(data);
+
           List<String> response = data.split(' ');
 
           String razorpayPaymentID = response[0];
           String razorpayOrderID = response[1];
           String razorpaySignature = response[2];
+
 
           if(samplePayment){
             showProgressDialog(context, "Transaction Successful\n\nRedirecting...");
@@ -217,7 +224,7 @@ class QuotationRazorPay extends StatelessWidget {
           "name": "Living Desire",
           "description": "Test Transaction",
           "image": "https://example.com/your_logo",
-          "order_id": "$orderID",
+          "order_id": "$razorPayOrderID",
           "handler": function (response){
        
              window.parent.postMessage("SUCCESS" + " " + response.razorpay_payment_id + " " + response.razorpay_order_id + " " + response.razorpay_signature);  
@@ -229,13 +236,6 @@ class QuotationRazorPay extends StatelessWidget {
               "contact": "$phone"
           },
              
-           "notes": {
-           
-             "orderID":"$orderID",
-             "authID":"$authID",
-         
-           },    
-           
            
           "theme": {
              "color": "#DF0145"    
