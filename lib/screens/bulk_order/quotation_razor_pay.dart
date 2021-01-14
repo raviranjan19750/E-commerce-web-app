@@ -137,49 +137,32 @@ class QuotationRazorPay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var razorpayPaymentID = '';
-    var razorpayOrderID = '';
-    var razorpaySignature = '';
 
     ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
 
       IFrameElement element = IFrameElement();
 
       //Event Listener
+
       window.onMessage.forEach((element) {
-        print('Event Received in callback: ${element.data}');
+
         if (element.data == 'MODAL_CLOSED') {
           Navigator.pop(context);
         }
-        else if (element.data == 'SUCCESS') {
+        else if (element.data.toString().contains('SUCCESS')) {
 
-          Navigator.pop(context);
 
-          razorpayPaymentID = element.data.toString().substring(6);
+          String data = element.data.toString().substring(8);
 
-          showProgressDialog(context, "Transaction Successful\nRedirecting...");
+          List<String> response = data.split(' ');
 
-          if(samplePayment){
-            updateSamplePaymentData(razorpayPaymentID);
-          }
-          else{
-            updateQuotationPaymentData(razorpayPaymentID);
-          }
+          String razorpayPaymentID = response[0];
+          String razorpayOrderID = response[1];
+          String razorpaySignature = response[2];
 
 
         }
-        else if (element.data.toString().contains('pay_id')) {
-          razorpayPaymentID = element.data.toString().substring(6);
-          print(razorpayPaymentID);
-        }
-        else if (element.data.toString().contains('order_id')) {
-          razorpayOrderID = element.data.toString().substring(8);
-          print(razorpayOrderID);
-        }
-        else if (element.data.toString().contains('sign')) {
-          razorpaySignature = element.data.toString().substring(4);
-          print(razorpaySignature);
-        }
+
       });
 
 
@@ -200,12 +183,8 @@ class QuotationRazorPay extends StatelessWidget {
           "image": "https://example.com/your_logo",
           "order_id": "",
           "handler": function (response){
-             window.parent.postMessage("SUCCESS","*"); 
-                  //2 
-             window.parent.postMessage("pay_id"+response.razorpay_payment_id);
-             window.parent.postMessage("order_id"+response.razorpay_order_id);
-             window.parent.postMessage("sign"+response.razorpay_signature);   
-             
+       
+             window.parent.postMessage("SUCCESS" + " " + response.razorpay_payment_id + " " + response.razorpay_order_id + " " + response.razorpay_signature);  
           },    
              
            "prefill": {
@@ -225,6 +204,7 @@ class QuotationRazorPay extends StatelessWidget {
           "theme": {
              "color": "#DF0145"    
           },
+          
           
           
           "modal": {
@@ -253,10 +233,15 @@ class QuotationRazorPay extends StatelessWidget {
       element.style.border = 'none';
 
       return element;
+
     });
-    return Container(
-      child: HtmlElementView(
-        viewType: 'rzp-html',
+
+
+    return Scaffold(
+      body: Container(
+        child: HtmlElementView(
+          viewType: 'rzp-html',
+        ),
       ),
     );
   }

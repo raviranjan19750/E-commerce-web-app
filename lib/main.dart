@@ -124,7 +124,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("auth ID: " + UserPreferences().AuthID.toString());
     return InitailizeAppService(
       authRepo: authRepo,
       child: MaterialApp(

@@ -98,30 +98,16 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
     }
 
-    showAlertDialog(context);
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuotationRazorPay(phone: FirebaseAuth.instance.currentUser.phoneNumber,
+      payingAmount: samplePayment.totalPayingAmount,
+      authID:FirebaseAuth.instance.currentUser.uid,
+      orderID: samplePayment.orderID,
+      samplePayment: true,
+      name: (name!=null)?name:"",
+      email: (email!=null)?email:"",)));
 
   }
 
-  void showAlertDialog(BuildContext context){
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-
-        return QuotationRazorPay(
-          phone: FirebaseAuth.instance.currentUser.phoneNumber,
-          payingAmount: samplePayment.totalPayingAmount,
-          authID:FirebaseAuth.instance.currentUser.uid,
-          orderID: samplePayment.orderID,
-          samplePayment: true,
-          name: (name!=null)?name:"",
-          email: (email!=null)?email:"",
-        );
-
-      },
-    );
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,6 +231,8 @@ class BulkOrderSamplePayment extends StatelessWidget{
                 padding: EdgeInsets.only(left: 80,right: 80,top: 24,bottom: 24),
 
                 onPressed: () async {
+
+
 
                     showProgressDialog(context, "Fetching Data");
                     await getProfileDetails(FirebaseAuth.instance.currentUser.uid,context);
