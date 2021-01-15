@@ -42,7 +42,6 @@ class ProductAvailabilitySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String pincode;
 
     TextEditingController textEditingController;
@@ -50,7 +49,6 @@ class ProductAvailabilitySection extends StatelessWidget {
     textEditingController = TextEditingController();
 
     pincode = "";
-
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -117,7 +115,6 @@ class ProductAvailabilitySection extends StatelessWidget {
                   padding: EdgeInsets.all(4.0),
                   child: CircularProgressIndicator(
                       strokeWidth: 3.0,
-
                       valueColor: AlwaysStoppedAnimation<Color>(
                         Colors.black,
                       )));
@@ -128,7 +125,11 @@ class ProductAvailabilitySection extends StatelessWidget {
                 children: [
                   if (state.checkProductAvailability.responseCode == 200)
                     Text(
-                      Strings.available.toUpperCase() + " (Delivery by " + DateFormat('dd MMM, EEEE').format(state.checkProductAvailability.expectedDeliveryDate) + " )",
+                      Strings.available.toUpperCase() +
+                          " (Delivery by " +
+                          DateFormat('dd MMM, EEEE').format(state
+                              .checkProductAvailability.expectedDeliveryDate) +
+                          " )",
                       style: TextStyle(
                           color: Palette.green,
                           fontWeight: FontWeight.w500,

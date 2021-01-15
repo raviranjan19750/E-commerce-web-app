@@ -25,9 +25,14 @@ class SelectAddressTypeBloc
         deliveryAddressID: event.deliveryAddressID,
         isSampleRequested: event.isSampleRequested,
         totalItems: event.totalItems,
+        isBulkOrderCart: event.isBulkOrderCart,
       );
     } else if (event is CreatePaymentOrder) {
       yield* createPaymentOrder(event);
+    } else if (event is PaymentMethod) {
+      yield PaymentMethodLoadingSuccessfull(paymentMode: event.paymentMode);
+    } else if (event is LoadSelectPaymentDialog) {
+      yield LaunchSelectPaymentDialog();
     }
   }
 

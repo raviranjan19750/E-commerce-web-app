@@ -78,6 +78,7 @@ class SelectAddressScreenDesktop extends StatelessWidget {
                     type: SelectAddressStateType.BULK_ORDER,
                     authID: state.user.uid,
                     totalItems: totalItems,
+                    isBulkOrderCartStr: isBulkOrderCart,
                     isSampleRequestedStr: isSampleRequested,
                   ),
               ],

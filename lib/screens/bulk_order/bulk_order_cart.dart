@@ -3,7 +3,10 @@ import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_cart_item.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
+
+import '../../main.dart';
 
 class BulkOrderCart extends StatelessWidget {
   BulkOrderProvider value;
@@ -110,8 +113,13 @@ class BulkOrderCart extends StatelessWidget {
                       "isBulkOrder": true,
                     });*/
 
-                value.showProgressDialog(context, "Generating Quotation");
-                value.getQuotation();
+                locator<NavigationService>().navigateTo(
+                    RoutesConfiguration.SELECT_ADDRESS,
+                    queryParams: {
+                      "isBulkOrderCart": "true",
+                      "totalItems": "${value.customCartItems.length}",
+                      "isSampleRequested": "${value.sampleRequested}"
+                    });
               },
               color: Palette.secondaryColor,
               child: Text(

@@ -49,11 +49,21 @@ class BulkOrderDetailLoadingSuccessfull extends SelectAddressTypeState {
   final String totalItems;
   final bool isSampleRequested;
   final String deliveryAddressID;
+  final bool isBulkOrderCart;
 
   BulkOrderDetailLoadingSuccessfull({
     this.authID,
     this.totalItems,
     this.isSampleRequested,
     this.deliveryAddressID,
+    this.isBulkOrderCart,
   });
 }
+
+class PaymentMethodLoadingSuccessfull extends SelectAddressTypeState {
+  final int paymentMode;
+
+  PaymentMethodLoadingSuccessfull({this.paymentMode});
+}
+
+class LaunchSelectPaymentDialog extends SelectAddressTypeState {}

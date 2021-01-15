@@ -35,12 +35,14 @@ class LoadBulkOrderCartDetails extends SelectAddressTypeEvent {
   final String authID;
   final bool isSampleRequested;
   final String deliveryAddressID;
+  final bool isBulkOrderCart;
 
   LoadBulkOrderCartDetails({
     this.totalItems,
     this.authID,
     this.deliveryAddressID,
     this.isSampleRequested,
+    this.isBulkOrderCart,
   });
 }
 
@@ -53,3 +55,11 @@ class CreatePaymentOrder extends SelectAddressTypeEvent {
     this.authID,
   });
 }
+
+class PaymentMethod extends SelectAddressTypeEvent {
+  final int paymentMode;
+
+  PaymentMethod({this.paymentMode});
+}
+
+class LoadSelectPaymentDialog extends SelectAddressTypeEvent {}
