@@ -3,6 +3,7 @@
 
 function secret_key() {
     const remoteConfig = firebase.remoteConfig();
+
     remoteConfig.settings.minimumFetchIntervalMillis = 3600000;
 
     return remoteConfig.fetchAndActivate()
