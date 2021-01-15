@@ -101,4 +101,27 @@ class Strings {
   static const String sizeChart = "Size chart";
   static const String currentlyProductNotAvailable = 'Currently product not available';
 
+  static const String selectProductVariantColor = "Select product variant color";
+  static const String red = "Red";
+  static const String pink = "Pink";
+  static const String purple = "Purple";
+  static const String deepPurple = "Red";
+  static const String indigo = "Indigo";
+  static const String blue = "Blue";
+  static const String lightBlue = "Light blue";
+  static const String cyan = "Cyan";
+  static const String teal = "Teal";
+  static const String green = "Green";
+  static const String lightGreen = "Light green";
+  static const String lime = "Lime";
+  static const String yellow = "Yellow";
+  static const String amber = "Amber";
+  static const String orange = "Orange";
+  static const String deepOrange = "Deep orange";
+  static const String brown = "Brown";
+  static const String grey = "Grey";
+  static const String white = "White";
+  static const String black = "Black";
+  static const String violet = "Violet";
+
 }

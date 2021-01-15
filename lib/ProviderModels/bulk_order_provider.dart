@@ -18,9 +18,11 @@ import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/StringToHexColor.dart';
 import 'package:living_desire/models/filtertags.dart';
 import 'package:living_desire/models/localCustomCart.dart';
+import 'package:living_desire/models/productVariantColorModel.dart';
 import 'package:living_desire/models/uploadImage.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:http/http.dart' as http;
+import 'package:living_desire/widgets/ColorPicker.dart';
 
 class BulkOrderProvider with ChangeNotifier{
 
@@ -72,47 +74,13 @@ class BulkOrderProvider with ChangeNotifier{
 
   int editElementIndex = -1;
 
-  Color pickerColor = Color(0xffffffff);
-  Color currentColor = Color(0xffffffff);
-  String hexColor ;
+  Color selectedColor = Colors.white;
+  String selectedColorName = Strings.white;
+  String hexColor;
 
   void onSampleRequested(bool value){
     sampleRequested = value;
     notifyListeners();
-  }
-
-  void showColorPicker(BuildContext context){
-
-    showDialog(
-      context: context, builder: (context) => AlertDialog(
-      title: const Text('Pick a color!'),
-
-      content: SingleChildScrollView(
-        child: ColorPicker(
-          pickerColor: pickerColor,
-          onColorChanged: (changeColor){
-
-            pickerColor = changeColor;
-
-          },
-          showLabel: false,
-          pickerAreaHeightPercent: 1,
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: const Text('Got it',style: TextStyle(fontSize: 20),),
-          onPressed: () {
-            currentColor = pickerColor;
-            hexColor ='#${currentColor.value.toRadixString(16)}';
-            notifyListeners();
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    ),
-    );
-
   }
 
   void onItemSizeChanged(String s){
@@ -156,7 +124,7 @@ class BulkOrderProvider with ChangeNotifier{
       }
     }
 
-    hexColor ='#${currentColor.value.toRadixString(16)}';
+    hexColor ='#${selectedColor.value.toRadixString(16)}';
 
     String authID ;
 
@@ -334,8 +302,9 @@ class BulkOrderProvider with ChangeNotifier{
     this.bulkOrderCart.description = bulkOrderCart.description;
     description = bulkOrderCart.description;
 
-    currentColor = HexColorConvert.fromHex(bulkOrderCart.colour.first);
-    hexColor ='#${currentColor.value.toRadixString(16)}';
+    hexColor =bulkOrderCart.colour.first['hexCode'];
+    selectedColor = HexColorConvert.fromHex(hexColor);
+    selectedColorName = bulkOrderCart.colour.first['name'];
     itemSize = bulkOrderCart.size;
 
     buttonName = "SAVE CHANGES";
@@ -392,6 +361,14 @@ class BulkOrderProvider with ChangeNotifier{
 
     notifyListeners();
 
+  }
+
+  void onColorChange(Color color, String name){
+
+    hexColor ='#${color.value.toRadixString(16)}';
+    selectedColor = HexColorConvert.fromHex(hexColor);
+    selectedColorName = name;
+    notifyListeners();
   }
 
   void showProgressDialog(BuildContext context,String message){
@@ -594,9 +571,15 @@ class BulkOrderProvider with ChangeNotifier{
       
       bulkOrderCart.images = logos;
 
-      List<String> colours = new List();
+      var colours = [
 
-      colours.add(hexColor);
+        {
+          'hexCode':hexColor,
+          'name':selectedColorName,
+        }
+
+      ];
+
 
       bulkOrderCart.colour = colours;
 
@@ -618,9 +601,15 @@ class BulkOrderProvider with ChangeNotifier{
 
     try {
 
-      List<String> colours = new List();
+      var colours = [
 
-      colours.add(hexColor);
+        {
+          'hexCode':hexColor,
+          'name':selectedColorName,
+        }
+
+      ];
+
 
       bulkOrderCart.colour = colours;
 
@@ -629,7 +618,7 @@ class BulkOrderProvider with ChangeNotifier{
         "productSubType": bulkOrderCart.productSubType,
         "quantity": bulkOrderCart.quantity,
         "size": bulkOrderCart.size,
-        "colour":colours,
+        "colour" : colours,
         "productID": bulkOrderCart.productID,
         "variantID": bulkOrderCart.variantID,
         "description": bulkOrderCart.description,
@@ -671,9 +660,14 @@ class BulkOrderProvider with ChangeNotifier{
 
     try {
 
-      List<String> colours = new List();
+      var colours = [
 
-      colours.add(hexColor);
+        {
+          'hexCode':hexColor,
+          'name':selectedColorName,
+        }
+
+      ];
 
       bulkOrderCart.colour = colours;
 
@@ -804,7 +798,7 @@ class BulkOrderProvider with ChangeNotifier{
     productSubTypeSelected = false;
     editElementIndex = -1;
     buttonName = "ADD MORE";
-    currentColor = Color(0xffffffff);
+    selectedColor = Color(0xffffffff);
     logos.clear();
     bulkOrderCart.reset();
     notifyListeners();

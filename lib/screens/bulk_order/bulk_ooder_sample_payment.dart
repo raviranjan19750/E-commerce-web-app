@@ -254,7 +254,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
               ),
             ),
 
-            replacement: TrackingStatusBar(),
+            replacement: Container( alignment: Alignment.center,child: TrackingStatusBar()),
           ),
 
         ],

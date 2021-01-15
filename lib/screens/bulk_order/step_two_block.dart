@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:living_desire/ProviderModels/bulk_order_provider.dart';
 import 'package:living_desire/config/palette.dart';
-import 'package:provider/provider.dart';
+import 'package:living_desire/models/StringToHexColor.dart';
+import 'package:living_desire/widgets/ColorPicker.dart';
+
 
 class StepTwoBlock extends StatelessWidget{
 
@@ -166,18 +167,18 @@ class StepTwoBlock extends StatelessWidget{
 
                           Text('Select Color : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18),),
 
-                          RaisedButton(
+                          ColorPickerWidget(
 
-                              onPressed: (){
+                            shadeColor: value.selectedColor,
 
-                                value.showColorPicker(context);
+                            onColorSelectedHexCode: (colorHexCode,colorName) {
 
-                              },
+                              value.onColorChange(colorHexCode,colorName);
 
-                              color: value.currentColor,
-
+                            },
 
                           ),
+
 
                         ],
 
@@ -419,7 +420,7 @@ class StepTwoBlock extends StatelessWidget{
                     width: 32.0,
                     height: 32.0,
                     decoration: new BoxDecoration(
-                      color: value.currentColor,
+                      color: value.selectedColor,
                       shape: BoxShape.circle,
                     ),
                   ),

@@ -59,7 +59,7 @@ class BulkOrderCartItem extends StatelessWidget{
                           width: 24.0,
                           height: 24.0,
                           decoration: new BoxDecoration(
-                            color: HexColorConvert.fromHex(items.elementAt(index).colour.first),
+                            color: HexColorConvert.fromHex(items.elementAt(index).colour.first['hexCode']),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -152,6 +152,7 @@ class BulkOrderCartItem extends StatelessWidget{
 
                       value.showProgressDialog(context, "Removing item from cart");
                       value.deleteCustomCartItems(items.elementAt(index).key, index);
+
 
                     },
 
