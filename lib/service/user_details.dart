@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:living_desire/config/function_config.dart';
+import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/user_detail.dart';
 
 class UserdetailsRepository {
@@ -15,7 +16,7 @@ class UserdetailsRepository {
     final response = await http.post(
       FunctionConfig.host + 'manageCustomerInfo/$uid',
       body: jsonEncode(data),
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
     );
     // re render the user card
 

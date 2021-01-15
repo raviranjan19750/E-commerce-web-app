@@ -123,5 +123,6 @@ class Strings {
   static const String white = "White";
   static const String black = "Black";
   static const String violet = "Violet";
+  static const String bearerToken = "37b947579b10b34b066d1b01eb2636da1cba6f25";
 
 }

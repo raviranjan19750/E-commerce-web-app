@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:living_desire/config/palette.dart';
+import 'package:living_desire/config/strings.dart';
 
 class MyProfileProvider with ChangeNotifier{
 
@@ -50,7 +51,7 @@ class MyProfileProvider with ChangeNotifier{
   Future<void> getProfileDetails(String authID) async {
 
     final response =
-        await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json"},);
+        await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
 
     if(response.statusCode == 200){
@@ -71,7 +72,7 @@ class MyProfileProvider with ChangeNotifier{
   Future<void> getReferralCode(String authID) async{
 
     final response =
-    await http.get(FunctionConfig.host + 'manageDiscountCoupons/my-referral/$authID', headers: {"Content-Type": "application/json"},);
+    await http.get(FunctionConfig.host + 'manageDiscountCoupons/my-referral/$authID', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
 
     if(response.statusCode == 200){
@@ -98,7 +99,7 @@ class MyProfileProvider with ChangeNotifier{
     };
 
     final response =
-    await http.put(FunctionConfig.host + 'manageCustomerInfo/$authID',body: jsonEncode(data), headers: {"Content-Type": "application/json"},);
+    await http.put(FunctionConfig.host + 'manageCustomerInfo/$authID',body: jsonEncode(data), headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
     dismissProgressDialog();
     

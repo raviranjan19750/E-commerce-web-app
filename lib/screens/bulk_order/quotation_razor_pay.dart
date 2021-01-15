@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/palette.dart';
+import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/main.dart';
 import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/services/razorpay/ui_fake.dart' if (dart.library.html) 'dart:ui' as ui;
@@ -111,7 +112,7 @@ class QuotationRazorPay extends StatelessWidget {
     };
 
     final response =
-        await http.post(FunctionConfig.host + 'managePayments/sample-payment-done/$authID/$orderKey',body: jsonEncode(data), headers: {"Content-Type": "application/json"},);
+        await http.post(FunctionConfig.host + 'managePayments/sample-payment-done/$authID/$orderKey',body: jsonEncode(data), headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
     dismissProgressDialog();
 
@@ -150,7 +151,7 @@ class QuotationRazorPay extends StatelessWidget {
 
 
     final response =
-    await http.post(FunctionConfig.host + 'managePayments/custom-payment-done/$authID/$key', body: jsonEncode(data), headers: {"Content-Type": "application/json"},);
+    await http.post(FunctionConfig.host + 'managePayments/custom-payment-done/$authID/$key', body: jsonEncode(data), headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
 
     if(response.statusCode == 200){

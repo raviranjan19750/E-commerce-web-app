@@ -48,7 +48,7 @@ class NormalOrderRepository {
       };
       final response = await http.post(
         FunctionConfig.host + 'manageRating/${authID}',
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
         body: jsonEncode(params),
       );
       if (response.statusCode == 200) {
@@ -89,7 +89,7 @@ class NormalOrderRepository {
 
       final response = await http.post(
         FunctionConfig.host + 'manageRating/${productID}/${key}',
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
         body: jsonEncode(params),
       );
 

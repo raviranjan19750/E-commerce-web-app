@@ -83,7 +83,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
   Future<void> getProfileDetails(String authID,BuildContext context) async {
 
     final response =
-    await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json"},);
+    await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
     dismissProgressDialog();
 

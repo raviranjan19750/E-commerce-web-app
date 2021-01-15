@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/palette.dart';
+import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/QuotationPayment.dart';
 import 'package:living_desire/screens/bulk_order/quotation_razor_pay.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
@@ -84,7 +85,7 @@ class BulkOrderQuotationPayment extends StatelessWidget{
   Future<void> getProfileDetails(String authID,BuildContext context) async {
 
     final response =
-    await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json"},);
+    await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
     dismissProgressDialog();
 

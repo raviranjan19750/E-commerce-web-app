@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/config/function_config.dart';
+import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/localCustomCart.dart';
 import 'package:living_desire/models/localNormalCart.dart';
 import 'package:living_desire/models/product.dart';
@@ -120,7 +121,7 @@ class AuthenticationRepository {
       final response = await http.post(
         FunctionConfig.host + 'sendAnonymousDataToUser/$authID',
         body: jsonEncode(data),
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
         // body: data
       );
       print("===================>     " + response.body);
@@ -152,7 +153,7 @@ class AuthenticationRepository {
   //   final response = await http.post(
   //     FunctionConfig.host + 'manageCustomerInfo/${this.uid}',
   //     body: jsonEncode(data),
-  //     headers: {"Content-Type": "application/json"},
+  //     headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
   //   );
   //   return response.body;
   // }

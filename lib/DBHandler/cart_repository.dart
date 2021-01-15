@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:living_desire/config/function_config.dart';
+import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
 
@@ -71,7 +72,7 @@ class CartRepository {
       };
       final response = await http.post(
           FunctionConfig.host + 'manageCart/normal/${authID}',
-          headers: {"Content-Type": "application/json"},
+          headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
           body: jsonEncode(data));
       if (response.statusCode == 200) {
       } else {
@@ -97,7 +98,7 @@ class CartRepository {
 
       final request = await http.put(
           FunctionConfig.host + 'manageCart/normal/' + key,
-          headers: {"Content-Type": "application/json"},
+          headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
           body: jsonEncode(data));
       if (request.statusCode == 200) {
         // Updating the item quamtity in our local state

@@ -192,7 +192,7 @@ class BulkOrderProvider with ChangeNotifier{
     if(authID !=null){
 
       final response =
-      await http.get(FunctionConfig.host + 'manageCart/custom/$authID', headers: {"Content-Type": "application/json"},);
+      await http.get(FunctionConfig.host + 'manageCart/custom/$authID', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
       print("Manage Cart  :  " + response.statusCode.toString());
 
@@ -628,7 +628,7 @@ class BulkOrderProvider with ChangeNotifier{
       final response =
       await http.put(FunctionConfig.host + 'manageCart/custom/$key',
         body: jsonEncode(data),
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
       );
 
       print(response.body);
@@ -686,7 +686,7 @@ class BulkOrderProvider with ChangeNotifier{
       final response =
       await http.post(FunctionConfig.host + 'manageCart/custom/$authID',
           body: jsonEncode(data),
-          headers: {"Content-Type": "application/json"},
+          headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
       );
 
 
@@ -762,7 +762,7 @@ class BulkOrderProvider with ChangeNotifier{
       final response =
       await http.post(FunctionConfig.host + 'manageCustomOrder/custom-request/$authID',
         body: jsonEncode(data),
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
       );
 
       dismissProgressDialog();

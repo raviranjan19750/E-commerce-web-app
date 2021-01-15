@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:living_desire/config/function_config.dart';
+import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/BulkOrder.dart';
 import 'package:living_desire/models/QuotationPayment.dart';
 import 'package:living_desire/models/SamplePayment.dart';
@@ -50,7 +51,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
   Future<void> getQuotation(String key) async{
 
     final response =
-        await http.get(FunctionConfig.host + 'manageCustomOrder/custom-order/$key', headers: {"Content-Type": "application/json"},);
+        await http.get(FunctionConfig.host + 'manageCustomOrder/custom-order/$key', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
     if(response.statusCode == 200){
 
@@ -62,7 +63,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
   Future<void> getSamplePaymentData(String key,String authID) async{
 
     final response =
-    await http.post(FunctionConfig.host + 'managePayments/get-sample-order/$authID/$key', headers: {"Content-Type": "application/json"},);
+    await http.post(FunctionConfig.host + 'managePayments/get-sample-order/$authID/$key', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
 
     if(response.statusCode == 200){
@@ -91,7 +92,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
   Future<void> getQuotationPaymentData(String key,String authID) async{
 
     final response =
-    await http.post(FunctionConfig.host + 'managePayments/get-custom-order/$authID/$key', headers: {"Content-Type": "application/json"},);
+    await http.post(FunctionConfig.host + 'managePayments/get-custom-order/$authID/$key', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
 
     print("Quotation Payment Data  : "  + response.statusCode.toString());
 
