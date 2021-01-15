@@ -1,14 +1,30 @@
 part of 'select_address_bloc.dart';
 
-abstract class SelectAddressState {}
+enum SelectAddressStateType {
+  BUY_NOW,
+  NORMAL_CART,
+  BULK_ORDER,
+  SUCCESS,
+  FAILURE
+}
 
-class SelectAddressDetailInitial extends SelectAddressState {}
+abstract class SelectAddressState {
+  final SelectAddressStateType type;
 
-class SelectAddressDetailLoading extends SelectAddressState {}
+  SelectAddressState(this.type);
+}
+
+class SelectAddressDetailInitial extends SelectAddressState {
+  SelectAddressDetailInitial(SelectAddressStateType type) : super(type);
+}
+
+class SelectAddressDetailLoading extends SelectAddressState {
+  SelectAddressDetailLoading(SelectAddressStateType type) : super(type);
+}
 
 // ignore: must_be_immutable
 class SelectAddressDetailLoadingSuccessful extends SelectAddressState {
   final Address address;
 
-  SelectAddressDetailLoadingSuccessful(this.address);
+  SelectAddressDetailLoadingSuccessful(this.address) : super(null);
 }

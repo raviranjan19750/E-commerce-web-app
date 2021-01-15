@@ -10,3 +10,5 @@ export 'rating.dart';
 export 'cart.dart';
 export 'filtertags.dart';
 export 'wishlist.dart';
+export 'buy_now_details.dart';
+export 'normal_cart_details.dart';

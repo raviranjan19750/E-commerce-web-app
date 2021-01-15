@@ -7,13 +7,17 @@ import '../../models/models.dart';
 import 'dart:js' as js;
 
 class RazorPayWeb extends StatelessWidget {
-  final orderData;
-  final List<Cart> carts;
+  final String razorpayOrderID;
+  final String orderID;
+  final double amount;
+  final String authID;
 
   const RazorPayWeb({
     Key key,
-    this.orderData,
-    this.carts,
+    this.razorpayOrderID,
+    this.authID,
+    this.amount,
+    this.orderID,
   }) : super(key: key);
 
   @override
@@ -35,18 +39,16 @@ class RazorPayWeb extends StatelessWidget {
           print('PAYMENT SUCCESSFULL!!!!!!!');
         } else if (element.data.toString().contains('pay_id')) {
           razorpayPaymentID = element.data.toString().substring(6);
-          print(razorpayPaymentID);
         } else if (element.data.toString().contains('order_id')) {
           razorpayOrderID = element.data.toString().substring(8);
-          print(razorpayOrderID);
         } else if (element.data.toString().contains('sign')) {
           razorpaySignature = element.data.toString().substring(4);
-          print(razorpaySignature);
         }
       });
       element.requestFullscreen();
       //element.src = 'assets/razorpay/payment.html';
-      element.srcdoc = """<!DOCTYPE html><html>
+      element.srcdoc = """
+<!DOCTYPE html><html>
 <meta name="viewport" content="width=device-width">
 <head><title>RazorPay Web Payment</title></head>
 <body>
@@ -55,11 +57,11 @@ class RazorPayWeb extends StatelessWidget {
       console.log("Razor pay options");
        var options = {
          "key": "rzp_test_U8mKfCB97ZZlEj",
-          "amount": "50000", "currency": "INR",
+          "amount": "${amount}", "currency": "INR",
           "name": "Living Desire",
-          "description": "Test Transaction",
+          "description": "",
           "image": "https://example.com/your_logo",
-          "order_id": "",
+          "order_id": "${razorpayOrderID}",
           "handler": function (response){
              window.parent.postMessage("SUCCESS","*"); 
                   //2 
@@ -70,11 +72,11 @@ class RazorPayWeb extends StatelessWidget {
           },    
              
            "notes": {
-             "orderID":"",
-             "authID":"",
+             "orderID":"${orderID}",
+             "authID":"${authID}",
            },    
           "theme": {
-             "color": "#DF0145"    
+             "color": "#10CED7"    
           },
           "modal": {
             "ondismiss": function(){
@@ -92,12 +94,9 @@ class RazorPayWeb extends StatelessWidget {
 
      </script>
 </body>
-</html>""";
-      // print('HTML src');
-      // element.setInnerHtml(
-      //   html,
-      //   validator: NodeValidatorBuilder.common()..allowElement('script'),
-      // );
+</html>
+      """;
+
       element.style.border = 'none';
 
       return element;

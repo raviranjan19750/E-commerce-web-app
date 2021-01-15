@@ -6,101 +6,79 @@ import 'package:living_desire/widgets/button_list.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:provider/provider.dart';
 
-class MyBulkOrder extends StatelessWidget{
-
-
+class MyBulkOrder extends StatelessWidget {
   bool init = false;
 
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(
         lazy: false,
         create: (context) => MyBulkOrderProvider(),
         child: Consumer<MyBulkOrderProvider>(
-          builder: (BuildContext context, MyBulkOrderProvider value, Widget child) {
-
+          builder:
+              (BuildContext context, MyBulkOrderProvider value, Widget child) {
             if (!init) {
-              Provider.of<MyBulkOrderProvider>(context, listen: false).initBulkOrders();
+              Provider.of<MyBulkOrderProvider>(context, listen: false)
+                  .initBulkOrders();
               init = true;
             }
 
             return Scaffold(
-
-              appBar: CustomAppBar(visibleMiddleAppBar: false,visibleSubAppBar: false,),
-
+              appBar: CustomAppBar(
+                visibleMiddleAppBar: false,
+                visibleSubAppBar: false,
+              ),
               body: Row(
-
                 children: [
-
-                  ButtonList(isMyOrderSelected: true,),
-
+                  ButtonList(
+                    isMyOrderSelected: true,
+                  ),
                   Visibility(
                     visible: value.isInitialized,
-                    replacement: Expanded(child: Center(child: CircularProgressIndicator(),)),
+                    replacement: Expanded(
+                        child: Center(
+                      child: CircularProgressIndicator(),
+                    )),
                     child: Expanded(
-
                       child: Column(
-
                         crossAxisAlignment: CrossAxisAlignment.start,
-
                         children: [
-
                           Container(
-
-
-                            margin: EdgeInsets.only(left: 32,right: 64,top: 64),
-
+                            margin:
+                                EdgeInsets.only(left: 32, right: 64, top: 64),
                             width: double.infinity,
-
                             height: 1,
-
                             color: Colors.grey[500],
-
                           ),
-
                           Container(
-
                             margin: EdgeInsets.only(left: 16),
-
-                            padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-
-                            child: LabelTag('${value.bulkOrdItems.length} Orders'),
-
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            child:
+                                LabelTag('${value.bulkOrdItems.length} Orders'),
                           ),
-
                           Expanded(
-
                             child: ListView.builder(
-
                                 itemCount: value.bulkOrdItems.length,
-                                itemBuilder:
-                                    (BuildContext context, int index) {
+                                itemBuilder: (BuildContext context, int index) {
                                   return Container(
-
-                                    padding: EdgeInsets.symmetric(horizontal: 16),
-
-                                    child: MyBulkOrderItem(bulkOrdItems: value.bulkOrdItems,index: index,),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                    child: MyBulkOrderItem(
+                                      bulkOrdItems: value.bulkOrdItems,
+                                      index: index,
+                                    ),
                                   );
                                 }),
                           ),
-
                         ],
-
                       ),
                     ),
                   ),
                 ],
               ),
             );
-
           },
         ));
-
-
-
   }
-
-
-
 }

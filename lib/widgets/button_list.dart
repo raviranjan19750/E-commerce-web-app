@@ -1,6 +1,8 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:living_desire/main.dart';
 import 'package:living_desire/routes.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import '../config/configs.dart';
 
 class ButtonList extends StatelessWidget {
@@ -34,7 +36,8 @@ class ButtonList extends StatelessWidget {
                 color: isWishlistSelected ? Colors.black : Colors.white,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, RoutesConfiguration.WISHLIST);
+                    locator<NavigationService>()
+                        .navigateTo(RoutesConfiguration.WISHLIST);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -69,7 +72,8 @@ class ButtonList extends StatelessWidget {
                 color: isMyOrderSelected ? Colors.black : Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, RoutesConfiguration.MY_ORDERS);
+                    locator<NavigationService>()
+                        .navigateTo(RoutesConfiguration.MY_ORDERS);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -103,7 +107,8 @@ class ButtonList extends StatelessWidget {
                 color: isMyCartSelected ? Colors.black : Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, RoutesConfiguration.CART);
+                    locator<NavigationService>()
+                        .navigateTo(RoutesConfiguration.CART);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -139,8 +144,8 @@ class ButtonList extends StatelessWidget {
                     : Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, RoutesConfiguration.MANAGE_ADDRESSES);
+                    locator<NavigationService>()
+                        .navigateTo(RoutesConfiguration.MANAGE_ADDRESSES);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),

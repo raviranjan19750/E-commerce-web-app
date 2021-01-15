@@ -11,153 +11,139 @@ import 'package:provider/provider.dart';
 
 import 'bulk_order_cart.dart';
 
-class BulkOrder extends StatelessWidget{
+class BulkOrder extends StatelessWidget {
+  final String productType, productSubType, size, productID, variantID;
 
-  final String productType, productSubType, size,productID,variantID;
-
-  BulkOrder({this.productID,this.variantID,this.productType, this.productSubType, this.size});
+  BulkOrder(
+      {this.productID,
+      this.variantID,
+      this.productType,
+      this.productSubType,
+      this.size});
 
   bool init = false;
 
-
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(
         lazy: false,
         create: (context) => BulkOrderProvider(),
         child: Consumer<BulkOrderProvider>(
-          builder: (BuildContext context, BulkOrderProvider value, Widget child) {
-
+          builder:
+              (BuildContext context, BulkOrderProvider value, Widget child) {
             if (!init) {
-              Provider.of<BulkOrderProvider>(context, listen: false).initStepOne(productID,variantID,size,productType, productSubType);
+              Provider.of<BulkOrderProvider>(context, listen: false)
+                  .initStepOne(
+                      productID, variantID, size, productType, productSubType);
               init = true;
             }
 
             return Scaffold(
-
-              appBar: CustomAppBar(visibleSubAppBar: false,visibleMiddleAppBar: false,),
-
+              appBar: CustomAppBar(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
+              ),
               body: Row(
-
                 children: [
-
                   Expanded(
-
                     child: Container(
-
-                      padding: EdgeInsets.only(left: 32,right: 32),
-
+                      padding: EdgeInsets.only(left: 32, right: 32),
                       child: SingleChildScrollView(
-
                         child: Column(
-
                           crossAxisAlignment: CrossAxisAlignment.start,
-
-
                           children: [
-
-                            Text('Order in Bulk',style: TextStyle(fontSize: 32 , fontWeight: FontWeight.bold),),
-
-                            StepOneBlock(productType: productType,productSubType: productSubType,value: value,),
-
-                            StepTwoBlock(value: value,),
-
-                            StepThreeBlock(value: value,),
-
+                            Text(
+                              'Order in Bulk',
+                              style: TextStyle(
+                                  fontSize: 32, fontWeight: FontWeight.bold),
+                            ),
+                            StepOneBlock(
+                              productType: productType,
+                              productSubType: productSubType,
+                              value: value,
+                            ),
+                            StepTwoBlock(
+                              value: value,
+                            ),
+                            StepThreeBlock(
+                              value: value,
+                            ),
                             Row(
-
                               mainAxisAlignment: MainAxisAlignment.end,
-
                               children: [
-
                                 Container(
-
-                                  margin: EdgeInsets.only(top: 16,bottom: 64),
-
+                                  margin: EdgeInsets.only(top: 16, bottom: 64),
                                   decoration: BoxDecoration(
-
-                                    border: Border.all(color: Palette.secondaryColor),
-
+                                    border: Border.all(
+                                        color: Palette.secondaryColor),
                                   ),
-
                                   alignment: Alignment.centerLeft,
-
                                   child: FlatButton(
-
-                                    padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
-
-                                    onPressed: (){
-
-                                        value.onClear();
+                                    padding: EdgeInsets.only(
+                                        left: 80,
+                                        right: 80,
+                                        top: 28,
+                                        bottom: 28),
+                                    onPressed: () {
+                                      value.onClear();
                                     },
-
                                     color: Colors.white,
-
-                                    child: Text('Clear',style: TextStyle(color: Palette.secondaryColor,fontSize: 24),),
-
-                                  ),
-                                ),
-
-                                Visibility(
-
-                                  visible: value.stepOneDone && value.stepTwoDone,
-
-                                  child: Container(
-
-                                    margin: EdgeInsets.only(top: 16,left: 32,bottom: 64),
-
-                                    alignment: Alignment.centerLeft,
-
-                                    child: RaisedButton(
-
-                                      padding: EdgeInsets.only(left: 80,right: 80,top: 28,bottom: 28),
-
-
-                                      onPressed: (){
-
-                                        if(value.editElementIndex == -1)
-                                          value.showProgressDialog(context,"Adding to cart");
-                                        else
-                                          value.showProgressDialog(context,"Updating cart");
-
-                                        value.addToCart();
-
-                                      },
-
-                                      color: Palette.secondaryColor,
-
-                                      child: Text(value.buttonName,style: TextStyle(color: Colors.white,fontSize: 24),),
-
+                                    child: Text(
+                                      'Clear',
+                                      style: TextStyle(
+                                          color: Palette.secondaryColor,
+                                          fontSize: 24),
                                     ),
                                   ),
                                 ),
+                                Visibility(
+                                  visible:
+                                      value.stepOneDone && value.stepTwoDone,
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        top: 16, left: 32, bottom: 64),
+                                    alignment: Alignment.centerLeft,
+                                    child: RaisedButton(
+                                      padding: EdgeInsets.only(
+                                          left: 80,
+                                          right: 80,
+                                          top: 28,
+                                          bottom: 28),
+                                      onPressed: () {
+                                        if (value.editElementIndex == -1)
+                                          value.showProgressDialog(
+                                              context, "Adding to cart");
+                                        else
+                                          value.showProgressDialog(
+                                              context, "Updating cart");
 
+                                        value.addToCart();
+                                      },
+                                      color: Palette.secondaryColor,
+                                      child: Text(
+                                        value.buttonName,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 24),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
-
-                            ),
-
-                            Footer(),
-
+                            )
                           ],
-
                         ),
                       ),
                     ),
                   ),
-                  Container(height: double.infinity ,child: BulkOrderCart(value: value,))
+                  Container(
+                      height: double.infinity,
+                      child: BulkOrderCart(
+                        value: value,
+                      ))
                 ],
               ),
-
             );
-
           },
         ));
-
-
-
   }
-
-
-
 }

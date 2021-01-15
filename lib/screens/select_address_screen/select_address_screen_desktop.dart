@@ -5,29 +5,34 @@ import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/select_address/select_address_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/screens/login/login_view.dart';
-import 'package:living_desire/service/sharedPreferences.dart';
 import '../../widgets/widgets.dart';
-import '../../models/models.dart';
 
 class SelectAddressScreenDesktop extends StatelessWidget {
-  //final List<Cart> cart;
+  // 3 variables to check from wich screen user is coming from
+  final String isBuyNow;
+  final String isNormalCart;
+  final String isBulkOrderCart;
 
-  // String authID = UserPreferences().AuthID;
+  // data from buy now, bulk order, normal cart
+  final String productID;
+  final String variantID;
+  final String totalItems;
+  final String isSampleRequested;
 
-  // bool isCustomOrder, isSampleRequested;
-
-  // int totalItems;
-
-  // SelectAddressScreenDesktop(
-  //     {Key key,
-  //     this.cart,
-  //     this.isCustomOrder,
-  //     this.isSampleRequested,
-  //     this.totalItems})
-  //     : super(key: key);
+  const SelectAddressScreenDesktop({
+    Key key,
+    this.productID = '',
+    this.variantID = '',
+    this.totalItems = '',
+    this.isSampleRequested = "false",
+    this.isBuyNow = "false",
+    this.isNormalCart = "false",
+    this.isBulkOrderCart = "false",
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print('$isBuyNow, $isNormalCart, $isBulkOrderCart');
     void _showLoginDialog(BuildContext context) async {
       await showDialog(
           context: context,
@@ -56,7 +61,26 @@ class SelectAddressScreenDesktop extends StatelessWidget {
                     child: SelectAddressContainer(
                   authID: state.user.uid,
                 )),
-                SelectAddressCartTotal(),
+                if (isBuyNow == "true")
+                  SelectAddressCartTotal(
+                    type: SelectAddressStateType.BUY_NOW,
+                    authID: state.user.uid,
+                    productID: productID,
+                    variantID: variantID,
+                  ),
+                if (isNormalCart == "true")
+                  SelectAddressCartTotal(
+                    type: SelectAddressStateType.NORMAL_CART,
+                    authID: state.user.uid,
+                  ),
+                if (isBulkOrderCart == "true")
+                  SelectAddressCartTotal(
+                    type: SelectAddressStateType.BULK_ORDER,
+                    authID: state.user.uid,
+                    totalItems: totalItems,
+                    isBulkOrderCartStr: isBulkOrderCart,
+                    isSampleRequestedStr: isSampleRequested,
+                  ),
               ],
             ),
           );

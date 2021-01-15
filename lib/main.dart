@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:living_desire/DBHandler/DBHandler.dart';
 import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
+import 'package:living_desire/DBHandler/promo_code_repository.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/home/home_bloc.dart';
@@ -20,10 +21,13 @@ import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:living_desire/service/sharedPreferences.dart';
+import 'package:logger/logger.dart';
 import './config/configs.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
 import 'bloc/wishlist_config/wishlist_bloc.dart';
 import 'config/CustomRouteObserver.dart';
+
+import 'dart:js' as js;
 
 GetIt locator = GetIt.instance;
 
@@ -90,6 +94,12 @@ class InitailizeAppService extends StatelessWidget {
           create: (context) => ProductRepository(),
         ),
         RepositoryProvider(
+          create: (context) => SelectAddressTypeRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => PromoCodeRepository(),
+        ),
+        RepositoryProvider(
             create: (context) =>
                 CustomerDetailRepository(RepositoryProvider.of(context)))
       ],
@@ -115,6 +125,8 @@ class InitailizeAppService extends StatelessWidget {
     );
   }
 }
+
+var LOG = Logger();
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

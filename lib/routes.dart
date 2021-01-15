@@ -50,35 +50,79 @@ class RoutesConfiguration {
     Path(r'^' + PRODUCT_DETAIL, (context, data) {
       return MyDesktopView(
         child: ProductDetailScreen(
-                productID: data['pid'],
-                variantID: data['vid'],
-              ),
+          productID: data['pid'],
+          variantID: data['vid'],
+        ),
         visibleMiddleAppBar: true,
         visibleSubAppBar: false,
       );
     }),
-
     Path(r'^' + MANAGE_ADDRESSES, (context, data) {
-
       return MyDesktopView(
         child: ManageAddressesScreenDesktop(),
         visibleMiddleAppBar: true,
         visibleSubAppBar: false,
       );
     }),
-
-    Path(r'^' + CART,
-        (context, data) => MyDesktopView(visibleMiddleAppBar:true,visibleSubAppBar: false,child: CartScreenDesktop())),
+    Path(
+      r'^' + CART,
+      (context, data) => MyDesktopView(
+        visibleMiddleAppBar: true,
+        visibleSubAppBar: false,
+        child: CartScreenDesktop(),
+      ),
+    ),
+    Path(
+        r'^' + CART,
+        (context, data) => MyDesktopView(
+            visibleMiddleAppBar: true,
+            visibleSubAppBar: false,
+            child: CartScreenDesktop())),
     Path(
         r'^' + ORDER_PLACED,
-        (context, data) => OrderPlacedScreenDesktop()),
-    Path(
-        r'^' + SELECT_ADDRESS,
         (context, data) => MyDesktopView(
-              child: SelectAddressScreenDesktop(),
+              child: OrderPlacedScreenDesktop(),
+              visibleSubAppBar: false,
+              visibleMiddleAppBar: false,
+            )),
+    Path(r'^' + SELECT_ADDRESS, (context, data) {
+      String productID = data["productID"];
+      String varinatID = data["variantID"];
+      String totalItems = data["totalItems"];
+      String isSampleRequested = data["isSampleRequested"];
+      String isBulkOrderCart = data['isBulkOrderCart'];
+      String isBuyNow = data['isBuyNow'];
+      String isNormalCart = data['isNormalCart'];
+      if (isBuyNow == "true") {
+        return MyDesktopView(
+          child: SelectAddressScreenDesktop(
+            productID: productID,
+            variantID: varinatID,
+            isBuyNow: isBuyNow,
+          ),
           visibleSubAppBar: false,
           visibleMiddleAppBar: false,
-            )),
+        );
+      } else if (isNormalCart == "true") {
+        return MyDesktopView(
+          child: SelectAddressScreenDesktop(
+            isNormalCart: isNormalCart,
+          ),
+          visibleSubAppBar: false,
+          visibleMiddleAppBar: false,
+        );
+      } else if (isBulkOrderCart == "true") {
+        return MyDesktopView(
+          child: SelectAddressScreenDesktop(
+            isBulkOrderCart: isBulkOrderCart,
+            totalItems: totalItems,
+            isSampleRequested: isSampleRequested,
+          ),
+          visibleSubAppBar: false,
+          visibleMiddleAppBar: false,
+        );
+      }
+    }),
     Path(
       r'^' + BULK_ORDER,
       (context, data) => BulkOrder(
@@ -99,13 +143,27 @@ class RoutesConfiguration {
     ),
     Path(
       r'^' + WISHLIST,
-      (context, data) => MyDesktopView(child: WishlistScreenDesktop(),visibleSubAppBar: false,
-        visibleMiddleAppBar: false,),
+      (context, data) => MyDesktopView(
+        child: WishlistScreenDesktop(),
+        visibleSubAppBar: false,
+        visibleMiddleAppBar: false,
+      ),
+    ),
+    Path(
+      r'^' + MANAGE_ADDRESSES,
+      (context, data) => MyDesktopView(
+        child: ManageAddressesScreenDesktop(),
+        visibleSubAppBar: false,
+        visibleMiddleAppBar: false,
+      ),
     ),
     Path(
       r'^' + MY_ORDERS,
-      (context, data) => MyDesktopView(child: OrderScreenDesktop(),visibleSubAppBar: false,
-        visibleMiddleAppBar: false,),
+      (context, data) => MyDesktopView(
+        child: OrderScreenDesktop(),
+        visibleSubAppBar: false,
+        visibleMiddleAppBar: false,
+      ),
     ),
     Path(r'^' + BULK_ORDER_QUOTATION,
         (context, data) => BulkOrderQuotation(id: data['key'])),
@@ -157,7 +215,7 @@ class RoutesConfiguration {
             builder: (context) => MyDesktopView(
                 visibleSubAppBar: false,
                 visibleMiddleAppBar: false,
-                    child: ProductDetailScreen(
+                child: ProductDetailScreen(
                   productID: productID,
                   variantID: variantID,
                 )));
@@ -179,21 +237,28 @@ class RoutesConfiguration {
 
       case WISHLIST:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(visibleSubAppBar: false,
-                visibleMiddleAppBar: false,child: WishlistScreenDesktop()));
+            builder: (_) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
+                child: WishlistScreenDesktop()));
       case MY_ORDERS:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(visibleSubAppBar: false,
-                visibleMiddleAppBar: false,child: OrderScreenDesktop()));
+            builder: (_) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
+                child: OrderScreenDesktop()));
       case CART:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(visibleSubAppBar: false,
-                visibleMiddleAppBar: false,child: CartScreenDesktop()));
+            builder: (_) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
+                child: CartScreenDesktop()));
       case MANAGE_ADDRESSES:
         return MaterialPageRoute(
-            builder: (_) =>
-                MyDesktopView(visibleSubAppBar: false,
-                    visibleMiddleAppBar: false,child: ManageAddressesScreenDesktop()));
+            builder: (_) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
+                child: ManageAddressesScreenDesktop()));
       case SELECT_ADDRESS:
         var args = settings.arguments as Map;
         bool sampleRequested = args["sampleRequested"];
@@ -210,8 +275,10 @@ class RoutesConfiguration {
                     )));
       case ORDER_PLACED:
         return MaterialPageRoute(
-            builder: (_) => MyDesktopView(visibleSubAppBar: false,
-                visibleMiddleAppBar: false,child: OrderPlacedScreenDesktop()));
+            builder: (_) => MyDesktopView(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: false,
+                child: OrderPlacedScreenDesktop()));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
