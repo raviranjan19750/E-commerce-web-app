@@ -67,14 +67,15 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   Stream<ProductDetailState> loadSizeChart(LoadSizeChart event) async* {
 
     yield SizeChartLoading();
-    try {
-      var sizeChart = await productRepository.getSizeChart(type: event.type, subType: event.subType);
+
+   /* try {
+    //  var sizeChart = await productRepository.getSizeChart(type: event.type, subType: event.subType);
       print("size Chart data Bloc " + sizeChart.toString());
       yield SizeChartLoadingSuccessful(sizeChart);
     } catch (e) {
       print(e.toString());
       yield SizeChartLoadingFailure();
-    }
+    }*/
 
   }
 

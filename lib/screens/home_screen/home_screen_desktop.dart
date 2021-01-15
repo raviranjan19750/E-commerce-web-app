@@ -5,6 +5,7 @@ import 'package:living_desire/bloc/home/home_bloc.dart';
 import 'package:living_desire/bloc/scroll/bloc/scroll_bloc.dart';
 import 'package:living_desire/screens/all_product/product_widgets.dart';
 import 'package:living_desire/screens/screens.dart';
+import 'package:living_desire/widgets/footer/FooterNew.dart';
 import 'package:living_desire/widgets/footer/footer.dart';
 import 'package:living_desire/widgets/home_widget/home_widget.dart';
 import 'package:living_desire/widgets/home_widget/product_category_widget.dart';
@@ -75,7 +76,7 @@ class MyDesktopView extends StatelessWidget {
                   height: 20,
                 ),
                 child,
-                Footer(
+                FooterNew(
                   scrollController: _scrollController,
                 )
               ],

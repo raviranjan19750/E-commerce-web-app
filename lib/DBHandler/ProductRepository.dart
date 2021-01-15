@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/CheckProductAvailability.dart';
@@ -12,13 +13,13 @@ class ProductRepository {
   var LOG = LogBuilder.getLogger();
 
   Future<ProductDetail> getProductVariantDescription({String productID, String variantID, String authID}) async {
+
     LOG.i('Fetching Product Description for Product ID ${productID},  VarientId ${variantID} and $authID)');
+
     Map<String, dynamic> data = {
       "authID": authID,
     };
-    final response = await http.post(FunctionConfig.host + "manageProductDetails/details/$productID/$variantID",
-        body: jsonEncode(data));
-
+    final response = await CloudFunctionConfig.post("manageProductDetails/details/$productID/$variantID", data);
     Map<String, dynamic> map = jsonDecode(response.body);
     return ProductDetail.fromJson(map);
   }
@@ -29,7 +30,7 @@ class ProductRepository {
     Map<String, dynamic> data = {
       "authID": authID,
     };
-    final response = await http.post(FunctionConfig.host + "manageCombo/details/$productID/", body: jsonEncode(data));
+    final response = await CloudFunctionConfig.post("manageCombo/details/$productID/", data);
     var result = jsonDecode(response.body);
 
     List<String> imgUrls = List();
@@ -57,15 +58,17 @@ class ProductRepository {
   }
 
   Future<CheckProductAvailability> checkProductAvailability({String pincode, String productID, String variantID}) async {
+
     Map<String, dynamic> data = {
       "pincode": pincode,
       "productID": productID,
       "variantID": variantID,
     };
-
-    var callable = FirebaseFunctions.instance.httpsCallable("checkPincodeAvailability");
-    var result = await callable(data);
-    return CheckProductAvailability.fromJson(result.data);
+    
+    final response = await CloudFunctionConfig.post("checkPincodeAvailability", data);
+    print(response.toString());
+    Map<String, dynamic> map = jsonDecode(response.body);
+    return CheckProductAvailability.fromJson(map);
   }
 
   Future<dynamic> getSizeChart({String type, String subType}) async {
@@ -77,9 +80,8 @@ class ProductRepository {
       "subType" : subType
     };
     
-    final response = await http.post(FunctionConfig.host + "manageSizeChart/details", body: (data));
+    final response = await CloudFunctionConfig.post("manageSizeChart/details", data);
     var result = jsonDecode(response.body);
-    print(result.toString());
     return result;
 
   }

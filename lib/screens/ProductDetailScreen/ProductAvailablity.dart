@@ -126,10 +126,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                   if (state.checkProductAvailability.responseCode == 200)
                     Text(
                       Strings.available.toUpperCase() +
-                          " (Delivery by " +
-                          DateFormat('dd MMM, EEEE').format(state
-                              .checkProductAvailability.expectedDeliveryDate) +
-                          " )",
+                          " (Delivery by " + DateFormat('dd MMM, EEEE').format(state.checkProductAvailability.expectedDeliveryDate) + " )",
                       style: TextStyle(
                           color: Palette.green,
                           fontWeight: FontWeight.w500,

@@ -76,6 +76,8 @@ dependencies:
   logger: ^0.9.4
   convert: ^2.1.1
   get_it: ^5.0.3
+  flutter_html: ^1.2.0
+
 
  
   
@@ -110,6 +112,10 @@ flutter:
     - assets/images/search_result_not_match.png
     - assets/images/something_went_wrong_empty_state.png
     - assets/images/wishlist_empty_state.png
+    - assets/images/facebook.png
+    - assets/images/instagram.png
+    - assets/images/linkedin.png
+    - assets/images/twitter.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

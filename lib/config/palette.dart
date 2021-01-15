@@ -14,5 +14,7 @@ class Palette {
 
   static const Color green = Color(0xFFF41B74D);
 
+  static const Color darkGrey = Color(0xFFF6A5F5F);
+
 
 }

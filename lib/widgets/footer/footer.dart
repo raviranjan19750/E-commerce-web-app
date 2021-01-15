@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class Footer extends StatelessWidget {
   final ScrollController scrollController;
   _moveUp() {
-    scrollController.animateTo(0,
-        curve: Curves.linear, duration: Duration(milliseconds: 500));
+    scrollController.animateTo(0, curve: Curves.linear, duration: Duration(milliseconds: 500));
   }
 
   const Footer({Key key, this.scrollController}) : super(key: key);

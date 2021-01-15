@@ -65,15 +65,9 @@ class ProductCardContent extends StatelessWidget {
                         "pid": product.productId,
                         "vid": product.varientId,
                       },
-                        newTab: true
+
                     );
-                    // Navigator.pushNamed(
-                    //     context, path,
-                    //     arguments: {
-                    //       "product": product,
-                    //       "productID": product.productId,
-                    //       "variantID": product.varientId
-                    //     });
+
                   },
                   child: Image.network(
                     product.imageUrls[0],
@@ -195,7 +189,7 @@ class ComboProductCardContent extends StatelessWidget {
                         "pid": comboProduct.productId,
                         "vid" : comboProduct.productId,
                       },
-                      newTab: true
+
                     );
                     // Navigator.pushNamed(
                     //     context, path,
