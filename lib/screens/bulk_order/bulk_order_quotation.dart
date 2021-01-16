@@ -7,6 +7,7 @@ import 'package:living_desire/screens/bulk_order/bulk_order_quotation_payment.da
 import 'package:living_desire/screens/bulk_order/bulk_order_quotation_products.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_samples.dart';
 import 'package:living_desire/widgets/app_bar/custom_app_bar.dart';
+import 'package:living_desire/widgets/footer/FooterNew.dart';
 import 'package:living_desire/widgets/footer/footer.dart';
 import 'package:provider/provider.dart';
 
@@ -103,7 +104,7 @@ class BulkOrderQuotation extends StatelessWidget{
               child: BulkOrderSamples(sampleList: value.bulkOrder.samples,)
           ),
 
-          Footer(),
+          FooterNew(),
 
         ],
 
