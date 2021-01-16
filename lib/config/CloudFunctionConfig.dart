@@ -16,7 +16,7 @@ class CloudFunctionConfig {
   };
 
   static Future<http.Response> post(String endPoint, var data) async {
-    return await http.post(FunctionConfig.host + endPoint,
+    return await http.post(FunctionConfig.host + endPoint,body: jsonEncode(data),
         headers: headers);
   }
 

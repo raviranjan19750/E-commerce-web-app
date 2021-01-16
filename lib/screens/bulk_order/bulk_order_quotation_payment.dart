@@ -351,6 +351,30 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
         Visibility(
 
+          visible: (quotationPayment.paidAmount > 0),
+
+          child: Container(
+
+            margin: EdgeInsets.only(left: 32,top: 8),
+
+            child: Row(
+
+
+              children: [
+
+                Expanded(child: Text('Paid Amount  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
+
+                Text(' ₹ ${quotationPayment.paidAmount}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
+
+              ],
+
+            ),
+
+          ),
+        ),
+
+        Visibility(
+
           visible: (quotationPayment.payingAmount > 0),
 
           child: Container(
@@ -413,30 +437,6 @@ class BulkOrderQuotationPayment extends StatelessWidget{
                 Expanded(child: Text('Delivery Charges  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
 
                 Text('₹ ${quotationPayment.deliveryCharges}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
-
-              ],
-
-            ),
-
-          ),
-        ),
-
-        Visibility(
-
-          visible: (quotationPayment.totalPayingAmount == 0),
-
-          child: Container(
-
-            margin: EdgeInsets.only(left: 32,top: 8),
-
-            child: Row(
-
-
-              children: [
-
-                Expanded(child: Text('Paid Amount  : ',style: TextStyle(color: Colors.grey[500],fontSize: 20),)),
-
-                Text(' ₹ ${quotationPayment.paidAmount}    ',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),),
 
               ],
 

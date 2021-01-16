@@ -90,7 +90,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
     final response =
     await  CloudFunctionConfig.post('managePayments/get-custom-order/$authID/$key', {});
 
-    print("Quotation Payment Data  : "  + response.body);
+    print("Quotation Payment Data  : "  + response.statusCode.toString());
 
     if(response.statusCode == 200){
 

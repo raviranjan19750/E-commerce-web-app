@@ -152,7 +152,7 @@ class QuotationRazorPay extends StatelessWidget {
     };
 
 
-    final response = await CloudFunctionConfig.post('managePayments/custom-payment-done/$authID/$key', data);
+    final response = await CloudFunctionConfig.post('managePayments/custom-payment-done/$authID/$orderKey', data);
 
     dismissProgressDialog();
 
