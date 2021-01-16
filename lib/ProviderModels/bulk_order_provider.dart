@@ -2,26 +2,21 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:html';
 import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:living_desire/DBHandler/local_storage.dart';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/configs.dart';
-import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/models/BulkOrderCart.dart';
 import 'package:living_desire/models/StringToHexColor.dart';
 import 'package:living_desire/models/filtertags.dart';
 import 'package:living_desire/models/localCustomCart.dart';
-import 'package:living_desire/models/productVariantColorModel.dart';
 import 'package:living_desire/models/uploadImage.dart';
 import 'package:living_desire/service/searchapi.dart';
-import 'package:http/http.dart' as http;
-import 'package:living_desire/widgets/ColorPicker.dart';
 
 class BulkOrderProvider with ChangeNotifier {
   static const AUTO_ID_ALPHABET =
@@ -176,13 +171,7 @@ class BulkOrderProvider with ChangeNotifier {
 
   Future<void> getCustomCart(String authID) async {
     if (authID != null) {
-      final response = await http.get(
-        FunctionConfig.host + 'manageCart/custom/$authID',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": Strings.bearerToken
-        },
-      );
+      final response = await CloudFunctionConfig.get('manageCart/custom/$authID');
 
       print("Manage Cart  :  " + response.statusCode.toString());
 
@@ -227,9 +216,7 @@ class BulkOrderProvider with ChangeNotifier {
       authID = FirebaseAuth.instance.currentUser.uid;
 
     if (authID != null) {
-      final response = await http
-          .delete(FunctionConfig.host + 'manageCart/custom/$authID/$key');
-
+      final response = await CloudFunctionConfig.delete('manageCart/custom/$authID/$key');
       dismissProgressDialog();
 
       if (response.statusCode == 200) {
@@ -533,14 +520,7 @@ class BulkOrderProvider with ChangeNotifier {
         "images": imageUrls,
       };
 
-      final response = await http.put(
-        FunctionConfig.host + 'manageCart/custom/$key',
-        body: jsonEncode(data),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": Strings.bearerToken
-        },
-      );
+      final response = await CloudFunctionConfig.put('manageCart/custom/$key', data);
 
       print(response.body);
 
@@ -582,14 +562,7 @@ class BulkOrderProvider with ChangeNotifier {
         "images": imageUrls,
       };
 
-      final response = await http.post(
-        FunctionConfig.host + 'manageCart/custom/$authID',
-        body: jsonEncode(data),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": Strings.bearerToken
-        },
-      );
+      final response = await CloudFunctionConfig.post('manageCart/custom/$authID', data);
 
       if (response.statusCode == 200) {
         var res = jsonDecode(response.body);
@@ -644,15 +617,7 @@ class BulkOrderProvider with ChangeNotifier {
         "deliveryAddressID": "2QFMUXPasBweaudXKg7a"
       };
 
-      final response = await http.post(
-        FunctionConfig.host + 'manageOrders/custom-request/$authID',
-        body: jsonEncode(data),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": Strings.bearerToken
-        },
-      );
-
+      final response = await CloudFunctionConfig.post('manageOrders/custom-request/$authID', data);
       dismissProgressDialog();
 
       if (response.statusCode == 200) {
