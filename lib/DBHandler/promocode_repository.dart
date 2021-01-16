@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
-import 'package:http/http.dart' as http;
 
 class PromoCodeUtils {
   Future<dynamic> getUserReferallCode(String authID) async {

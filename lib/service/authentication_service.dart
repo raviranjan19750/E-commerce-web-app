@@ -3,19 +3,11 @@ import 'dart:convert';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:hive/hive.dart';
-import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
-import 'package:living_desire/config/function_config.dart';
-import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/localCustomCart.dart';
 import 'package:living_desire/models/localNormalCart.dart';
-import 'package:living_desire/models/product.dart';
-import 'package:living_desire/models/user_detail.dart';
-import 'package:living_desire/service/sharedPreferences.dart';
-// import 'pa';
 
 class LogOutFailure implements Exception {}
 
