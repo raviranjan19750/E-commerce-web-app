@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class NormalOrderRepository {
   // Initialising Local Order List
   List<Order> _order = List.empty();
+  var LOG = Logger();
 
   // Getting orders
   List<Order> get order => _order;
@@ -46,13 +49,10 @@ class NormalOrderRepository {
         "rating": rating,
         "review": review,
       };
-      final response = await http.post(
-        FunctionConfig.host + 'manageRating/${authID}',
-        headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
-        body: jsonEncode(params),
-      );
+      final response =
+          await CloudFunctionConfig.post('manageRating/${authID}', params);
+
       if (response.statusCode == 200) {
-        print('Http Post request sucessfull');
         // print(jsonDecode(response.body).toString());
         for (var o in _order) {
           if (o.orderID == orderID) {
@@ -65,7 +65,7 @@ class NormalOrderRepository {
           }
         }
       } else {
-        print('Http Request Failed');
+        LOG.i('Http Request Failed');
       }
     } catch (e) {
       print('Function Error:' + e.toString());
@@ -87,14 +87,11 @@ class NormalOrderRepository {
         "review": review,
       };
 
-      final response = await http.post(
-        FunctionConfig.host + 'manageRating/${productID}/${key}',
-        headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
-        body: jsonEncode(params),
-      );
+      final response = await CloudFunctionConfig.post(
+          'manageRating/${productID}/${key}', params);
 
       if (response.statusCode == 200) {
-        print('Http Post request sucessfull');
+        LOG.i('Http Post request sucessfull');
         // print(jsonDecode(response.body).toString());
         for (var o in _order) {
           if (o.key == key) {
@@ -107,10 +104,10 @@ class NormalOrderRepository {
           }
         }
       } else {
-        print('Http Request Failed');
+        LOG.e(response.body);
       }
     } catch (e) {
-      print('Function Error:' + e.toString());
+      LOG.e('Function Error:' + e.toString());
       throw Exception(e);
     }
   }

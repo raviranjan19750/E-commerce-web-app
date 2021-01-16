@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/models.dart';
@@ -17,7 +18,8 @@ class AddressRepository {
   Future<List<Address>> getAddressDetails(String authID) async {
     try {
       final response =
-          await http.get(FunctionConfig.host + 'manageAddress/list/${authID}');
+          await CloudFunctionConfig.get('manageAddress/list/${authID}');
+
       LOG.i("Http Get request address Container");
       if (response.statusCode == 200) {
         _addresses = (jsonDecode(response.body) as List)
@@ -46,14 +48,10 @@ class AddressRepository {
         "phone": phone,
         "name": name,
       };
-      final request = await http.post(
-          FunctionConfig.host + 'manageAddress/add/${authID}',
-          body: params);
-      if (request.statusCode == 200) {
-        print('Http Get request sucessfull');
-      } else {}
+
+      await CloudFunctionConfig.post('manageAddress/add/${authID}', params);
     } catch (e) {
-      print(e.toString());
+      LOG.e(e);
       throw Exception(e);
     }
   }
@@ -73,9 +71,8 @@ class AddressRepository {
         "phone": phone,
         "name": name,
       };
-      final request = await http.put(
-          FunctionConfig.host + 'manageAddress/update/${key}',
-          body: params);
+      final request =
+          await CloudFunctionConfig.put('manageAddress/update/${key}', params);
 
       if (request.statusCode == 200) {
         _addresses.map((e) {
@@ -86,8 +83,11 @@ class AddressRepository {
             e.name = name;
           }
         }).toList();
-        print('Http Get request sucessfull');
-      } else {}
+        LOG.i('Http Address Update request successful');
+      } else {
+        LOG.e(request.statusCode);
+        LOG.e(request.body);
+      }
     } catch (e) {
       print(e.toString());
       throw Exception(e);
@@ -100,9 +100,9 @@ class AddressRepository {
     String authID,
   ) async {
     try {
-      final request = await http.put(
-        FunctionConfig.host + 'manageAddress/default/${authID}/${key}',
-      );
+      final request = await CloudFunctionConfig.put(
+          'manageAddress/default/${authID}/${key}', {});
+
       if (request.statusCode == 200) {
         _addresses.map((e) {
           if (e.key == key) {
@@ -111,7 +111,6 @@ class AddressRepository {
             e.isPrimary = false;
           }
         }).toList();
-        print('Http Get request sucessfull');
       }
     } catch (e) {
       print(e.toString());
@@ -125,13 +124,12 @@ class AddressRepository {
     String authID,
   ) async {
     try {
-      final request = await http.delete(
-        FunctionConfig.host + 'manageAddress/delete/${key}',
-      );
+      final request =
+          await CloudFunctionConfig.delete('manageAddress/delete/${key}');
+
       if (request.statusCode == 200) {
         _addresses.removeWhere((element) => element.key.compareTo(key) == 0);
         LOG.i('Http Delete Request Sent');
-        print('Http Get request sucessfull');
       } else {}
     } catch (e) {
       print(e.toString());
