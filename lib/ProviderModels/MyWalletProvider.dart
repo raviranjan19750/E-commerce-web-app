@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/strings.dart';
 
@@ -30,8 +30,7 @@ class MyWalletProvider with ChangeNotifier{
   Future<void> getWalletDetails(String authID) async{
 
     final response =
-    await http.get(FunctionConfig.host + 'manageWallet/wallet-amount/$authID', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
-
+    await CloudFunctionConfig.get('manageWallet/wallet-amount/$authID');
     print("Referral Code  :  " + response.body);
 
     if(response.statusCode == 200){

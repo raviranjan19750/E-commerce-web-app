@@ -31,7 +31,7 @@ class CloudFunctionConfig {
     );
   }
 
-  static Future<http.Response> get(String endPoint, var data) async {
+  static Future<http.Response> get(String endPoint) async {
     return await http.get(
       FunctionConfig.host + endPoint,
       headers: {
@@ -41,7 +41,7 @@ class CloudFunctionConfig {
     );
   }
 
-  static Future<http.Response> delete(String endPoint, var data) async {
+  static Future<http.Response> delete(String endPoint) async {
     return await http.delete(
       FunctionConfig.host + endPoint,
       headers: {
