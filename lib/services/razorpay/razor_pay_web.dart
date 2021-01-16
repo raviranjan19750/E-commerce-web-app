@@ -8,6 +8,7 @@ import 'dart:js' as js;
 
 class RazorPayWeb extends StatelessWidget {
   final String razorpayOrderID;
+  final int paymentMode;
   final String orderID;
   final double amount;
   final String authID;
@@ -15,6 +16,7 @@ class RazorPayWeb extends StatelessWidget {
   const RazorPayWeb({
     Key key,
     this.razorpayOrderID,
+    this.paymentMode,
     this.authID,
     this.amount,
     this.orderID,
@@ -61,6 +63,75 @@ class RazorPayWeb extends StatelessWidget {
           "name": "Living Desire",
           "description": "",
           "image": "https://example.com/your_logo",
+          config:{
+            display:{
+              blocks:{
+                "debit_card":{
+                  "name":"Pay Using Debit Card",
+                  "instruments":[
+                    {
+                      "method": "card",
+                      types:[
+                        "debit",
+                      ],
+                    },
+                  ],
+                },
+                "credit_card":{
+                  "name":"Pay Using Credit Card",
+                  "instruments":[
+                    {
+                      "method": "card",
+                      types:[
+                        "credit",
+                      ],
+                    },
+                  ],
+                },
+                "netbanking":{
+                  "name":"Pay Using Netbanking",
+                  "instruments":[
+                    {
+                      "method": "netbanking",
+                      
+                    },
+                  ],
+                },
+                "upi":{
+                  "name":"Pay Using UPI apps",
+                  "instruments":[
+                    {
+                      "method": "upi",
+                      flows: ["collect", "qr"],
+                      apps: ["google_pay", "bhim", "paytm", "amazon", "whatsapp", "phonepe"],
+                      
+                    },
+                  ],
+                },
+                "wallet":{
+                  "name":"Pay Using Popular Wallet",
+                  "instruments":[
+                    {
+                      "method": "wallets",
+                      
+                      wallets: [ "paypal" , "amazonpay",  "phonepe"],
+                      
+                    },
+                  ],
+                },
+              },
+              "sequence": [
+                "block.debit_card",
+                "block.credit_card",
+                "block.netbanking",
+                "block.upi",
+                "block.wallet",
+              ],
+              "preferences": {
+                "show_default_blocks": false
+              }
+            },
+          },
           "order_id": "${razorpayOrderID}",
           "handler": function (response){
              window.parent.postMessage("SUCCESS","*"); 
@@ -70,10 +141,10 @@ class RazorPayWeb extends StatelessWidget {
              window.parent.postMessage("sign"+response.razorpay_signature);   
              
           },    
-             
+         
            "notes": {
-             "orderID":"${orderID}",
-             "authID":"${authID}",
+             "orderID":"$orderID",
+             "authID":"$authID",
            },    
           "theme": {
              "color": "#10CED7"    

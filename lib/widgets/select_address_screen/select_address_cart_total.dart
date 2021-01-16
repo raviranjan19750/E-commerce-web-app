@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/check_promo_code/check_promo_code_bloc.dart';
 import 'package:living_desire/bloc/select_address/select_address_bloc.dart';
 import 'package:living_desire/bloc/select_address_type/select_address_type_bloc.dart';
+import 'package:living_desire/bloc/select_payment/select_payment_bloc.dart';
 import 'package:living_desire/models/buy_now_details.dart';
 import 'package:living_desire/models/models.dart';
 import '../../config/configs.dart';
@@ -44,95 +45,96 @@ class SelectAddressCartTotal extends StatelessWidget {
     } else {
       isBulkOrderCart = false;
     }
-    return BlocBuilder<SelectAddressBloc, SelectAddressState>(
-        builder: (context, state) {
-      if (state is SelectAddressDetailLoading) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      } else if (state is SelectAddressDetailLoadingSuccessful) {
-        deliveryAddressID = state.address.key;
-        return MultiBlocProvider(
-          providers: [
-            if (type == SelectAddressStateType.BUY_NOW)
-              BlocProvider(
-                  create: (context) => SelectAddressTypeBloc(
-                      selectAddressTypeRepository:
-                          RepositoryProvider.of(context))
-                    ..add(LoadBuyNowDetails(
-                      authID: authID,
-                      deliveryAddressID: state.address.key,
-                      productID: productID,
-                      variantID: variantID,
-                    ))),
-            if (type == SelectAddressStateType.NORMAL_CART)
-              BlocProvider(
-                  create: (context) => SelectAddressTypeBloc(
-                      selectAddressTypeRepository:
-                          RepositoryProvider.of(context))
-                    ..add(LoadNormalCartDetails(
-                      authID: authID,
-                      deliveryAddressID: state.address.key,
-                    ))),
-            if (type == SelectAddressStateType.BULK_ORDER)
-              BlocProvider(
-                  create: (context) => SelectAddressTypeBloc(
-                      selectAddressTypeRepository:
-                          RepositoryProvider.of(context))
-                    ..add(LoadBulkOrderCartDetails(
-                      authID: authID,
-                      deliveryAddressID: state.address.key,
-                      totalItems: totalItems,
-                      isBulkOrderCart: isBulkOrderCart,
-                      isSampleRequested: isSampleRequested,
-                    ))),
-          ],
-          child: BlocBuilder<SelectAddressTypeBloc, SelectAddressTypeState>(
-            builder: (context, state) {
-              if (state is BuyNowDetailLoadingSucessfull) {
-                return TotalView(
-                  authID: authID,
-                  deliveryCharges: state.buyNowDetails.deliveryCharges,
-                  discount: state.buyNowDetails.discount,
-                  payingAmount: state.buyNowDetails.payingAmount,
-                  totalAmount: state.buyNowDetails.totalAmount,
-                  totalItems: state.buyNowDetails.totalItems,
-                  razorpayOrderID:
-                      state.buyNowDetails.paymentData.razorpayOrderID,
-                  orderID: state.buyNowDetails.paymentData.orderID,
-                  taxAmount: state.buyNowDetails.taxAmount,
-                  walletAmount: state.buyNowDetails.walletAmount,
-                );
-              } else if (state is NormalCartDetailLoadingSuccessfull) {
-                return TotalView(
-                  authID: authID,
-                  deliveryCharges: state.normalCartDetails.deliveryCharges,
-                  discount: state.normalCartDetails.discount,
-                  payingAmount: state.normalCartDetails.payingAmount,
-                  totalAmount: state.normalCartDetails.totalAmount,
-                  totalItems: state.normalCartDetails.totalItems,
-                  razorpayOrderID:
-                      state.normalCartDetails.paymentData.razorpayOrderID,
-                  orderID: state.normalCartDetails.paymentData.orderID,
-                  taxAmount: state.normalCartDetails.taxAmount,
-                  walletAmount: state.normalCartDetails.walletAmount,
-                );
-              } else if (state is BulkOrderDetailLoadingSuccessfull) {
-                return TotalView(
-                  authID: authID,
-                  totalBulkItems: state.totalItems,
-                  isBulkOrderCart: state.isBulkOrderCart,
-                  deliveryAddressID: state.deliveryAddressID,
-                  isSampleRequested: state.isSampleRequested,
-                );
-              }
-              return Container();
-            },
-          ),
-        );
-      }
-      return Container();
-    });
+    return TotalView();
+    // return BlocBuilder<SelectAddressBloc, SelectAddressState>(
+    //     builder: (context, state) {
+    //   if (state is SelectAddressDetailLoading) {
+    //     return Center(
+    //       child: CircularProgressIndicator(),
+    //     );
+    //   } else if (state is SelectAddressDetailLoadingSuccessful) {
+    //     deliveryAddressID = state.address.key;
+    //     return MultiBlocProvider(
+    //       providers: [
+    //         if (type == SelectAddressStateType.BUY_NOW)
+    //           BlocProvider(
+    //               create: (context) => SelectAddressTypeBloc(
+    //                   selectAddressTypeRepository:
+    //                       RepositoryProvider.of(context))
+    //                 ..add(LoadBuyNowDetails(
+    //                   authID: authID,
+    //                   deliveryAddressID: state.address.key,
+    //                   productID: productID,
+    //                   variantID: variantID,
+    //                 ))),
+    //         if (type == SelectAddressStateType.NORMAL_CART)
+    //           BlocProvider(
+    //               create: (context) => SelectAddressTypeBloc(
+    //                   selectAddressTypeRepository:
+    //                       RepositoryProvider.of(context))
+    //                 ..add(LoadNormalCartDetails(
+    //                   authID: authID,
+    //                   deliveryAddressID: state.address.key,
+    //                 ))),
+    //         if (type == SelectAddressStateType.BULK_ORDER)
+    //           BlocProvider(
+    //               create: (context) => SelectAddressTypeBloc(
+    //                   selectAddressTypeRepository:
+    //                       RepositoryProvider.of(context))
+    //                 ..add(LoadBulkOrderCartDetails(
+    //                   authID: authID,
+    //                   deliveryAddressID: state.address.key,
+    //                   totalItems: totalItems,
+    //                   isBulkOrderCart: isBulkOrderCart,
+    //                   isSampleRequested: isSampleRequested,
+    //                 ))),
+    //       ],
+    //       child: BlocBuilder<SelectAddressTypeBloc, SelectAddressTypeState>(
+    //         builder: (context, state) {
+    //           if (state is BuyNowDetailLoadingSucessfull) {
+    //             return TotalView(
+    //               authID: authID,
+    //               deliveryCharges: state.buyNowDetails.deliveryCharges,
+    //               discount: state.buyNowDetails.discount,
+    //               payingAmount: state.buyNowDetails.payingAmount,
+    //               totalAmount: state.buyNowDetails.totalAmount,
+    //               totalItems: state.buyNowDetails.totalItems,
+    //               razorpayOrderID:
+    //                   state.buyNowDetails.paymentData.razorpayOrderID,
+    //               orderID: state.buyNowDetails.paymentData.orderID,
+    //               taxAmount: state.buyNowDetails.taxAmount,
+    //               walletAmount: state.buyNowDetails.walletAmount,
+    //             );
+    //           } else if (state is NormalCartDetailLoadingSuccessfull) {
+    //             return TotalView(
+    //               authID: authID,
+    //               deliveryCharges: state.normalCartDetails.deliveryCharges,
+    //               discount: state.normalCartDetails.discount,
+    //               payingAmount: state.normalCartDetails.payingAmount,
+    //               totalAmount: state.normalCartDetails.totalAmount,
+    //               totalItems: state.normalCartDetails.totalItems,
+    //               razorpayOrderID:
+    //                   state.normalCartDetails.paymentData.razorpayOrderID,
+    //               orderID: state.normalCartDetails.paymentData.orderID,
+    //               taxAmount: state.normalCartDetails.taxAmount,
+    //               walletAmount: state.normalCartDetails.walletAmount,
+    //             );
+    //           } else if (state is BulkOrderDetailLoadingSuccessfull) {
+    //             return TotalView(
+    //               authID: authID,
+    //               totalBulkItems: state.totalItems,
+    //               isBulkOrderCart: state.isBulkOrderCart,
+    //               deliveryAddressID: state.deliveryAddressID,
+    //               isSampleRequested: state.isSampleRequested,
+    //             );
+    //           }
+    //           return Container();
+    //         },
+    //       ),
+    //     );
+    //   }
+    //   return Container();
+    // });
   }
 }
 
@@ -172,239 +174,227 @@ class TotalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5.0,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 8.0,
+    int paymentMode;
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => SelectPaymentBloc())],
+      child: Card(
+        elevation: 5.0,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 8.0,
+                ),
+                child: isBulkOrderCart == true
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            Strings.totalItems,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            totalItems.toString(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            Strings.subTotal + ' (${totalItems} Item):',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            totalAmount.toString(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
               ),
-              child: isBulkOrderCart == true
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          Strings.totalItems,
-                          style: TextStyle(
-                            fontSize: 18,
+
+              isBulkOrderCart == true
+                  ? SizedBox.fromSize()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 10.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(Strings.deliveryCharges),
+                          Text(deliveryCharges.toString()),
+                        ],
+                      ),
+                    ),
+
+              isBulkOrderCart == true
+                  ? SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10.0,
+                        horizontal: 8.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(Strings.discount),
+                          Text(discount.toString()),
+                        ],
+                      ),
+                    ),
+
+              Divider(
+                color: Colors.black,
+                thickness: 0.3,
+              ),
+
+              isBulkOrderCart == true
+                  ? SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            Strings.total,
+                            style: TextStyle(fontSize: 18),
                           ),
-                        ),
-                        Text(
-                          totalItems.toString(),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                          Text(
+                            payingAmount.toString(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                    ),
+
+              SizedBox(
+                height: 20,
+              ),
+
+              // Get Quotation Button
+              isBulkOrderCart == true
+                  ? GetQuotationButton(
+                      authID: authID,
+                      deliveryAddressID: deliveryAddressID,
+                      isSampleRequested: isSampleRequested,
                     )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                  : SizedBox.shrink(),
+
+              // Select Payment Method
+              isBulkOrderCart == true
+                  ? SizedBox.shrink()
+                  : SelectPaymentMethod(),
+
+              BlocConsumer<SelectPaymentBloc, SelectPaymentState>(
+                listener: (context, state) {
+                  if (state is LaunchSelectPaymentDialog) {
+                    return showDialog(
+                      context: context,
+                      builder: (BuildContext buildContext) {
+                        return SelectPaymentDialog(
+                          onAction: (val) =>
+                              BlocProvider.of<SelectPaymentBloc>(context)
+                                  .add(val),
+                        );
+                      },
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state is LoadSelectPayment) {
+                    if (state.paymentMode == 1) {
+                      paymentMode = 101;
+                    } else if (state.paymentMode == 2) {
+                      paymentMode = 102;
+                    } else if (state.paymentMode == 3) {
+                      paymentMode = 103;
+                    } else if (state.paymentMode == 4) {
+                      paymentMode = 104;
+                    } else if (state.paymentMode == 5) {
+                      paymentMode = 105;
+                    }
+                    return Column(
                       children: [
-                        Text(
-                          Strings.subTotal + ' (${totalItems} Item):',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                        // Promo Code
+                        GetPromoCode(
+                          authID: authID,
+                          payingAmount: payingAmount,
+                          paymentMode: paymentMode,
                         ),
-                        Text(
-                          totalAmount.toString(),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-            ),
-
-            isBulkOrderCart == true
-                ? SizedBox.fromSize()
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 10.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(Strings.deliveryCharges),
-                        Text(deliveryCharges.toString()),
-                      ],
-                    ),
-                  ),
-
-            isBulkOrderCart == true
-                ? SizedBox.shrink()
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10.0,
-                      horizontal: 8.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(Strings.discount),
-                        Text(discount.toString()),
-                      ],
-                    ),
-                  ),
-
-            Divider(
-              color: Colors.black,
-              thickness: 0.3,
-            ),
-
-            isBulkOrderCart == true
-                ? SizedBox.shrink()
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 8.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          Strings.total,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Text(
-                          payingAmount.toString(),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        ProceedToPayButton(
+                          // amount: payingAmount,
+                          // authID: authID,
+                          paymentMode: paymentMode,
                         ),
                       ],
-                    ),
-                  ),
+                    );
+                  }
+                  return Container();
+                },
+              ),
 
-            SizedBox(
-              height: 20,
-            ),
-
-            // BlocListener(
-            //   listener: (context, state) {
-            //     if (state is LaunchSelectPaymentDialog) {
-            //       return showDialog(
-            //         context: context,
-            //         builder: (BuildContext context) {
-            //           return SelectPaymentDialog(
-            //             onAction: (val) =>
-            //                 BlocProvider.of<SelectAddressTypeBloc>(context)
-            //                     .add(val),
-            //           );
-            //         },
-            //       );
-            //     }
-            //   },
-            //   child: BlocBuilder(builder: null),
-            // ),
-
-            // Select Payment Method
-            BlocConsumer<SelectAddressTypeBloc, SelectAddressTypeState>(
-              listener: (context, state) {
-                if (state is LaunchSelectPaymentDialog) {
-                  return showDialog(
-                    context: context,
-                    builder: (BuildContext buildContext) {
-                      return SelectPaymentDialog(
-                        onAction: (val) =>
-                            BlocProvider.of<SelectAddressTypeBloc>(context)
-                                .add(val),
-                      );
-                    },
-                  );
-                }
-              },
-              buildWhen: (previous, current) {
-                if (current is SelectAddressTypeState) {
-                  return false;
-                } else {
-                  return true;
-                }
-              },
-              builder: (context, state) {
-                if (state is PaymentMethodLoadingSuccessfull) {
-                  return Container(
-                    width: 30,
-                    height: 30,
-                    color: Colors.red,
-                    child: Text(state.paymentMode.toString()),
-                  );
-                }
-
-                return isBulkOrderCart == true
-                    ? SizedBox.shrink()
-                    : SelectPaymentMethod();
-              },
-            ),
-
-            // Promo Code
-            isBulkOrderCart == true
-                ? SizedBox.shrink()
-                : GetPromoCode(
-                    authID: authID,
-                    payingAmount: payingAmount,
-                    // paymentMode: paymentMode,
-                  ),
-
-            // Proceed To Pay Button
-            isBulkOrderCart == true
-                ? GetQuotationButton(
-                    authID: authID,
-                    deliveryAddressID: deliveryAddressID,
-                    isSampleRequested: isSampleRequested,
-                  )
-                : ProceedToPayButton(
-                    amount: payingAmount,
-                    authID: authID,
-                  ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  Strings.selectAddressNextStep,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.black45,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: Text(
-                    Strings.needHelp,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    Strings.selectAddressNextStep,
                     style: TextStyle(
-                      decoration: TextDecoration.underline,
+                      fontSize: 12,
+                      color: Colors.black45,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: Text(
+                      Strings.needHelp,
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -418,7 +408,7 @@ class SelectPaymentMethod extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          BlocProvider.of<SelectAddressTypeBloc>(context)
+          BlocProvider.of<SelectPaymentBloc>(context)
               .add(LoadSelectPaymentDialog());
         },
         child: Container(
@@ -445,8 +435,8 @@ class SelectPaymentMethod extends StatelessWidget {
 // Select Payment Method Dialog Box
 class SelectPaymentDialog extends StatefulWidget {
   final Function onAction;
-
-  const SelectPaymentDialog({Key key, this.onAction}) : super(key: key);
+  int selectedIndex;
+  SelectPaymentDialog({Key key, this.onAction}) : super(key: key);
   @override
   _SelectPaymentDialogState createState() => _SelectPaymentDialogState();
 }
@@ -454,7 +444,6 @@ class SelectPaymentDialog extends StatefulWidget {
 class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
   @override
   Widget build(BuildContext context) {
-    int selectedIndex;
     return Dialog(
       child: Container(
         height: MediaQuery.of(context).size.height * 0.6,
@@ -479,88 +468,167 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ChoiceChip(
-                    label: Text('Debit Card'),
-                    selected: selectedIndex == 1,
+                    label: Container(
+                      child: Row(
+                        children: [
+                          Ink.image(
+                            image: AssetImage('assets/images/debit_card.png'),
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.cover,
+                          ),
+                          Column(
+                            children: [
+                              Text('Debit Card'),
+                              Text('Visa, MasterCard, ...etc.')
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    selected: widget.selectedIndex == 1,
                     elevation: 10,
                     pressElevation: 5,
                     selectedShadowColor: Colors.blue,
                     shadowColor: Colors.teal,
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.white,
                     selectedColor: Colors.blue,
                     onSelected: (bool selected) {
                       setState(() {
                         if (selected) {
-                          selectedIndex = 1;
-                          print(selectedIndex);
+                          widget.selectedIndex = 1;
                         }
                       });
                     },
                   ),
                   ChoiceChip(
-                    label: Text('Credit Card'),
-                    selected: selectedIndex == 2,
+                    label: Container(
+                      child: Row(
+                        children: [
+                          Ink.image(
+                            image: AssetImage('assets/images/credit_card.png'),
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.cover,
+                          ),
+                          Column(
+                            children: [
+                              Text('Credit Card'),
+                              Text('Visa, MasterCard, ...etc.'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    selected: widget.selectedIndex == 2,
                     elevation: 10,
                     pressElevation: 5,
                     shadowColor: Colors.teal,
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.white,
                     selectedColor: Colors.red,
                     onSelected: (bool selected) {
                       setState(() {
                         if (selected) {
-                          selectedIndex = 2;
-                          print(selectedIndex);
+                          widget.selectedIndex = 2;
                         }
                       });
                     },
                   ),
                   ChoiceChip(
-                    label: Text('Netbanking'),
-                    selected: selectedIndex == 3,
+                    label: Container(
+                      child: Row(
+                        children: [
+                          Ink.image(
+                            image: AssetImage('assets/images/netbanking.png'),
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.cover,
+                          ),
+                          Column(
+                            children: [
+                              Text('Netbanking'),
+                              Text('HDFC, SBI, ICICI ...etc.'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    selected: widget.selectedIndex == 3,
                     elevation: 10,
                     pressElevation: 5,
                     shadowColor: Colors.teal,
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.white,
                     selectedColor: Colors.blue,
                     onSelected: (bool selected) {
                       setState(() {
                         if (selected) {
-                          selectedIndex = 3;
-                          print(selectedIndex);
+                          widget.selectedIndex = 3;
                         }
                       });
                     },
                   ),
                   ChoiceChip(
-                    label: Text('UPI'),
-                    selected: selectedIndex == 4,
+                    label: Container(
+                      child: Row(
+                        children: [
+                          Ink.image(
+                            image: AssetImage('assets/images/upi.png'),
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.cover,
+                          ),
+                          Column(
+                            children: [
+                              Text('UPI'),
+                              Text('Paytm, Gpay, Phonepe, ...etc.'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    selected: widget.selectedIndex == 4,
                     elevation: 10,
                     pressElevation: 5,
                     shadowColor: Colors.teal,
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.white,
                     selectedColor: Colors.blue,
                     onSelected: (bool selected) {
-                      print(selectedIndex);
-
                       setState(() {
                         if (selected) {
-                          selectedIndex = 4;
+                          widget.selectedIndex = 4;
                         }
                       });
                     },
                   ),
                   ChoiceChip(
-                    label: Text('Wallet'),
-                    selected: selectedIndex == 5,
+                    label: Container(
+                      child: Row(
+                        children: [
+                          Ink.image(
+                            image: AssetImage('assets/images/wallet.png'),
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.cover,
+                          ),
+                          Column(
+                            children: [
+                              Text('Wallet'),
+                              Text('PAYTM, ...etc.'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    selected: widget.selectedIndex == 5,
                     elevation: 10,
                     pressElevation: 5,
                     shadowColor: Colors.teal,
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.white,
                     selectedColor: Colors.blue,
                     onSelected: (bool selected) {
-                      print(selectedIndex);
                       setState(() {
                         if (selected) {
-                          selectedIndex = 5;
+                          widget.selectedIndex = 5;
                         }
                       });
                     },
@@ -576,12 +644,10 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
                 children: [
                   InkWell(
                     onTap: () {
-                      widget.onAction(
-                        PaymentMethod(
-                          paymentMode: selectedIndex,
-                        ),
-                      );
-                      Navigator.of(context).pop();
+                      if (widget.selectedIndex != null) {
+                        widget.onAction(GetSelectPayment(widget.selectedIndex));
+                        Navigator.of(context).pop();
+                      }
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -605,9 +671,12 @@ class GetPromoCode extends StatelessWidget {
   final double payingAmount;
   final int paymentMode;
 
-  const GetPromoCode(
-      {Key key, this.authID, this.payingAmount, this.paymentMode})
-      : super(key: key);
+  const GetPromoCode({
+    Key key,
+    this.authID,
+    this.payingAmount,
+    this.paymentMode,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     String promoCode;
@@ -661,9 +730,13 @@ class GetPromoCode extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  BlocProvider.of<CheckPromoCodeBloc>(context).add(
-                      CheckingPromoCodeAvailability(
-                          authID, payingAmount, paymentMode, promoCode));
+                  BlocProvider.of<CheckPromoCodeBloc>(context)
+                      .add(CheckingPromoCodeAvailability(
+                    authID,
+                    payingAmount,
+                    paymentMode,
+                    promoCode,
+                  ));
                 },
                 child: Text(
                   Strings.check,
@@ -718,23 +791,6 @@ class GetPromoCode extends StatelessWidget {
                           fontSize: 14,
                         ),
                       )
-                    // else if (state.checkPromoCodeAvailability.responseCode ==
-                    //     501)
-                    //   Text(
-                    //     Strings.notAvailable.toUpperCase(),
-                    //     style: TextStyle(
-                    //         color: Colors.red[500],
-                    //         fontWeight: FontWeight.normal,
-                    //         fontSize: 14),
-                    //   )
-                    // else
-                    //   Text(
-                    //     Strings.invalidPincode.toUpperCase(),
-                    //     style: TextStyle(
-                    //         color: Colors.orange,
-                    //         fontWeight: FontWeight.normal,
-                    //         fontSize: 14),
-                    //   ),
                   ],
                 );
               else if (state is PromoCodeDetailAvailabilityCheckingFailure)

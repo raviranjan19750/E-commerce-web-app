@@ -116,6 +116,11 @@ flutter:
     - assets/images/instagram.png
     - assets/images/linkedin.png
     - assets/images/twitter.png
+    - assets/images/upi.png
+    - assets/images/netbanking.png
+    - assets/images/wallet.png
+    - assets/images/debit_card.png
+    - assets/images/credit_card.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

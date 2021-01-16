@@ -65,5 +65,3 @@ class PaymentMethodLoadingSuccessfull extends SelectAddressTypeState {
 
   PaymentMethodLoadingSuccessfull({this.paymentMode});
 }
-
-class LaunchSelectPaymentDialog extends SelectAddressTypeState {}

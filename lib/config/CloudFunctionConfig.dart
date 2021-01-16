@@ -1,11 +1,11 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:living_desire/config/strings.dart';
-import 'package:universal_io/prefer_sdk/io.dart';
-
+import 'package:logger/logger.dart';
 import 'function_config.dart';
 import 'dart:js' as js;
+
+var LOG = Logger();
 
 class CloudFunctionConfig {
   static var res = "37b947579b10b34b066d1b01eb2636da1cba6f25";
@@ -16,8 +16,8 @@ class CloudFunctionConfig {
   };
 
   static Future<http.Response> post(String endPoint, var data) async {
-    return await http.post(FunctionConfig.host + endPoint,body: jsonEncode(data),
-        headers: headers);
+    return await http.post(FunctionConfig.host + endPoint,
+        body: jsonEncode(data), headers: headers);
   }
 
   static Future<http.Response> put(String endPoint, var data) async {

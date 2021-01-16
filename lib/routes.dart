@@ -13,7 +13,6 @@ import 'package:living_desire/extension/string_extension.dart';
 
 import 'dart:js' as js;
 
-
 import 'logger.dart';
 
 class Path {
@@ -93,6 +92,7 @@ class RoutesConfiguration {
       String isBulkOrderCart = data['isBulkOrderCart'];
       String isBuyNow = data['isBuyNow'];
       String isNormalCart = data['isNormalCart'];
+
       if (isBuyNow == "true") {
         return MyDesktopView(
           child: SelectAddressScreenDesktop(
