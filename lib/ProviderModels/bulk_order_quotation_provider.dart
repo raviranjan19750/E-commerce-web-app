@@ -61,7 +61,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
   Future<void> getSamplePaymentData(String key,String authID) async{
 
     final response =
-    await CloudFunctionConfig.post('managePayments/get-sample-order/$authID/$key', null);
+    await CloudFunctionConfig.post('managePayments/get-sample-order/$authID/$key', {});
     if(response.statusCode == 200){
 
       samplePayment = SamplePayment.fromJson(jsonDecode(response.body));
@@ -88,9 +88,10 @@ class BulkOrderQuotationProvider with ChangeNotifier{
   Future<void> getQuotationPaymentData(String key,String authID) async{
 
     final response =
-    await  CloudFunctionConfig.post('managePayments/get-custom-order/$authID/$key', null);
+    await  CloudFunctionConfig.post('managePayments/get-custom-order/$authID/$key',
+        {});
 
-    print("Quotation Payment Data  : "  + response.statusCode.toString());
+    print("Quotation Payment Data  : "  + response.body);
 
     if(response.statusCode == 200){
 

@@ -18,8 +18,8 @@ class QuotationPayment{
       tax: data['tax'],
       totalPayingAmount: data['totalPayingAmount'],
       unpaidAmount: data['unpaidAmount'],
-      razorpayOrderID: data['paymentData']['razorpayOrderID'],
-      orderID: data['paymentData']['orderID'],
+      razorpayOrderID:(data['paymentData']!=null)? data['paymentData']['razorpayOrderID']:null,
+      orderID: (data['paymentData']!=null)?data['paymentData']['orderID']:null,
       paidAmount: data['paidAmount'],
       deliveryCharges: data['deliveryCharges'],
 
