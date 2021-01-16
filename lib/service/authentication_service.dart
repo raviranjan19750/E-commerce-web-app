@@ -3,19 +3,11 @@ import 'dart:convert';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:hive/hive.dart';
-import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
-import 'package:living_desire/config/function_config.dart';
-import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/localCustomCart.dart';
 import 'package:living_desire/models/localNormalCart.dart';
-import 'package:living_desire/models/product.dart';
-import 'package:living_desire/models/user_detail.dart';
-import 'package:living_desire/service/sharedPreferences.dart';
-// import 'pa';
 
 class LogOutFailure implements Exception {}
 
@@ -42,23 +34,11 @@ class AuthenticationRepository {
     return await _firebaseAuth.signInWithPhoneNumber("+91" + phone);
   }
 
-  // Future<firebase_auth.UserCredential> verifyOTP(
-  //     String verification, firebase_auth.ConfirmationResult result) async {
-  //   return await result.confirm(verification);
-  // }
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
       return firebaseUser;
     });
   }
-
-  // Future<HttpsCallableResult> sendOtp(String phone) async {
-  //   HttpsCallable res =
-  //       FirebaseFunctions.instance.httpsCallable('sendVerifyOTP');
-  //   this.phone = phone;
-  //   // res.call()
-  //   return res.call(<String, dynamic>{"requestType": 1, "phone": phone});
-  // }
 
   Future<http.Response> sendOtp(String phone) async {
     this.phone = phone;
@@ -79,14 +59,6 @@ class AuthenticationRepository {
     return res.call(<String, dynamic>{"requestType": 2, "phone": this.phone});
   }
 
-  // Future<HttpsCallableResult> verifyOtp(String otp) async {
-  //   HttpsCallable res =
-  //       FirebaseFunctions.instance.httpsCallable('sendVerifyOTP');
-  //   // res.call()
-  //   return res.call(
-  //       <String, dynamic>{"requestType": 3, "phone": this.phone, "otp": otp});
-  // }
-
   Future<http.Response> verifyOtp(String otp) async {
     try {
       var data = {};
@@ -96,14 +68,6 @@ class AuthenticationRepository {
       print(e.toString());
     }
   }
-
-  // auth id phone nu
-  // function name?
-  // Future<HttpsCallableResult> createUser() async {
-  //   HttpsCallable res = FirebaseFunctions.instance.httpsCallable('createUser');
-  //   // res.call()
-  //   return res.call(<String, dynamic>{"phone": this.phone});
-  // }
 
   Future<http.Response> createUser() async {
     try {
@@ -150,16 +114,8 @@ class AuthenticationRepository {
       };
       print(data);
       print(json.encode(data));
-      final response = await http.post(
-        FunctionConfig.host + 'sendAnonymousDataToUser/$authID',
-        body: jsonEncode(data),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": Strings.bearerToken
-        },
-        // body: data
-      );
-      print("===================>     " + response.body);
+      final response = await CloudFunctionConfig.post(
+          'sendAnonymousDataToUser/$authID', data);
     } catch (e) {
       print(e.toString());
     }
@@ -178,29 +134,6 @@ class AuthenticationRepository {
       throw LoginWithTokenFailure();
     }
   }
-
-  // Future<String> sendUserDetailsData(String name, String email) async {
-  //   var data = {
-  //     "name": name,
-  //     "email": email,
-  //     "phone": this.phone,
-  //   };
-  //   final response = await http.post(
-  //     FunctionConfig.host + 'manageCustomerInfo/${this.uid}',
-  //     body: jsonEncode(data),
-  //     headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
-  //   );
-  //   return response.body;
-  // }
-
-  // Future<UserDetail> getUserDetailsData(String uid) async {
-  //   final response = await http.get(
-  //     FunctionConfig.host + 'manageCustomerInfo/$uid',
-  //   );
-  //   Map<String, dynamic> data = jsonDecode(response.body);
-  //   print("!!!!!!!!!!!!!!!!! " + response.body.toString());
-  //   return UserDetail.fromJson(data);
-  // }
 
   Future<void> logout() async {
     try {

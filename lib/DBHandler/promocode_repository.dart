@@ -1,13 +1,15 @@
 import 'dart:convert';
 
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
-import 'package:http/http.dart' as http;
 
 class PromoCodeUtils {
   Future<dynamic> getUserReferallCode(String authID) async {
     try {
-      final response = await http.get(
-          FunctionConfig.host + 'manageDiscountCoupons/my-referral/$authID');
+      final response = await CloudFunctionConfig.get(
+          'manageDiscountCoupons/my-referral/$authID');
+      // http.get(
+      //     FunctionConfig.host + 'manageDiscountCoupons/my-referral/$authID');
       print(response.body);
       var ref = jsonDecode(response.body);
       return ref;
@@ -21,8 +23,10 @@ class PromoCodeUtils {
     try {
       print(FunctionConfig.host +
           'manageDiscountCoupons/check-validity/$authID/$promoCode'.toString());
-      final response = await http.post(FunctionConfig.host +
-          'manageDiscountCoupons/check-validity/$authID/$promoCode');
+      final response = await CloudFunctionConfig.post(
+          'manageDiscountCoupons/check-validity/$authID/$promoCode', {});
+      // http.post(FunctionConfig.host +
+      //     'manageDiscountCoupons/check-validity/$authID/$promoCode');
       print(response.statusCode);
       switch (response.statusCode) {
         case 200:
@@ -44,6 +48,18 @@ class PromoCodeUtils {
           return response.body.toString();
           break;
         case 506:
+          return response.body.toString();
+          break;
+        case 507:
+          return response.body.toString();
+          break;
+        case 508:
+          return response.body.toString();
+          break;
+        case 509:
+          return response.body.toString();
+          break;
+        case 510:
           return response.body.toString();
           break;
         default:
