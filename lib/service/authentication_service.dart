@@ -64,8 +64,8 @@ class AuthenticationRepository {
     this.phone = phone;
     var res;
     try {
-      Map<String, dynamic> data = {"requestType": 1, "phone": phone};
-      res = CloudFunctionConfig.post("sendVerifyOTP", data);
+      Map<String, dynamic> data = {};
+      res = CloudFunctionConfig.post("sendVerifyOTP/sendOTP/$phone", data);
     } catch (e) {
       print("send otp" + e.toString());
     }
@@ -89,8 +89,9 @@ class AuthenticationRepository {
 
   Future<http.Response> verifyOtp(String otp) async {
     try {
-      var data = {"requestType": 3, "phone": this.phone, "otp": otp};
-      return CloudFunctionConfig.post("sendVerifyOTP/", data);
+      var data = {};
+      return CloudFunctionConfig.post(
+          "sendVerifyOTP/verifyOTP/${this.phone}/$otp", data);
     } catch (e) {
       print(e.toString());
     }
@@ -106,8 +107,8 @@ class AuthenticationRepository {
 
   Future<http.Response> createUser() async {
     try {
-      var data = {"phone": this.phone};
-      return CloudFunctionConfig.post("createUser/", data);
+      var data = {};
+      return CloudFunctionConfig.post("createUser/${this.phone}", data);
     } catch (e) {
       print(e.toString());
     }

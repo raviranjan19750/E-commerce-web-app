@@ -12,25 +12,30 @@ import 'package:living_desire/models/comboProduct.dart';
 class ProductRepository {
   var LOG = LogBuilder.getLogger();
 
-  Future<ProductDetail> getProductVariantDescription({String productID, String variantID, String authID}) async {
-
-    LOG.i('Fetching Product Description for Product ID ${productID},  VarientId ${variantID} and $authID)');
+  Future<ProductDetail> getProductVariantDescription(
+      {String productID, String variantID, String authID}) async {
+    LOG.i(
+        'Fetching Product Description for Product ID ${productID},  VarientId ${variantID} and $authID)');
 
     Map<String, dynamic> data = {
       "authID": authID,
     };
-    final response = await CloudFunctionConfig.post("manageProductDetails/details/$productID/$variantID", data);
+    final response = await CloudFunctionConfig.post(
+        "manageProductDetails/details/$productID/$variantID", data);
     Map<String, dynamic> map = jsonDecode(response.body);
     return ProductDetail.fromJson(map);
   }
 
-  Future<ComboProduct> getComboProductDescription({String productID, String authID}) async {
-    LOG.i('Fetching Combo Product Description for Product ID $productID and #$authID)');
+  Future<ComboProduct> getComboProductDescription(
+      {String productID, String authID}) async {
+    LOG.i(
+        'Fetching Combo Product Description for Product ID $productID and #$authID)');
 
     Map<String, dynamic> data = {
       "authID": authID,
     };
-    final response = await CloudFunctionConfig.post("manageCombo/details/$productID/", data);
+    final response =
+        await CloudFunctionConfig.post("manageCombo/details/$productID/", data);
     var result = jsonDecode(response.body);
 
     List<String> imgUrls = List();
@@ -57,32 +62,24 @@ class ProductRepository {
         isAvailable: result["data"]['isAvailable']);
   }
 
-  Future<CheckProductAvailability> checkProductAvailability({String pincode, String productID, String variantID}) async {
-
-    Map<String, dynamic> data = {
-      "pincode": pincode,
-      "productID": productID,
-      "variantID": variantID,
-    };
-    
-    final response = await CloudFunctionConfig.post("checkPincodeAvailability", data);
-    print(response.toString());
+  Future<CheckProductAvailability> checkProductAvailability(
+      {String pincode, String productID, String variantID}) async {
+    print("inside checkproduct availability");
+    final response = await CloudFunctionConfig.get(
+        "checkPincodeAvailability/$pincode/$variantID");
+    print(response.toString() + response.statusCode.toString());
     Map<String, dynamic> map = jsonDecode(response.body);
     return CheckProductAvailability.fromJson(map);
   }
 
   Future<dynamic> getSizeChart({String type, String subType}) async {
-
     LOG.i('Fetching size chart for type $type and #$subType)');
 
-    Map<String, dynamic> data = {
-      "type": type,
-      "subType" : subType
-    };
-    
-    final response = await CloudFunctionConfig.post("manageSizeChart/details", data);
+    Map<String, dynamic> data = {"type": type, "subType": subType};
+
+    final response =
+        await CloudFunctionConfig.post("manageSizeChart/details", data);
     var result = jsonDecode(response.body);
     return result;
-
   }
 }

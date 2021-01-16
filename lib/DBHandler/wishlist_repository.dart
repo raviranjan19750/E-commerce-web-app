@@ -1,3 +1,4 @@
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/models.dart';
@@ -9,8 +10,8 @@ class WishlistRepository {
   Future<List<Wishlist>> getWishlistDetails(String authID) async {
     try {
       print('Sending Wishlist Http Request');
-      final response =
-          await http.get(FunctionConfig.host + 'manageWishlist/${authID}');
+      final response = await CloudFunctionConfig.get('manageWishlist/$authID');
+      // http.get(FunctionConfig.host + 'manageWishlist/${authID}');
       if (response.statusCode == 200) {
         print(jsonDecode(response.body).toString());
         return (jsonDecode(response.body) as List)
