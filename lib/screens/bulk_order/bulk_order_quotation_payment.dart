@@ -4,14 +4,14 @@ import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
-import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/QuotationPayment.dart';
 import 'package:living_desire/screens/bulk_order/quotation_razor_pay.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:living_desire/widgets/order_screen/tracking_status_bar.dart';
-import 'package:http/http.dart' as http;
+import 'dart:html' as html;
+
 
 class BulkOrderQuotationPayment extends StatelessWidget{
 
@@ -19,9 +19,9 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
   bool isPaid;
 
-  String name,email,orderKey;
+  String name,email,orderKey,orderInvoiceUrl;
 
-  BulkOrderQuotationPayment({this.quotationPayment,this.isPaid,this.orderKey});
+  BulkOrderQuotationPayment({this.quotationPayment,this.isPaid,this.orderKey,this.orderInvoiceUrl});
 
   ArsProgressDialog progressDialog;
 
@@ -246,6 +246,7 @@ class BulkOrderQuotationPayment extends StatelessWidget{
     progressDialog.show();
 
   }
+
 
   ArsProgressDialog createProgressDialog(BuildContext context,String message){
 
@@ -506,7 +507,7 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
         Visibility(
 
-          visible: !isPaid,
+          visible: !(quotationPayment.totalPayingAmount == 0 && quotationPayment.unpaidAmount == 0),
 
           child: Container(
 
@@ -544,7 +545,39 @@ class BulkOrderQuotationPayment extends StatelessWidget{
             ),
           ),
 
-          replacement: TrackingStatusBar(),
+          replacement: Column(
+
+            crossAxisAlignment: CrossAxisAlignment.center,
+
+            children: [
+
+              Container(
+
+                alignment: Alignment.center,
+
+                margin: EdgeInsets.symmetric(vertical: 16,horizontal: 16),
+
+                child: RaisedButton(
+
+
+                  padding: EdgeInsets.only(left: 80,right: 80,top: 24,bottom: 24),
+
+                  onPressed: ()  {
+
+                    html.window.open(orderInvoiceUrl, '');
+
+                  },
+
+                  color: Palette.secondaryColor,
+
+                  child: Text('Download Invoice',style: TextStyle(color: Colors.white,fontSize: 24),),
+
+                ),
+              ),
+
+              TrackingStatusBar(),
+            ],
+          ),
         ),
 
       ],

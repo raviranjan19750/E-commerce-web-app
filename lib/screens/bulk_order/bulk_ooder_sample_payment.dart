@@ -1,13 +1,14 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/SamplePayment.dart';
 import 'package:living_desire/screens/bulk_order/quotation_razor_pay.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:living_desire/widgets/order_screen/tracking_status_bar.dart';
+import 'dart:html' as html;
 
 
 class BulkOrderSamplePayment extends StatelessWidget{
@@ -16,11 +17,11 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
   bool isPaid;
 
-  String name,email,orderKey;
+  String name,email,orderKey,sampleInvoiceURL;
 
   ArsProgressDialog progressDialog;
 
-  BulkOrderSamplePayment({this.samplePayment,this.isPaid,this.orderKey});
+  BulkOrderSamplePayment({this.samplePayment,this.isPaid,this.orderKey,this.sampleInvoiceURL});
 
   void dismissProgressDialog(){
     progressDialog.dismiss();
@@ -83,7 +84,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
   Future<void> getProfileDetails(String authID,BuildContext context) async {
 
     final response =
-    await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
+    await CloudFunctionConfig.get('manageCustomerInfo/$authID');
 
     dismissProgressDialog();
 
@@ -254,7 +255,39 @@ class BulkOrderSamplePayment extends StatelessWidget{
               ),
             ),
 
-            replacement: Container( alignment: Alignment.center,child: TrackingStatusBar()),
+            replacement: Container( alignment: Alignment.center,child: Column(
+
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+              children: [
+
+                Container(
+
+                  alignment: Alignment.center,
+
+                  margin: EdgeInsets.symmetric(vertical: 16,horizontal: 16),
+
+                  child: RaisedButton(
+
+
+                    padding: EdgeInsets.only(left: 80,right: 80,top: 24,bottom: 24),
+
+                    onPressed: ()  {
+
+                      html.window.open(sampleInvoiceURL, '');
+
+                    },
+
+                    color: Palette.secondaryColor,
+
+                    child: Text('Download Invoice',style: TextStyle(color: Colors.white,fontSize: 24),),
+
+                  ),
+                ),
+
+                TrackingStatusBar(),
+              ],
+            ),),
           ),
 
         ],

@@ -31,7 +31,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
         children: [
 
-          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,)),
+          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,)),
 
           Visibility(
 
@@ -44,7 +44,7 @@ class BulkOrderQuotation extends StatelessWidget{
             ),
           ),
 
-          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,)),
+          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,)),
 
 
 
@@ -61,7 +61,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
         children: [
 
-          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,)),
+          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,)),
 
           Visibility(
 
@@ -74,7 +74,7 @@ class BulkOrderQuotation extends StatelessWidget{
             ),
           ),
 
-          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,)),
+          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,)),
 
 
         ],
