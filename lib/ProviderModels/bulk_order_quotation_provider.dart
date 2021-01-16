@@ -88,8 +88,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
   Future<void> getQuotationPaymentData(String key,String authID) async{
 
     final response =
-    await  CloudFunctionConfig.post('managePayments/get-custom-order/$authID/$key',
-        {});
+    await  CloudFunctionConfig.post('managePayments/get-custom-order/$authID/$key', {});
 
     print("Quotation Payment Data  : "  + response.body);
 

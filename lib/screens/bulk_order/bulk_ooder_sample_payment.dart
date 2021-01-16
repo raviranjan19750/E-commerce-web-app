@@ -99,7 +99,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
     }
 
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuotationRazorPay(phone: FirebaseAuth.instance.currentUser.phoneNumber,
-      payingAmount: samplePayment.totalPayingAmount,
+      totalPayingAmount: samplePayment.totalPayingAmount,
       authID:FirebaseAuth.instance.currentUser.uid,
       orderID: samplePayment.orderID,
       razorPayOrderID: samplePayment.razorpayOrderID,

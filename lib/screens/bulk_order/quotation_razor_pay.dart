@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
@@ -16,12 +17,13 @@ import '../../routes.dart';
 class QuotationRazorPay extends StatelessWidget {
 
   String phone,name,email,authID,orderID,razorPayOrderID;
-  double payingAmount,deliveryCharges;
+  double totalPayingAmount,deliveryCharges,payingAmount;
   bool samplePayment;
   String orderKey;
 
   QuotationRazorPay({
     this.phone,
+    this.totalPayingAmount,
     this.payingAmount,
     this.name,
     this.email,
@@ -112,8 +114,7 @@ class QuotationRazorPay extends StatelessWidget {
     };
 
     final response =
-        await http.post(FunctionConfig.host + 'managePayments/sample-payment-done/$authID/$orderKey',body: jsonEncode(data), headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
-
+        await CloudFunctionConfig.post('managePayments/sample-payment-done/$authID/$orderKey', data);
     dismissProgressDialog();
 
     print("Payment Status  : " + response.statusCode.toString() + "Message  : " + response.body);
@@ -136,12 +137,13 @@ class QuotationRazorPay extends StatelessWidget {
     var data = {
 
       "orderID" : orderID,
-      "deliveryCharges" : deliveryCharges,
+      "payingAmount" : payingAmount,
       "razorpayData" : {
 
         "razorpayPaymentID":razorpayID,
         "razorpaySignature":razorpaySignature,
-        "amount": payingAmount,
+        "razorpayOrderID":razorPayOrderID,
+        "amount": totalPayingAmount,
         "paymentMode" :101,
 
       },
@@ -150,18 +152,22 @@ class QuotationRazorPay extends StatelessWidget {
     };
 
 
-    final response =
-    await http.post(FunctionConfig.host + 'managePayments/custom-payment-done/$authID/$key', body: jsonEncode(data), headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
+    final response = await CloudFunctionConfig.post('managePayments/custom-payment-done/$authID/$key', data);
 
+    dismissProgressDialog();
+
+    print("Response  : "  + response.statusCode.toString());
 
     if(response.statusCode == 200){
 
 
       Map<String,dynamic> map = jsonDecode(response.body);
 
+      locator<NavigationService>().navigateTo(RoutesConfiguration.BULK_ORDER_QUOTATION, queryParams: {"key": orderKey});
+
     }
 
-    dismissProgressDialog();
+
 
 
   }
@@ -219,7 +225,7 @@ class QuotationRazorPay extends StatelessWidget {
       console.log("Razor pay options");
        var options = {
          "key": "rzp_test_U8mKfCB97ZZlEj",
-          "amount": ${payingAmount*100}, "currency": "INR",
+          "amount": ${totalPayingAmount*100}, "currency": "INR",
           "name": "Living Desire",
           "description": "Test Transaction",
           "image": "https://example.com/your_logo",

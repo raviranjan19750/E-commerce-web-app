@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
@@ -27,6 +28,216 @@ class BulkOrderQuotationPayment extends StatelessWidget{
   void dismissProgressDialog(){
     progressDialog.dismiss();
   }
+
+  void showPaymentDialog(BuildContext context){
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+
+        return Dialog(
+
+          child: Container(
+
+            height: MediaQuery.of(context).size.height * 0.6,
+            width: MediaQuery.of(context).size.width * 0.6,
+
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Select Payment Method
+                  Text(
+                    Strings.selectPaymentMethod,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ChoiceChip(
+                        label: Container(
+                          child: Row(
+                            children: [
+                              Ink.image(
+                                image: AssetImage('assets/images/debit_card.png'),
+                                height: 40,
+                                width: 40,
+                                fit: BoxFit.cover,
+                              ),
+                              Column(
+                                children: [
+                                  Text('Debit Card'),
+                                  Text('Visa, MasterCard, ...etc.')
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        selected: true,
+                        elevation: 10,
+                        pressElevation: 5,
+                        selectedShadowColor: Colors.blue,
+                        shadowColor: Colors.teal,
+                        backgroundColor: Colors.white,
+                        selectedColor: Colors.blue,
+                        onSelected: (bool selected) {
+
+                        },
+                      ),
+                      ChoiceChip(
+                        label: Container(
+                          child: Row(
+                            children: [
+                              Ink.image(
+                                image: AssetImage('assets/images/credit_card.png'),
+                                height: 40,
+                                width: 40,
+                                fit: BoxFit.cover,
+                              ),
+                              Column(
+                                children: [
+                                  Text('Credit Card'),
+                                  Text('Visa, MasterCard, ...etc.'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        selected: false,
+                        elevation: 10,
+                        pressElevation: 5,
+                        shadowColor: Colors.teal,
+                        backgroundColor: Colors.white,
+                        selectedColor: Colors.red,
+                        onSelected: (bool selected) {
+
+                        },
+                      ),
+                      ChoiceChip(
+                        label: Container(
+                          child: Row(
+                            children: [
+                              Ink.image(
+                                image: AssetImage('assets/images/netbanking.png'),
+                                height: 40,
+                                width: 40,
+                                fit: BoxFit.cover,
+                              ),
+                              Column(
+                                children: [
+                                  Text('Netbanking'),
+                                  Text('HDFC, SBI, ICICI ...etc.'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        selected: false,
+                        elevation: 10,
+                        pressElevation: 5,
+                        shadowColor: Colors.teal,
+                        backgroundColor: Colors.white,
+                        selectedColor: Colors.blue,
+                        onSelected: (bool selected) {
+
+                        },
+                      ),
+                      ChoiceChip(
+                        label: Container(
+                          child: Row(
+                            children: [
+                              Ink.image(
+                                image: AssetImage('assets/images/upi.png'),
+                                height: 40,
+                                width: 40,
+                                fit: BoxFit.cover,
+                              ),
+                              Column(
+                                children: [
+                                  Text('UPI'),
+                                  Text('Paytm, Gpay, Phonepe, ...etc.'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        selected: false,
+                        elevation: 10,
+                        pressElevation: 5,
+                        shadowColor: Colors.teal,
+                        backgroundColor: Colors.white,
+                        selectedColor: Colors.blue,
+                        onSelected: (bool selected) {
+
+                        },
+                      ),
+                      ChoiceChip(
+                        label: Container(
+                          child: Row(
+                            children: [
+                              Ink.image(
+                                image: AssetImage('assets/images/wallet.png'),
+                                height: 40,
+                                width: 40,
+                                fit: BoxFit.cover,
+                              ),
+                              Column(
+                                children: [
+                                  Text('Wallet'),
+                                  Text('PAYTM, ...etc.'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        selected: false,
+                        elevation: 10,
+                        pressElevation: 5,
+                        shadowColor: Colors.teal,
+                        backgroundColor: Colors.white,
+                        selectedColor: Colors.blue,
+                        onSelected: (bool selected) {
+
+                        },
+                      ),
+                    ],
+                  ),
+                  // Submit Button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: Text(Strings.submit),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+      }
+    );
+
+  }
+
 
   void showProgressDialog(BuildContext context,String message){
 
@@ -85,7 +296,7 @@ class BulkOrderQuotationPayment extends StatelessWidget{
   Future<void> getProfileDetails(String authID,BuildContext context) async {
 
     final response =
-    await http.get(FunctionConfig.host + 'manageCustomerInfo/$authID', headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},);
+    await CloudFunctionConfig.get('manageCustomerInfo/$authID');
 
     dismissProgressDialog();
 
@@ -100,8 +311,10 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
     }
 
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuotationRazorPay(phone: FirebaseAuth.instance.currentUser.phoneNumber,
-      payingAmount: quotationPayment.totalPayingAmount,
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuotationRazorPay(
+      phone: FirebaseAuth.instance.currentUser.phoneNumber,
+      totalPayingAmount: quotationPayment.totalPayingAmount,
+      payingAmount: quotationPayment.payingAmount,
       authID:FirebaseAuth.instance.currentUser.uid,
       orderID: quotationPayment.orderID,
       razorPayOrderID: quotationPayment.razorpayOrderID,
@@ -110,6 +323,8 @@ class BulkOrderQuotationPayment extends StatelessWidget{
       orderKey: orderKey,
       name: (name!=null)?name:"",
       email: (email!=null)?email:"",)));
+
+    //showPaymentDialog(context);
 
   }
 
