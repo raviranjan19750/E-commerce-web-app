@@ -41,18 +41,20 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
   Future<int> newUserCreation() async {
     try {
-      HttpsCallableResult res = await authService.createUser();
+      var res = await authService.createUser();
+      // HttpsCallableResult res = await authService.createUser();
       // print("inside signinsucc" + res.data.toString());
       // var map = jsonDecode(res.data);
-      int code = res.data['responseCode'];
+      // int code = res.data['responseCode'];
+      int code = res.statusCode;
       // int code = map['responseCode'];
       // print("Create user code" + code.toString());
       switch (code) {
         case 200:
           // print("new user created... signing in");
           // print(res.data['token']);
-          String customToken = res.data['token'];
-          int usertype = res.data['userType'];
+          String customToken = jsonDecode(res.body)['token'];
+          int usertype = jsonDecode(res.body)['userType'];
           // TODO :
           // add auth id to local storage
           // push local changesd to firebase
@@ -80,9 +82,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Stream<SignInState> _sendOtp(SendOTP event) async* {
     yield SendingOTP();
     try {
-      HttpsCallableResult res = await authService.sendOtp(event.phoneNumber);
-      // var map = jsonDecode(res.data);
-      int code = res.data['responseCode'];
+      var res = await authService.sendOtp(event.phoneNumber);
+      int code = res.statusCode;
       print("response : " + code.toString());
       switch (code) {
         case 200:
@@ -105,12 +106,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Stream<SignInState> _verifyotp(VerifyOTP event) async* {
     yield VerifyingOTP();
     try {
-      HttpsCallableResult res =
-          await authService.verifyOtp(event.verificationCode);
-      print(res.data.toString());
-      // var map = jsonDecode(res.data);
-      // int code = map['responseCode'];
-      int code = res.data['responseCode'];
+      var res = await authService.verifyOtp(event.verificationCode);
+      int code = res.statusCode;
       print(" verify otp response : " + code.toString());
       switch (code) {
         case 200:

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/localCustomCart.dart';
@@ -51,12 +52,24 @@ class AuthenticationRepository {
     });
   }
 
-  Future<HttpsCallableResult> sendOtp(String phone) async {
-    HttpsCallable res =
-        FirebaseFunctions.instance.httpsCallable('sendVerifyOTP');
+  // Future<HttpsCallableResult> sendOtp(String phone) async {
+  //   HttpsCallable res =
+  //       FirebaseFunctions.instance.httpsCallable('sendVerifyOTP');
+  //   this.phone = phone;
+  //   // res.call()
+  //   return res.call(<String, dynamic>{"requestType": 1, "phone": phone});
+  // }
+
+  Future<http.Response> sendOtp(String phone) async {
     this.phone = phone;
-    // res.call()
-    return res.call(<String, dynamic>{"requestType": 1, "phone": phone});
+    var res;
+    try {
+      var data = {"requestType": 1, "phone": phone};
+      res = CloudFunctionConfig.post("sendVerifyOTP", data);
+    } catch (e) {
+      print("send otp" + e.toString());
+    }
+    return res;
   }
 
   Future<HttpsCallableResult> resendOtp() async {
@@ -66,20 +79,38 @@ class AuthenticationRepository {
     return res.call(<String, dynamic>{"requestType": 2, "phone": this.phone});
   }
 
-  Future<HttpsCallableResult> verifyOtp(String otp) async {
-    HttpsCallable res =
-        FirebaseFunctions.instance.httpsCallable('sendVerifyOTP');
-    // res.call()
-    return res.call(
-        <String, dynamic>{"requestType": 3, "phone": this.phone, "otp": otp});
+  // Future<HttpsCallableResult> verifyOtp(String otp) async {
+  //   HttpsCallable res =
+  //       FirebaseFunctions.instance.httpsCallable('sendVerifyOTP');
+  //   // res.call()
+  //   return res.call(
+  //       <String, dynamic>{"requestType": 3, "phone": this.phone, "otp": otp});
+  // }
+
+  Future<http.Response> verifyOtp(String otp) async {
+    try {
+      var data = {"requestType": 3, "phone": this.phone, "otp": otp};
+      return CloudFunctionConfig.post("sendVerifyOTP/", data);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   // auth id phone nu
   // function name?
-  Future<HttpsCallableResult> createUser() async {
-    HttpsCallable res = FirebaseFunctions.instance.httpsCallable('createUser');
-    // res.call()
-    return res.call(<String, dynamic>{"phone": this.phone});
+  // Future<HttpsCallableResult> createUser() async {
+  //   HttpsCallable res = FirebaseFunctions.instance.httpsCallable('createUser');
+  //   // res.call()
+  //   return res.call(<String, dynamic>{"phone": this.phone});
+  // }
+
+  Future<http.Response> createUser() async {
+    try {
+      var data = {"phone": this.phone};
+      return CloudFunctionConfig.post("createUser/", data);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future<void> signInAnony() async {
@@ -121,7 +152,10 @@ class AuthenticationRepository {
       final response = await http.post(
         FunctionConfig.host + 'sendAnonymousDataToUser/$authID',
         body: jsonEncode(data),
-        headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": Strings.bearerToken
+        },
         // body: data
       );
       print("===================>     " + response.body);
