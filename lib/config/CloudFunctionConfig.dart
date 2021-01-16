@@ -16,7 +16,8 @@ class CloudFunctionConfig {
     print("bearer key : " + res1.toString());
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: "application/json", // or whatever
-      HttpHeaders.authorizationHeader: "Bearer $res1",
+      HttpHeaders.authorizationHeader:
+          "Bearer 37b947579b10b34b066d1b01eb2636da1cba6f25",
     };
     return await http.post(FunctionConfig.host + endPoint,
         body: jsonEncode(data), headers: headers);

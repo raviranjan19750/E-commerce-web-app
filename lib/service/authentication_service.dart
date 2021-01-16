@@ -64,7 +64,7 @@ class AuthenticationRepository {
     this.phone = phone;
     var res;
     try {
-      var data = {"requestType": 1, "phone": phone};
+      Map<String, dynamic> data = {"requestType": 1, "phone": phone};
       res = CloudFunctionConfig.post("sendVerifyOTP", data);
     } catch (e) {
       print("send otp" + e.toString());
