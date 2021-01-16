@@ -45,96 +45,96 @@ class SelectAddressCartTotal extends StatelessWidget {
     } else {
       isBulkOrderCart = false;
     }
-    return TotalView();
-    // return BlocBuilder<SelectAddressBloc, SelectAddressState>(
-    //     builder: (context, state) {
-    //   if (state is SelectAddressDetailLoading) {
-    //     return Center(
-    //       child: CircularProgressIndicator(),
-    //     );
-    //   } else if (state is SelectAddressDetailLoadingSuccessful) {
-    //     deliveryAddressID = state.address.key;
-    //     return MultiBlocProvider(
-    //       providers: [
-    //         if (type == SelectAddressStateType.BUY_NOW)
-    //           BlocProvider(
-    //               create: (context) => SelectAddressTypeBloc(
-    //                   selectAddressTypeRepository:
-    //                       RepositoryProvider.of(context))
-    //                 ..add(LoadBuyNowDetails(
-    //                   authID: authID,
-    //                   deliveryAddressID: state.address.key,
-    //                   productID: productID,
-    //                   variantID: variantID,
-    //                 ))),
-    //         if (type == SelectAddressStateType.NORMAL_CART)
-    //           BlocProvider(
-    //               create: (context) => SelectAddressTypeBloc(
-    //                   selectAddressTypeRepository:
-    //                       RepositoryProvider.of(context))
-    //                 ..add(LoadNormalCartDetails(
-    //                   authID: authID,
-    //                   deliveryAddressID: state.address.key,
-    //                 ))),
-    //         if (type == SelectAddressStateType.BULK_ORDER)
-    //           BlocProvider(
-    //               create: (context) => SelectAddressTypeBloc(
-    //                   selectAddressTypeRepository:
-    //                       RepositoryProvider.of(context))
-    //                 ..add(LoadBulkOrderCartDetails(
-    //                   authID: authID,
-    //                   deliveryAddressID: state.address.key,
-    //                   totalItems: totalItems,
-    //                   isBulkOrderCart: isBulkOrderCart,
-    //                   isSampleRequested: isSampleRequested,
-    //                 ))),
-    //       ],
-    //       child: BlocBuilder<SelectAddressTypeBloc, SelectAddressTypeState>(
-    //         builder: (context, state) {
-    //           if (state is BuyNowDetailLoadingSucessfull) {
-    //             return TotalView(
-    //               authID: authID,
-    //               deliveryCharges: state.buyNowDetails.deliveryCharges,
-    //               discount: state.buyNowDetails.discount,
-    //               payingAmount: state.buyNowDetails.payingAmount,
-    //               totalAmount: state.buyNowDetails.totalAmount,
-    //               totalItems: state.buyNowDetails.totalItems,
-    //               razorpayOrderID:
-    //                   state.buyNowDetails.paymentData.razorpayOrderID,
-    //               orderID: state.buyNowDetails.paymentData.orderID,
-    //               taxAmount: state.buyNowDetails.taxAmount,
-    //               walletAmount: state.buyNowDetails.walletAmount,
-    //             );
-    //           } else if (state is NormalCartDetailLoadingSuccessfull) {
-    //             return TotalView(
-    //               authID: authID,
-    //               deliveryCharges: state.normalCartDetails.deliveryCharges,
-    //               discount: state.normalCartDetails.discount,
-    //               payingAmount: state.normalCartDetails.payingAmount,
-    //               totalAmount: state.normalCartDetails.totalAmount,
-    //               totalItems: state.normalCartDetails.totalItems,
-    //               razorpayOrderID:
-    //                   state.normalCartDetails.paymentData.razorpayOrderID,
-    //               orderID: state.normalCartDetails.paymentData.orderID,
-    //               taxAmount: state.normalCartDetails.taxAmount,
-    //               walletAmount: state.normalCartDetails.walletAmount,
-    //             );
-    //           } else if (state is BulkOrderDetailLoadingSuccessfull) {
-    //             return TotalView(
-    //               authID: authID,
-    //               totalBulkItems: state.totalItems,
-    //               isBulkOrderCart: state.isBulkOrderCart,
-    //               deliveryAddressID: state.deliveryAddressID,
-    //               isSampleRequested: state.isSampleRequested,
-    //             );
-    //           }
-    //           return Container();
-    //         },
-    //       ),
-    //     );
-    //   }
-    //   return Container();
-    // });
+    // return TotalView();
+    return BlocBuilder<SelectAddressBloc, SelectAddressState>(
+        builder: (context, state) {
+      if (state is SelectAddressDetailLoading) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (state is SelectAddressDetailLoadingSuccessful) {
+        deliveryAddressID = state.address.key;
+        return MultiBlocProvider(
+          providers: [
+            if (type == SelectAddressStateType.BUY_NOW)
+              BlocProvider(
+                  create: (context) => SelectAddressTypeBloc(
+                      selectAddressTypeRepository:
+                          RepositoryProvider.of(context))
+                    ..add(LoadBuyNowDetails(
+                      authID: authID,
+                      deliveryAddressID: state.address.key,
+                      productID: productID,
+                      variantID: variantID,
+                    ))),
+            if (type == SelectAddressStateType.NORMAL_CART)
+              BlocProvider(
+                  create: (context) => SelectAddressTypeBloc(
+                      selectAddressTypeRepository:
+                          RepositoryProvider.of(context))
+                    ..add(LoadNormalCartDetails(
+                      authID: authID,
+                      deliveryAddressID: state.address.key,
+                    ))),
+            if (type == SelectAddressStateType.BULK_ORDER)
+              BlocProvider(
+                  create: (context) => SelectAddressTypeBloc(
+                      selectAddressTypeRepository:
+                          RepositoryProvider.of(context))
+                    ..add(LoadBulkOrderCartDetails(
+                      authID: authID,
+                      deliveryAddressID: state.address.key,
+                      totalItems: totalItems,
+                      isBulkOrderCart: isBulkOrderCart,
+                      isSampleRequested: isSampleRequested,
+                    ))),
+          ],
+          child: BlocBuilder<SelectAddressTypeBloc, SelectAddressTypeState>(
+            builder: (context, state) {
+              if (state is BuyNowDetailLoadingSucessfull) {
+                return TotalView(
+                  authID: authID,
+                  deliveryCharges: state.buyNowDetails.deliveryCharges,
+                  discount: state.buyNowDetails.discount,
+                  payingAmount: state.buyNowDetails.payingAmount,
+                  totalAmount: state.buyNowDetails.totalAmount,
+                  totalItems: state.buyNowDetails.totalItems,
+                  razorpayOrderID:
+                      state.buyNowDetails.paymentData.razorpayOrderID,
+                  orderID: state.buyNowDetails.paymentData.orderID,
+                  taxAmount: state.buyNowDetails.taxAmount,
+                  walletAmount: state.buyNowDetails.walletAmount,
+                );
+              } else if (state is NormalCartDetailLoadingSuccessfull) {
+                return TotalView(
+                  authID: authID,
+                  deliveryCharges: state.normalCartDetails.deliveryCharges,
+                  discount: state.normalCartDetails.discount,
+                  payingAmount: state.normalCartDetails.payingAmount,
+                  totalAmount: state.normalCartDetails.totalAmount,
+                  totalItems: state.normalCartDetails.totalItems,
+                  razorpayOrderID:
+                      state.normalCartDetails.paymentData.razorpayOrderID,
+                  orderID: state.normalCartDetails.paymentData.orderID,
+                  taxAmount: state.normalCartDetails.taxAmount,
+                  walletAmount: state.normalCartDetails.walletAmount,
+                );
+              } else if (state is BulkOrderDetailLoadingSuccessfull) {
+                return TotalView(
+                  authID: authID,
+                  totalBulkItems: state.totalItems,
+                  isBulkOrderCart: state.isBulkOrderCart,
+                  deliveryAddressID: state.deliveryAddressID,
+                  isSampleRequested: state.isSampleRequested,
+                );
+              }
+              return Container();
+            },
+          ),
+        );
+      }
+      return Container();
+    });
   }
 }
 
@@ -351,8 +351,10 @@ class TotalView extends StatelessWidget {
                           paymentMode: paymentMode,
                         ),
                         ProceedToPayButton(
-                          // amount: payingAmount,
-                          // authID: authID,
+                          amount: payingAmount,
+                          authID: authID,
+                          orderID: orderID,
+                          razorpayOrderID: razorpayOrderID,
                           paymentMode: paymentMode,
                         ),
                       ],

@@ -28,6 +28,19 @@ class RazorPayWeb extends StatelessWidget {
     var razorpayPaymentID = '';
     var razorpayOrderID = '';
     var razorpaySignature = '';
+    var blocConfig = {};
+    String sequenceBloc = "";
+    if (paymentMode == 101) {
+      sequenceBloc = "block.debit_card";
+    } else if (paymentMode == 102) {
+      sequenceBloc = "block.credit_card";
+    } else if (paymentMode == 103) {
+      sequenceBloc = "block.netbanking";
+    } else if (paymentMode == 104) {
+      sequenceBloc = "block.upi";
+    } else if (paymentMode == 105) {
+      sequenceBloc = "block.wallet";
+    }
 
     ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
       IFrameElement element = IFrameElement();
@@ -59,19 +72,19 @@ class RazorPayWeb extends StatelessWidget {
       console.log("Razor pay options");
        var options = {
          "key": "rzp_test_U8mKfCB97ZZlEj",
-          "amount": "${amount}", "currency": "INR",
+          "amount": "$amount", "currency": "INR",
           "name": "Living Desire",
           "description": "",
           "image": "https://example.com/your_logo",
           config:{
             display:{
-              blocks:{
+              blocks: {
                 "debit_card":{
                   "name":"Pay Using Debit Card",
                   "instruments":[
                     {
                       "method": "card",
-                      types:[
+                      "types":[
                         "debit",
                       ],
                     },
@@ -82,7 +95,7 @@ class RazorPayWeb extends StatelessWidget {
                   "instruments":[
                     {
                       "method": "card",
-                      types:[
+                      "types":[
                         "credit",
                       ],
                     },
@@ -102,8 +115,8 @@ class RazorPayWeb extends StatelessWidget {
                   "instruments":[
                     {
                       "method": "upi",
-                      flows: ["collect", "qr"],
-                      apps: ["google_pay", "bhim", "paytm", "amazon", "whatsapp", "phonepe"],
+                      "flows": ["collect", "qr"],
+                      "apps": ["google_pay", "bhim", "paytm", "amazon", "whatsapp", "phonepe"],
                       
                     },
                   ],
@@ -114,25 +127,22 @@ class RazorPayWeb extends StatelessWidget {
                     {
                       "method": "wallets",
                       
-                      wallets: [ "paypal" , "amazonpay",  "phonepe"],
+                      "wallets": [ "paypal" , "amazonpay",  "phonepe"],
                       
                     },
                   ],
                 },
               },
+              
               "sequence": [
-                "block.debit_card",
-                "block.credit_card",
-                "block.netbanking",
-                "block.upi",
-                "block.wallet",
+                "$sequenceBloc",
               ],
               "preferences": {
                 "show_default_blocks": false
               }
             },
           },
-          "order_id": "${razorpayOrderID}",
+          "order_id": "$razorpayOrderID",
           "handler": function (response){
              window.parent.postMessage("SUCCESS","*"); 
                   //2 

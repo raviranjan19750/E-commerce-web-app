@@ -68,10 +68,10 @@ class ProceedToPayButton extends StatelessWidget {
             builder: (BuildContext context) {
               return RazorPayWeb(
                 paymentMode: paymentMode,
-                amount: 100,
-                authID: "FtkJJ0IK1tYpC8ldkmlLVgNDlS12",
-                orderID: "sample_orderID",
-                razorpayOrderID: "order_GPDhFi29V4QgjJ",
+                amount: amount,
+                authID: authID,
+                orderID: orderID,
+                razorpayOrderID: razorpayOrderID,
               );
             },
           );

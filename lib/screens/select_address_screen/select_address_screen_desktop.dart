@@ -41,80 +41,80 @@ class SelectAddressScreenDesktop extends StatelessWidget {
           });
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SelectAddressCartTotal(),
-      ],
-    );
+    // return Row(
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     SelectAddressCartTotal(),
+    //   ],
+    // );
 
-    // return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-    //     builder: (context, state) {
-    //   switch (state.status) {
-    //     case AuthenticationStatus.authenticated:
-    //       return MultiBlocProvider(
-    //         providers: [
-    //           BlocProvider(
-    //               create: (context) => ManageAddressesBloc(
-    //                   addresssRepository: RepositoryProvider.of(context))
-    //                 ..add(LoadAllAddresses(state.user.uid))),
-    //           BlocProvider(create: (context) => SelectAddressBloc()),
-    //         ],
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.start,
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             Expanded(
-    //                 child: SelectAddressContainer(
-    //               authID: state.user.uid,
-    //             )),
-    //             if (isBuyNow == "true")
-    //               SelectAddressCartTotal(
-    //                 type: SelectAddressStateType.BUY_NOW,
-    //                 authID: state.user.uid,
-    //                 productID: productID,
-    //                 variantID: variantID,
-    //               ),
-    //             if (isNormalCart == "true")
-    //               SelectAddressCartTotal(
-    //                 type: SelectAddressStateType.NORMAL_CART,
-    //                 authID: state.user.uid,
-    //               ),
-    //             if (isBulkOrderCart == "true")
-    //               SelectAddressCartTotal(
-    //                 type: SelectAddressStateType.BULK_ORDER,
-    //                 authID: state.user.uid,
-    //                 totalItems: totalItems,
-    //                 isBulkOrderCartStr: isBulkOrderCart,
-    //                 isSampleRequestedStr: isSampleRequested,
-    //               ),
-    //           ],
-    //         ),
-    //       );
-    //     case AuthenticationStatus.unauthenticated:
-    //       return Center(
-    //         child: Container(
-    //           padding: EdgeInsets.all(8),
-    //           decoration: BoxDecoration(
-    //             color: Palette.secondaryColor,
-    //             borderRadius: BorderRadius.circular(4),
-    //           ),
-    //           // Login Button
-    //           child: InkWell(
-    //             onTap: () {
-    //               _showLoginDialog(context);
-    //             },
-    //             child: Text(
-    //               Strings.loginText,
-    //               style: TextStyle(color: Colors.white),
-    //             ),
-    //           ),
-    //         ),
-    //       );
-    //     default:
-    //       return Container();
-    //   }
-    // });
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+      switch (state.status) {
+        case AuthenticationStatus.authenticated:
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (context) => ManageAddressesBloc(
+                      addresssRepository: RepositoryProvider.of(context))
+                    ..add(LoadAllAddresses(state.user.uid))),
+              BlocProvider(create: (context) => SelectAddressBloc()),
+            ],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    child: SelectAddressContainer(
+                  authID: state.user.uid,
+                )),
+                if (isBuyNow == "true")
+                  SelectAddressCartTotal(
+                    type: SelectAddressStateType.BUY_NOW,
+                    authID: state.user.uid,
+                    productID: productID,
+                    variantID: variantID,
+                  ),
+                if (isNormalCart == "true")
+                  SelectAddressCartTotal(
+                    type: SelectAddressStateType.NORMAL_CART,
+                    authID: state.user.uid,
+                  ),
+                if (isBulkOrderCart == "true")
+                  SelectAddressCartTotal(
+                    type: SelectAddressStateType.BULK_ORDER,
+                    authID: state.user.uid,
+                    totalItems: totalItems,
+                    isBulkOrderCartStr: isBulkOrderCart,
+                    isSampleRequestedStr: isSampleRequested,
+                  ),
+              ],
+            ),
+          );
+        case AuthenticationStatus.unauthenticated:
+          return Center(
+            child: Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Palette.secondaryColor,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              // Login Button
+              child: InkWell(
+                onTap: () {
+                  _showLoginDialog(context);
+                },
+                child: Text(
+                  Strings.loginText,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          );
+        default:
+          return Container();
+      }
+    });
   }
 }
