@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/ProviderModels/bulk_order_quotation_provider.dart';
 import 'package:living_desire/config/configs.dart';
-import 'package:living_desire/screens/bulk_order/bulk_ooder_sample_payment.dart';
+import 'package:living_desire/screens/bulk_order/bulk_oder_sample_payment.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_quotation_payment.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_quotation_products.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order_samples.dart';
@@ -31,7 +31,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
         children: [
 
-          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,)),
+          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,orderTracking: value.bulkOrder.orderTracking,)),
 
           Visibility(
 
@@ -74,7 +74,7 @@ class BulkOrderQuotation extends StatelessWidget{
             ),
           ),
 
-          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,)),
+          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,orderTracking: value.bulkOrder.orderTracking,)),
 
 
         ],

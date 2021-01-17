@@ -7,7 +7,9 @@ import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/QuotationPayment.dart';
+import 'package:living_desire/models/tracking.dart';
 import 'package:living_desire/screens/bulk_order/quotation_razor_pay.dart';
+import 'package:living_desire/screens/tracking/order_tracking.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:living_desire/widgets/order_screen/tracking_status_bar.dart';
 import 'dart:html' as html;
@@ -21,7 +23,9 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
   String name,email,orderKey,orderInvoiceUrl;
 
-  BulkOrderQuotationPayment({this.quotationPayment,this.isPaid,this.orderKey,this.orderInvoiceUrl});
+  List<Tracking> orderTracking;
+
+  BulkOrderQuotationPayment({this.quotationPayment,this.isPaid,this.orderKey,this.orderInvoiceUrl,this.orderTracking});
 
   ArsProgressDialog progressDialog;
 
@@ -247,6 +251,40 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
   }
 
+  void showTrackingDialog(BuildContext context , List<Tracking> list,String title){
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+
+          return AlertDialog(
+
+            title: Text(title),
+
+            content:Column(
+
+              mainAxisSize: MainAxisSize.min,
+
+              children: [
+
+                OrderTracking(tracks: list,title: title,),
+
+              ],
+
+            ),
+
+            actions: [
+
+              FlatButton(onPressed: (){Navigator.pop(context);}, child: Container(padding:EdgeInsets.symmetric(horizontal: 16,vertical: 8),child: Text('Go Bak',style: TextStyle(color: Palette.secondaryColor),),))
+
+            ],
+
+          );
+
+        }
+    );
+
+  }
 
   ArsProgressDialog createProgressDialog(BuildContext context,String message){
 
@@ -575,7 +613,42 @@ class BulkOrderQuotationPayment extends StatelessWidget{
                 ),
               ),
 
-              TrackingStatusBar(),
+              Container(
+
+                alignment: Alignment.center,
+
+                margin: EdgeInsets.symmetric(vertical: 16,horizontal: 72),
+
+                child: InkWell(
+
+                  onTap: (){
+
+                    List<Tracking> temp = new List.from(orderTracking.reversed);
+                    showTrackingDialog(context, temp, "Order Tracking");
+
+                  },
+
+
+                  child: Container(
+
+
+                    alignment: Alignment.center,
+
+                    padding: EdgeInsets.only(top: 8,bottom: 8),
+
+                    decoration: BoxDecoration(
+
+                      border: Border.all(color: Palette.secondaryColor),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(4),
+
+                    ),
+
+                    child: Text('Track Order',style: TextStyle(color: Palette.secondaryColor,fontSize: 24),),
+
+                  ),
+                ),
+              ),
             ],
           ),
         ),
