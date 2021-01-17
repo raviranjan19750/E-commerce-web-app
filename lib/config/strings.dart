@@ -1,6 +1,11 @@
 class Strings {
   // Strings containing all texts
 
+  //Contact info strings
+
+  static const String contactUsPhone = "9205528588";
+  static const String contactUsEmail = "help@livingdesire.in";
+
   // for empty screens
   static const String searchPrimaryText = "We couldn't find any matches";
   static const String searchSecondaryText = "Please check the spelling or try searching something else";

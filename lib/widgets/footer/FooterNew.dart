@@ -1,7 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:living_desire/DBHandler/footerRepository.dart';
 import 'package:living_desire/config/configs.dart';
+import 'package:living_desire/service/navigation_service.dart';
+
+import '../../main.dart';
+import '../../routes.dart';
 
 class FooterNew extends StatelessWidget {
   final ScrollController scrollController;
@@ -198,7 +203,7 @@ class FooterNew extends StatelessWidget {
                           SizedBox(width: 24,),
 
                           Text(
-                           "9821951461",
+                          Strings.contactUsPhone,
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
@@ -220,7 +225,7 @@ class FooterNew extends StatelessWidget {
                           SizedBox(width: 24,),
 
                           Text(
-                            "ravi@livingdesire.in",
+                           Strings.contactUsEmail,
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
@@ -299,12 +304,20 @@ class FooterNew extends StatelessWidget {
             alignment: WrapAlignment.center,
             children: [
 
-              Text(
-                Strings.aboutUs.toUpperCase(),
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black,
-                  fontSize: 14
+              InkWell(
+
+                onTap: () {
+
+                  locator<NavigationService>().navigateTo(RoutesConfiguration.ABOUT_US);
+
+                },
+                child: Text(
+                  Strings.aboutUs.toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                    fontSize: 14
+                  ),
                 ),
               ),
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:living_desire/config/configs.dart';
+
 import 'package:living_desire/models/routing_data.dart';
+import 'package:living_desire/screens/HTMLScreen/aboutUs.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailScreeen.dart';
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order.dart';
@@ -40,6 +41,7 @@ class RoutesConfiguration {
   static const String MANAGE_ADDRESSES = "/manageaddresses";
   static const String SELECT_ADDRESS = "/select-address";
   static const String ORDER_PLACED = "/orderplaced";
+  static const String ABOUT_US = "/about-us";
 
   static List<Path> paths = [
     Path(
@@ -174,6 +176,11 @@ class RoutesConfiguration {
       r'^' + HOME_PAGE,
       (context, data) => HomeScreen(),
     ),
+
+    Path(
+      r'^' + ABOUT_US,
+          (context, data) => MyDesktopView(child: AboutUs(htmlResponseFunctionEndPoint:  data['key']))
+    ),
   ];
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -282,6 +289,9 @@ class RoutesConfiguration {
                 visibleSubAppBar: false,
                 visibleMiddleAppBar: false,
                 child: OrderPlacedScreenDesktop()));
+
+      case ABOUT_US :
+        return MaterialPageRoute(builder: (_) => AboutUs());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

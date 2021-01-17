@@ -66,6 +66,7 @@ class ProductCardContent extends StatelessWidget {
                         "vid": product.varientId,
                       },
 
+
                     );
 
                   },
