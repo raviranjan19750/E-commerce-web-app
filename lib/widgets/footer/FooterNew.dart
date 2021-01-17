@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:living_desire/DBHandler/footerRepository.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/service/navigation_service.dart';
 
@@ -282,42 +281,66 @@ class FooterNew extends StatelessWidget {
               SizedBox(
                 width: 40,
               ),
-              Text(
-                Strings.shippingPolicy.toUpperCase(),
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                    fontSize: 14),
+              InkWell(
+                onTap: () {
+                  locator<NavigationService>()
+                      .navigateTo(RoutesConfiguration.SHIPPING_POLICY);
+                },
+                child: Text(
+                  Strings.shippingPolicy.toUpperCase(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      fontSize: 14),
+                ),
               ),
               SizedBox(
                 width: 40,
               ),
-              Text(
-                Strings.cancellationAndReturn.toUpperCase(),
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                    fontSize: 14),
+              InkWell(
+                onTap: () {
+                  locator<NavigationService>()
+                      .navigateTo(RoutesConfiguration.CANCELLATION_AND_RETURN);
+                },
+                child: Text(
+                  Strings.cancellationAndReturn.toUpperCase(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      fontSize: 14),
+                ),
               ),
               SizedBox(
                 width: 40,
               ),
-              Text(
-                Strings.privacyPolicy.toUpperCase(),
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                    fontSize: 14),
+              InkWell(
+                onTap: () {
+                  locator<NavigationService>()
+                      .navigateTo(RoutesConfiguration.PRIVACY_POLICY);
+                },
+                child: Text(
+                  Strings.privacyPolicy.toUpperCase(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      fontSize: 14),
+                ),
               ),
               SizedBox(
                 width: 40,
               ),
-              Text(
-                Strings.termsAndConditions.toUpperCase(),
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                    fontSize: 14),
+              InkWell(
+                onTap: () {
+                  locator<NavigationService>()
+                      .navigateTo(RoutesConfiguration.TERMS_AND_CONDITIONS);
+                },
+                child: Text(
+                  Strings.termsAndConditions.toUpperCase(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      fontSize: 14),
+                ),
               ),
             ],
           ),

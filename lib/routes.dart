@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:living_desire/extension/string_extension.dart';
 import 'package:living_desire/models/routing_data.dart';
-import 'package:living_desire/screens/HTMLScreen/aboutUs.dart';
+import 'package:living_desire/screens/HTMLScreen/htmlResponseScreen.dart';
 import 'package:living_desire/screens/ProductDetailScreen/ProductDetailScreeen.dart';
 import 'package:living_desire/screens/all_product/all_product_screen.dart';
 import 'package:living_desire/screens/bulk_order/bulk_order.dart';
@@ -10,13 +10,9 @@ import 'package:living_desire/screens/home_screen/home_screen.dart';
 import 'package:living_desire/screens/my_orders/my_bulk_order.dart';
 import 'package:living_desire/screens/my_orders/my_order.dart';
 import 'package:living_desire/screens/screens.dart';
-import 'package:living_desire/extension/string_extension.dart';
-import 'package:living_desire/screens/tracking/order_tracking.dart';
 
-import 'dart:js' as js;
-
+import 'config/configs.dart';
 import 'logger.dart';
-import 'models/tracking.dart';
 
 class Path {
   const Path(this.pattern, this.builder);
@@ -41,11 +37,35 @@ class RoutesConfiguration {
   static const String MANAGE_ADDRESSES = "/manageaddresses";
   static const String SELECT_ADDRESS = "/select-address";
   static const String ORDER_PLACED = "/orderplaced";
-  static const String ABOUT_US = "/about-us";
+  static const String ABOUT_US = "/about_us";
+  static const String SHIPPING_POLICY = "/shipping_policy";
+  static const String PRIVACY_POLICY = "/privacy_policy";
+  static const String CANCELLATION_AND_RETURN = "/cancellation_and_return";
+  static const String TERMS_AND_CONDITIONS = "/terms_and_conditions";
 
   static List<Path> paths = [
-    Path(r'^' + ABOUT_US,
-        (context, data) => AboutUs(htmlResponseFunctionEndPoint: "")),
+    Path(
+        r'^' + ABOUT_US,
+        (context, data) => HTMLResponseScreen(
+            htmlResponseFunctionEndPoint: Strings.functionNameAboutUs)),
+    Path(
+        r'^' + SHIPPING_POLICY,
+        (context, data) => HTMLResponseScreen(
+            htmlResponseFunctionEndPoint: Strings.functionNameShippingPolicy)),
+    Path(
+        r'^' + PRIVACY_POLICY,
+        (context, data) => HTMLResponseScreen(
+            htmlResponseFunctionEndPoint: Strings.functionNamePrivacyPolicy)),
+    Path(
+        r'^' + CANCELLATION_AND_RETURN,
+        (context, data) => HTMLResponseScreen(
+            htmlResponseFunctionEndPoint:
+                Strings.functionNameCancellationAndReturn)),
+    Path(
+        r'^' + TERMS_AND_CONDITIONS,
+        (context, data) => HTMLResponseScreen(
+            htmlResponseFunctionEndPoint:
+                Strings.functionNameTermsAnConditions)),
     Path(
       r'^' + SEARCH_ALL_PRODUCT,
       (context, data) => AllProductScreen(
@@ -287,7 +307,7 @@ class RoutesConfiguration {
                 child: OrderPlacedScreenDesktop()));
 
       case ABOUT_US:
-        return MaterialPageRoute(builder: (_) => AboutUs());
+        return MaterialPageRoute(builder: (_) => HTMLResponseScreen());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

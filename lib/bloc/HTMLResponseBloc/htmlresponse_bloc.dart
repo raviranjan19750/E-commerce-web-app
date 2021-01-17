@@ -24,7 +24,8 @@ class HtmlResponseBloc extends Bloc<HtmlResponseEvent, HtmlResponseState> {
     }
   }
 
-  Stream<HtmlResponseState> loadHtmlResponseEvent(LoadHtmlResponse event) async* {
+  Stream<HtmlResponseState> loadHtmlResponseEvent(
+      LoadHtmlResponse event) async* {
     yield HtmlResponseLoading();
 
     try {
