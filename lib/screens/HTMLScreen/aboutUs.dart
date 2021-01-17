@@ -1,36 +1,30 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:living_desire/DBHandler/footerRepository.dart';
 import 'dart:js' as js;
 
 import 'package:living_desire/bloc/HTMLResponseBloc/htmlresponse_bloc.dart';
 
 // ignore: must_be_immutable
 class AboutUs extends StatelessWidget {
-
   String htmlResponseFunctionEndPoint = "";
 
   AboutUs({Key key, this.htmlResponseFunctionEndPoint}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-
-    return BlocProvider(create: (context)=> HtmlResponseBloc(footerRepository: RepositoryProvider.of(context))..add(LoadHtmlResponse(htmlResponseFunctionEndPoint)),
-
-      child: AboutUsContent()
-    );
-
-
-
+    return BlocProvider(
+        create: (context1) =>
+            HtmlResponseBloc(footerRepository: RepositoryProvider.of(context1))
+              ..add(LoadHtmlResponse(htmlResponseFunctionEndPoint)),
+        child: AboutUsContent());
   }
 }
 
 // ignore: must_be_immutable
 class AboutUsContent extends StatelessWidget {
-
   var htmlData = """
 <h1>Header 1</h1>
 <h2>Header 2</h2>
@@ -140,19 +134,13 @@ class AboutUsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return BlocBuilder<HtmlResponseBloc, HtmlResponseState> (
-
+    return BlocBuilder<HtmlResponseBloc, HtmlResponseState>(
       builder: (context, state) {
-
-        if(state is HtmlResponseLoading) {
+        if (state is HtmlResponseLoading) {
           return CircularProgressIndicator();
-        }
-
-        else if (state is HtmlResponseLoadingSuccessful) {
+        } else if (state is HtmlResponseLoadingSuccessful) {
           return Scaffold(
             body: SingleChildScrollView(
-
               child: Html(
                 data: htmlData,
                 onLinkTap: (url) {
@@ -162,15 +150,10 @@ class AboutUsContent extends StatelessWidget {
               ),
             ),
           );
-        }
-
-        else {
+        } else {
           return Container();
         }
       },
     );
-
-
   }
-
 }
