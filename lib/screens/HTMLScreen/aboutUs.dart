@@ -18,9 +18,11 @@ class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocProvider(create: (context)=> HtmlResponseBloc(footerRepository: RepositoryProvider.of(context))..add(LoadHtmlResponse(htmlResponseFunctionEndPoint)),
+    return Scaffold(
+      body: BlocProvider(create: (context)=> HtmlResponseBloc(footerRepository: RepositoryProvider.of(context))..add(LoadHtmlResponse(htmlResponseFunctionEndPoint)),
 
-      child: AboutUsContent()
+        child: AboutUsContent()
+      ),
     );
 
 
@@ -150,16 +152,14 @@ class AboutUsContent extends StatelessWidget {
         }
 
         else if (state is HtmlResponseLoadingSuccessful) {
-          return Scaffold(
-            body: SingleChildScrollView(
+          return  SingleChildScrollView(
 
-              child: Html(
-                data: htmlData,
-                onLinkTap: (url) {
-                  js.context.callMethod('open', [url]);
-                  print(url.toString());
-                },
-              ),
+            child: Html(
+              data: htmlData,
+              onLinkTap: (url) {
+                js.context.callMethod('open', [url]);
+                print(url.toString());
+              },
             ),
           );
         }

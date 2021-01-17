@@ -5,7 +5,7 @@ abstract class HtmlResponseEvent {}
 
 class LoadHtmlResponse extends HtmlResponseEvent{
 
-   String htmlResponseFunctionEndPoint;
+   final String htmlResponseFunctionEndPoint;
 
   LoadHtmlResponse(this.htmlResponseFunctionEndPoint);
 
