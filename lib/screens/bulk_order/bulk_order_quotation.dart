@@ -44,7 +44,7 @@ class BulkOrderQuotation extends StatelessWidget{
             ),
           ),
 
-          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,)),
+          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,trackingList: value.bulkOrder.sampleTracking,)),
 
 
 
@@ -61,7 +61,7 @@ class BulkOrderQuotation extends StatelessWidget{
 
         children: [
 
-          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,)),
+          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,trackingList: value.bulkOrder.sampleTracking,)),
 
           Visibility(
 

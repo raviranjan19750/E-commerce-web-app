@@ -6,11 +6,13 @@ class Tracking {
   final double status;
   final DateTime date;
   final String comments;
+  final String statusValue;
 
   const Tracking({
     this.status,
     this.date,
     this.comments,
+    this.statusValue
   });
 
   factory Tracking.fromJson(dynamic data) {
@@ -25,6 +27,7 @@ class Tracking {
               .toLocal())
           .add(hours: 5, minutes: 30),
       comments: data['comments'],
+      statusValue: data['statusValue'],
     );
   }
 }

@@ -39,7 +39,6 @@ class MyBulkOrderProvider with ChangeNotifier{
 
     final response =
     await CloudFunctionConfig.get('manageCustomOrder/custom-list/$authID');
-    print("My Bulk Order  :  " + response.statusCode.toString());
 
     if(response.statusCode == 200){
 

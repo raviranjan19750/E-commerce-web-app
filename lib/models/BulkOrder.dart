@@ -26,11 +26,11 @@ class BulkOrder {
 
   final List<Tracking> orderTracking;
 
-  final List<QuotationTracking> quotationTracking;
+  final List<Tracking> quotationTracking;
 
   final List<Samples> samples ;
 
-  final List<SampleTracking> sampleTracking;
+  final List<Tracking> sampleTracking;
 
   final List<SamplePayment> samplePayment;
 
@@ -73,6 +73,26 @@ class BulkOrder {
   factory BulkOrder.fromJson(Map<String, dynamic> data) {
 
     if (data == null) return null;
+
+    List<Tracking> getTracking(List<dynamic> data){
+
+      if(data == null)
+        return null;
+
+      List<Tracking> temp = new List();
+
+      for(int i=0;i<data.length;i++){
+
+        Tracking tracking = Tracking.fromJson(data[i]);
+        temp.add(tracking);
+
+      }
+
+      temp.sort((a,b) => b.date.compareTo(a.date));
+
+      return temp;
+
+    }
 
     DateTime getDate(Map<String, dynamic> data){
 
@@ -119,24 +139,6 @@ class BulkOrder {
 
     }
 
-    List<QuotationTracking> getQuotationTrackingList(List<dynamic> data){
-
-      if(data == null)
-        return null;
-
-      List<QuotationTracking> temp = new List();
-
-      for(int i=0;i<data.length;i++){
-
-        QuotationTracking quotationTracking = QuotationTracking.fromJson(data[i]);
-        temp.add(quotationTracking);
-
-      }
-
-      return temp;
-
-    }
-
     return BulkOrder(
         key: data['id'],
         requestDate: getDate(data['data']['requestDate']),
@@ -159,8 +161,10 @@ class BulkOrder {
         quotationStatus: data['data']['quotationStatus'],
         requestID: data['data']['requestID'],
         name: data['data']['name'],
-        quotationTracking: getQuotationTrackingList(data['data']['quotationTracking']),
         samples: getSamplesList(data['data']['samples']),
+        sampleTracking: getTracking(data['data']['sampleTracking']),
+        quotationTracking: getTracking(data['data']['quotationTracking']),
+        //orderTracking: getTracking(data['data']['orderTracking']),
 
     );
   }

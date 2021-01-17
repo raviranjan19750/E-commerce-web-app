@@ -53,7 +53,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
         await  CloudFunctionConfig.get('manageCustomOrder/custom-order/$key');
     if(response.statusCode == 200){
 
-      print("Bulk Order  :  " +  response.body);
+
 
       bulkOrder = BulkOrder.fromJson(jsonDecode(response.body));
     }

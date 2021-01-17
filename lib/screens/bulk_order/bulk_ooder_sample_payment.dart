@@ -5,10 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/SamplePayment.dart';
+import 'package:living_desire/models/models.dart';
 import 'package:living_desire/screens/bulk_order/quotation_razor_pay.dart';
+import 'package:living_desire/screens/tracking/order_tracking.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/widgets/home_screen_widget/home_product.dart';
 import 'package:living_desire/widgets/order_screen/tracking_status_bar.dart';
 import 'dart:html' as html;
+
+import '../../main.dart';
+import '../../routes.dart';
 
 
 class BulkOrderSamplePayment extends StatelessWidget{
@@ -21,7 +27,9 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
   ArsProgressDialog progressDialog;
 
-  BulkOrderSamplePayment({this.samplePayment,this.isPaid,this.orderKey,this.sampleInvoiceURL});
+  List<Tracking> trackingList;
+
+  BulkOrderSamplePayment({this.samplePayment,this.isPaid,this.orderKey,this.sampleInvoiceURL,this.trackingList});
 
   void dismissProgressDialog(){
     progressDialog.dismiss();
@@ -109,6 +117,41 @@ class BulkOrderSamplePayment extends StatelessWidget{
       orderKey: orderKey,
       name: (name!=null)?name:"",
       email: (email!=null)?email:"",)));
+
+  }
+
+  void showTrackingDialog(BuildContext context , List<Tracking> list,String title){
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+
+          return AlertDialog(
+
+            title: Text(title),
+
+            content:Column(
+
+              mainAxisSize: MainAxisSize.min,
+
+              children: [
+
+                OrderTracking(tracks: list,title: title,),
+
+              ],
+
+            ),
+
+            actions: [
+
+              FlatButton(onPressed: (){Navigator.pop(context);}, child: Container(padding:EdgeInsets.symmetric(horizontal: 16,vertical: 8),child: Text('Go Bak',style: TextStyle(color: Palette.secondaryColor),),))
+
+            ],
+
+          );
+
+        }
+    );
 
   }
 
@@ -285,7 +328,42 @@ class BulkOrderSamplePayment extends StatelessWidget{
                   ),
                 ),
 
-                TrackingStatusBar(),
+                Container(
+
+                  alignment: Alignment.center,
+
+                  margin: EdgeInsets.symmetric(vertical: 16,horizontal: 72),
+
+                  child: InkWell(
+
+                   onTap: (){
+
+                     List<Tracking> temp = new List.from(trackingList.reversed);
+                     showTrackingDialog(context, temp, "Sample Tracking");
+
+                   },
+
+
+                    child: Container(
+
+
+                      alignment: Alignment.center,
+
+                      padding: EdgeInsets.only(top: 8,bottom: 8),
+
+                      decoration: BoxDecoration(
+
+                        border: Border.all(color: Palette.secondaryColor),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+
+                      ),
+
+                      child: Text('Track Samples',style: TextStyle(color: Palette.secondaryColor,fontSize: 24),),
+
+                    ),
+                  ),
+                ),
               ],
             ),),
           ),

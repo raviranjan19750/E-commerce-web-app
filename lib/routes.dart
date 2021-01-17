@@ -10,11 +10,13 @@ import 'package:living_desire/screens/my_orders/my_bulk_order.dart';
 import 'package:living_desire/screens/my_orders/my_order.dart';
 import 'package:living_desire/screens/screens.dart';
 import 'package:living_desire/extension/string_extension.dart';
+import 'package:living_desire/screens/tracking/order_tracking.dart';
 
 import 'dart:js' as js;
 
 
 import 'logger.dart';
+import 'models/tracking.dart';
 
 class Path {
   const Path(this.pattern, this.builder);
@@ -47,6 +49,7 @@ class RoutesConfiguration {
         searchFilter: data['search'],
       ),
     ),
+
     Path(r'^' + PRODUCT_DETAIL, (context, data) {
       return MyDesktopView(
         child: ProductDetailScreen(
