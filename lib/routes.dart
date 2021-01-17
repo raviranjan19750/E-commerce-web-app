@@ -44,13 +44,14 @@ class RoutesConfiguration {
   static const String ABOUT_US = "/about-us";
 
   static List<Path> paths = [
+    Path(r'^' + ABOUT_US,
+        (context, data) => AboutUs(htmlResponseFunctionEndPoint: "")),
     Path(
       r'^' + SEARCH_ALL_PRODUCT,
       (context, data) => AllProductScreen(
         searchFilter: data['search'],
       ),
     ),
-
     Path(r'^' + PRODUCT_DETAIL, (context, data) {
       return MyDesktopView(
         child: ProductDetailScreen(
@@ -176,11 +177,6 @@ class RoutesConfiguration {
       r'^' + HOME_PAGE,
       (context, data) => HomeScreen(),
     ),
-
-    Path(
-      r'^' + ABOUT_US,
-          (context, data) => MyDesktopView(child: AboutUs(htmlResponseFunctionEndPoint:  data['key']))
-    ),
   ];
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -290,7 +286,7 @@ class RoutesConfiguration {
                 visibleMiddleAppBar: false,
                 child: OrderPlacedScreenDesktop()));
 
-      case ABOUT_US :
+      case ABOUT_US:
         return MaterialPageRoute(builder: (_) => AboutUs());
       default:
         return MaterialPageRoute(

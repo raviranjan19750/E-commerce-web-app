@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:living_desire/DBHandler/DBHandler.dart';
 import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
+import 'package:living_desire/DBHandler/footerRepository.dart';
 import 'package:living_desire/DBHandler/promo_code_repository.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
@@ -101,7 +102,8 @@ class InitailizeAppService extends StatelessWidget {
         ),
         RepositoryProvider(
             create: (context) =>
-                CustomerDetailRepository(RepositoryProvider.of(context)))
+                CustomerDetailRepository(RepositoryProvider.of(context))),
+        RepositoryProvider(create: (context) => FooterRepository())
       ],
       child: MultiBlocProvider(
         providers: [

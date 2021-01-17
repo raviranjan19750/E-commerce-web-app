@@ -9,7 +9,7 @@ part 'htmlresponse_event.dart';
 part 'htmlresponse_state.dart';
 
 class HtmlResponseBloc extends Bloc<HtmlResponseEvent, HtmlResponseState> {
-  FooterRepository footerRepository;
+  final FooterRepository footerRepository;
 
   HtmlResponseBloc({this.footerRepository})
       : assert(footerRepository != null),
@@ -28,9 +28,9 @@ class HtmlResponseBloc extends Bloc<HtmlResponseEvent, HtmlResponseState> {
     yield HtmlResponseLoading();
 
     try {
-      var result = await footerRepository.getAboutUs(event.htmlResponseFunctionEndPoint);
+      var result =
+          await footerRepository.getAboutUs(event.htmlResponseFunctionEndPoint);
       yield HtmlResponseLoadingSuccessful(result);
-
     } catch (e) {
       print(e.toString());
       yield HtmlResponseLoadingFailure();
