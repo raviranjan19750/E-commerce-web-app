@@ -6,10 +6,10 @@ async function secret_key() {
 
     remoteConfig.settings.minimumFetchIntervalMillis = 3600000;
 
-    
+
     return await remoteConfig.fetchAndActivate()
         .then(() => {
-            const val = remoteConfig.getValue("function_secret_key");            
+            const val = remoteConfig.getValue("function_secret_key");
             return val._value;
         })
         .catch((err) => {

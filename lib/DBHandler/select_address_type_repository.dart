@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/models.dart';
@@ -20,9 +21,9 @@ class SelectAddressTypeRepository {
         "variantID": variantID,
         "deliveryAddressID": deliveryAddressID
       };
-      final response = await http.post(
-          FunctionConfig.host + 'managePayments/get-buy-now/${authID}',
-          body: params);
+      final response = await CloudFunctionConfig.post(
+          'managePayments/get-buy-now/${authID}', params);
+
       LOG.i("Http Post request uy Now manage payments");
       if (response.statusCode == 200) {
         return BuyNowDetails.fromJson(jsonDecode(response.body));
@@ -39,9 +40,9 @@ class SelectAddressTypeRepository {
   }) async {
     try {
       var params = {"deliveryAddressID": deliveryAddressID};
-      final response = await http.post(
-          FunctionConfig.host + 'managePayments/get-normal-cart/${authID}',
-          body: params);
+      final response = await CloudFunctionConfig.post(
+          'managePayments/get-normal-cart/${authID}', params);
+
       LOG.i("Http Post request Normal Cart manage payments");
       if (response.statusCode == 200) {
         return NormalCartDetails.fromJson(jsonDecode(response.body));
@@ -49,7 +50,7 @@ class SelectAddressTypeRepository {
         LOG.i(response.statusCode);
       }
     } catch (e) {
-      print(e.toString());
+      LOG.e(e.toString());
       throw Exception(e);
     }
   }
@@ -60,15 +61,15 @@ class SelectAddressTypeRepository {
   }) async {
     try {
       var params = {"amount": amount};
-      final response = await http.post(
-          FunctionConfig.host + 'managePayments/create-order/${authID}',
-          body: params);
+      final response = await CloudFunctionConfig.post(
+          'managePayments/create-order/${authID}', params);
+
       LOG.i("Http Post request create order manage payments");
       if (response.statusCode == 200) {
         return (jsonDecode(response.body));
       }
     } catch (e) {
-      print(e.toString());
+      LOG.e(e.toString());
       throw Exception(e);
     }
   }

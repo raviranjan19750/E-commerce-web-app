@@ -1,27 +1,26 @@
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
-import 'package:living_desire/data/data.dart';
 import 'package:living_desire/models/models.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class WishlistRepository {
   // Get Wishlist Details
+  var LOG = Logger();
   Future<List<Wishlist>> getWishlistDetails(String authID) async {
     try {
-      print('Sending Wishlist Http Request');
       final response = await CloudFunctionConfig.get('manageWishlist/$authID');
-      // http.get(FunctionConfig.host + 'manageWishlist/${authID}');
+
       if (response.statusCode == 200) {
-        print(jsonDecode(response.body).toString());
         return (jsonDecode(response.body) as List)
             .map((i) => Wishlist.fromJson(i))
             .toList();
       } else {
-        print('Http Request Failed');
+        LOG.e('Http Request Failed');
       }
     } catch (e) {
-      print(e.toString());
+      LOG.e(e.toString());
       throw Exception(e);
     }
   }
@@ -38,17 +37,16 @@ class WishlistRepository {
       "variantID": variantID,
     };
     try {
-      final response = await http.post(
-        FunctionConfig.host + 'manageWishlist/${authID}',
-        body: params,
-      );
+      final response =
+          await CloudFunctionConfig.post('manageWishlist/${authID}', params);
+
       if (response.statusCode == 200) {
-        print('Http Get request sucessfull');
+        LOG.i('Http Get request sucessfull');
       } else {
-        print('Http Request Failed');
+        LOG.e('Http Request Failed');
       }
     } catch (e) {
-      print(e.toString());
+      LOG.e(e.toString());
       throw Exception(e);
     }
   }
@@ -61,16 +59,16 @@ class WishlistRepository {
       // var params = {
       //   "productID":productID,
       // };
-      final response = await http.delete(
-        FunctionConfig.host + 'manageWishlist/${authID}/${productID}/${key}',
-      );
+      final response = await CloudFunctionConfig.delete(
+          'manageWishlist/${authID}/${productID}/${key}');
+
       if (response.statusCode == 200) {
-        print('Http Get request sucessfull');
+        LOG.i('Http Get request sucessfull');
       } else {
-        print('Http Request Failed');
+        LOG.e(response.body);
       }
     } catch (e) {
-      print(e.toString());
+      LOG.e(e.toString());
       throw Exception(e);
     }
   }

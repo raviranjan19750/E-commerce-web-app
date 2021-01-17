@@ -72,6 +72,7 @@ class ProductRepository {
     return CheckProductAvailability.fromJson(map);
   }
 
+  // Size Chart
   Future<dynamic> getSizeChart({String type, String subType}) async {
     LOG.i('Fetching size chart for type $type and #$subType)');
 

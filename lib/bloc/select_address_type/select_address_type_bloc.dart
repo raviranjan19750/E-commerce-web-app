@@ -31,8 +31,6 @@ class SelectAddressTypeBloc
       yield* createPaymentOrder(event);
     } else if (event is PaymentMethod) {
       yield PaymentMethodLoadingSuccessfull(paymentMode: event.paymentMode);
-    } else if (event is LoadSelectPaymentDialog) {
-      yield LaunchSelectPaymentDialog();
     }
   }
 

@@ -41,6 +41,14 @@ class SelectAddressScreenDesktop extends StatelessWidget {
           });
     }
 
+    // return Row(
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     SelectAddressCartTotal(),
+    //   ],
+    // );
+
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
       switch (state.status) {

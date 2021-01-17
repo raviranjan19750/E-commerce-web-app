@@ -61,5 +61,3 @@ class PaymentMethod extends SelectAddressTypeEvent {
 
   PaymentMethod({this.paymentMode});
 }
-
-class LoadSelectPaymentDialog extends SelectAddressTypeEvent {}

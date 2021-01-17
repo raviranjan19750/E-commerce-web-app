@@ -1,3 +1,4 @@
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/models/check_promo_code_availability.dart';
 
 import 'dart:convert';
@@ -20,15 +21,9 @@ class PromoCodeRepository {
       "paymentMode": paymentMode,
     };
 
-    final response = await http.post(
-        FunctionConfig.host +
-            'manageDiscountCoupons/check-validity/${authID}/${promoCode}',
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(params));
+    final response = await CloudFunctionConfig.post(
+        'manageDiscountCoupons/check-validity/${authID}/${promoCode}', params);
 
     return CheckPromoCodeAvailability.fromJson(jsonDecode(response.body));
-    // var callable = FirebaseFunctions.instance.httpsCallable("checkPincodeAvailability");
-    // var result = await callable(data);
-    //return CheckPromoCodeAvailability.fromJson(result.data);
   }
 }

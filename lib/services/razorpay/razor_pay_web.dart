@@ -8,6 +8,7 @@ import 'dart:js' as js;
 
 class RazorPayWeb extends StatelessWidget {
   final String razorpayOrderID;
+  final int paymentMode;
   final String orderID;
   final double amount;
   final String authID;
@@ -15,6 +16,7 @@ class RazorPayWeb extends StatelessWidget {
   const RazorPayWeb({
     Key key,
     this.razorpayOrderID,
+    this.paymentMode,
     this.authID,
     this.amount,
     this.orderID,
@@ -26,6 +28,19 @@ class RazorPayWeb extends StatelessWidget {
     var razorpayPaymentID = '';
     var razorpayOrderID = '';
     var razorpaySignature = '';
+    var blocConfig = {};
+    String sequenceBloc = "";
+    if (paymentMode == 101) {
+      sequenceBloc = "block.debit_card";
+    } else if (paymentMode == 102) {
+      sequenceBloc = "block.credit_card";
+    } else if (paymentMode == 103) {
+      sequenceBloc = "block.netbanking";
+    } else if (paymentMode == 104) {
+      sequenceBloc = "block.upi";
+    } else if (paymentMode == 105) {
+      sequenceBloc = "block.wallet";
+    }
 
     ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
       IFrameElement element = IFrameElement();
@@ -57,11 +72,77 @@ class RazorPayWeb extends StatelessWidget {
       console.log("Razor pay options");
        var options = {
          "key": "rzp_test_U8mKfCB97ZZlEj",
-          "amount": "${amount}", "currency": "INR",
+          "amount": "$amount", "currency": "INR",
           "name": "Living Desire",
           "description": "",
           "image": "https://example.com/your_logo",
-          "order_id": "${razorpayOrderID}",
+          config:{
+            display:{
+              blocks: {
+                "debit_card":{
+                  "name":"Pay Using Debit Card",
+                  "instruments":[
+                    {
+                      "method": "card",
+                      "types":[
+                        "debit",
+                      ],
+                    },
+                  ],
+                },
+                "credit_card":{
+                  "name":"Pay Using Credit Card",
+                  "instruments":[
+                    {
+                      "method": "card",
+                      "types":[
+                        "credit",
+                      ],
+                    },
+                  ],
+                },
+                "netbanking":{
+                  "name":"Pay Using Netbanking",
+                  "instruments":[
+                    {
+                      "method": "netbanking",
+                      
+                    },
+                  ],
+                },
+                "upi":{
+                  "name":"Pay Using UPI apps",
+                  "instruments":[
+                    {
+                      "method": "upi",
+                      "flows": ["collect", "qr"],
+                      "apps": ["google_pay", "bhim", "paytm", "amazon", "whatsapp", "phonepe"],
+                      
+                    },
+                  ],
+                },
+                "wallet":{
+                  "name":"Pay Using Popular Wallet",
+                  "instruments":[
+                    {
+                      "method": "wallets",
+                      
+                      "wallets": [ "paypal" , "amazonpay",  "phonepe"],
+                      
+                    },
+                  ],
+                },
+              },
+              
+              "sequence": [
+                "$sequenceBloc",
+              ],
+              "preferences": {
+                "show_default_blocks": false
+              }
+            },
+          },
+          "order_id": "$razorpayOrderID",
           "handler": function (response){
              window.parent.postMessage("SUCCESS","*"); 
                   //2 
@@ -70,10 +151,10 @@ class RazorPayWeb extends StatelessWidget {
              window.parent.postMessage("sign"+response.razorpay_signature);   
              
           },    
-             
+         
            "notes": {
-             "orderID":"${orderID}",
-             "authID":"${authID}",
+             "orderID":"$orderID",
+             "authID":"$authID",
            },    
           "theme": {
              "color": "#10CED7"    

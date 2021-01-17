@@ -14,7 +14,6 @@ import 'package:living_desire/screens/tracking/order_tracking.dart';
 
 import 'dart:js' as js;
 
-
 import 'logger.dart';
 import 'models/tracking.dart';
 
@@ -96,6 +95,7 @@ class RoutesConfiguration {
       String isBulkOrderCart = data['isBulkOrderCart'];
       String isBuyNow = data['isBuyNow'];
       String isNormalCart = data['isNormalCart'];
+
       if (isBuyNow == "true") {
         return MyDesktopView(
           child: SelectAddressScreenDesktop(

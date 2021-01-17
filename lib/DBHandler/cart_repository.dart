@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/models.dart';
@@ -41,7 +42,8 @@ class CartRepository {
     LOG.v('Requesting all cart details for ${authID}');
     try {
       final response =
-          await http.get(FunctionConfig.host + 'manageCart/normal/${authID}');
+          await CloudFunctionConfig.get('manageCart/normal/${authID}');
+
       if (response.statusCode == 200) {
         //Map<String, dynamic> map = json.decode(response.body);
         LOG.i('Http Request sucessfull ${response.body}');
@@ -72,10 +74,9 @@ class CartRepository {
         "variantID": variantID,
         "quantity": quantity
       };
-      final response = await http.post(
-          FunctionConfig.host + 'manageCart/normal/${authID}',
-          headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
-          body: jsonEncode(data));
+      final response =
+          await CloudFunctionConfig.post('manageCart/normal/${authID}', data);
+
       if (response.statusCode == 200) {
       } else {
         print('Http Request Failed');
@@ -98,10 +99,9 @@ class CartRepository {
 
       print(jsonEncode(data));
 
-      final request = await http.put(
-          FunctionConfig.host + 'manageCart/normal/' + key,
-          headers: {"Content-Type": "application/json","Authorization" : Strings.bearerToken},
-          body: jsonEncode(data));
+      final request =
+          await CloudFunctionConfig.put('manageCart/normal/' + key, data);
+
       if (request.statusCode == 200) {
         // Updating the item quamtity in our local state
         for (var c in _cart) {
@@ -110,13 +110,11 @@ class CartRepository {
             break;
           }
         }
-        LOG.i(_cart.length);
+
         _cart.removeWhere((element) => element.quantity == 0);
         LOG.i(_cart.length);
-
-        print(request.body);
       } else {
-        print(request.body);
+        LOG.e(request.body);
       }
     } catch (e) {
       print(e.toString());
@@ -131,21 +129,20 @@ class CartRepository {
     String productID,
   }) async {
     try {
-      final request = await http.delete(
-        FunctionConfig.host + 'manageCart/normal/${authID}/${productID}/${key}',
-      );
+      final request = await CloudFunctionConfig.delete(
+          'manageCart/normal/${authID}/${productID}/${key}');
+
       if (request.statusCode == 200) {
         LOG.i(_cart.length);
-        for (var e in _cart) {}
+
         LOG.i('Removing Key ${key}');
         _cart.removeWhere((element) => element.key.compareTo(key) == 0);
         LOG.i(_cart.length);
-        print('Http Get request sucessfull');
       } else {
-        print('Http Request Failed');
+        LOG.e(request.body);
       }
     } catch (e) {
-      print(e.toString());
+      LOG.e(e.toString());
       throw Exception(e);
     }
   }
