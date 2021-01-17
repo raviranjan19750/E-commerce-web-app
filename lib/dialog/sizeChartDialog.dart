@@ -12,8 +12,13 @@ import 'package:living_desire/widgets/bullet.dart';
 
 class SizeChartDialog extends StatelessWidget {
   ProductRepository productRepository;
+   String type;
+   String subType;
+
 
   List<String> descriptions = new List();
+
+   SizeChartDialog({Key key, this.type, this.subType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class SizeChartDialog extends StatelessWidget {
         child: BlocProvider(
           create: (context) => ProductDetailBloc(
               productRepository: RepositoryProvider.of(context))
-            ..add(LoadSizeChart("Bean Bag", "Arm Chair")),
+            ..add(LoadSizeChart(type, subType)),
           child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
               builder: (context, state) {
             if (state is SizeChartLoading) {

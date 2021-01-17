@@ -187,7 +187,7 @@ class _ProductDetailDescriptionAndImageState
                                 margin: EdgeInsets.only(top: 16.0),
                                 child: ProductVariantSizeList(
                                   sizeOptionsList:
-                                      state.productDetail.sizeOptions,
+                                  state.productDetail.sizeOptions,
                                   productID: state.productDetail.productID,
                                   variantSize: state.productDetail.size,
                                   selectedColor: state.productDetail.colour,

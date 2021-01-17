@@ -268,7 +268,7 @@ class FooterNew extends StatelessWidget {
               InkWell(
                 onTap: () {
                   locator<NavigationService>()
-                      .navigateTo(RoutesConfiguration.ABOUT_US);
+                      .navigateTo(RoutesConfiguration.ABOUT_US, newTab: true);
                 },
                 child: Text(
                   Strings.aboutUs.toUpperCase(),
@@ -283,8 +283,9 @@ class FooterNew extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  locator<NavigationService>()
-                      .navigateTo(RoutesConfiguration.SHIPPING_POLICY);
+                  locator<NavigationService>().navigateTo(
+                      RoutesConfiguration.SHIPPING_POLICY,
+                      newTab: true);
                 },
                 child: Text(
                   Strings.shippingPolicy.toUpperCase(),
@@ -299,8 +300,9 @@ class FooterNew extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  locator<NavigationService>()
-                      .navigateTo(RoutesConfiguration.CANCELLATION_AND_RETURN);
+                  locator<NavigationService>().navigateTo(
+                      RoutesConfiguration.CANCELLATION_AND_RETURN,
+                      newTab: true);
                 },
                 child: Text(
                   Strings.cancellationAndReturn.toUpperCase(),
@@ -315,8 +317,9 @@ class FooterNew extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  locator<NavigationService>()
-                      .navigateTo(RoutesConfiguration.PRIVACY_POLICY);
+                  locator<NavigationService>().navigateTo(
+                      RoutesConfiguration.PRIVACY_POLICY,
+                      newTab: true);
                 },
                 child: Text(
                   Strings.privacyPolicy.toUpperCase(),
@@ -331,8 +334,9 @@ class FooterNew extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  locator<NavigationService>()
-                      .navigateTo(RoutesConfiguration.TERMS_AND_CONDITIONS);
+                  locator<NavigationService>().navigateTo(
+                      RoutesConfiguration.TERMS_AND_CONDITIONS,
+                      newTab: true);
                 },
                 child: Text(
                   Strings.termsAndConditions.toUpperCase(),

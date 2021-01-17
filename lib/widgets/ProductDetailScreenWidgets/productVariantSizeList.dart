@@ -19,6 +19,8 @@ class ProductVariantSizeList extends StatelessWidget {
   List<AllVariant> allVariantList;
   String productID;
   String variantSize;
+  String type;
+  String subType;
 
   ProductVariantSizeList(
       {Key key,
@@ -26,6 +28,8 @@ class ProductVariantSizeList extends StatelessWidget {
       this.productID,
       this.variantSize,
       this.selectedColor,
+      this.type,
+      this.subType,
       this.allVariantList})
       : super(key: key);
 
@@ -129,7 +133,7 @@ class ProductVariantSizeList extends StatelessWidget {
                   showDialog(
                       context: context,
                     builder: (BuildContext buildContext) {
-                        return SizeChartDialog();
+                        return SizeChartDialog(type: type, subType: subType,);
                     }
                   );
                 },
