@@ -44,7 +44,6 @@ class HTMLResponseScreenContent extends StatelessWidget {
               data: state.htmlResponse,
               onLinkTap: (url) {
                 js.context.callMethod('open', [url]);
-                print(url.toString());
               },
             ),
           );
