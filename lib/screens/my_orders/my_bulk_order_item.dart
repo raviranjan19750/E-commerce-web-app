@@ -6,7 +6,7 @@ import 'package:living_desire/main.dart';
 import 'package:living_desire/models/BulkOrder.dart';
 import 'package:living_desire/routes.dart';
 import 'package:living_desire/service/navigation_service.dart';
-
+import 'dart:html' as html;
 class MyBulkOrderItem extends StatelessWidget {
   List<BulkOrder> bulkOrdItems;
   int index;
@@ -219,7 +219,17 @@ class MyBulkOrderItem extends StatelessWidget {
                           visible: (bulkOrder.sampleInvoiceUrl != null ||
                               bulkOrder.orderInvoiceUrl != null),
                           child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+
+                                if (bulkOrder.orderInvoiceUrl == null) {
+                                  if (bulkOrder.sampleInvoiceUrl != null) {
+                                    html.window.open(bulkOrder.sampleInvoiceUrl, '');
+                                  }
+                                }
+                                else
+                                  html.window.open(bulkOrder.orderInvoiceUrl, '');
+
+                              },
                               child: Container(
                                 margin: EdgeInsets.only(
                                     left: 32, bottom: 8, right: 32),
