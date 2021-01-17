@@ -1,6 +1,22 @@
 class Strings {
   // Strings containing all texts
 
+  //Contact info strings
+
+  static const String contactUsPhone = "9205528588";
+  static const String contactUsEmail = "help@livingdesire.in";
+
+  // footer function name strings
+
+  static const String functionNameAboutUs = "about-us";
+  static const String functionNameShippingPolicy = "shipping-policy";
+  static const String functionNameCancellationAndReturn = "cancellation-and-return";
+  static const String functionNamePrivacyPolicy = "privacy-policy";
+  static const String functionNameTermsAnConditions = "terms-and-conditions";
+
+  // html response error
+  static const String htmlResponseError = "Error while fetching html response";
+
   // for empty screens
   static const String searchPrimaryText = "We couldn't find any matches";
   static const String searchSecondaryText = "Please check the spelling or try searching something else";
