@@ -25,6 +25,7 @@ import 'package:living_desire/service/sharedPreferences.dart';
 import 'package:logger/logger.dart';
 import './config/configs.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
+import 'bloc/cart_config/cart_config_bloc.dart';
 import 'bloc/wishlist_config/wishlist_bloc.dart';
 import 'config/CustomRouteObserver.dart';
 
@@ -101,14 +102,18 @@ class InitailizeAppService extends StatelessWidget {
           create: (context) => PromoCodeRepository(),
         ),
         RepositoryProvider(
-            create: (context) =>
-                CustomerDetailRepository(RepositoryProvider.of(context))),
+            create: (context) => CustomerDetailRepository(
+                wishlistRepo: RepositoryProvider.of(context),
+                cartRepository: RepositoryProvider.of(context))),
         RepositoryProvider(create: (context) => FooterRepository())
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
               create: (context) => WishlistConfigBloc(
+                  customerRepository: RepositoryProvider.of(context))),
+          BlocProvider(
+              create: (context) => CartConfigBloc(
                   customerRepository: RepositoryProvider.of(context))),
           BlocProvider(
               create: (context) =>
@@ -119,6 +124,7 @@ class InitailizeAppService extends StatelessWidget {
           BlocProvider(
               create: (context) => AuthenticationBloc(
                   authenticationRepository: RepositoryProvider.of(context),
+                  cartConfigBloc: BlocProvider.of(context),
                   wishlistConfigBloc: BlocProvider.of(context))),
           BlocProvider(create: (context) => HomeBloc())
         ],

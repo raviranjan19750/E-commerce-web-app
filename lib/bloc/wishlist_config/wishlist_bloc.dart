@@ -14,26 +14,26 @@ class WishlistConfigBloc extends Bloc<WishlistConfigEvent, WishlistConfigState> 
 
   WishlistConfigBloc({this.customerRepository})
       : assert(customerRepository != null),
-        super(WishlistConfigInitial(customerRepository.totalItemInCart));
+        super(WishlistConfigInitial(customerRepository.totalItemInWishList));
 
   @override
   Stream<WishlistConfigState> mapEventToState(
     WishlistConfigEvent event,
   ) async* {
     if (event is UpdateWishConfigList) {
-      yield UpdatedWishConfigList(customerRepository.totalItemInCart);
+      yield UpdatedWishConfigList(customerRepository.totalItemInWishList);
     } else if (event is GetWishlistFromServer) {
       await customerRepository.getWishlist(authID: event.uid);
-      yield UpdatedWishConfigList(customerRepository.totalItemInCart);
+      yield UpdatedWishConfigList(customerRepository.totalItemInWishList);
     } else if (event is ResetWishList) {
       customerRepository.resetWishList();
-      yield UpdatedWishConfigList(customerRepository.totalItemInCart);
+      yield UpdatedWishConfigList(customerRepository.totalItemInWishList);
     } else if (event is UpdateWishList) {
       if (event.wishlist != null) {
         List<String> data = event.wishlist.map((e) => e.variantID).toList(growable: true);
         customerRepository.resetWishlistWithData(data);
       }
     }
-    yield UpdatedWishConfigList(customerRepository.totalItemInCart);
+    yield UpdatedWishConfigList(customerRepository.totalItemInWishList);
   }
 }

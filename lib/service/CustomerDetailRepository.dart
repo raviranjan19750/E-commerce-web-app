@@ -2,20 +2,23 @@ import 'dart:js';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/DBHandler/DBHandler.dart';
+import 'package:living_desire/models/mini_cart.dart';
 import 'package:living_desire/models/models.dart';
 
 enum RepositorySource { LOCAL, ONLINE }
 
+enum CartRepositorySource { LOCAL, ONLINE }
+
 class CustomerDetailRepository {
   final WishlistRepository wishlistRepo;
+  final CartRepository cartRepository;
   RepositorySource _source = RepositorySource.LOCAL;
+  CartRepositorySource _cartSource = CartRepositorySource.LOCAL;
 
-  List<String> _wishListIds = List.empty(growable: true);
-  List<Cart> _cartItem = List.empty(growable: true);
-  List<String> _cartListIDs = List.empty(growable: true);
   Set<String> _wishlistSet = Set();
+  Set<MiniCart> _cartSet = Set();
 
-  CustomerDetailRepository(this.wishlistRepo);
+  CustomerDetailRepository({this.wishlistRepo, this.cartRepository});
 
   void addToWishList(String productId, String variantId,
       {String authID}) async {
@@ -64,38 +67,70 @@ class CustomerDetailRepository {
     return _wishlistSet.contains(id);
   }
 
-  get totalItemInCart {
+  get totalItemInWishList {
     return _wishlistSet.length;
   }
 
-  void addAllCartList(List<Cart> cart) {
-    _cartItem = cart;
+  get totalItemsInCart {
+    int quantity = 0;
+    _cartSet.forEach((element) { quantity += element.quantity; });
+    return quantity;
   }
 
-  void addToCart(String id) {
-    _cartListIDs.add(id);
+  void resetCartList() {
+    _cartSource = CartRepositorySource.LOCAL;
+    _cartSet = Set();
   }
 
-  void removeFromCart(String id) {
-    _cartListIDs.remove(id);
-  }
-
-  void onChangeQuantityCart(
-    String id,
-    int quantity,
-  ) {
-    for (int i = 0; i < _cartItem.length; i++) {
-      if (_cartItem[i].key == id) {
-        _cartItem[i].quantity = quantity;
+  Future<List<MiniCart>> getAllCartItems({String authID}) async {
+    if (authID != null) {
+      if (_cartSource == CartRepositorySource.LOCAL) {
+        _cartSource = CartRepositorySource.ONLINE;
+        _cartSet = Set();
+        List<Cart> cartItems = await cartRepository.getCartDetails(authID);
+        cartItems.forEach((element) {
+          _cartSet.add(MiniCart(element.variantID, element.productID, 1));
+        });
       }
+    }
+    return _cartSet.toList();
+  }
+
+  Future<void> addToCart({ String authID, String productID, String variantID, int quantity }) async {
+    if (authID != null) {
+      await cartRepository.addCartDetails(authID, productID, variantID, quantity);
+      _cartSet.add(MiniCart(variantID, productID, quantity));
     }
   }
 
-  get cartTotal {
-    double total = 0;
-    _cartItem.forEach((element) {
-      total = total + element.discountPrice * element.quantity;
-    });
-    return total;
-  }
+  // void addAllCartList(List<Cart> cart) {
+  //   _cartItem = cart;
+  // }
+  //
+  // void addToCart(String id) {
+  //   _cartListIDs.add(id);
+  // }
+  //
+  // void removeFromCart(String id) {
+  //   _cartListIDs.remove(id);
+  // }
+  //
+  // void onChangeQuantityCart(
+  //   String id,
+  //   int quantity,
+  // ) {
+  //   for (int i = 0; i < _cartItem.length; i++) {
+  //     if (_cartItem[i].key == id) {
+  //       _cartItem[i].quantity = quantity;
+  //     }
+  //   }
+  // }
+  //
+  // get cartTotal {
+  //   double total = 0;
+  //   _cartItem.forEach((element) {
+  //     total = total + element.discountPrice * element.quantity;
+  //   });
+  //   return total;
+  // }
 }

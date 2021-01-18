@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:living_desire/bloc/cart_config/cart_config_bloc.dart';
 import 'package:living_desire/bloc/wishlist_config/wishlist_bloc.dart';
 import 'package:living_desire/models/user.dart';
 import 'package:living_desire/models/user_detail.dart';
@@ -16,11 +17,13 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final WishlistConfigBloc wishlistConfigBloc;
+  final CartConfigBloc cartConfigBloc;
 
   AuthenticationBloc(
       {@required AuthenticationRepository authenticationRepository,
-      this.wishlistConfigBloc})
+      this.wishlistConfigBloc, this.cartConfigBloc})
       : assert(authenticationRepository != null),
+        assert(cartConfigBloc != null),
         _authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
     _userSubscription = _authenticationRepository.user.listen(
@@ -53,8 +56,10 @@ class AuthenticationBloc
   ) {
     if (event.user != null) {
       wishlistConfigBloc.add(GetWishlistFromServer(event.user.uid));
+      cartConfigBloc.add(GetCartItemsFromServer(event.user.uid));
     } else {
       wishlistConfigBloc.add(ResetWishList());
+      cartConfigBloc.add(ResetCartList());
     }
 
     return event.user != null
