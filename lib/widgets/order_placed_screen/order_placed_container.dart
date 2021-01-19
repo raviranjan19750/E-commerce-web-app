@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:living_desire/widgets/footer/FooterNew.dart';
 import 'package:living_desire/widgets/footer/footer.dart';
 import '../../config/configs.dart';
 import '../../models/models.dart';
@@ -98,7 +99,7 @@ class OrderPlacedContainer extends StatelessWidget {
               ],
             ),
 
-            Footer(),
+            FooterNew(),
           ],
         ),
       ),

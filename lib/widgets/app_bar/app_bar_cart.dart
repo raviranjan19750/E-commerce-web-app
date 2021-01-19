@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/cart_config/cart_config_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:badges/badges.dart';
 import 'package:living_desire/main.dart';
@@ -22,13 +24,17 @@ class AppBarCart extends StatelessWidget {
             padding: EdgeInsets.all(8),
             child: Row(
               children: [
-                Badge(
-                  badgeContent: Text(
-                    '0',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  badgeColor: Palette.secondaryColor,
-                  child: Icon(Icons.shopping_cart_outlined),
+                BlocBuilder<CartConfigBloc, CartConfigState>(
+                  builder: (context, state) {
+                    return Badge(
+                      badgeContent: Text(
+                        state.totalItem.toString() ?? '0',
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                      badgeColor: Palette.secondaryColor,
+                      child: Icon(Icons.shopping_cart_outlined),
+                    );
+                  }
                 ),
                 Text(
                   '   Cart',

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/select_address/select_address_bloc.dart';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:http/http.dart' as http;
 import 'package:living_desire/service/navigation_service.dart';
@@ -34,11 +35,8 @@ class GetQuotationButton extends StatelessWidget {
               "deliveryAddressID": deliveryAddressID
             };
 
-            final response = await http.post(
-              FunctionConfig.host + 'manageCustomOrder/custom-request/$authID',
-              body: jsonEncode(data),
-              headers: {"Content-Type": "application/json"},
-            );
+            final response = await CloudFunctionConfig.post(
+                'manageCustomOrder/custom-request/$authID', jsonEncode(data));
 
             if (response.statusCode == 200) {
               LOG.i(response.body);

@@ -76,7 +76,6 @@ class CartRepository {
       };
       final response =
           await CloudFunctionConfig.post('manageCart/normal/${authID}', data);
-
       if (response.statusCode == 200) {
       } else {
         print('Http Request Failed');

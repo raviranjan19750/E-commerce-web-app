@@ -19,6 +19,11 @@ class ProceedToPayButton extends StatelessWidget {
   String razorpayOrderID;
   String orderID;
   final int paymentMode;
+  final String deliveryAddressID;
+  final List<String> cartKeys;
+  final String couponCode;
+  final double couponAmount;
+  final double deliveryCharges;
 
   ProceedToPayButton({
     Key key,
@@ -27,6 +32,11 @@ class ProceedToPayButton extends StatelessWidget {
     this.orderID,
     this.paymentMode,
     this.razorpayOrderID,
+    this.deliveryAddressID,
+    this.cartKeys,
+    this.couponAmount,
+    this.couponCode,
+    this.deliveryCharges,
   }) : super(key: key);
 
   // Proceed To PAy Button
@@ -62,6 +72,7 @@ class ProceedToPayButton extends StatelessWidget {
           //   print(e.toString());
           //   throw Exception(e);
           // }
+          print(deliveryAddressID);
 
           return showDialog(
             context: context,
@@ -72,12 +83,17 @@ class ProceedToPayButton extends StatelessWidget {
                 authID: authID,
                 orderID: orderID,
                 razorpayOrderID: razorpayOrderID,
+                deliveryAddressID: deliveryAddressID,
+                cartKeys: cartKeys,
+                couponAmount: couponAmount,
+                couponCode: couponCode,
+                deliveryCharges: deliveryCharges,
               );
             },
           );
         },
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.22,
+          width: MediaQuery.of(context).size.width * 0.25,
 
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
