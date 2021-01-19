@@ -99,11 +99,14 @@ class SelectAddressCartTotal extends StatelessWidget {
                   payingAmount: state.buyNowDetails.payingAmount,
                   totalAmount: state.buyNowDetails.totalAmount,
                   totalItems: state.buyNowDetails.totalItems,
+                  totalPayingAmount: state.buyNowDetails.totalPayingAmount,
                   razorpayOrderID:
                       state.buyNowDetails.paymentData.razorpayOrderID,
                   orderID: state.buyNowDetails.paymentData.orderID,
                   taxAmount: state.buyNowDetails.taxAmount,
                   walletAmount: state.buyNowDetails.walletAmount,
+                  deliveryAddressID: deliveryAddressID,
+                  cartKeys: state.buyNowDetails.cartKeys,
                 );
               } else if (state is NormalCartDetailLoadingSuccessfull) {
                 return TotalView(
@@ -111,6 +114,7 @@ class SelectAddressCartTotal extends StatelessWidget {
                   deliveryCharges: state.normalCartDetails.deliveryCharges,
                   discount: state.normalCartDetails.discount,
                   payingAmount: state.normalCartDetails.payingAmount,
+                  totalPayingAmount: state.normalCartDetails.totalPayingAmount,
                   totalAmount: state.normalCartDetails.totalAmount,
                   totalItems: state.normalCartDetails.totalItems,
                   razorpayOrderID:
@@ -118,6 +122,8 @@ class SelectAddressCartTotal extends StatelessWidget {
                   orderID: state.normalCartDetails.paymentData.orderID,
                   taxAmount: state.normalCartDetails.taxAmount,
                   walletAmount: state.normalCartDetails.walletAmount,
+                  deliveryAddressID: deliveryAddressID,
+                  cartKeys: state.normalCartDetails.cartKeys,
                 );
               } else if (state is BulkOrderDetailLoadingSuccessfull) {
                 return TotalView(
@@ -149,10 +155,12 @@ class TotalView extends StatelessWidget {
   final double deliveryCharges;
   final String authID;
   final String razorpayOrderID;
+  final double totalPayingAmount;
   final String orderID;
   final double walletAmount;
   final String totalBulkItems;
   final double taxAmount;
+  final List<String> cartKeys;
 
   const TotalView({
     Key key,
@@ -170,13 +178,21 @@ class TotalView extends StatelessWidget {
     this.taxAmount,
     this.walletAmount,
     this.isBulkOrderCart,
+    this.cartKeys,
+    this.totalPayingAmount,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     int paymentMode;
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => SelectPaymentBloc())],
+      providers: [
+        BlocProvider(create: (context) => SelectPaymentBloc()),
+        BlocProvider(
+          create: (context) => CheckPromoCodeBloc(
+              promoCodeRepository: RepositoryProvider.of(context)),
+        ),
+      ],
       child: Card(
         elevation: 5.0,
         child: Padding(
@@ -191,43 +207,49 @@ class TotalView extends StatelessWidget {
                   horizontal: 8.0,
                 ),
                 child: isBulkOrderCart == true
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            Strings.totalItems,
-                            style: TextStyle(
-                              fontSize: 18,
+                    ? Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.totalItems,
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          Text(
-                            totalItems.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
+                            Text(
+                              totalItems.toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            Strings.subTotal + ' (${totalItems} Item):',
-                            style: TextStyle(
-                              fontSize: 18,
+                    : Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.subTotal + ' (${totalItems} Item):',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          Text(
-                            totalAmount.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
+                            Text(
+                              totalAmount.toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
               ),
 
@@ -238,13 +260,26 @@ class TotalView extends StatelessWidget {
                         horizontal: 8.0,
                         vertical: 10.0,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(Strings.deliveryCharges),
-                          Text(deliveryCharges.toString()),
-                        ],
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.deliveryCharges,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            Text(
+                              deliveryCharges.toString(),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 
@@ -255,19 +290,42 @@ class TotalView extends StatelessWidget {
                         vertical: 10.0,
                         horizontal: 8.0,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(Strings.discount),
-                          Text(discount.toString()),
-                        ],
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.discount,
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 14,
+                              ),
+                            ),
+                            Text(
+                              discount.toString(),
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 
-              Divider(
-                color: Colors.black,
-                thickness: 0.3,
+              // Divider(
+              //   color: Colors.black,
+              //   thickness: 0.3,
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 1,
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  color: Colors.black,
+                ),
               ),
 
               isBulkOrderCart == true
@@ -277,22 +335,28 @@ class TotalView extends StatelessWidget {
                         vertical: 10,
                         horizontal: 8.0,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            Strings.total,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          Text(
-                            payingAmount.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.total,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                        ],
+                            Text(
+                              payingAmount.toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 
@@ -342,22 +406,18 @@ class TotalView extends StatelessWidget {
                     } else if (state.paymentMode == 5) {
                       paymentMode = 105;
                     }
-                    return Column(
-                      children: [
-                        // Promo Code
-                        GetPromoCode(
-                          authID: authID,
-                          payingAmount: payingAmount,
-                          paymentMode: paymentMode,
-                        ),
-                        ProceedToPayButton(
-                          amount: payingAmount,
-                          authID: authID,
-                          orderID: orderID,
-                          razorpayOrderID: razorpayOrderID,
-                          paymentMode: paymentMode,
-                        ),
-                      ],
+                    return GetPromoCode(
+                      authID: authID,
+                      payingAmount: payingAmount,
+                      paymentMode: paymentMode,
+                      orderID: orderID,
+                      totalPayingAmount: totalPayingAmount,
+                      walletAmount: walletAmount,
+                      taxAmount: taxAmount,
+                      razorpayOrderID: razorpayOrderID,
+                      deliveryAddressID: deliveryAddressID,
+                      deliveryCharges: deliveryCharges,
+                      cartKeys: cartKeys,
                     );
                   }
                   return Container();
@@ -414,7 +474,7 @@ class SelectPaymentMethod extends StatelessWidget {
               .add(LoadSelectPaymentDialog());
         },
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.22,
+          width: MediaQuery.of(context).size.width * 0.25,
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Palette.secondaryColor,
@@ -672,12 +732,28 @@ class GetPromoCode extends StatelessWidget {
   final String authID;
   final double payingAmount;
   final int paymentMode;
+  final String orderID;
+  final String razorpayOrderID;
+  final String deliveryAddressID;
+  final double deliveryCharges;
+  final List<String> cartKeys;
+  final double walletAmount;
+  final double taxAmount;
+  final double totalPayingAmount;
 
   const GetPromoCode({
     Key key,
     this.authID,
+    this.orderID,
+    this.razorpayOrderID,
     this.payingAmount,
     this.paymentMode,
+    this.deliveryAddressID,
+    this.deliveryCharges,
+    this.cartKeys,
+    this.taxAmount,
+    this.totalPayingAmount,
+    this.walletAmount,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -689,19 +765,71 @@ class GetPromoCode extends StatelessWidget {
 
     promoCode = "";
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => CheckPromoCodeBloc(
-              promoCodeRepository: RepositoryProvider.of(context))
-            ..add(CheckingPromoCodeAvailabilityInitial()),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 8.0,
+          ),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.25,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  Strings.tax,
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  taxAmount.toString(),
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      ],
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+        walletAmount != 0
+            ? Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 8.0,
+                ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        Strings.wallet,
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      Text(
+                        walletAmount.toString(),
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : SizedBox.shrink(),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -709,39 +837,40 @@ class GetPromoCode extends StatelessWidget {
                 color: Colors.black,
               ),
               Container(
-                width: 130,
-                margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+                width: MediaQuery.of(context).size.width * 0.1,
                 child: TextFormField(
-                    controller: textEditingController,
-                    // keyboardType: TextInputType,
-                    maxLength: 6,
-                    // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (val) {
-                      promoCode = val;
-                    },
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                        labelText: Strings.checkAvailability,
-                        border: InputBorder.none,
-                        labelStyle: TextStyle(color: Colors.black54),
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        counterText: "")),
+                  controller: textEditingController,
+                  // keyboardType: TextInputType,
+
+                  // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  onChanged: (val) {
+                    promoCode = val;
+                  },
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: Strings.promoCode,
+                    border: InputBorder.none,
+                    labelStyle: TextStyle(color: Colors.black54),
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    counterText: "",
+                  ),
+                ),
               ),
               InkWell(
                 onTap: () {
                   BlocProvider.of<CheckPromoCodeBloc>(context)
                       .add(CheckingPromoCodeAvailability(
                     authID,
-                    payingAmount,
+                    totalPayingAmount,
                     paymentMode,
                     promoCode,
                   ));
                 },
                 child: Text(
-                  Strings.check,
+                  Strings.apply,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -750,101 +879,308 @@ class GetPromoCode extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            width: 230,
-            padding: EdgeInsets.all(0.0),
-            margin: EdgeInsets.all(0.0),
-            child: Divider(
-              thickness: 1.0,
-              height: 0.0,
-              color: Colors.black,
-            ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.23,
+          padding: EdgeInsets.all(0.0),
+          margin: EdgeInsets.all(0.0),
+          child: Divider(
+            thickness: 1.0,
+            height: 0.0,
+            color: Colors.black,
           ),
-          BlocBuilder<CheckPromoCodeBloc, PromoCodeAvailabilityState>(
-            builder: (context, state) {
-              if (state is PromoCodeDetailAvailabilityChecking)
-                return Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: CircularProgressIndicator(
-                        strokeWidth: 3.0,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.black,
-                        )));
-              else if (state is PromoCodeDetailAvailabilityCheckingSuccessful)
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (state.checkPromoCodeAvailability.responseCode == 200)
-                      Text(
-                        'Promo Code Applied New Amount:',
-                        style: TextStyle(
-                          color: Palette.green,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
+        ),
+        BlocBuilder<CheckPromoCodeBloc, PromoCodeAvailabilityState>(
+          builder: (context, state) {
+            if (state is PromoCodeDetailAvailabilityChecking)
+              return Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: CircularProgressIndicator(
+                      strokeWidth: 3.0,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.black,
+                      )));
+            else if (state is PromoCodeDetailAvailabilityCheckingSuccessful)
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (state.checkPromoCodeAvailability.newPayingAmount !=
+                          null ||
+                      state.checkPromoCodeAvailability.cashbackAmount != null)
+                    Text(
+                      state.checkPromoCodeAvailability.responseText,
+                      style: TextStyle(
+                        color: Palette.green,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    )
+                  else
+                    Text(
+                      state.checkPromoCodeAvailability.responseText,
+                      style: TextStyle(
+                        color: Colors.red[500],
+                        fontWeight: FontWeight.normal,
+                        fontSize: 14,
+                      ),
+                    ),
+                  if (state.checkPromoCodeAvailability.newPayingAmount != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8.0,
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.couponDiscount,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              state.checkPromoCodeAvailability.discount
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
-                      )
-                    else
-                      Text(
-                        state.checkPromoCodeAvailability.responseText,
-                        style: TextStyle(
-                          color: Colors.red[500],
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14,
+                      ),
+                    )
+                  else if (state.checkPromoCodeAvailability.cashbackAmount !=
+                      null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8.0,
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.cashbackAmount,
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              state.checkPromoCodeAvailability.cashbackAmount
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
-                      )
-                  ],
-                );
-              else if (state is PromoCodeDetailAvailabilityCheckingFailure)
-                return Container(
-                  child: Text(
-                    "Error",
+                      ),
+                    )
+                  else
+                    SizedBox.shrink(),
+                  if (state.checkPromoCodeAvailability.newPayingAmount != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8.0,
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.total,
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              state.checkPromoCodeAvailability.newPayingAmount
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  else if (state.checkPromoCodeAvailability.cashbackAmount !=
+                      null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8.0,
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.grandTotal,
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              totalPayingAmount.toString(),
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  else
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8.0,
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.grandTotal,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              totalPayingAmount.toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (state.checkPromoCodeAvailability.newPayingAmount != null)
+                    ProceedToPayButton(
+                      amount: state.checkPromoCodeAvailability.newPayingAmount,
+                      authID: authID,
+                      orderID:
+                          state.checkPromoCodeAvailability.paymentData.orderID,
+                      razorpayOrderID: state.checkPromoCodeAvailability
+                          .paymentData.razorpayOrderID,
+                      paymentMode: paymentMode,
+                      deliveryCharges: deliveryCharges,
+                      cartKeys: cartKeys,
+                      deliveryAddressID: deliveryAddressID,
+                      couponCode: promoCode,
+                      couponAmount: state.checkPromoCodeAvailability.discount,
+                    )
+                  else if (state.checkPromoCodeAvailability.cashbackAmount !=
+                      null)
+                    ProceedToPayButton(
+                      amount: totalPayingAmount,
+                      authID: authID,
+                      orderID: orderID,
+                      razorpayOrderID: razorpayOrderID,
+                      paymentMode: paymentMode,
+                      deliveryCharges: deliveryCharges,
+                      cartKeys: cartKeys,
+                      deliveryAddressID: deliveryAddressID,
+                      couponCode: promoCode,
+                      couponAmount:
+                          state.checkPromoCodeAvailability.cashbackAmount,
+                    )
+                  else
+                    ProceedToPayButton(
+                      amount: payingAmount,
+                      authID: authID,
+                      orderID: orderID,
+                      razorpayOrderID: razorpayOrderID,
+                      paymentMode: paymentMode,
+                      deliveryCharges: deliveryCharges,
+                      cartKeys: cartKeys,
+                      deliveryAddressID: deliveryAddressID,
+                    ),
+                ],
+              );
+            else if (state is PromoCodeDetailAvailabilityCheckingFailure)
+              return Container(
+                child: Text(
+                  "Error",
+                ),
+              );
+            else {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 8.0,
+                    ),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            Strings.grandTotal,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            totalPayingAmount.toString(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                );
-              else {
-                return Container();
-              }
-            },
-          ),
-        ],
-      ),
-      // Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: Container(
-      //     child: Row(
-      //       children: [
-      //         Expanded(
-      //           child: TextFormField(
-      //             decoration: InputDecoration(
-      //               labelText: 'Enter your Promo Code Here',
-      //               //border: InputBorder.none,
-      //               labelStyle: TextStyle(color: Colors.blue),
-      //               // focusedBorder: InputBorder.none,
-      //               // enabledBorder: InputBorder.none,
-      //               // errorBorder: InputBorder.none,
-      //               // disabledBorder: InputBorder.none,
-      //             ),
-      //             cursorColor: Colors.black,
-      //             // initialValue: initialValue,
-      //             // validator: validator,
-      //             onSaved: (val) {},
-      //             onChanged: (val) {},
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {},
-      //           child: Text(
-      //             'APPLY',
-      //             style: TextStyle(
-      //               color: Colors.blue,
-      //               fontSize: 14,
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
+                  ProceedToPayButton(
+                    amount: payingAmount,
+                    authID: authID,
+                    orderID: orderID,
+                    razorpayOrderID: razorpayOrderID,
+                    paymentMode: paymentMode,
+                    deliveryAddressID: deliveryAddressID,
+                    deliveryCharges: deliveryCharges,
+                    cartKeys: cartKeys,
+                  ),
+                ],
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

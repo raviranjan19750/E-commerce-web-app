@@ -105,7 +105,13 @@ class RoutesConfiguration {
             child: CartScreenDesktop())),
     Path(
         r'^' + ORDER_PLACED,
-        (context, data) => OrderPlacedScreenDesktop()),
+        (context, data) => MyDesktopView(
+              child: OrderPlacedScreenDesktop(
+                orderKey: data["key"],
+              ),
+              visibleSubAppBar: false,
+              visibleMiddleAppBar: false,
+            )),
     Path(r'^' + SELECT_ADDRESS, (context, data) {
       String productID = data["productID"];
       String varinatID = data["variantID"];

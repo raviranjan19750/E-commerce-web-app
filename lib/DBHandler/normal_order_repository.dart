@@ -16,8 +16,9 @@ class NormalOrderRepository {
   Future<List<Order>> getNormalOrderDetails(String authID) async {
     try {
       print('Sending Cart Http Request');
-      final response = await http
-          .get(FunctionConfig.host + 'manageOrders/normal-list/${authID}');
+      final response =
+          await CloudFunctionConfig.get('manageOrders/normal-list/${authID}');
+
       if (response.statusCode == 200) {
         print('Http Get request sucessfull');
         _order = (jsonDecode(response.body) as List<dynamic>)

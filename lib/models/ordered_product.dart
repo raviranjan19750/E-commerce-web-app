@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:living_desire/models/StringToHexColor.dart';
 
-
 class OrderedProduct {
   final String key;
   final String productName;
@@ -39,18 +38,16 @@ class OrderedProduct {
   factory OrderedProduct.fromJson(dynamic data) {
     if (data == null) return null;
 
-    List<Color> getColors(List<dynamic> data){
+    List<Color> getColors(List<dynamic> data) {
+      List<Color> temp = new List.empty();
 
-      List<Color> temp = new List();
-
-      for(int i=0;i<data.length;i++){
-        String hexColor = data[i]['hexCode'];
+      for (int i = 0; i < data.length; i++) {
+        String hexColor = data[i];
         Color color = HexColor.hexToColor(hexColor);
         temp.add(color);
       }
 
       return temp;
-
     }
 
     return OrderedProduct(
@@ -62,9 +59,10 @@ class OrderedProduct {
       rating: data['rating'],
       review: data['review'],
       ratingID: data['ratingID'],
-      colour: getColors(data['colour']),
+      colour:
+          (data['colour'] as List).map((e) => HexColor.hexToColor(e)).toList(),
       size: data['size'],
-      imageUrl: data['productImage'],
+      imageUrl: data['imageURL'],
       productName: data['productName'],
     );
   }

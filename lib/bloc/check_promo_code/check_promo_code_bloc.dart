@@ -11,7 +11,7 @@ class CheckPromoCodeBloc
 
   CheckPromoCodeBloc({this.promoCodeRepository})
       : assert(promoCodeRepository != null),
-        super(PromoCodeAvailabilityInitial());
+        super(null);
 
   @override
   Stream<PromoCodeAvailabilityState> mapEventToState(

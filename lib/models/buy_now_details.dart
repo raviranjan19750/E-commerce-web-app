@@ -9,6 +9,8 @@ class BuyNowDetails {
   final PaymentData paymentData;
   final double taxAmount;
   final double walletAmount;
+  final double totalPayingAmount;
+  final List<String> cartKeys;
 
   BuyNowDetails({
     this.totalAmount,
@@ -19,6 +21,8 @@ class BuyNowDetails {
     this.paymentData,
     this.taxAmount,
     this.walletAmount,
+    this.cartKeys,
+    this.totalPayingAmount,
   });
 
   factory BuyNowDetails.fromJson(dynamic data) {
@@ -33,6 +37,8 @@ class BuyNowDetails {
       payingAmount: data["payingAmount"],
       totalAmount: data["totalAmount"],
       totalItems: data["totalItems"],
+      cartKeys: (data["cartKeys"] as List).map((e) => e.toString()).toList(),
+      totalPayingAmount: data["totalPayingAmount"],
     );
   }
 }
