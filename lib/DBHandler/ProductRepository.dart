@@ -26,10 +26,8 @@ class ProductRepository {
     return ProductDetail.fromJson(map);
   }
 
-  Future<ComboProduct> getComboProductDescription(
-      {String productID, String authID}) async {
-    LOG.i(
-        'Fetching Combo Product Description for Product ID $productID and #$authID)');
+  Future<ComboProduct> getComboProductDescription({String productID, String authID}) async {
+    LOG.i('Fetching Combo Product Description for Product ID $productID and #$authID)');
 
     Map<String, dynamic> data = {
       "authID": authID,
@@ -62,14 +60,13 @@ class ProductRepository {
         isAvailable: result["data"]['isAvailable']);
   }
 
-  Future<CheckProductAvailability> checkProductAvailability(
-      {String pincode, String productID, String variantID}) async {
+  Future<CheckProductAvailability> checkProductAvailability({String pincode, String productID, String variantID}) async {
     print("inside checkproduct availability");
-    final response = await CloudFunctionConfig.get(
-        "checkPincodeAvailability/$pincode/$variantID");
+    final response = await CloudFunctionConfig.get("checkPincodeAvailability/$pincode/$variantID");
     print(response.toString() + response.statusCode.toString());
     Map<String, dynamic> map = jsonDecode(response.body);
-    return CheckProductAvailability.fromJson(map);
+    return CheckProductAvailability.fromJson(map, response.statusCode);
+
   }
 
   // Size Chart
@@ -78,8 +75,7 @@ class ProductRepository {
 
     Map<String, dynamic> data = {"type": type, "subType": subType};
 
-    final response =
-        await CloudFunctionConfig.post("manageSizeChart/details", data);
+    final response = await CloudFunctionConfig.post("manageSizeChart/details", data);
     var result = jsonDecode(response.body);
     return result;
   }

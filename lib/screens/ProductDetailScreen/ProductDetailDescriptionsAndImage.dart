@@ -192,6 +192,8 @@ class _ProductDetailDescriptionAndImageState
                                   variantSize: state.productDetail.size,
                                   selectedColor: state.productDetail.colour,
                                   allVariantList: state.productDetail.allVariants,
+                                  type: state.productDetail.type,
+                                  subType: state.productDetail.subType,
                                 ),
                               ),
 
@@ -248,16 +250,7 @@ class _ProductDetailDescriptionAndImageState
                                         text: Strings.customizeWithLogo,
                                       ),
                                     )
-                                  : Container(
-                                      height: 45,
-                                      width: 220,
-                                      color: Colors.brown,
-                                      margin: EdgeInsets.only(top: 12.0),
-                                      child: CustomWidgetButton(
-                                        onPressed: () {},
-                                        text: Strings.customizeWithLogo,
-                                      ),
-                                    ),
+                                  : Container(),
 
                               Container(
                                 margin: EdgeInsets.only(top: 20.0),

@@ -8,12 +8,12 @@ class CheckProductAvailability {
   CheckProductAvailability(
       {this.responseText, this.responseCode, this.expectedDeliveryDate});
 
-  factory CheckProductAvailability.fromJson(Map<String, dynamic> data) {
+  factory CheckProductAvailability.fromJson(Map<String, dynamic> data, int statusCode) {
     print(data.toString());
 
-    if (data['expectedDeliveryDate'] != null) {
+    if (statusCode == 200) {
       return CheckProductAvailability(
-        responseCode: data['responseCode'],
+        responseCode: statusCode,
         responseText: data['responseText'],
         expectedDeliveryDate: new Timestamp(
                 data['expectedDeliveryDate']["_seconds"],
@@ -23,7 +23,7 @@ class CheckProductAvailability {
     }
 
     return CheckProductAvailability(
-      responseCode: data['responseCode'],
+      responseCode: statusCode,
       responseText: data['responseText'],
       // expectedDeliveryDate: new Timestamp(data['expectedDeliveryDate']["_seconds"], data['expectedDeliveryDate']["_nanoseconds"])
       //     .toDate(),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/bloc/product_availability_bloc.dart';
 import 'package:living_desire/config/palette.dart';
 import 'package:living_desire/config/strings.dart';
@@ -85,8 +84,21 @@ class ProductAvailabilitySection extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                BlocProvider.of<ProductAvailabilityBloc>(context).add(
-                    CheckingProductAvailability(productID, variantID, pincode));
+                if (textEditingController.text.length == 6) {
+                  BlocProvider.of<ProductAvailabilityBloc>(context).add(
+                      CheckingProductAvailability(
+                          productID, variantID, pincode));
+                } else {
+                  SnackBar snackBar = SnackBar(
+                    content: Text(Strings.invalidPincode.toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.deepOrange,
+                            fontWeight: FontWeight.bold)),
+                    backgroundColor: Colors.black,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
               },
               child: Text(
                 Strings.check,
@@ -135,7 +147,16 @@ class ProductAvailabilitySection extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           fontSize: 14),
                     )
-                  else if (state.checkProductAvailability.responseCode == 602)
+                  else if (state.checkProductAvailability.responseCode == 421 ||
+                      textEditingController.text.length < 6)
+                    Text(
+                      Strings.invalidPincode.toUpperCase(),
+                      style: TextStyle(
+                          color: Colors.orange[500],
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14),
+                    )
+                  else if (state.checkProductAvailability.responseCode == 422)
                     Text(
                       Strings.notAvailable.toUpperCase(),
                       style: TextStyle(
@@ -143,15 +164,7 @@ class ProductAvailabilitySection extends StatelessWidget {
                           fontWeight: FontWeight.normal,
                           fontSize: 14),
                     )
-                  else if (state.checkProductAvailability.responseCode == 601)
-                    Text(
-                      Strings.invalidPincode.toUpperCase(),
-                      style: TextStyle(
-                          color: Colors.orange,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14),
-                    )
-                  else if (state.checkProductAvailability.responseCode == 401)
+                  else
                     Container()
                 ],
               );
@@ -165,7 +178,7 @@ class ProductAvailabilitySection extends StatelessWidget {
               return Container();
             }
           },
-        ),
+        )
       ],
     );
   }
