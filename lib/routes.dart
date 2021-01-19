@@ -80,7 +80,9 @@ class RoutesConfiguration {
     Path(
         r'^' + ORDER_PLACED,
         (context, data) => MyDesktopView(
-              child: OrderPlacedScreenDesktop(),
+              child: OrderPlacedScreenDesktop(
+                orderKey: data["key"],
+              ),
               visibleSubAppBar: false,
               visibleMiddleAppBar: false,
             )),

@@ -1,26 +1,44 @@
+import 'package:living_desire/models/payment_data.dart';
+
 class CheckPromoCodeAvailability {
   final String responseText;
-  final int responseCode;
+  final double discount;
   final double newPayingAmount;
+  final PaymentData paymentData;
+  final double cashbackAmount;
 
   CheckPromoCodeAvailability({
     this.responseText,
-    this.responseCode,
     this.newPayingAmount,
+    this.discount,
+    this.paymentData,
+    this.cashbackAmount,
   });
 
   factory CheckPromoCodeAvailability.fromJson(Map<String, dynamic> data) {
+    print(data.toString());
     if (data['newPayingAmount'] != null) {
       return CheckPromoCodeAvailability(
-        responseCode: data['responseCode'],
-        responseText: data['responseText'],
+        responseText: data['message'],
         newPayingAmount: data['newPayingAmount'],
+        discount: data['discount'],
+        paymentData: PaymentData.fromJson(data['paymentData']),
+        cashbackAmount: null,
+      );
+    }
+    if (data["cashbackAmount"] != null) {
+      return CheckPromoCodeAvailability(
+        responseText: data['message'],
+        cashbackAmount: data["cashbackAmount"],
       );
     }
 
     return CheckPromoCodeAvailability(
-      responseCode: data['responseCode'],
-      responseText: data['responseText'],
+      responseText: data['message'],
+      newPayingAmount: null,
+      discount: null,
+      paymentData: null,
+      cashbackAmount: null,
     );
   }
 }

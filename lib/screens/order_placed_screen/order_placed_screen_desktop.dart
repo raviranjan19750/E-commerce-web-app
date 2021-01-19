@@ -12,7 +12,6 @@ import '../../models/models.dart';
 class OrderPlacedScreenDesktop extends StatelessWidget {
   // Desktop Website Order Placed Screen
 
-
   bool init = false;
   String orderKey;
   OrderPlacedScreenDesktop({this.orderKey});
@@ -35,67 +34,75 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
               lazy: false,
               create: (context) => PlacedOrderProvider(),
               child: Consumer<PlacedOrderProvider>(
-                builder: (BuildContext context, PlacedOrderProvider value, Widget child) {
-
+                builder: (BuildContext context, PlacedOrderProvider value,
+                    Widget child) {
                   if (!init) {
-                    Provider.of<PlacedOrderProvider>(context, listen: false).initOrder("cUnWh3cVAWOLDwBw9zJc");
+                    Provider.of<PlacedOrderProvider>(context, listen: false)
+                        .initOrder(orderKey);
                     init = true;
                   }
 
                   return Scaffold(
-
-                    appBar: CustomAppBar(visibleSubAppBar: false,visibleMiddleAppBar: false,),
-                    
-                    body: (value.isInitialized)?Row(
-
-                      children: [
-
-                        Expanded(
-                          child: SingleChildScrollView(
-
-                            child: OrderPlacedContainer(
-                              order: value.order,
-                            ),
+                    appBar: CustomAppBar(
+                      visibleSubAppBar: false,
+                      visibleMiddleAppBar: false,
+                    ),
+                    body: (value.isInitialized)
+                        ? Row(
+                            children: [
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: OrderPlacedContainer(
+                                    order: value.order,
+                                  ),
+                                ),
+                              ),
+                              OrderPlacedStatusContainer(
+                                order: value.order,
+                              ),
+                            ],
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-
-                        OrderPlacedStatusContainer(
-                          order: value.order,
-                        ),
-
-                      ],
-                    ) :Center(child: CircularProgressIndicator(),),
-
-
-
                   );
-
-
                 },
               ));
 
         case AuthenticationStatus.unauthenticated:
-          return Scaffold(appBar: CustomAppBar(visibleMiddleAppBar: false,visibleSubAppBar: false,),body: Center(
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Palette.secondaryColor,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              // Login Button
-              child: InkWell(
-                onTap: () {
-                  _showLoginDialog(context);
-                },
-                child: Text(
-                  Strings.loginText,
-                  style: TextStyle(color: Colors.white),
+          return Scaffold(
+            appBar: CustomAppBar(
+              visibleMiddleAppBar: false,
+              visibleSubAppBar: false,
+            ),
+            body: Center(
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Palette.secondaryColor,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                // Login Button
+                child: InkWell(
+                  onTap: () {
+                    _showLoginDialog(context);
+                  },
+                  child: Text(
+                    Strings.loginText,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),
-          ),);
+          );
         default:
-          return Scaffold(appBar: CustomAppBar(visibleMiddleAppBar: false,visibleSubAppBar: false,),body: Container(),);
+          return Scaffold(
+            appBar: CustomAppBar(
+              visibleMiddleAppBar: false,
+              visibleSubAppBar: false,
+            ),
+            body: Container(),
+          );
       }
     });
   }

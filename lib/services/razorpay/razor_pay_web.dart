@@ -1,6 +1,13 @@
+import 'dart:convert';
 import 'dart:html';
 import 'dart:ui' as ui;
 //conditional import
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/config/CloudFunctionConfig.dart';
+import 'package:living_desire/main.dart';
+import 'package:living_desire/service/navigation_service.dart';
+
+import '../../routes.dart';
 import 'ui_fake.dart' if (dart.library.html) 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import '../../models/models.dart';
@@ -12,21 +19,32 @@ class RazorPayWeb extends StatelessWidget {
   final String orderID;
   final double amount;
   final String authID;
+  final String deliveryAddressID;
+  final List<String> cartKeys;
+  final String couponCode;
+  final double couponAmount;
+  final double deliveryCharges;
 
   const RazorPayWeb({
     Key key,
     this.razorpayOrderID,
     this.paymentMode,
     this.authID,
+    this.cartKeys,
     this.amount,
     this.orderID,
+    this.deliveryAddressID,
+    this.couponAmount,
+    this.couponCode,
+    this.deliveryCharges,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     print('razor pay');
+    print(razorpayOrderID);
     var razorpayPaymentID = '';
-    var razorpayOrderID = '';
+    var razorpayOrderIDWeb = '';
     var razorpaySignature = '';
     var blocConfig = {};
     String sequenceBloc = "";
@@ -46,18 +64,41 @@ class RazorPayWeb extends StatelessWidget {
       IFrameElement element = IFrameElement();
 
       //Event Listener
-      window.onMessage.forEach((element) {
+      window.onMessage.forEach((element) async {
         print('Event Received in callback: ${element.data}');
         if (element.data == 'MODAL_CLOSED') {
           Navigator.pop(context);
-        } else if (element.data == 'SUCCESS') {
-          print('PAYMENT SUCCESSFULL!!!!!!!');
         } else if (element.data.toString().contains('pay_id')) {
           razorpayPaymentID = element.data.toString().substring(6);
         } else if (element.data.toString().contains('order_id')) {
-          razorpayOrderID = element.data.toString().substring(8);
+          razorpayOrderIDWeb = element.data.toString().substring(8);
         } else if (element.data.toString().contains('sign')) {
           razorpaySignature = element.data.toString().substring(4);
+        } else if (element.data == 'SUCCESS') {
+          print('PAYMENT SUCCESSFULL!!!!!!!');
+          var data = {
+            "orderID": "$orderID",
+            "deliveryAddressID": "$deliveryAddressID",
+            "deliveryCharges": deliveryCharges,
+            "payingAmount": amount,
+            "razorpayData": {
+              "razorpayPaymentID": "$razorpayPaymentID",
+              "razorpaySignature": "$razorpaySignature",
+              "razorpayOrderID": "$razorpayOrderIDWeb",
+              "paymentMode": paymentMode,
+            },
+            "cartKeys": cartKeys,
+          };
+          print(data);
+          final response = await CloudFunctionConfig.post(
+              'managePayments/normal-payment-done/$authID', data);
+          if (response.statusCode == 200) {
+            String key = (jsonDecode(response.body))["key"];
+            locator<NavigationService>()
+                .navigateTo(RoutesConfiguration.ORDER_PLACED, queryParams: {
+              "key": key,
+            });
+          }
         }
       });
       element.requestFullscreen();
@@ -72,7 +113,7 @@ class RazorPayWeb extends StatelessWidget {
       console.log("Razor pay options");
        var options = {
          "key": "rzp_test_U8mKfCB97ZZlEj",
-          "amount": "$amount", "currency": "INR",
+          "amount": "${amount * 100}", "currency": "INR",
           "name": "Living Desire",
           "description": "",
           "image": "https://example.com/your_logo",
@@ -105,6 +146,7 @@ class RazorPayWeb extends StatelessWidget {
                   "name":"Pay Using Netbanking",
                   "instruments":[
                     {
+
                       "method": "netbanking",
                       
                     },
@@ -125,7 +167,7 @@ class RazorPayWeb extends StatelessWidget {
                   "name":"Pay Using Popular Wallet",
                   "instruments":[
                     {
-                      "method": "wallets",
+                      "method": "wallet",
                       
                       "wallets": [ "paypal" , "amazonpay",  "phonepe"],
                       
@@ -144,11 +186,12 @@ class RazorPayWeb extends StatelessWidget {
           },
           "order_id": "$razorpayOrderID",
           "handler": function (response){
-             window.parent.postMessage("SUCCESS","*"); 
+             
                   //2 
              window.parent.postMessage("pay_id"+response.razorpay_payment_id);
              window.parent.postMessage("order_id"+response.razorpay_order_id);
-             window.parent.postMessage("sign"+response.razorpay_signature);   
+             window.parent.postMessage("sign"+response.razorpay_signature);
+             window.parent.postMessage("SUCCESS","*");    
              
           },    
          
