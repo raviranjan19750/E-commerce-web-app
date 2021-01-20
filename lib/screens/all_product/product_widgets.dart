@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/models/sorting_criteria.dart';
+import 'package:living_desire/screens/login/login_view.dart';
+import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/navigation_service.dart';
 
 import '../../main.dart';
@@ -581,12 +584,26 @@ class _AddToCartButton extends StatefulWidget {
 class __AddToCartButtonState extends State<_AddToCartButton> {
   bool _visible;
 
+
+  void _showLoginDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return LoginScreen();
+        });
+  }
+
   Widget _buildWidget(bool _on, BuildContext context) {
     if (_on) {
       return InkWell(
         onTap: () {
-          BlocProvider.of<ProductCardBloc>(context)
-              .add(AddToCartEvent());
+          if (BlocProvider.of<AuthenticationBloc>(context).state.user?.uid != null) {
+            BlocProvider.of<ProductCardBloc>(context)
+                .add(AddToCartEvent());
+          } else {
+            _showLoginDialog(context);
+          }
+
         },
         child: AnimatedContainer(
           width: 400,
@@ -603,6 +620,7 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<ProductCardBloc, ProductCardState>(
       builder: (context, state) {
 
