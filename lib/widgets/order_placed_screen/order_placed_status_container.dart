@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:living_desire/screens/tracking/order_tracking.dart';
 import 'package:living_desire/widgets/OrderTimeline.dart';
 import '../../config/configs.dart';
 import '../widgets.dart';
@@ -12,6 +13,41 @@ class OrderPlacedStatusContainer extends StatelessWidget {
 
 
     return new DateFormat.yMMMd().format(date);
+
+  }
+
+  void showTrackingDialog(BuildContext context , List<Tracking> list,String title){
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+
+          return AlertDialog(
+
+            title: Text(title),
+
+            content:Column(
+
+              mainAxisSize: MainAxisSize.min,
+
+              children: [
+
+                OrderTracking(tracks: list,title: title,),
+
+              ],
+
+            ),
+
+            actions: [
+
+              FlatButton(onPressed: (){Navigator.pop(context);}, child: Container(padding:EdgeInsets.symmetric(horizontal: 16,vertical: 8),child: Text('Go Bak',style: TextStyle(color: Palette.secondaryColor),),))
+
+            ],
+
+          );
+
+        }
+    );
 
   }
 
@@ -111,7 +147,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
               ),
               Container(
   
-                margin : EdgeInsets.only(top: 8,bottom: 8),
+                margin : EdgeInsets.only(top: 8,bottom: 16),
                 child: Row(
   
                   children: [
@@ -139,15 +175,39 @@ class OrderPlacedStatusContainer extends StatelessWidget {
               //Phone Number
               Text(Strings.phoneNumber + order.phone),*/
 
-              Container(
-                width: 400,
-                height: 100,
-                margin: EdgeInsets.only(bottom: 16,top: 8),
-                child: OrderTimeline(processIndex: 0,),
+              InkWell(
+                onTap: (){
+                  List<Tracking> temp = new List.from(order.tracking.reversed);
+                  showTrackingDialog(context, temp, "Order Tracking");
+                },
+                child: Container(
+                  width: 400,
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  // Place Order Button
+                  child: Text(
+                    'Track Order',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
               ),
 
-
               Container(
+
+                margin: EdgeInsets.only(top: 20),
+
                 child: InkWell(
                   onTap: (){},
 
