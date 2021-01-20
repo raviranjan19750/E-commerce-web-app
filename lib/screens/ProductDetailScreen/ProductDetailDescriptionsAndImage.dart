@@ -78,6 +78,7 @@ class _ProductDetailDescriptionAndImageState
             BlocProvider(create: (context) => ProductCardBloc(
               productDetail: state.productDetail,
               customerRepo: RepositoryProvider.of(context),
+                cartConfigBloc: BlocProvider.of(context),
               wishlistBloc: BlocProvider.of(context),
               auth: BlocProvider.of(context)
             ))
@@ -315,6 +316,7 @@ class _ProductDetailDescriptionAndImageState
             BlocProvider(create: (context) => ProductCardBloc(
                 comboProduct: state.comboProduct,
                 customerRepo: RepositoryProvider.of(context),
+                cartConfigBloc: BlocProvider.of(context),
                 wishlistBloc: BlocProvider.of(context),
                 auth: BlocProvider.of(context)
             ))

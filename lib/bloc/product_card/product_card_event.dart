@@ -10,3 +10,7 @@ abstract class ProductCardEvent extends Equatable {
 class AddToWishListProductEvent extends ProductCardEvent {}
 
 class RemoveFromWishListProductEvent extends ProductCardEvent {}
+
+class AddToCartEvent extends ProductCardEvent {}
+
+class RemoveFromCartEvent extends ProductCardEvent {}

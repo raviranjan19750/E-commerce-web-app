@@ -20,7 +20,7 @@ class CustomerDetailRepository {
 
   CustomerDetailRepository({this.wishlistRepo, this.cartRepository});
 
-  void addToWishList(String productId, String variantId,
+  Future<void> addToWishList(String productId, String variantId,
       {String authID}) async {
     if (authID != null) {
       if (_source == RepositorySource.LOCAL) {
@@ -63,8 +63,18 @@ class CustomerDetailRepository {
     // _wishlistSet.remove(id);
   }
 
-  bool contains(String id) {
+  bool alreadyInWishlist(String id) {
     return _wishlistSet.contains(id);
+  }
+
+  bool alreadyInCart(String productId, String variantId) {
+    _cartSet.forEach((e) {
+      print('${e.productID} v ${e.variantID} ::: ${productId} ${variantId}');
+      if (e.productID == productId && e.variantID == variantId) {
+        return true;
+      }
+    });
+    return false;
   }
 
   get totalItemInWishList {
@@ -89,7 +99,7 @@ class CustomerDetailRepository {
         _cartSet = Set();
         List<Cart> cartItems = await cartRepository.getCartDetails(authID);
         cartItems.forEach((element) {
-          _cartSet.add(MiniCart(element.variantID, element.productID, 1));
+          _cartSet.add(MiniCart(element.variantID, element.productID, element.quantity));
         });
       }
     }

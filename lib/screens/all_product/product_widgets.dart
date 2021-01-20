@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/models/sorting_criteria.dart';
@@ -27,6 +28,7 @@ class ProductCard extends StatelessWidget {
       create: (context) => ProductCardBloc(
           customerRepo: RepositoryProvider.of(context),
           wishlistBloc: BlocProvider.of(context),
+          cartConfigBloc: BlocProvider.of(context),
           product: product,
           auth: BlocProvider.of(context)),
       child: Card(
@@ -88,7 +90,10 @@ class ProductCardContent extends StatelessWidget {
               ),
               Positioned(
                 bottom: 0,
-                child: _AddToCartButton(),
+                child: _AddToCartButton(
+                  productId: product.productId,
+                  variantId: product.varientId
+                ),
               )
             ],
           ),
@@ -152,6 +157,7 @@ class ComboProductCard extends StatelessWidget {
       create: (context) => ProductCardBloc(
           customerRepo: RepositoryProvider.of(context),
           wishlistBloc: BlocProvider.of(context),
+          cartConfigBloc: BlocProvider.of(context),
           comboProduct: comboProduct,
           auth: BlocProvider.of(context)),
       child: Card(
@@ -562,40 +568,82 @@ class _FilterDropDownState extends State<FilterDropDown> {
 }
 
 class _AddToCartButton extends StatefulWidget {
+
+  final String productId;
+  final String variantId;
+
+  const _AddToCartButton({Key key, this.productId, this.variantId}) : super(key: key);
+
   @override
   __AddToCartButtonState createState() => __AddToCartButtonState();
 }
 
 class __AddToCartButtonState extends State<_AddToCartButton> {
-  bool _visible = false;
+  bool _visible;
 
-  Widget _buildWidget(bool _on) {
+  Widget _buildWidget(bool _on, BuildContext context) {
     if (_on) {
-      return AnimatedContainer(
-        width: 400,
-        color: Colors.white.withAlpha(180),
-        duration: Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(vertical: 6),
-        child: Icon(Icons.add_shopping_cart),
+      return InkWell(
+        onTap: () {
+          BlocProvider.of<ProductCardBloc>(context)
+              .add(AddToCartEvent());
+        },
+        child: AnimatedContainer(
+          width: 400,
+          color: Colors.white.withAlpha(180),
+          duration: Duration(milliseconds: 200),
+          padding: EdgeInsets.symmetric(vertical: 6),
+          child: Icon(Icons.add_shopping_cart),
+        ),
       );
     } else {
-      return Container(width: 400, height: 40, margin: EdgeInsets.all(0));
+      return Container(width: 400, height: 35, margin: EdgeInsets.all(0));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-        onEnter: (event) {
-          setState(() {
-            _visible = true;
-          });
-        },
-        onExit: (event) {
-          setState(() {
-            _visible = false;
-          });
-        },
-        child: _buildWidget(_visible));
+    return BlocBuilder<ProductCardBloc, ProductCardState>(
+      builder: (context, state) {
+
+        if (_visible == null) {
+          _visible = state.isItemInCart;
+        }
+
+        if (state.isItemInCart) {
+          return InkWell(
+            onTap: () {
+              locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
+            },
+            child: AnimatedContainer(
+              width: 400,
+              color: Colors.white.withAlpha(180),
+              duration: Duration(milliseconds: 200),
+              padding: EdgeInsets.symmetric(vertical: 6),
+              child: Text(Strings.goToCart),
+            ),
+          );
+        }
+
+        return Container(
+          child: MouseRegion(
+              onEnter: (event) {
+                if (!state.isItemInCart) {
+                  setState(() {
+                    _visible = true;
+                  });
+                }
+              },
+              onExit: (event) {
+                if (!state.isItemInCart) {
+                  setState(() {
+                    _visible = false;
+                  });
+                }
+              },
+              child: _buildWidget(_visible, context)),
+        );
+      }
+    );
   }
 }
