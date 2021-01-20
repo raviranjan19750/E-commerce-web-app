@@ -41,18 +41,6 @@ class SelectAddressContainer extends StatelessWidget {
                       {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
                 );
               });
-        } else if (state is LaunchDeleteAddressDialogueState) {
-          showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (BuildContext buildContext) {
-                return DeleteAddressContainer(
-                  authID: authID,
-                  address: state.address,
-                  onAction: (val) =>
-                      {BlocProvider.of<ManageAddressesBloc>(context).add(val)},
-                );
-              });
         }
       },
       buildWhen: (prev, curr) {

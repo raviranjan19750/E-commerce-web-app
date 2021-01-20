@@ -71,9 +71,23 @@ class RazorPayWeb extends StatelessWidget {
     } else if (paymentMode == 103) {
       sequenceBloc = "block.netbanking";
     } else if (paymentMode == 104) {
-      sequenceBloc = "block.upi";
+      sequenceBloc = "block.upi_gpay";
     } else if (paymentMode == 105) {
-      sequenceBloc = "block.wallet";
+      sequenceBloc = "block.upi_bhim";
+    } else if (paymentMode == 106) {
+      sequenceBloc = "block.upi_paytm";
+    } else if (paymentMode == 107) {
+      sequenceBloc = "block.upi_amazon";
+    } else if (paymentMode == 108) {
+      sequenceBloc = "block.upi_whatsapp";
+    } else if (paymentMode == 109) {
+      sequenceBloc = "block.upi_phonepe";
+    } else if (paymentMode == 110) {
+      sequenceBloc = "block.wallet_phonepe";
+    } else if (paymentMode == 111) {
+      sequenceBloc = "block.wallet_paytm";
+    } else if (paymentMode == 112) {
+      sequenceBloc = "block.wallet_amazon";
     }
 
     ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
@@ -173,24 +187,101 @@ class RazorPayWeb extends StatelessWidget {
                     },
                   ],
                 },
-                "upi":{
+                "upi_gpay":{
+                  "name":"Pay Using Google Pay",
+                  "instruments":[
+                    {
+                      "method": "upi",
+                      "flows": ["collect", "qr"],
+                      "apps": ["google_pay"],
+                      
+                    },
+                  ],
+                },
+                "upi_bhim":{
+                  "name":"Pay Using BHIM",
+                  "instruments":[
+                    {
+                      "method": "upi",
+                      "flows": ["collect", "qr"],
+                      "apps": [ "bhim"],
+                      
+                    },
+                  ],
+                },
+                "upi_paytm":{
+                  "name":"Pay Using PAYTM",
+                  "instruments":[
+                    {
+                      "method": "upi",
+                      "flows": ["collect", "qr"],
+                      "apps": [ "paytm"],
+                      
+                    },
+                  ],
+                },
+                "upi_amazon":{
+                  "name":"Pay Using amazon pay",
+                  "instruments":[
+                    {
+                      "method": "upi",
+                      "flows": ["collect", "qr"],
+                      "apps": [ "amazon"],
+                      
+                    },
+                  ],
+                },
+                "upi_whatsapp":{
+                  "name":"Pay Using Whatsapp",
+                  "instruments":[
+                    {
+                      "method": "upi",
+                      "flows": ["collect", "qr"],
+                      "apps": [ "whatsapp"],
+                      
+                    },
+                  ],
+                },
+                "upi_phonepe":{
                   "name":"Pay Using UPI apps",
                   "instruments":[
                     {
                       "method": "upi",
                       "flows": ["collect", "qr"],
-                      "apps": ["google_pay", "bhim", "paytm", "amazon", "whatsapp", "phonepe"],
+                      "apps": [ "phonepe"],
                       
                     },
                   ],
                 },
-                "wallet":{
+                "wallet_paytm":{
                   "name":"Pay Using Popular Wallet",
                   "instruments":[
                     {
                       "method": "wallet",
                       
-                      "wallets": [ "paypal" , "amazonpay",  "phonepe"],
+                      "wallets": [ "paytm" ],
+                      
+                    },
+                  ],
+                },
+                "wallet_phonepe":{
+                  "name":"Pay Using Popular Wallet",
+                  "instruments":[
+                    {
+                      "method": "wallet",
+                      
+                      "wallets": [ "phonepe" ],
+                      
+                    },
+                  ],
+                },
+                "wallet_amazon":{
+                  "name":"Pay Using Popular Wallet",
+                  "instruments":[
+                    {
+                      "method": "wallet",
+                      
+                      "wallets": [ "amazonpay" ],
                       
                     },
                   ],

@@ -148,32 +148,6 @@ class AddressContainer extends StatelessWidget {
                             },
                           ),
                         ),
-                        Container(
-                          width: 1,
-                          height: 16.0,
-                          color: Colors.black,
-                        ),
-
-                        //delete address
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 8.0,
-                            right: 8.0,
-                          ),
-                          child: InkWell(
-                            child: Text(
-                              Strings.delete,
-                              style: TextStyle(
-                                color: Colors.blue,
-                              ),
-                            ),
-                            onTap: () {
-                              // Bloc Provider to Delete Address dialog box
-                              BlocProvider.of<ManageAddressesBloc>(context)
-                                  .add(LoadDeleteAddressDialogueEvent(address));
-                            },
-                          ),
-                        ),
                         address.isPrimary
                             ? SizedBox.shrink()
                             : Container(
