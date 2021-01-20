@@ -21,6 +21,8 @@ class QuotationRazorPay extends StatelessWidget {
   bool samplePayment;
   String orderKey;
 
+  int paymentMode=101;
+
   QuotationRazorPay({
     this.phone,
     this.totalPayingAmount,
@@ -143,6 +145,20 @@ class QuotationRazorPay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String sequenceBloc = "";
+    if (paymentMode == 101) {
+      sequenceBloc = "block.debit_card";
+    } else if (paymentMode == 102) {
+      sequenceBloc = "block.credit_card";
+    } else if (paymentMode == 103) {
+      sequenceBloc = "block.netbanking";
+    } else if (paymentMode == 104) {
+      sequenceBloc = "block.upi";
+    } else if (paymentMode == 105) {
+      sequenceBloc = "block.wallet";
+    }
+
     ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
       IFrameElement element = IFrameElement();
 
@@ -191,6 +207,74 @@ class QuotationRazorPay extends StatelessWidget {
           "name": "Living Desire",
           "description": "Test Transaction",
           "image": "https://example.com/your_logo",
+          
+          config:{
+            display:{
+              blocks: {
+                "debit_card":{
+                  "name":"Pay Using Debit Card",
+                  "instruments":[
+                    {
+                      "method": "card",
+                      "types":[
+                        "debit",
+                      ],
+                    },
+                  ],
+                },
+                "credit_card":{
+                  "name":"Pay Using Credit Card",
+                  "instruments":[
+                    {
+                      "method": "card",
+                      "types":[
+                        "credit",
+                      ],
+                    },
+                  ],
+                },
+                "netbanking":{
+                  "name":"Pay Using Netbanking",
+                  "instruments":[
+                    {
+                      "method": "netbanking",
+                      
+                    },
+                  ],
+                },
+                "upi":{
+                  "name":"Pay Using UPI apps",
+                  "instruments":[
+                    {
+                      "method": "upi",
+                      "flows": ["collect", "qr"],
+                      "apps": ["google_pay", "bhim", "paytm", "amazon", "whatsapp", "phonepe"],
+                      
+                    },
+                  ],
+                },
+                "wallet":{
+                  "name":"Pay Using Popular Wallet",
+                  "instruments":[
+                    {
+                      "method": "wallets",
+                      
+                      "wallets": [ "paypal" , "amazonpay",  "phonepe"],
+                      
+                    },
+                  ],
+                },
+              },
+              
+              "sequence": [
+                "$sequenceBloc",
+              ],
+              "preferences": {
+                "show_default_blocks": false
+              }
+            },
+          },
+          
           "order_id": "$razorPayOrderID",
           "handler": function (response){
        

@@ -602,7 +602,9 @@ class BulkOrderQuotationPayment extends StatelessWidget{
 
                   onPressed: ()  {
 
-                    html.window.open(orderInvoiceUrl, '');
+                    /*html.window.open(orderInvoiceUrl, '');*/
+
+                    showPaymentDialog(context);
 
                   },
 

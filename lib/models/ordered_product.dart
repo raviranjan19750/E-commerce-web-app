@@ -60,9 +60,9 @@ class OrderedProduct {
       review: data['review'],
       ratingID: data['ratingID'],
       colour:
-          (data['colour'] as List).map((e) => HexColor.hexToColor(e)).toList(),
+          (data['colour'] as List).map((e) => HexColor.hexToColor(e['hexCode'])).toList(),
       size: data['size'],
-      imageUrl: data['imageURL'],
+      imageUrl: data['productImage'],
       productName: data['productName'],
     );
   }
