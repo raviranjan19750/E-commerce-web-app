@@ -76,7 +76,7 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
                     content: Container(
 
-                      height: MediaQuery.of(context).size.height * 0.6,
+
                       width: MediaQuery.of(context).size.width * 0.6,
 
                       child: ListView.builder(
