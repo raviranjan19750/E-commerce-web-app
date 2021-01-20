@@ -45,6 +45,7 @@ class SelectAddressCartTotal extends StatelessWidget {
     } else {
       isBulkOrderCart = false;
     }
+    String promoCode = '';
     // return TotalView();
     return BlocBuilder<SelectAddressBloc, SelectAddressState>(
         builder: (context, state) {
@@ -134,12 +135,30 @@ class SelectAddressCartTotal extends StatelessWidget {
                   isSampleRequested: state.isSampleRequested,
                 );
               }
-              return Container();
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: Card(
+                  elevation: 5,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              );
             },
           ),
         );
       }
-      return Container();
+      return Container(
+        width: MediaQuery.of(context).size.width * 0.25,
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: Card(
+          elevation: 5,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
     });
   }
 }
@@ -184,7 +203,11 @@ class TotalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int paymentMode;
+    int paymentMode = 0;
+    String promoCode;
+    TextEditingController textEditingController;
+
+    textEditingController = TextEditingController();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => SelectPaymentBloc()),
@@ -201,6 +224,7 @@ class TotalView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Sub Total
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 20,
@@ -253,36 +277,7 @@ class TotalView extends StatelessWidget {
                       ),
               ),
 
-              isBulkOrderCart == true
-                  ? SizedBox.fromSize()
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0,
-                        vertical: 10.0,
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              Strings.deliveryCharges,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                            Text(
-                              deliveryCharges.toString(),
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
+              // Discount
               isBulkOrderCart == true
                   ? SizedBox.shrink()
                   : Padding(
@@ -315,10 +310,7 @@ class TotalView extends StatelessWidget {
                       ),
                     ),
 
-              // Divider(
-              //   color: Colors.black,
-              //   thickness: 0.3,
-              // ),
+              // Divider
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
@@ -328,6 +320,7 @@ class TotalView extends StatelessWidget {
                 ),
               ),
 
+              // Paying Amount: Total
               isBulkOrderCart == true
                   ? SizedBox.shrink()
                   : Padding(
@@ -353,6 +346,327 @@ class TotalView extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+              // Coupon Discount
+              isBulkOrderCart == true
+                  ? SizedBox.shrink()
+                  : BlocBuilder<CheckPromoCodeBloc, PromoCodeAvailabilityState>(
+                      builder: (context, state) {
+                      if (state is PromoCodeDetailAvailabilityChecking)
+                        return Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: CircularProgressIndicator(),
+                        );
+                      else if (state
+                          is PromoCodeDetailAvailabilityCheckingSuccessful)
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (state.checkPromoCodeAvailability.couponType ==
+                                102)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 8.0,
+                                ),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        Strings.couponDiscount,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        state
+                                            .checkPromoCodeAvailability.discount
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            else if (state
+                                    .checkPromoCodeAvailability.couponType ==
+                                103)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 8.0,
+                                ),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        Strings.cashbackAmount,
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        state
+                                            .checkPromoCodeAvailability.discount
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            else
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 8.0,
+                                ),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '0',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        state
+                                            .checkPromoCodeAvailability.discount
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                          ],
+                        );
+                      else {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 8.0,
+                          ),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  Strings.couponDiscount,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  '0',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    }),
+
+              // TAX Amount
+              isBulkOrderCart == true
+                  ? SizedBox.shrink()
+                  : BlocBuilder<CheckPromoCodeBloc, PromoCodeAvailabilityState>(
+                      builder: (context, state) {
+                      if (state is PromoCodeDetailAvailabilityChecking) {
+                        return CircularProgressIndicator();
+                      } else if (state
+                          is PromoCodeDetailAvailabilityCheckingSuccessful) {
+                        if (state.checkPromoCodeAvailability.couponType ==
+                            102) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 8.0,
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.25,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    Strings.tax,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    state.checkPromoCodeAvailability.taxAmount
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 8.0,
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.25,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    Strings.tax,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    taxAmount.toString(),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 8.0,
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.25,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                Strings.tax,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                taxAmount.toString(),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+
+              // Delivery Charges
+              isBulkOrderCart == true
+                  ? SizedBox.fromSize()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 10.0,
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.deliveryCharges,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            Text(
+                              deliveryCharges.toString(),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+              // Wallet Amount
+              isBulkOrderCart == true
+                  ? SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8.0,
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Strings.wallet,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            Text(
+                              walletAmount.toString(),
+                              style: TextStyle(
+                                fontSize: 14,
                               ),
                             ),
                           ],
@@ -424,36 +738,28 @@ class TotalView extends StatelessWidget {
                 },
               ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    Strings.selectAddressNextStep,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.black45,
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Text(
-                      Strings.needHelp,
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
+
+              // Need Help
+              Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {},
+                      child: Text(
+                        Strings.needHelp,
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -728,7 +1034,7 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
   }
 }
 
-class GetPromoCode extends StatelessWidget {
+class GetPromoCode extends StatefulWidget {
   final String authID;
   final double payingAmount;
   final int paymentMode;
@@ -740,8 +1046,9 @@ class GetPromoCode extends StatelessWidget {
   final double walletAmount;
   final double taxAmount;
   final double totalPayingAmount;
+  String promoCode = "";
 
-  const GetPromoCode({
+  GetPromoCode({
     Key key,
     this.authID,
     this.orderID,
@@ -755,80 +1062,26 @@ class GetPromoCode extends StatelessWidget {
     this.totalPayingAmount,
     this.walletAmount,
   }) : super(key: key);
+
+  @override
+  _GetPromoCodeState createState() => _GetPromoCodeState();
+}
+
+class _GetPromoCodeState extends State<GetPromoCode> {
   @override
   Widget build(BuildContext context) {
-    String promoCode;
-
     TextEditingController textEditingController;
 
     textEditingController = TextEditingController();
-
-    promoCode = "";
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 8.0,
-          ),
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.25,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  Strings.tax,
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  taxAmount.toString(),
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        walletAmount != 0
-            ? Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 8.0,
-                ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.25,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        Strings.wallet,
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        walletAmount.toString(),
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            : SizedBox.shrink(),
         Container(
           width: MediaQuery.of(context).size.width * 0.25,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -844,7 +1097,9 @@ class GetPromoCode extends StatelessWidget {
 
                   // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   onChanged: (val) {
-                    promoCode = val;
+                    setState(() {
+                      widget.promoCode = val;
+                    });
                   },
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
@@ -861,13 +1116,14 @@ class GetPromoCode extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  BlocProvider.of<CheckPromoCodeBloc>(context)
-                      .add(CheckingPromoCodeAvailability(
-                    authID,
-                    totalPayingAmount,
-                    paymentMode,
-                    promoCode,
-                  ));
+                  BlocProvider.of<CheckPromoCodeBloc>(context).add(
+                      CheckingPromoCodeAvailability(
+                          authID: widget.authID,
+                          deliveryCharges: widget.deliveryCharges,
+                          payingAmount: widget.payingAmount,
+                          paymentMode: widget.paymentMode,
+                          promoCode: widget.promoCode,
+                          walletAmount: widget.walletAmount));
                 },
                 child: Text(
                   Strings.apply,
@@ -905,9 +1161,8 @@ class GetPromoCode extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (state.checkPromoCodeAvailability.newPayingAmount !=
-                          null ||
-                      state.checkPromoCodeAvailability.cashbackAmount != null)
+                  if (state.checkPromoCodeAvailability.couponType == 102 ||
+                      state.checkPromoCodeAvailability.couponType == 103)
                     Text(
                       state.checkPromoCodeAvailability.responseText,
                       style: TextStyle(
@@ -925,7 +1180,7 @@ class GetPromoCode extends StatelessWidget {
                         fontSize: 14,
                       ),
                     ),
-                  if (state.checkPromoCodeAvailability.newPayingAmount != null)
+                  if (state.checkPromoCodeAvailability.couponType == 102)
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 10,
@@ -938,72 +1193,7 @@ class GetPromoCode extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              Strings.couponDiscount,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              state.checkPromoCodeAvailability.discount
-                                  .toString(),
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  else if (state.checkPromoCodeAvailability.cashbackAmount !=
-                      null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 8.0,
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              Strings.cashbackAmount,
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              state.checkPromoCodeAvailability.cashbackAmount
-                                  .toString(),
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  else
-                    SizedBox.shrink(),
-                  if (state.checkPromoCodeAvailability.newPayingAmount != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 8.0,
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              Strings.total,
+                              Strings.grandTotal,
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w600,
@@ -1021,37 +1211,6 @@ class GetPromoCode extends StatelessWidget {
                         ),
                       ),
                     )
-                  else if (state.checkPromoCodeAvailability.cashbackAmount !=
-                      null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 8.0,
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              Strings.grandTotal,
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              totalPayingAmount.toString(),
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
                   else
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -1067,14 +1226,14 @@ class GetPromoCode extends StatelessWidget {
                             Text(
                               Strings.grandTotal,
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 22,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             Text(
-                              totalPayingAmount.toString(),
+                              widget.totalPayingAmount.toString(),
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 22,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -1082,46 +1241,44 @@ class GetPromoCode extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (state.checkPromoCodeAvailability.newPayingAmount != null)
+                  if (state.checkPromoCodeAvailability.couponType == 102)
                     ProceedToPayButton(
                       amount: state.checkPromoCodeAvailability.newPayingAmount,
-                      authID: authID,
+                      authID: widget.authID,
                       orderID:
                           state.checkPromoCodeAvailability.paymentData.orderID,
                       razorpayOrderID: state.checkPromoCodeAvailability
                           .paymentData.razorpayOrderID,
-                      paymentMode: paymentMode,
-                      deliveryCharges: deliveryCharges,
-                      cartKeys: cartKeys,
-                      deliveryAddressID: deliveryAddressID,
-                      couponCode: promoCode,
+                      paymentMode: widget.paymentMode,
+                      deliveryCharges: widget.deliveryCharges,
+                      cartKeys: widget.cartKeys,
+                      deliveryAddressID: widget.deliveryAddressID,
+                      couponCode: widget.promoCode,
                       couponAmount: state.checkPromoCodeAvailability.discount,
                     )
-                  else if (state.checkPromoCodeAvailability.cashbackAmount !=
-                      null)
+                  else if (state.checkPromoCodeAvailability.couponType == 103)
                     ProceedToPayButton(
-                      amount: totalPayingAmount,
-                      authID: authID,
-                      orderID: orderID,
-                      razorpayOrderID: razorpayOrderID,
-                      paymentMode: paymentMode,
-                      deliveryCharges: deliveryCharges,
-                      cartKeys: cartKeys,
-                      deliveryAddressID: deliveryAddressID,
-                      couponCode: promoCode,
-                      couponAmount:
-                          state.checkPromoCodeAvailability.cashbackAmount,
+                      amount: widget.totalPayingAmount,
+                      authID: widget.authID,
+                      orderID: widget.orderID,
+                      razorpayOrderID: widget.razorpayOrderID,
+                      paymentMode: widget.paymentMode,
+                      deliveryCharges: widget.deliveryCharges,
+                      cartKeys: widget.cartKeys,
+                      deliveryAddressID: widget.deliveryAddressID,
+                      couponCode: widget.promoCode,
+                      couponAmount: state.checkPromoCodeAvailability.discount,
                     )
                   else
                     ProceedToPayButton(
-                      amount: payingAmount,
-                      authID: authID,
-                      orderID: orderID,
-                      razorpayOrderID: razorpayOrderID,
-                      paymentMode: paymentMode,
-                      deliveryCharges: deliveryCharges,
-                      cartKeys: cartKeys,
-                      deliveryAddressID: deliveryAddressID,
+                      amount: widget.totalPayingAmount,
+                      authID: widget.authID,
+                      orderID: widget.orderID,
+                      razorpayOrderID: widget.razorpayOrderID,
+                      paymentMode: widget.paymentMode,
+                      deliveryCharges: widget.deliveryCharges,
+                      cartKeys: widget.cartKeys,
+                      deliveryAddressID: widget.deliveryAddressID,
                     ),
                 ],
               );
@@ -1155,7 +1312,7 @@ class GetPromoCode extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            totalPayingAmount.toString(),
+                            widget.totalPayingAmount.toString(),
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -1166,14 +1323,14 @@ class GetPromoCode extends StatelessWidget {
                     ),
                   ),
                   ProceedToPayButton(
-                    amount: payingAmount,
-                    authID: authID,
-                    orderID: orderID,
-                    razorpayOrderID: razorpayOrderID,
-                    paymentMode: paymentMode,
-                    deliveryAddressID: deliveryAddressID,
-                    deliveryCharges: deliveryCharges,
-                    cartKeys: cartKeys,
+                    amount: widget.totalPayingAmount,
+                    authID: widget.authID,
+                    orderID: widget.orderID,
+                    razorpayOrderID: widget.razorpayOrderID,
+                    paymentMode: widget.paymentMode,
+                    deliveryAddressID: widget.deliveryAddressID,
+                    deliveryCharges: widget.deliveryCharges,
+                    cartKeys: widget.cartKeys,
                   ),
                 ],
               );

@@ -19,6 +19,7 @@ class Order {
   final int status;
   final String address;
   final String phone;
+  final String orderInvoiceUrl;
   final String pincode;
   final double amount;
   // List of tracking data of different ordered products
@@ -41,6 +42,7 @@ class Order {
     this.deliveryDate,
     this.status,
     this.tracking,
+    this.orderInvoiceUrl,
     this.orderID,
   });
 
@@ -75,6 +77,7 @@ class Order {
       status: data['data']['status'],
       statusValue: data['data']['statusValue'],
       amount: data['data']['amount'],
+      orderInvoiceUrl: data['data']['orderInvoiceUrl'],
       tracking: (((data['data']['tracking']) as List<dynamic>)
           .map((tracking) => Tracking.fromJson(tracking))
           .toList()),

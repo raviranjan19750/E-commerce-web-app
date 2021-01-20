@@ -59,8 +59,9 @@ class OrderedProduct {
       rating: data['rating'],
       review: data['review'],
       ratingID: data['ratingID'],
-      colour:
-          (data['colour'] as List).map((e) => HexColor.hexToColor(e['hexCode'])).toList(),
+      colour: (data['colour'] as List)
+          .map((e) => HexColor.hexToColor(e['hexCode']))
+          .toList(),
       size: data['size'],
       imageUrl: data['imageURL'],
       productName: data['productName'],

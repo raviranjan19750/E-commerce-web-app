@@ -160,25 +160,26 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 height: imageHeight,
                 width: imageWidth,
                 decoration: new BoxDecoration(
-                  //color: Palette.lightGrey,
+                    //color: Palette.lightGrey,
                     image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: (selectedURI != null)
-                          ? NetworkImage(selectedURI)
-                          : NetworkImage(widget.imageURL[0]),
-                    )),
+                  fit: BoxFit.fill,
+                  image: (selectedURI != null)
+                      ? NetworkImage(selectedURI)
+                      : NetworkImage(widget.imageURL[0]),
+                )),
                 child: Stack(
                   children: [
                     Positioned(
                       right: 0,
                       top: 0,
-                      child: ProductWishlistButton(productId: widget.productID, varientId: widget.variantID,),
+                      child: ProductWishlistButton(
+                        productId: widget.productID,
+                        varientId: widget.variantID,
+                      ),
                     ),
                   ],
                 ),
               ),
-
-
 
 // action buttons
 
@@ -188,97 +189,95 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                 margin: EdgeInsets.only(left: 0.0, top: 8.0),
                 child: Row(
                   children: [
-
                     BlocBuilder<AuthenticationBloc, AuthenticationState>(
                         builder: (context, state) {
-                          switch (state.status) {
-                            case AuthenticationStatus.authenticated:
-                              return Expanded(
-                                flex: 1,
-                                child: Container(
-                                  height: double.infinity,
-                                  child: CustomWidgetButton(
-                                    onPressed: () {
+                      switch (state.status) {
+                        case AuthenticationStatus.authenticated:
+                          return Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: double.infinity,
+                              child: CustomWidgetButton(
+                                onPressed: () {
+                                  if (widget.isInCart) {
+                                    locator<NavigationService>()
+                                        .navigateTo(RoutesConfiguration.CART);
+                                  } else {
+                                    final _cartlist =
+                                        Hive.box<NormalCartLocal>('cart_items');
 
-                                      if(widget.isInCart) {
-
-                                        locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
-
-                                      }else{
-
-                                        final _cartlist = Hive.box<NormalCartLocal>('cart_items');
-
-                                        if (!_cartlist.containsKey(widget.variantID)) {
-                                          _cartlist.put(
-                                              widget.variantID,
-                                              NormalCartLocal(
-                                                  productId: widget.productID,
-                                                  variantId: widget.variantID,
-                                                  quantity: 1));
-                                        }
-                                        else {
-                                          NormalCartLocal itm =
+                                    if (!_cartlist
+                                        .containsKey(widget.variantID)) {
+                                      _cartlist.put(
+                                          widget.variantID,
+                                          NormalCartLocal(
+                                              productId: widget.productID,
+                                              variantId: widget.variantID,
+                                              quantity: 1));
+                                    } else {
+                                      NormalCartLocal itm =
                                           _cartlist.get(widget.variantID);
-                                          itm.quantity += 1;
-                                          print("===> " + itm.quantity.toString());
-                                          // update the quantity field in the existing entry
-                                        }
+                                      itm.quantity += 1;
+                                      print("===> " + itm.quantity.toString());
+                                      // update the quantity field in the existing entry
+                                    }
 
-                                        BlocProvider.of<CartBloc>(context).add(AddCart(
-                                          authID: state.user.uid,
-                                          productID: widget.productID,
-                                          variantID: widget.variantID,
-                                          quantity: widget.itemCount,
-                                        ));
+                                    BlocProvider.of<CartBloc>(context)
+                                        .add(AddCart(
+                                      authID: state.user.uid,
+                                      productID: widget.productID,
+                                      variantID: widget.variantID,
+                                      quantity: widget.itemCount,
+                                    ));
 
-                                        locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
-                                      }
-
-                                    },
-                                    text: (widget.isInCart) ? Strings.goToCart : Strings.addToCart,
-                                  ),
+                                    locator<NavigationService>()
+                                        .navigateTo(RoutesConfiguration.CART);
+                                  }
+                                },
+                                text: (widget.isInCart)
+                                    ? Strings.goToCart
+                                    : Strings.addToCart,
+                              ),
+                            ),
+                          );
+                        // Your Code HERE(Get AuthID from state.user.uid)
+                        case AuthenticationStatus.unauthenticated:
+                          return Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.only(right: 0.0),
+                              child: Container(
+                                height: double.infinity,
+                                child: CustomWidgetButton(
+                                  onPressed: () {
+                                    _showLoginDialog(context);
+                                  },
+                                  text: (widget.isInCart)
+                                      ? Strings.goToCart
+                                      : Strings.addToCart,
                                 ),
-                              );
-                          // Your Code HERE(Get AuthID from state.user.uid)
-                            case AuthenticationStatus.unauthenticated:
-                              return Expanded(
-                                flex: 1,
-                                child: Container(
-                                  padding: EdgeInsets.only(right: 0.0),
-                                  child: Container(
-                                    height: double.infinity,
-                                    child: CustomWidgetButton(
-                                      onPressed: () {
-                                        _showLoginDialog(context);
-
-                                      },
-                                      text: (widget.isInCart) ? Strings.goToCart : Strings.addToCart,
-                                    ),
-                                  ),
+                              ),
+                            ),
+                          );
+                        default:
+                          return Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.only(right: 0.0),
+                              child: Container(
+                                height: double.infinity,
+                                child: CustomWidgetButton(
+                                  onPressed: () {},
+                                  backGroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  text: Strings.buyNow,
                                 ),
-                              );
-                            default:
-                              return Expanded(
-                                flex: 1,
-                                child: Container(
-                                  padding: EdgeInsets.only(right: 0.0),
-                                  child: Container(
-                                    height: double.infinity,
-                                    child: CustomWidgetButton(
-                                      onPressed: () {
-
-                                      },
-                                      backGroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      text: Strings.buyNow,
-                                    ),
-                                  ),
-                                ),
-                              );
-                          }
-                        }),
+                              ),
+                            ),
+                          );
+                      }
+                    }),
 //add to cart button
-
 
                     SizedBox(
                       width: 10,
@@ -286,66 +285,77 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 // buy now button
                     BlocBuilder<AuthenticationBloc, AuthenticationState>(
                         builder: (context, state) {
-                          switch (state.status) {
-                            case AuthenticationStatus.authenticated:
-                              return Expanded(
-                                flex: 1,
-                                child: Container(
-                                  padding: EdgeInsets.only(right: 0.0),
-                                  child: Container(
-                                    height: double.infinity,
-                                    child: CustomWidgetButton(
-                                      onPressed: () {
-                                        // send data
-                                      },
-                                      backGroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      text: Strings.buyNow,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            // Your Code HERE(Get AuthID from state.user.uid)
-                            case AuthenticationStatus.unauthenticated:
-                              return Expanded(
-                                flex: 1,
-                                child: Container(
-                                  padding: EdgeInsets.only(right: 0.0),
-                                  child: Container(
-                                    height: double.infinity,
-                                    child: CustomWidgetButton(
-                                      onPressed: () {
-                                        _showLoginDialog(context);
+                      switch (state.status) {
+                        case AuthenticationStatus.authenticated:
+                          return Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.only(right: 0.0),
+                              child: Container(
+                                height: double.infinity,
+                                child: CustomWidgetButton(
+                                  onPressed: () {
+                                    // send data
+                                    BlocProvider.of<CartBloc>(context)
+                                        .add(AddCart(
+                                      authID: state.user.uid,
+                                      productID: widget.productID,
+                                      variantID: widget.variantID,
+                                      quantity: widget.itemCount,
+                                    ));
 
-                                      },
-                                      backGroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      text: Strings.buyNow,
-                                    ),
-                                  ),
+                                    locator<NavigationService>().navigateTo(
+                                        RoutesConfiguration.SELECT_ADDRESS,
+                                        queryParams: {
+                                          "productID": widget.productID,
+                                          "variantID": widget.variantID,
+                                          "isBuyNow": "true"
+                                        });
+                                  },
+                                  backGroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  text: Strings.buyNow,
                                 ),
-                              );
-                            default:
-                              return Expanded(
-                                flex: 1,
-                                child: Container(
-                                  padding: EdgeInsets.only(right: 0.0),
-                                  child: Container(
-                                    height: double.infinity,
-                                    child: CustomWidgetButton(
-                                      onPressed: () {
-
-                                      },
-                                      backGroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      text: Strings.buyNow,
-                                    ),
-                                  ),
+                              ),
+                            ),
+                          );
+                        // Your Code HERE(Get AuthID from state.user.uid)
+                        case AuthenticationStatus.unauthenticated:
+                          return Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.only(right: 0.0),
+                              child: Container(
+                                height: double.infinity,
+                                child: CustomWidgetButton(
+                                  onPressed: () {
+                                    _showLoginDialog(context);
+                                  },
+                                  backGroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  text: Strings.buyNow,
                                 ),
-                              );
-                          }
-                        })
-
+                              ),
+                            ),
+                          );
+                        default:
+                          return Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.only(right: 0.0),
+                              child: Container(
+                                height: double.infinity,
+                                child: CustomWidgetButton(
+                                  onPressed: () {},
+                                  backGroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  text: Strings.buyNow,
+                                ),
+                              ),
+                            ),
+                          );
+                      }
+                    })
                   ],
                 ),
               )

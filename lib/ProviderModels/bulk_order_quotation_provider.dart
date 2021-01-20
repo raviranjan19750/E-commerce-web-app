@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 
 import 'package:living_desire/models/BulkOrder.dart';
@@ -11,9 +10,7 @@ import 'package:living_desire/models/PaymentMethod.dart';
 import 'package:living_desire/models/QuotationPayment.dart';
 import 'package:living_desire/models/SamplePayment.dart';
 
-class BulkOrderQuotationProvider with ChangeNotifier{
-
-
+class BulkOrderQuotationProvider with ChangeNotifier {
   BulkOrder bulkOrder;
 
   SamplePayment samplePayment;
@@ -34,8 +31,7 @@ class BulkOrderQuotationProvider with ChangeNotifier{
 
   List<PaymentMethod> paymentMethods = new List();
 
-
- /* [
+  /* [
 
     new PaymentMethod(code: 101,asset: 'assets/images/debit_card.png',description: 'Visa, MasterCard, ...etc.',value: 'Debit Card'),
     new PaymentMethod(code: 102,asset: 'assets/images/credit_card.png',description: 'Visa, MasterCard, ...etc.',value: 'Credit Card'),
@@ -53,35 +49,59 @@ class BulkOrderQuotationProvider with ChangeNotifier{
 
   ];*/
 
-  void initPaymentDialog(){
+  void initPaymentDialog() {
+    Mode debit = new Mode(
+        description: 'Visa, MasterCard, ...etc.',
+        code: 101,
+        asset: 'assets/images/debit_card.png');
+    Mode credit = new Mode(
+        description: 'Visa, MasterCard, ...etc.',
+        code: 102,
+        asset: 'assets/images/credit_card.png');
+    Mode netBanking = new Mode(
+        description: 'HDFC ,SBI , Axis ..etc. ',
+        code: 103,
+        asset: 'assets/images/netbanking.png');
+    Mode googlePayUPI = new Mode(
+        description: 'Google Pay',
+        code: 104,
+        asset: 'assets/images/google_pay.png');
+    Mode bhimUPI = new Mode(
+        description: 'BHIM', code: 105, asset: 'assets/images/upi.png');
+    Mode payTmUPI = new Mode(
+        description: 'PayTM', code: 106, asset: 'assets/images/paytm.png');
+    Mode phonePeUPI = new Mode(
+        description: 'Phone Pe', code: 107, asset: 'assets/images/pone_pe.png');
+    Mode whatsAppUPI = new Mode(
+        description: 'WhatsApp',
+        code: 108,
+        asset: 'assets/images/whatsapp.png');
+    Mode amazonUPI = new Mode(
+        description: 'Amazon', code: 109, asset: 'assets/images/amazon.png');
 
-    Mode debit = new Mode(description: 'Visa, MasterCard, ...etc.' , code: 101 ,asset:'assets/images/debit_card.png' );
-    Mode credit = new Mode(description: 'Visa, MasterCard, ...etc.' , code: 102 ,asset:'assets/images/credit_card.png' );
-    Mode netBanking = new Mode(description: 'HDFC ,SBI , Axis ..etc. ' , code: 103 ,asset:'assets/images/netbanking.png' );
-    Mode googlePayUPI = new Mode(description: 'Google Pay' , code: 104 ,asset:'assets/images/google_pay.png' );
-    Mode bhimUPI = new Mode(description: 'BHIM' , code: 105 ,asset:'assets/images/upi.png' );
-    Mode payTmUPI = new Mode(description: 'PayTM' , code: 106 ,asset:'assets/images/paytm.png' );
-    Mode phonePeUPI = new Mode(description: 'Phone Pe' , code: 107 ,asset:'assets/images/pone_pe.png' );
-    Mode whatsAppUPI = new Mode(description: 'WhatsApp' , code: 108 ,asset:'assets/images/whatsapp.png' );
-    Mode amazonUPI = new Mode(description: 'Amazon' , code: 109 ,asset:'assets/images/amazon.png' );
-
-    paymentMethods.add(new PaymentMethod(method: 'Debit Card',modes: [debit]));
-    paymentMethods.add(new PaymentMethod(method: 'Credit Card',modes: [credit]));
-    paymentMethods.add(new PaymentMethod(method: 'Net Banking',modes: [netBanking]));
-    paymentMethods.add(new PaymentMethod(method: 'UPI',modes: [googlePayUPI,bhimUPI,payTmUPI,phonePeUPI,whatsAppUPI,amazonUPI]));
-
-
+    paymentMethods.add(new PaymentMethod(method: 'Debit Card', modes: [debit]));
+    paymentMethods
+        .add(new PaymentMethod(method: 'Credit Card', modes: [credit]));
+    paymentMethods
+        .add(new PaymentMethod(method: 'Net Banking', modes: [netBanking]));
+    paymentMethods.add(new PaymentMethod(method: 'UPI', modes: [
+      googlePayUPI,
+      bhimUPI,
+      payTmUPI,
+      phonePeUPI,
+      whatsAppUPI,
+      amazonUPI
+    ]));
   }
 
   void initQuotation(String key) async {
-
     await getQuotation(key);
 
     String authID = FirebaseAuth.instance.currentUser.uid;
 
-    if(bulkOrder.isSampleRequested)
+    if (bulkOrder.isSampleRequested)
       await getSamplePaymentData(key, authID);
-    else{
+    else {
       samplePaymentUploaded = false;
       samplePaymentPaid = false;
     }
@@ -91,83 +111,57 @@ class BulkOrderQuotationProvider with ChangeNotifier{
     isInitialized = true;
 
     notifyListeners();
-
   }
 
-  Future<void> getQuotation(String key) async{
-
+  Future<void> getQuotation(String key) async {
     final response =
-        await  CloudFunctionConfig.get('manageCustomOrder/custom-order/$key');
-    if(response.statusCode == 200){
-
-
-
+        await CloudFunctionConfig.get('manageCustomOrder/custom-order/$key');
+    if (response.statusCode == 200) {
       bulkOrder = BulkOrder.fromJson(jsonDecode(response.body));
     }
-
   }
 
-  Future<void> getSamplePaymentData(String key,String authID) async{
-
-    final response =
-    await CloudFunctionConfig.post('managePayments/get-sample-order/$authID/$key', {});
-    if(response.statusCode == 200){
-
+  Future<void> getSamplePaymentData(String key, String authID) async {
+    final response = await CloudFunctionConfig.post(
+        'managePayments/get-sample-order/$authID/$key', {});
+    if (response.statusCode == 200) {
       samplePayment = SamplePayment.fromJson(jsonDecode(response.body));
 
       samplePaymentUploaded = true;
       samplePaymentPaid = false;
-
-    }
-    else if(response.statusCode == 501){
-
+    } else if (response.statusCode == 501) {
       samplePaymentUploaded = false;
       samplePaymentPaid = false;
-    }
-    else if(response.statusCode == 502){
-
+    } else if (response.statusCode == 502) {
       samplePayment = SamplePayment.fromJson(jsonDecode(response.body));
 
       samplePaymentUploaded = true;
       samplePaymentPaid = true;
     }
-
   }
 
-  Future<void> getQuotationPaymentData(String key,String authID) async{
+  Future<void> getQuotationPaymentData(String key, String authID) async {
+    final response = await CloudFunctionConfig.post(
+        'managePayments/get-custom-order/$authID/$key', {});
 
-    final response =
-    await  CloudFunctionConfig.post('managePayments/get-custom-order/$authID/$key', {});
+    print("Quotation Payment Data  : " + response.statusCode.toString());
 
-    print("Quotation Payment Data  : "  + response.statusCode.toString());
-
-    if(response.statusCode == 200){
-
+    if (response.statusCode == 200) {
       quotationPayment = QuotationPayment.fromJson(jsonDecode(response.body));
 
       quotationPaymentUploaded = true;
       quotationPaymentPaid = false;
-
-    }
-    else if(response.statusCode == 501){
-
+    } else if (response.statusCode == 501) {
       quotationPaymentUploaded = false;
       quotationPaymentPaid = false;
-    }
-    else if(response.statusCode == 502){
+    } else if (response.statusCode == 502) {
       quotationPaymentUploaded = true;
       quotationPaymentPaid = true;
     }
-
-
   }
 
-  void onPaymentMethodSelected(int method){
-
+  void onPaymentMethodSelected(int method) {
     selectedPaymentMethod = method;
     notifyListeners();
-
   }
-
-
 }

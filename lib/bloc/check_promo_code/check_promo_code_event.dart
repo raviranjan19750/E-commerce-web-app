@@ -11,11 +11,15 @@ class CheckingPromoCodeAvailability extends PromoCodeAvailabilityEvent {
   final int paymentMode;
   final double payingAmount;
   final String promoCode;
+  final double deliveryCharges;
+  final double walletAmount;
 
-  CheckingPromoCodeAvailability(
+  CheckingPromoCodeAvailability({
     this.authID,
     this.payingAmount,
     this.paymentMode,
     this.promoCode,
-  );
+    this.walletAmount,
+    this.deliveryCharges,
+  });
 }
