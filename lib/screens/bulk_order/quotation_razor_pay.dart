@@ -21,7 +21,7 @@ class QuotationRazorPay extends StatelessWidget {
   bool samplePayment;
   String orderKey;
 
-  int paymentMode=101;
+  int paymentMode;
 
   QuotationRazorPay({
     this.phone,
@@ -32,6 +32,7 @@ class QuotationRazorPay extends StatelessWidget {
     this.orderKey,
     this.authID,
     this.orderID,
+    this.paymentMode,
     this.razorPayOrderID,
     this.deliveryCharges,
     this.samplePayment,

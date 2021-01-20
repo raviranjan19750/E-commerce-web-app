@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 
 import 'package:living_desire/models/BulkOrder.dart';
+import 'package:living_desire/models/PaymentMethod.dart';
 import 'package:living_desire/models/QuotationPayment.dart';
 import 'package:living_desire/models/SamplePayment.dart';
 
@@ -25,6 +26,28 @@ class BulkOrderQuotationProvider with ChangeNotifier{
   bool quotationPaymentPaid = false;
 
   bool quotationPaymentUploaded = false;
+
+  int selectedPaymentIndex = -1;
+
+  int selectedPaymentMethod = 0;
+
+  List<PaymentMethod> paymentMethods = [
+
+    new PaymentMethod(code: 101,asset: 'assets/images/debit_card.png',description: 'Visa, MasterCard, ...etc.',value: 'Debit Card'),
+    new PaymentMethod(code: 102,asset: 'assets/images/credit_card.png',description: 'Visa, MasterCard, ...etc.',value: 'Credit Card'),
+    new PaymentMethod(code: 103,asset: 'assets/images/netbanking.png',description: 'Visa, MasterCard, ...etc.',value: 'NetBanking'),
+    new PaymentMethod(code: 104,asset: 'assets/images/google_pay.png',description: 'Google Pay',value: 'UPI'),
+    new PaymentMethod(code: 105,asset: 'assets/images/upi.png',description: 'BHIM',value: 'UPI'),
+    new PaymentMethod(code: 106,asset: 'assets/images/paytm.png',description: 'PayTM',value: 'UPI'),
+    new PaymentMethod(code: 107,asset: 'assets/images/amazon.png',description: 'Amazon',value: 'UPI'),
+    new PaymentMethod(code: 108,asset: 'assets/images/whatsapp.png',description: 'WhatsApp',value: 'UPI'),
+    new PaymentMethod(code: 109,asset: 'assets/images/pone_pe.png',description: 'PhonePe',value: 'UPI'),
+    new PaymentMethod(code: 110,asset: 'assets/images/pone_pe.png',description: 'PhonePe',value: 'Wallet'),
+    new PaymentMethod(code: 111,asset: 'assets/images/paytm.png',description: 'PayTM',value: 'Wallet'),
+    new PaymentMethod(code: 112,asset: 'assets/images/amazon_pay.png',description: 'AmazonPay',value: 'Wallet'),
+    new PaymentMethod(code: 113,asset: 'assets/images/cash_on_delivery.png',description: 'Cash on Delivery',value: 'Cash'),
+
+  ];
 
   void initQuotation(String key) async {
 
@@ -112,6 +135,15 @@ class BulkOrderQuotationProvider with ChangeNotifier{
       quotationPaymentPaid = true;
     }
 
+
+  }
+
+  void onPaymentMethodSelected(int index){
+
+    selectedPaymentIndex = index;
+    selectedPaymentMethod = paymentMethods.elementAt(index).code;
+
+    notifyListeners();
 
   }
 
