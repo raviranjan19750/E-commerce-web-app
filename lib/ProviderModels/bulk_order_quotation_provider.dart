@@ -55,6 +55,8 @@ class BulkOrderQuotationProvider with ChangeNotifier{
 
   void initPaymentDialog(){
 
+    paymentMethods.clear();
+
     Mode debit = new Mode(description: 'Visa, MasterCard, ...etc.' , code: 101 ,asset:'assets/images/debit_card.png' );
     Mode credit = new Mode(description: 'Visa, MasterCard, ...etc.' , code: 102 ,asset:'assets/images/credit_card.png' );
     Mode netBanking = new Mode(description: 'HDFC ,SBI , Axis ..etc. ' , code: 103 ,asset:'assets/images/netbanking.png' );
