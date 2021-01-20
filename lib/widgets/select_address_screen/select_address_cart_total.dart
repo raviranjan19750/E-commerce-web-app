@@ -869,6 +869,7 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
                       });
                     },
                   ),
+                  SizedBox.shrink(),
                   ChoiceChip(
                     label: Container(
                       child: Row(

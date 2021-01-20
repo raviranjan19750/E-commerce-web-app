@@ -437,7 +437,7 @@ class BulkOrderSamplePayment extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Text(
-                      'Go Bak',
+                      'Go Back',
                       style: TextStyle(color: Palette.secondaryColor),
                     ),
                   ))
