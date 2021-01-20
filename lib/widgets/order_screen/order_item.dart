@@ -28,7 +28,6 @@ class _OrderItemState extends State<OrderItem> {
         bottom: 8.0,
       ),
       child: Container(
-        width: double.infinity,
         child: Card(
           borderOnForeground: false,
           elevation: 2.0,

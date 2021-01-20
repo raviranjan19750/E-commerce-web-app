@@ -3,6 +3,7 @@ import 'dart:html';
 import 'dart:ui' as ui;
 //conditional import
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/main.dart';
 import 'package:living_desire/service/navigation_service.dart';
@@ -47,6 +48,21 @@ class RazorPayWeb extends StatelessWidget {
     var razorpayOrderIDWeb = '';
     var razorpaySignature = '';
     var blocConfig = {};
+    String phoneNumber =
+        BlocProvider.of<AuthenticationBloc>(context).state.user.phoneNumber;
+    String name =
+        BlocProvider.of<AuthenticationBloc>(context).state.user.displayName;
+    String emailId =
+        BlocProvider.of<AuthenticationBloc>(context).state.user.email;
+
+    if (name == null) {
+      name = "";
+    }
+    if (emailId == null) {
+      emailId = "";
+    }
+    var prefill = {};
+
     String sequenceBloc = "";
     if (paymentMode == 101) {
       sequenceBloc = "block.debit_card";
@@ -116,6 +132,11 @@ class RazorPayWeb extends StatelessWidget {
           "amount": "${amount * 100}", "currency": "INR",
           "name": "Living Desire",
           "description": "",
+          "prefill": {
+            "name": "$name",
+            "email": "$emailId",
+            "contact": "$phoneNumber"
+          },
           "image": "https://example.com/your_logo",
           config:{
             display:{

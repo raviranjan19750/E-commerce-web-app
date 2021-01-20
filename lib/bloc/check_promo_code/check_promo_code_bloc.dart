@@ -31,6 +31,8 @@ class CheckPromoCodeBloc
         payingAmount: event.payingAmount,
         paymentMode: event.paymentMode,
         promoCode: event.promoCode,
+        deliveryCharges: event.deliveryCharges,
+        walletAmount: event.walletAmount,
       );
       yield PromoCodeDetailAvailabilityCheckingSuccessful(
           promoCodeAvailabilityResponse);

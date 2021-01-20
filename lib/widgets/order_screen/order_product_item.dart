@@ -6,9 +6,13 @@ import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
 import 'package:living_desire/bloc/normal_order/normal_order_bloc.dart';
 import 'package:living_desire/bloc/normal_order_item/normal_order_item_bloc.dart';
 import 'package:living_desire/config/strings.dart';
+import 'package:living_desire/data/data.dart';
+import 'package:living_desire/main.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/widgets/widgets.dart';
 import 'package:rating_bar/rating_bar.dart';
 import '../../models/models.dart';
+import '../../routes.dart';
 
 class OrderProductItemView extends StatelessWidget {
   // OrderedProduct Container
@@ -117,72 +121,81 @@ class OrderProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 10,
-          bottom: 10,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Product Image
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  width: MediaQuery.of(context).size.width * 0.12,
-                  child: Image.network(
-                    orderedProduct.imageUrl,
-                    fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        locator<NavigationService>()
+            .navigateTo(RoutesConfiguration.PRODUCT_DETAIL, queryParams: {
+          "pid": orderedProduct.productID,
+          "vid": orderedProduct.variantID
+        });
+      },
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 10,
+            bottom: 10,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Product Image
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width * 0.12,
+                    child: Image.network(
+                      orderedProduct.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                OrderedProductDetails(
-                  orderedProduct: orderedProduct,
-                ),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                // Need Help Button
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 5.0,
-                    bottom: 15.0,
+                  SizedBox(
+                    width: 15,
                   ),
-                  child: Container(
-                    child: InkWell(
-                      onTap: () {},
-                      child: Text(
-                        Strings.needHelp,
-                        style: TextStyle(
-                          fontSize: 14,
-                          decoration: TextDecoration.underline,
-                          color: Colors.black54,
+                  OrderedProductDetails(
+                    orderedProduct: orderedProduct,
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  // Need Help Button
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 5.0,
+                      bottom: 15.0,
+                    ),
+                    child: Container(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Text(
+                          Strings.needHelp,
+                          style: TextStyle(
+                            fontSize: 14,
+                            decoration: TextDecoration.underline,
+                            color: Colors.black54,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                // Rating Bar
-                OrderedProductRating(
-                  orderID: orderID,
-                  orderedProduct: orderedProduct,
-                ),
-              ],
-            ),
-          ],
+                  // Rating Bar
+                  OrderedProductRating(
+                    orderID: orderID,
+                    orderedProduct: orderedProduct,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -285,7 +298,7 @@ class OrderedProductDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: MediaQuery.of(context).size.width * 0.35,
             child: RichText(
               text: TextSpan(
                 text: orderedProduct.productName,
@@ -313,7 +326,12 @@ class OrderedProductDetails extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed('/product');
+                locator<NavigationService>().navigateTo(
+                    RoutesConfiguration.PRODUCT_DETAIL,
+                    queryParams: {
+                      "pid": orderedProduct.productID,
+                      "vid": orderedProduct.variantID
+                    });
               },
               child: Container(
                 color: Colors.black,

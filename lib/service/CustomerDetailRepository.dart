@@ -69,8 +69,7 @@ class CustomerDetailRepository {
 
   bool alreadyInCart(String productId, String variantId) {
     _cartSet.forEach((e) {
-      print('${e.productID} v ${e.variantID} ::: ${productId} ${variantId}');
-      if (e.productID == productId && e.variantID == variantId) {
+      if (e.productID.compareTo(productId) == 0 && e.variantID.compareTo(variantId) == 0) {
         return true;
       }
     });

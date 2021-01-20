@@ -5,40 +5,40 @@ class CheckPromoCodeAvailability {
   final double discount;
   final double newPayingAmount;
   final PaymentData paymentData;
-  final double cashbackAmount;
+  final int couponType;
+  final double taxAmount;
 
   CheckPromoCodeAvailability({
     this.responseText,
     this.newPayingAmount,
     this.discount,
     this.paymentData,
-    this.cashbackAmount,
+    this.couponType,
+    this.taxAmount,
   });
 
   factory CheckPromoCodeAvailability.fromJson(Map<String, dynamic> data) {
-    print(data.toString());
-    if (data['newPayingAmount'] != null) {
+    if (data['couponType'] == 102) {
       return CheckPromoCodeAvailability(
         responseText: data['message'],
-        newPayingAmount: data['newPayingAmount'],
-        discount: data['discount'],
+        newPayingAmount: data['totalPayingAmount'],
+        discount: data['couponDiscount'],
         paymentData: PaymentData.fromJson(data['paymentData']),
-        cashbackAmount: null,
+        couponType: data["couponType"],
+        taxAmount: data["taxAmount"],
       );
     }
-    if (data["cashbackAmount"] != null) {
+    if (data["couponType"] == 103) {
       return CheckPromoCodeAvailability(
         responseText: data['message'],
-        cashbackAmount: data["cashbackAmount"],
+        discount: data["couponDiscount"],
+        couponType: data["couponType"],
       );
     }
 
     return CheckPromoCodeAvailability(
       responseText: data['message'],
-      newPayingAmount: null,
-      discount: null,
-      paymentData: null,
-      cashbackAmount: null,
+      couponType: data["couponType"],
     );
   }
 }

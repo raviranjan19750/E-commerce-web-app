@@ -39,7 +39,10 @@ class OrderScreenDesktop extends StatelessWidget {
                 ButtonList(
                   isMyOrderSelected: true,
                 ),
-                Expanded(child: NormalOrdersContainer()),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: NormalOrdersContainer(),
+                ),
               ],
             ),
           );
@@ -51,8 +54,7 @@ class OrderScreenDesktop extends StatelessWidget {
               assetPath: 'assets/images/order_empty_state.png',
               onPressed: () {
                 _showLoginDialog(context);
-              }
-          );
+              });
         default:
           return Container();
       }

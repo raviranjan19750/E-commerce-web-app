@@ -15,10 +15,14 @@ class PromoCodeRepository {
     String authID,
     double payingAmount,
     int paymentMode,
+    double deliveryCharges,
+    double walletAmount,
   }) async {
     Map<String, dynamic> params = {
       "payingAmount": payingAmount,
       "paymentMode": paymentMode,
+      "deliveryCharges": deliveryCharges,
+      "walletAmount": walletAmount
     };
 
     final response = await CloudFunctionConfig.post(

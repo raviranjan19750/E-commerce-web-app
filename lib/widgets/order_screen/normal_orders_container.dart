@@ -21,15 +21,16 @@ class NormalOrdersContainer extends StatelessWidget {
         }
         // Orders acquired in state
         else if (state is NormalOrderDetailLoadingSuccessful) {
-
-          if(state.order.length == 0) {
+          if (state.order.length == 0) {
             return EmptyStateScreen(
               primaryText: Strings.orderPrimaryText,
               secondaryText: Strings.orderSecondaryText,
               actionButtonText: Strings.continueShopping,
               assetPath: 'assets/images/order_empty_state.png',
               onPressed: () {
-                locator<NavigationService>().navigateTo(RoutesConfiguration.SEARCH_ALL_PRODUCT, queryParams: {"search": ""});
+                locator<NavigationService>().navigateTo(
+                    RoutesConfiguration.SEARCH_ALL_PRODUCT,
+                    queryParams: {"search": ""});
               },
             );
           }
