@@ -53,7 +53,7 @@ class BulkOrderQuotationPayment extends StatelessWidget{
                 builder: (BuildContext context, BulkOrderQuotationProvider value, Widget child) {
 
                   if (!init) {
-                    Provider.of<BulkOrderQuotationProvider>(context, listen: false);
+                    Provider.of<BulkOrderQuotationProvider>(context, listen: false).initPaymentDialog();
                     init = true;
                   }
 
@@ -82,53 +82,143 @@ class BulkOrderQuotationPayment extends StatelessWidget{
                           itemCount: value.paymentMethods.length,
                           itemBuilder: (BuildContext context, int index) {
 
-                            return Container(
+                            if(value.paymentMethods.elementAt(index).modes.length == 1){
+                              return Container(
 
-                              margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                                margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
 
-                              decoration: BoxDecoration(
+                                decoration: BoxDecoration(
 
-                                borderRadius: BorderRadius.circular(8),
-                                color: (value.selectedPaymentIndex == index)?Palette.secondaryColor:Colors.grey[200],
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    offset: Offset(0, 2),
-                                    blurRadius: 3,
-                                  )],
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: (value.selectedPaymentMethod == value.paymentMethods.elementAt(index).modes.first.code)?Palette.secondaryColor:Colors.grey[200],
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      offset: Offset(0, 2),
+                                      blurRadius: 3,
+                                    )],
 
-                              ),
+                                ),
 
-                              child: InkWell(
+                                child: InkWell(
 
-                                onTap: (){value.onPaymentMethodSelected(index);},
+                                  onTap: (){value.onPaymentMethodSelected(value.paymentMethods.elementAt(index).modes.first.code);},
+
+                                  child: Padding(
+
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+
+                                    child: Row(
+
+                                      children: [
+
+                                        Image.asset(value.paymentMethods.elementAt(index).modes.first.asset,height: 48,width: 48,),
+
+                                        Column(
+
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                                          children: [
+
+                                            Container(margin:EdgeInsets.only(left: 16,top: 8,bottom: 4),child: Text(value.paymentMethods.elementAt(index).method,style: TextStyle(fontSize: 18,color: (value.selectedPaymentMethod == value.paymentMethods.elementAt(index).modes.first.code)?Colors.white:Palette.secondaryColor,fontWeight: FontWeight.w500),)),
+                                            Container(margin:EdgeInsets.only(left: 16,bottom: 8),child: Text(value.paymentMethods.elementAt(index).modes.first.description,style: TextStyle(fontSize: 16,color:  (value.selectedPaymentMethod == value.paymentMethods.elementAt(index).modes.first.code)?Colors.white:Palette.secondaryColor,),)),
+
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            else{
+                              return Container(
+
+                                margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+
+                                decoration: BoxDecoration(
+
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.grey[200],
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      offset: Offset(0, 2),
+                                      blurRadius: 3,
+                                    )],
+
+                                ),
 
                                 child: Padding(
 
                                   padding: const EdgeInsets.symmetric(horizontal: 16),
 
-                                  child: Row(
+                                  child: Column(
+
+                                    crossAxisAlignment: CrossAxisAlignment.start,
 
                                     children: [
 
-                                      Image.asset(value.paymentMethods.elementAt(index).asset,height: 48,width: 48,),
+                                      Container(margin:EdgeInsets.only(left: 16,top: 8,bottom: 4),child: Text(value.paymentMethods.elementAt(index).method,style: TextStyle(fontSize: 18,color: Palette.secondaryColor,fontWeight: FontWeight.w500),)),
 
-                                      Column(
+                                      GridView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: value.paymentMethods.elementAt(index).modes.length,
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 4,
 
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                          childAspectRatio: (MediaQuery.of(context).size.width )/
+                                              (MediaQuery.of(context).size.height / 2),
 
-                                        children: [
+                                        ),
 
-                                          Container(margin:EdgeInsets.only(left: 16,top: 8,bottom: 4),child: Text(value.paymentMethods.elementAt(index).value,style: TextStyle(fontSize: 18,color: (value.selectedPaymentIndex == index)?Colors.white:Palette.secondaryColor,fontWeight: FontWeight.w500),)),
-                                          Container(margin:EdgeInsets.only(left: 16,bottom: 8),child: Text(value.paymentMethods.elementAt(index).description,style: TextStyle(fontSize: 16,color:  (value.selectedPaymentIndex == index)?Colors.white:Palette.secondaryColor,),)),
+                                        itemBuilder: (BuildContext context, int insideIndex) {
 
-                                        ],
+                                          return InkWell(
+
+                                            onTap: (){
+
+                                              value.onPaymentMethodSelected(value.paymentMethods.elementAt(index).modes.elementAt(insideIndex).code);
+
+                                            },
+
+                                            child: new Container(
+
+                                              alignment: Alignment.center,
+
+                                              margin: EdgeInsets.all(8),
+
+                                              padding: EdgeInsets.only(left: 16,top: 8,bottom: 8),
+
+                                              decoration: BoxDecoration(
+
+                                                  border: Border.all(color: Palette.secondaryColor),
+
+                                                  borderRadius: BorderRadius.circular(4),
+
+                                                  color: (value.selectedPaymentMethod == value.paymentMethods.elementAt(index).modes.elementAt(insideIndex).code) ? Palette.secondaryColor : Colors.white
+
+                                              ),
+
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(value.paymentMethods.elementAt(index).modes.elementAt(insideIndex).asset,width: 48,height: 48,),
+                                                  Text('    ' +value.paymentMethods.elementAt(index).modes.elementAt(insideIndex).description,style: TextStyle(fontSize: 16,color: (value.selectedPaymentMethod == value.paymentMethods.elementAt(index).modes.elementAt(insideIndex).code) ? Colors.white :Palette.secondaryColor),),
+                                                ],
+                                              ),
+
+                                            ),
+                                          );
+
+                                        },
                                       ),
+
                                     ],
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
+
                           }),
                     ),
 
@@ -137,7 +227,7 @@ class BulkOrderQuotationPayment extends StatelessWidget{
                       FlatButton(
                           onPressed: () async {
 
-                            if(value.selectedPaymentIndex!=-1){
+                            if(value.selectedPaymentMethod!= 0){
 
                               paymentMode = value.selectedPaymentMethod;
                               showProgressDialog(context, "Fetching Data");

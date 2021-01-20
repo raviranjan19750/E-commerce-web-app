@@ -1,8 +1,18 @@
 class PaymentMethod{
 
+  String method;
+
+  List<Mode> modes;
+
+  bool enabled;
+
+  PaymentMethod({this.method, this.modes,this.enabled});
+}
+
+class Mode {
+
   int code;
+  String description,asset;
 
-  String asset,value,description;
-
-  PaymentMethod({this.code, this.asset, this.value, this.description});
+  Mode({this.code, this.description,this.asset});
 }

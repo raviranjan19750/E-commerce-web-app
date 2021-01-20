@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+
+
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 
 import 'package:living_desire/models/BulkOrder.dart';
 import 'package:living_desire/models/PaymentMethod.dart';
+
 import 'package:living_desire/models/QuotationPayment.dart';
 import 'package:living_desire/models/SamplePayment.dart';
 
@@ -27,11 +30,12 @@ class BulkOrderQuotationProvider with ChangeNotifier{
 
   bool quotationPaymentUploaded = false;
 
-  int selectedPaymentIndex = -1;
-
   int selectedPaymentMethod = 0;
 
-  List<PaymentMethod> paymentMethods = [
+  List<PaymentMethod> paymentMethods = new List();
+
+
+ /* [
 
     new PaymentMethod(code: 101,asset: 'assets/images/debit_card.png',description: 'Visa, MasterCard, ...etc.',value: 'Debit Card'),
     new PaymentMethod(code: 102,asset: 'assets/images/credit_card.png',description: 'Visa, MasterCard, ...etc.',value: 'Credit Card'),
@@ -47,7 +51,27 @@ class BulkOrderQuotationProvider with ChangeNotifier{
     new PaymentMethod(code: 112,asset: 'assets/images/amazon_pay.png',description: 'AmazonPay',value: 'Wallet'),
     new PaymentMethod(code: 113,asset: 'assets/images/cash_on_delivery.png',description: 'Cash on Delivery',value: 'Cash'),
 
-  ];
+  ];*/
+
+  void initPaymentDialog(){
+
+    Mode debit = new Mode(description: 'Visa, MasterCard, ...etc.' , code: 101 ,asset:'assets/images/debit_card.png' );
+    Mode credit = new Mode(description: 'Visa, MasterCard, ...etc.' , code: 102 ,asset:'assets/images/credit_card.png' );
+    Mode netBanking = new Mode(description: 'HDFC ,SBI , Axis ..etc. ' , code: 103 ,asset:'assets/images/netbanking.png' );
+    Mode googlePayUPI = new Mode(description: 'Google Pay' , code: 104 ,asset:'assets/images/google_pay.png' );
+    Mode bhimUPI = new Mode(description: 'BHIM' , code: 105 ,asset:'assets/images/upi.png' );
+    Mode payTmUPI = new Mode(description: 'PayTM' , code: 106 ,asset:'assets/images/paytm.png' );
+    Mode phonePeUPI = new Mode(description: 'Phone Pe' , code: 107 ,asset:'assets/images/pone_pe.png' );
+    Mode whatsAppUPI = new Mode(description: 'WhatsApp' , code: 108 ,asset:'assets/images/whatsapp.png' );
+    Mode amazonUPI = new Mode(description: 'Amazon' , code: 109 ,asset:'assets/images/amazon.png' );
+
+    paymentMethods.add(new PaymentMethod(method: 'Debit Card',modes: [debit]));
+    paymentMethods.add(new PaymentMethod(method: 'Credit Card',modes: [credit]));
+    paymentMethods.add(new PaymentMethod(method: 'Net Banking',modes: [netBanking]));
+    paymentMethods.add(new PaymentMethod(method: 'UPI',modes: [googlePayUPI,bhimUPI,payTmUPI,phonePeUPI,whatsAppUPI,amazonUPI]));
+
+
+  }
 
   void initQuotation(String key) async {
 
@@ -138,11 +162,9 @@ class BulkOrderQuotationProvider with ChangeNotifier{
 
   }
 
-  void onPaymentMethodSelected(int index){
+  void onPaymentMethodSelected(int method){
 
-    selectedPaymentIndex = index;
-    selectedPaymentMethod = paymentMethods.elementAt(index).code;
-
+    selectedPaymentMethod = method;
     notifyListeners();
 
   }
