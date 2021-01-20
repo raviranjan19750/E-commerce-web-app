@@ -5,6 +5,7 @@ import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/data/data.dart';
 import 'package:living_desire/screens/login/login_view.dart';
+import 'package:living_desire/widgets/footer/FooterNew.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/widgets.dart';
 import '../../models/models.dart';
@@ -42,30 +43,28 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
                     init = true;
                   }
 
-                  return Scaffold(
-                    appBar: CustomAppBar(
-                      visibleSubAppBar: false,
-                      visibleMiddleAppBar: false,
-                    ),
-                    body: (value.isInitialized)
-                        ? Row(
-                            children: [
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: OrderPlacedContainer(
-                                    order: value.order,
-                                  ),
-                                ),
-                              ),
-                              OrderPlacedStatusContainer(
-                                order: value.order,
-                              ),
-                            ],
-                          )
-                        : Center(
-                            child: CircularProgressIndicator(),
+                  return Container(
+
+                    child: (value.isInitialized)?Row(
+
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: OrderPlacedContainer(
+                            order: value.order,
                           ),
+                        ),
+                        OrderPlacedStatusContainer(
+                          order: value.order,
+                        ),
+                      ],
+                    ):Center(
+                      child: CircularProgressIndicator(),
+
+                    )
+
                   );
+
                 },
               ));
 

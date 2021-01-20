@@ -61,7 +61,7 @@ class OrderPlacedItem extends StatelessWidget {
 
                     children: [
 
-                      Container(child: Text(orderedProduct.productName,style: TextStyle(fontSize: 28,color: Colors.black,fontWeight: FontWeight.w100),),),
+                      Container(child: Text(orderedProduct.productName,style: TextStyle(fontSize: 22,color: Colors.black,fontWeight: FontWeight.w100),),),
 
 
 
@@ -107,9 +107,9 @@ class OrderPlacedItem extends StatelessWidget {
 
                                         children: [
 
-                                          Text(' Size : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20),),
+                                          Text(' Size : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18),),
 
-                                          Text(' ${orderedProduct.size} ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20,fontWeight: FontWeight.bold),),
+                                          Text(' ${orderedProduct.size} ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18,fontWeight: FontWeight.bold),),
 
 
                                         ],
@@ -125,9 +125,9 @@ class OrderPlacedItem extends StatelessWidget {
 
                                         children: [
 
-                                          Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20),),
+                                          Text(' Qty : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18),),
 
-                                          Text(' ${orderedProduct.quantity} ',style: TextStyle(color: Palette.secondaryColor,fontSize: 20,fontWeight: FontWeight.bold),),
+                                          Text(' ${orderedProduct.quantity} ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18,fontWeight: FontWeight.bold),),
 
 
                                         ],
@@ -169,7 +169,7 @@ class OrderPlacedItem extends StatelessWidget {
 
                       margin: EdgeInsets.only(bottom: 64),
 
-                      child: Visibility(visible : true,child: Text('₹ ${orderedProduct.discountPrice}',style: TextStyle(color: Palette.secondaryColor,fontSize: 32,fontWeight: FontWeight.bold),)),
+                      child: Visibility(visible : true,child: Text('₹ ${orderedProduct.discountPrice}',style: TextStyle(color: Palette.secondaryColor,fontSize: 28,fontWeight: FontWeight.bold),)),
 
                     ),
 

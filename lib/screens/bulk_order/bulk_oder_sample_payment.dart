@@ -558,10 +558,8 @@ class BulkOrderSamplePayment extends StatelessWidget{
 
                    onTap: (){
 
-                     /*List<Tracking> temp = new List.from(trackingList.reversed);
-                     showTrackingDialog(context, temp, "Sample Tracking");*/
-
-                     showPaymentDialog(context);
+                     List<Tracking> temp = new List.from(trackingList.reversed);
+                     showTrackingDialog(context, temp, "Sample Tracking");
 
                    },
 

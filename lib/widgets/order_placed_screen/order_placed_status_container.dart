@@ -22,8 +22,14 @@ class OrderPlacedStatusContainer extends StatelessWidget {
 
 
     return Column(
+
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
-        
+
+
+
         Container(
 
           padding: EdgeInsets.only(left: 32,right: 32,top: 16,bottom: 32),
@@ -200,7 +206,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
 
         ),
         
-        Expanded(child: Container())
+
       ],
     );
   }

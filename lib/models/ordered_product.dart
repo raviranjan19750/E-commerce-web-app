@@ -62,7 +62,7 @@ class OrderedProduct {
       colour:
           (data['colour'] as List).map((e) => HexColor.hexToColor(e['hexCode'])).toList(),
       size: data['size'],
-      imageUrl: data['productImage'],
+      imageUrl: data['imageURL'],
       productName: data['productName'],
     );
   }

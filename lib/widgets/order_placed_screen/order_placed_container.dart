@@ -92,14 +92,12 @@ class OrderPlacedContainer extends StatelessWidget {
                   child: Text(
                     Strings.total + '(${order.orderedProducts.length} Items) : ₹ ${calcTotal()}',
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 28,
                     ),
                   ),
                 ),
               ],
             ),
-
-            FooterNew(),
           ],
         ),
       ),
