@@ -16,3 +16,5 @@ class PromoCodeDetailAvailabilityCheckingSuccessful
 
 class PromoCodeDetailAvailabilityCheckingFailure
     extends PromoCodeAvailabilityState {}
+
+class RemovePromoCodeSuccessfull extends PromoCodeAvailabilityState {}

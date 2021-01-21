@@ -28,6 +28,7 @@ class PromoCodeRepository {
     final response = await CloudFunctionConfig.post(
         'manageDiscountCoupons/check-validity/${authID}/${promoCode}', params);
 
-    return CheckPromoCodeAvailability.fromJson(jsonDecode(response.body));
+    return CheckPromoCodeAvailability.fromJson(
+        jsonDecode(response.body), promoCode);
   }
 }

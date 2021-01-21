@@ -17,7 +17,11 @@ class CheckPromoCodeBloc
   Stream<PromoCodeAvailabilityState> mapEventToState(
     PromoCodeAvailabilityEvent event,
   ) async* {
-    if (event is CheckingPromoCodeAvailability) yield* checkAvailability(event);
+    if (event is CheckingPromoCodeAvailability)
+      yield* checkAvailability(event);
+    else if (event is RemovePromoCode) {
+      yield RemovePromoCodeSuccessfull();
+    }
   }
 
   Stream<PromoCodeAvailabilityState> checkAvailability(

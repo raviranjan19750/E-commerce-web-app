@@ -56,100 +56,121 @@ class SelectAddressCartTotal extends StatelessWidget {
           child: CircularProgressIndicator(),
         );
       } else if (state is SelectAddressDetailLoadingSuccessful) {
-        deliveryAddressID = state.address.key;
-        return MultiBlocProvider(
-          providers: [
-            if (type == SelectAddressStateType.BUY_NOW)
-              BlocProvider(
-                  create: (context) => SelectAddressTypeBloc(
-                      selectAddressTypeRepository:
-                          RepositoryProvider.of(context))
-                    ..add(LoadBuyNowDetails(
-                      authID: authID,
-                      deliveryAddressID: state.address.key,
-                      productID: productID,
-                      variantID: variantID,
-                    ))),
-            if (type == SelectAddressStateType.NORMAL_CART)
-              BlocProvider(
-                  create: (context) => SelectAddressTypeBloc(
-                      selectAddressTypeRepository:
-                          RepositoryProvider.of(context))
-                    ..add(LoadNormalCartDetails(
-                      authID: authID,
-                      deliveryAddressID: state.address.key,
-                    ))),
-            if (type == SelectAddressStateType.BULK_ORDER)
-              BlocProvider(
-                  create: (context) => SelectAddressTypeBloc(
-                      selectAddressTypeRepository:
-                          RepositoryProvider.of(context))
-                    ..add(LoadBulkOrderCartDetails(
-                      authID: authID,
-                      deliveryAddressID: state.address.key,
-                      totalItems: totalItems,
-                      isBulkOrderCart: isBulkOrderCart,
-                      isSampleRequested: isSampleRequested,
-                    ))),
-          ],
-          child: BlocBuilder<SelectAddressTypeBloc, SelectAddressTypeState>(
-            builder: (context, state) {
-              if (state is BuyNowDetailLoadingSucessfull) {
-                return TotalView(
-                  authID: authID,
-                  deliveryCharges: state.buyNowDetails.deliveryCharges,
-                  discount: state.buyNowDetails.discount,
-                  payingAmount: state.buyNowDetails.payingAmount,
-                  totalAmount: state.buyNowDetails.totalAmount,
-                  totalItems: state.buyNowDetails.totalItems,
-                  totalPayingAmount: state.buyNowDetails.totalPayingAmount,
-                  razorpayOrderID:
-                      state.buyNowDetails.paymentData.razorpayOrderID,
-                  orderID: state.buyNowDetails.paymentData.orderID,
-                  taxAmount: state.buyNowDetails.taxAmount,
-                  walletAmount: state.buyNowDetails.walletAmount,
-                  deliveryAddressID: deliveryAddressID,
-                  cartKeys: state.buyNowDetails.cartKeys,
-                );
-              } else if (state is NormalCartDetailLoadingSuccessfull) {
-                return TotalView(
-                  authID: authID,
-                  deliveryCharges: state.normalCartDetails.deliveryCharges,
-                  discount: state.normalCartDetails.discount,
-                  payingAmount: state.normalCartDetails.payingAmount,
-                  totalPayingAmount: state.normalCartDetails.totalPayingAmount,
-                  totalAmount: state.normalCartDetails.totalAmount,
-                  totalItems: state.normalCartDetails.totalItems,
-                  razorpayOrderID:
-                      state.normalCartDetails.paymentData.razorpayOrderID,
-                  orderID: state.normalCartDetails.paymentData.orderID,
-                  taxAmount: state.normalCartDetails.taxAmount,
-                  walletAmount: state.normalCartDetails.walletAmount,
-                  deliveryAddressID: deliveryAddressID,
-                  cartKeys: state.normalCartDetails.cartKeys,
-                );
-              } else if (state is BulkOrderDetailLoadingSuccessfull) {
-                return TotalView(
-                  authID: authID,
-                  totalBulkItems: state.totalItems,
-                  isBulkOrderCart: state.isBulkOrderCart,
-                  deliveryAddressID: state.deliveryAddressID,
-                  isSampleRequested: state.isSampleRequested,
-                );
-              }
-              return Container(
-                width: MediaQuery.of(context).size.width * 0.25,
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: Card(
-                  elevation: 5,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+        if (state.address == null) {
+          return Card(
+            elevation: 5,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.25,
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.error),
+                    Text('Select An Address to continue'),
+                  ],
                 ),
-              );
-            },
-          ),
-        );
+              ),
+            ),
+          );
+        } else {
+          deliveryAddressID = state.address.key;
+          return MultiBlocProvider(
+            providers: [
+              if (type == SelectAddressStateType.BUY_NOW)
+                BlocProvider(
+                    create: (context) => SelectAddressTypeBloc(
+                        selectAddressTypeRepository:
+                            RepositoryProvider.of(context))
+                      ..add(LoadBuyNowDetails(
+                        authID: authID,
+                        deliveryAddressID: state.address.key,
+                        productID: productID,
+                        variantID: variantID,
+                      ))),
+              if (type == SelectAddressStateType.NORMAL_CART)
+                BlocProvider(
+                    create: (context) => SelectAddressTypeBloc(
+                        selectAddressTypeRepository:
+                            RepositoryProvider.of(context))
+                      ..add(LoadNormalCartDetails(
+                        authID: authID,
+                        deliveryAddressID: state.address.key,
+                      ))),
+              if (type == SelectAddressStateType.BULK_ORDER)
+                BlocProvider(
+                    create: (context) => SelectAddressTypeBloc(
+                        selectAddressTypeRepository:
+                            RepositoryProvider.of(context))
+                      ..add(LoadBulkOrderCartDetails(
+                        authID: authID,
+                        deliveryAddressID: state.address.key,
+                        totalItems: totalItems,
+                        isBulkOrderCart: isBulkOrderCart,
+                        isSampleRequested: isSampleRequested,
+                      ))),
+            ],
+            child: BlocBuilder<SelectAddressTypeBloc, SelectAddressTypeState>(
+              builder: (context, state) {
+                if (state is BuyNowDetailLoadingSucessfull) {
+                  return TotalView(
+                    authID: authID,
+                    deliveryCharges: state.buyNowDetails.deliveryCharges,
+                    discount: state.buyNowDetails.discount,
+                    payingAmount: state.buyNowDetails.payingAmount,
+                    totalAmount: state.buyNowDetails.totalAmount,
+                    totalItems: state.buyNowDetails.totalItems,
+                    totalPayingAmount: state.buyNowDetails.totalPayingAmount,
+                    razorpayOrderID:
+                        state.buyNowDetails.paymentData.razorpayOrderID,
+                    orderID: state.buyNowDetails.paymentData.orderID,
+                    taxAmount: state.buyNowDetails.taxAmount,
+                    walletAmount: state.buyNowDetails.walletAmount,
+                    deliveryAddressID: deliveryAddressID,
+                    cartKeys: state.buyNowDetails.cartKeys,
+                  );
+                } else if (state is NormalCartDetailLoadingSuccessfull) {
+                  return TotalView(
+                    authID: authID,
+                    deliveryCharges: state.normalCartDetails.deliveryCharges,
+                    discount: state.normalCartDetails.discount,
+                    payingAmount: state.normalCartDetails.payingAmount,
+                    totalPayingAmount:
+                        state.normalCartDetails.totalPayingAmount,
+                    totalAmount: state.normalCartDetails.totalAmount,
+                    totalItems: state.normalCartDetails.totalItems,
+                    razorpayOrderID:
+                        state.normalCartDetails.paymentData.razorpayOrderID,
+                    orderID: state.normalCartDetails.paymentData.orderID,
+                    taxAmount: state.normalCartDetails.taxAmount,
+                    walletAmount: state.normalCartDetails.walletAmount,
+                    deliveryAddressID: deliveryAddressID,
+                    cartKeys: state.normalCartDetails.cartKeys,
+                  );
+                } else if (state is BulkOrderDetailLoadingSuccessfull) {
+                  return TotalView(
+                    authID: authID,
+                    totalBulkItems: state.totalItems,
+                    isBulkOrderCart: state.isBulkOrderCart,
+                    deliveryAddressID: state.deliveryAddressID,
+                    isSampleRequested: state.isSampleRequested,
+                  );
+                }
+                return Container(
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: Card(
+                    elevation: 5,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
       }
       return Container(
         width: MediaQuery.of(context).size.width * 0.25,
@@ -390,8 +411,7 @@ class TotalView extends StatelessWidget {
                                       Text(
                                         Strings.couponDiscount,
                                         style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
                                         ),
                                       ),
                                       Text(
@@ -399,8 +419,7 @@ class TotalView extends StatelessWidget {
                                             .checkPromoCodeAvailability.discount
                                             .toString(),
                                         style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ],
@@ -460,19 +479,15 @@ class TotalView extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        '0',
+                                        Strings.couponDiscount,
                                         style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
                                         ),
                                       ),
                                       Text(
-                                        state
-                                            .checkPromoCodeAvailability.discount
-                                            .toString(),
+                                        '0',
                                         style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ],
@@ -496,15 +511,13 @@ class TotalView extends StatelessWidget {
                                 Text(
                                   Strings.couponDiscount,
                                   style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
                                   ),
                                 ),
                                 Text(
                                   '0',
                                   style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ],
@@ -732,13 +745,15 @@ class TotalView extends StatelessWidget {
                               onTap: () {
                                 BlocProvider.of<SelectPaymentBloc>(context)
                                     .add(LoadSelectPaymentDialog());
+                                BlocProvider.of<CheckPromoCodeBloc>(context)
+                                    .add(RemovePromoCode());
                               },
                               child: Card(
                                 elevation: 5,
                                 child: Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.25,
-                                  padding: EdgeInsets.all(16),
+                                  padding: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(8),
@@ -943,7 +958,7 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
         height: MediaQuery.of(context).size.height * 0.65,
         width: MediaQuery.of(context).size.width * 0.6,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1267,6 +1282,7 @@ class GetPromoCode extends StatefulWidget {
   final double taxAmount;
   final double totalPayingAmount;
   String promoCode = "";
+  TextEditingController textEditingController;
 
   GetPromoCode({
     Key key,
@@ -1290,102 +1306,306 @@ class GetPromoCode extends StatefulWidget {
 class _GetPromoCodeState extends State<GetPromoCode> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingController;
-
-    textEditingController = TextEditingController();
+    widget.textEditingController = new TextEditingController();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.25,
-            decoration: BoxDecoration(
-                border: Border.all(
-              color: Colors.black54,
-              style: BorderStyle.solid,
-            )),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+        BlocBuilder<CheckPromoCodeBloc, PromoCodeAvailabilityState>(
+            builder: (context, state) {
+          if (state is PromoCodeDetailAvailabilityChecking)
+            return Padding(
+                padding: EdgeInsets.all(4.0),
+                child: CircularProgressIndicator(
+                    strokeWidth: 3.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Colors.black,
+                    )));
+          else if (state is PromoCodeDetailAvailabilityCheckingSuccessful)
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  color: Colors.black54,
+                  style: BorderStyle.solid,
+                )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text(
+                            state.checkPromoCodeAvailability.promoCode,
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                        //   child: Container(
+                        //     width: MediaQuery.of(context).size.width * 0.1,
+                        //     child: TextFormField(
+
+                        //       // keyboardType: TextInputType,
+
+                        //       // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        //       onChanged: (val) {
+                        //         setState(() {
+                        //           widget.promoCode = val;
+                        //         });
+                        //       },
+                        //       cursorColor: Colors.blue,
+
+                        //       decoration: InputDecoration(
+                        //         labelText: Strings.promoCode,
+                        //         border: InputBorder.none,
+                        //         labelStyle: TextStyle(color: Colors.black54),
+                        //         focusedBorder: InputBorder.none,
+                        //         enabledBorder: InputBorder.none,
+                        //         errorBorder: InputBorder.none,
+                        //         disabledBorder: InputBorder.none,
+                        //         counterText: ,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.1,
-                        child: TextFormField(
-                          controller: textEditingController,
-                          // keyboardType: TextInputType,
-
-                          // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          onChanged: (val) {
-                            setState(() {
-                              widget.promoCode = val;
-                            });
-                          },
-                          cursorColor: Colors.blue,
-
-                          decoration: InputDecoration(
-                            labelText: Strings.promoCode,
-                            border: InputBorder.none,
-                            labelStyle: TextStyle(color: Colors.black54),
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            counterText: "",
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: InkWell(
+                        onTap: () {
+                          BlocProvider.of<CheckPromoCodeBloc>(context)
+                              .add(RemovePromoCode());
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Card(
+                            elevation: 3,
+                            color: Colors.red,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                Strings.remove,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: InkWell(
-                    onTap: () {
-                      BlocProvider.of<CheckPromoCodeBloc>(context).add(
-                          CheckingPromoCodeAvailability(
-                              authID: widget.authID,
-                              deliveryCharges: widget.deliveryCharges,
-                              payingAmount: widget.payingAmount,
-                              paymentMode: widget.paymentMode,
-                              promoCode: widget.promoCode,
-                              walletAmount: widget.walletAmount));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Card(
-                        elevation: 3,
-                        color: Colors.blue,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            Strings.apply,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
+              ),
+            );
+          else if (state is RemovePromoCodeSuccessfull) {
+            widget.textEditingController.clear();
+            widget.promoCode = '';
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  color: Colors.black54,
+                  style: BorderStyle.solid,
+                )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.15,
+                            height: 50,
+                            child: TextFormField(
+                              controller: widget.textEditingController,
+                              // keyboardType: TextInputType,
+
+                              // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              onChanged: (val) {
+                                widget.promoCode = val;
+                                // setState(() {
+                                //   widget.promoCode = val;
+                                // });
+                              },
+                              cursorColor: Colors.blue,
+
+                              decoration: InputDecoration(
+                                labelText: Strings.promoCode,
+                                border: InputBorder.none,
+                                labelStyle: TextStyle(color: Colors.black54),
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                counterText: "",
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: InkWell(
+                        onTap: () {
+                          BlocProvider.of<CheckPromoCodeBloc>(context).add(
+                              CheckingPromoCodeAvailability(
+                                  authID: widget.authID,
+                                  deliveryCharges: widget.deliveryCharges,
+                                  payingAmount: widget.payingAmount,
+                                  paymentMode: widget.paymentMode,
+                                  promoCode: widget.promoCode,
+                                  walletAmount: widget.walletAmount));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Card(
+                            elevation: 3,
+                            color: Colors.blue,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                Strings.apply,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
+            );
+          } else
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  color: Colors.black54,
+                  style: BorderStyle.solid,
+                )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.15,
+                            child: TextFormField(
+                              controller: widget.textEditingController,
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                              // keyboardType: TextInputType,
+
+                              // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              // onChanged: (val) {
+                              //   setState(() {
+                              //     widget.promoCode = val;
+                              //   });
+                              // },
+                              onChanged: (val) {
+                                widget.promoCode = val;
+                              },
+                              cursorColor: Colors.blue,
+
+                              decoration: InputDecoration(
+                                labelText: Strings.promoCode,
+                                border: InputBorder.none,
+                                labelStyle: TextStyle(color: Colors.black54),
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                counterText: "",
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: InkWell(
+                        onTap: () {
+                          BlocProvider.of<CheckPromoCodeBloc>(context).add(
+                              CheckingPromoCodeAvailability(
+                                  authID: widget.authID,
+                                  deliveryCharges: widget.deliveryCharges,
+                                  payingAmount: widget.payingAmount,
+                                  paymentMode: widget.paymentMode,
+                                  promoCode: widget.promoCode,
+                                  walletAmount: widget.walletAmount));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Card(
+                            elevation: 3,
+                            color: Colors.blue,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                Strings.apply,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+        }),
+
         // Container(
         //   width: MediaQuery.of(context).size.width * 0.23,
         //   padding: EdgeInsets.all(0.0),
@@ -1413,21 +1633,27 @@ class _GetPromoCodeState extends State<GetPromoCode> {
                 children: [
                   if (state.checkPromoCodeAvailability.couponType == 102 ||
                       state.checkPromoCodeAvailability.couponType == 103)
-                    Text(
-                      state.checkPromoCodeAvailability.responseText,
-                      style: TextStyle(
-                        color: Palette.green,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text(
+                        state.checkPromoCodeAvailability.responseText,
+                        style: TextStyle(
+                          color: Palette.green,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
                       ),
                     )
                   else
-                    Text(
-                      state.checkPromoCodeAvailability.responseText,
-                      style: TextStyle(
-                        color: Colors.red[500],
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text(
+                        state.checkPromoCodeAvailability.responseText,
+                        style: TextStyle(
+                          color: Colors.red[500],
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   if (state.checkPromoCodeAvailability.couponType == 102)
@@ -1532,12 +1758,6 @@ class _GetPromoCodeState extends State<GetPromoCode> {
                     ),
                 ],
               );
-            else if (state is PromoCodeDetailAvailabilityCheckingFailure)
-              return Container(
-                child: Text(
-                  "Error",
-                ),
-              );
             else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -1557,14 +1777,14 @@ class _GetPromoCodeState extends State<GetPromoCode> {
                           Text(
                             Strings.grandTotal,
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 22,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
                             widget.totalPayingAmount.toString(),
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 22,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

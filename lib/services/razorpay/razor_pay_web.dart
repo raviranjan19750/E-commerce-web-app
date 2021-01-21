@@ -106,19 +106,42 @@ class RazorPayWeb extends StatelessWidget {
           razorpaySignature = element.data.toString().substring(4);
         } else if (element.data == 'SUCCESS') {
           print('PAYMENT SUCCESSFULL!!!!!!!');
-          var data = {
-            "orderID": "$orderID",
-            "deliveryAddressID": "$deliveryAddressID",
-            "deliveryCharges": deliveryCharges,
-            "payingAmount": amount,
-            "razorpayData": {
-              "razorpayPaymentID": "$razorpayPaymentID",
-              "razorpaySignature": "$razorpaySignature",
-              "razorpayOrderID": "$razorpayOrderIDWeb",
-              "paymentMode": paymentMode,
-            },
-            "cartKeys": cartKeys,
-          };
+          var data = {};
+          if (couponCode == null) {
+            data = {
+              "orderID": "$orderID",
+              "deliveryAddressID": "$deliveryAddressID",
+              "deliveryCharges": deliveryCharges,
+              "payingAmount": amount,
+              "razorpayData": {
+                "razorpayPaymentID": "$razorpayPaymentID",
+                "razorpaySignature": "$razorpaySignature",
+                "razorpayOrderID": "$razorpayOrderIDWeb",
+                "paymentMode": paymentMode,
+              },
+              "cartKeys": cartKeys,
+            };
+          } else {
+            data = {
+              "orderID": "$orderID",
+              "deliveryAddressID": "$deliveryAddressID",
+              "deliveryCharges": deliveryCharges,
+              "payingAmount": amount,
+              "couponData": {
+                "couponCode": couponCode,
+                "couponAmount": couponAmount
+              },
+              "razorpayData": {
+                "razorpayPaymentID": "$razorpayPaymentID",
+                "razorpaySignature": "$razorpaySignature",
+                "razorpayOrderID": "$razorpayOrderIDWeb",
+                "paymentMode": paymentMode,
+              },
+              "cartKeys": cartKeys,
+            };
+          }
+          print(couponCode);
+
           print(data);
           final response = await CloudFunctionConfig.post(
               'managePayments/normal-payment-done/$authID', data);

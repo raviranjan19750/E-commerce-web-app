@@ -109,10 +109,14 @@ class _SelectAddressGridState extends State<SelectAddressGrid> {
   void initState() {
     super.initState();
 
-    widget.selectedAddress = widget.addresses[0];
-    // BLOC provider to select Address bloc pass the value of selected address
-    BlocProvider.of<SelectAddressBloc>(context)
-        .add(LoadAddress(widget.selectedAddress));
+    if (widget.addresses.length == 0) {
+      BlocProvider.of<SelectAddressBloc>(context).add(LoadAddress(null));
+    } else {
+      widget.selectedAddress = widget.addresses[0];
+      // BLOC provider to select Address bloc pass the value of selected address
+      BlocProvider.of<SelectAddressBloc>(context)
+          .add(LoadAddress(widget.selectedAddress));
+    }
   }
 
   @override
