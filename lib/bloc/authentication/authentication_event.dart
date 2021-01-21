@@ -17,3 +17,5 @@ class AuthenticationUserChanged extends AuthenticationEvent {
 }
 
 class AuthenticationLogoutRequested extends AuthenticationEvent {}
+
+class ReloadAuthenticatedUser extends AuthenticationEvent {}

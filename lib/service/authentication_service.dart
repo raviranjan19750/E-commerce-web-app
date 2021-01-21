@@ -31,16 +31,24 @@ class AuthenticationRepository {
   }) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
   Future<ConfirmationResult> loginWithPhoneNumber(String phone) async {
+    await _firebaseAuth.setPersistence(firebase_auth.Persistence.LOCAL);
     return await _firebaseAuth.signInWithPhoneNumber("+91" + phone);
   }
 
+  void reloadUser() async {
+    await _firebaseAuth.setPersistence(firebase_auth.Persistence.LOCAL);
+    await _firebaseAuth.currentUser.reload();
+  }
+
   Stream<User> get user {
-    return _firebaseAuth.authStateChanges().map((firebaseUser) {
+    // _firebaseAuth.userChanges()
+    return _firebaseAuth.userChanges().map((firebaseUser) {
       return firebaseUser;
     });
   }
 
   Future<http.Response> sendOtp(String phone) async {
+    await _firebaseAuth.setPersistence(firebase_auth.Persistence.LOCAL);
     this.phone = phone;
     var res;
     try {
@@ -124,6 +132,7 @@ class AuthenticationRepository {
   Future<void> signInWithToken({String token}) async {
     assert(token != null);
     try {
+      await _firebaseAuth.setPersistence(firebase_auth.Persistence.LOCAL);
       firebase_auth.UserCredential user =
           await _firebaseAuth.signInWithCustomToken(token);
 

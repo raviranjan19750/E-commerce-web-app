@@ -42,6 +42,8 @@ class AuthenticationBloc
       yield _mapAuthenticationUserChangedToState(event);
     } else if (event is AuthenticationLogoutRequested) {
       unawaited(_authenticationRepository.logout());
+    } else if (event is ReloadAuthenticatedUser) {
+      _authenticationRepository.reloadUser();
     }
   }
 
