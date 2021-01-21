@@ -62,7 +62,15 @@ Future<void> main() async {
 
   await SentryFlutter.init(
           (options) => options.dsn = 'https://ca6de53fe8f94dc98988539d7e5642cb@o508594.ingest.sentry.io/5601312',
-      appRunner: () => runApp(MyApp(authRepo: authRepo,)),);
+      appRunner: () async {
+            try{
+              runApp(MyApp(authRepo: authRepo,));
+            }catch(exception, stackTrace){
+              await Sentry.captureException(exception, stackTrace: stackTrace);
+
+            }
+
+      },);
 
 
 }
