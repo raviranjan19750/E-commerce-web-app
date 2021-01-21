@@ -86,7 +86,27 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
   @override
   Widget build(BuildContext context) {
     return Center(child: Container(
-        child: BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+        child: BlocConsumer<SignInBloc, SignInState>(
+            listener: (context, state) {
+              if (state is GetUserDetailSuccessful) {
+                Navigator.pop(context);
+              //html.window.location.reload();
+              // return Container(
+              //   child: Column(
+              //     children: [
+              //       Text("All set"),
+              //       RaisedButton(
+              //         onPressed: () {
+
+              //         },
+              //         child: Text("Continue Shopping"),
+              //       )
+              //     ],
+              //   ),
+              // );
+              }
+            },
+            builder: (context, state) {
       if (state is SignInInitial) {
         return Column(
           children: [
@@ -170,8 +190,8 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
           ],
         );
       } else if (state is VerificationSuccessNew) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+        return ListView(
+          //mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Icon(
               Icons.check_circle_outline,
@@ -219,22 +239,6 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
             ),
           ],
         );
-      } else if (state is GetUserDetailSuccessful) {
-        Navigator.pop(context);
-        html.window.location.reload();
-        // return Container(
-        //   child: Column(
-        //     children: [
-        //       Text("All set"),
-        //       RaisedButton(
-        //         onPressed: () {
-
-        //         },
-        //         child: Text("Continue Shopping"),
-        //       )
-        //     ],
-        //   ),
-        // );
       } else if (state is GetUserDetailFaliure) {
         Container(
           child: Text("Try again"),
