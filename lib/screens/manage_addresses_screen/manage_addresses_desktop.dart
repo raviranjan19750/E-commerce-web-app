@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
+import 'package:living_desire/screens/emptyState/EmptyStateScreen.dart';
 import 'package:living_desire/screens/login/login_view.dart';
 import 'package:living_desire/screens/manage_addresses_screen/my_profile_screen.dart';
 import 'package:living_desire/screens/manage_addresses_screen/my_wallet.dart';
@@ -37,46 +38,41 @@ class ManageAddressesScreenDesktop extends StatelessWidget {
                 ButtonList(
                   isManageAddressesSelected: true,
                 ),
-
                 Expanded(
                     child: Column(
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: [
-
-                        MyProfileScreen(),
-
-                        ManageAddressesContainer(
-                  authID: state.user.uid,
-                ),
-                      ],
-                    )),
-
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyProfileScreen(),
+                    ManageAddressesContainer(
+                      authID: state.user.uid,
+                    ),
+                  ],
+                )),
                 MyWallet(),
               ],
             ),
           );
         case AuthenticationStatus.unauthenticated:
-          return Center(
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Palette.secondaryColor,
-                borderRadius: BorderRadius.circular(4),
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ButtonList(
+                isManageAddressesSelected: true,
               ),
-              // Login Button
-              child: InkWell(
-                onTap: () {
-                  _showLoginDialog(context);
-                },
-                child: Text(
-                  Strings.loginText,
-                  style: TextStyle(color: Colors.white),
-                ),
+              Expanded(
+                child: EmptyStateScreen(
+                    primaryText: Strings.cartLoginText,
+                    actionButtonText: Strings.loginText,
+                    secondaryText: "",
+                    assetPath: 'assets/images/myaccount_emptystate.png',
+                    onPressed: () {
+                      _showLoginDialog(context);
+                    }),
               ),
-            ),
+            ],
           );
+
         default:
           return Container();
       }

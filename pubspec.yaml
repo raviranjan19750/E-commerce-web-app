@@ -113,6 +113,7 @@ flutter:
     - assets/images/search_result_not_match.png
     - assets/images/something_went_wrong_empty_state.png
     - assets/images/wishlist_empty_state.png
+    - assets/images/myaccount_emptystate.png
     - assets/images/facebook.png
     - assets/images/instagram.png
     - assets/images/linkedin.png

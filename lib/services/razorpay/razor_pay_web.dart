@@ -18,6 +18,7 @@ class RazorPayWeb extends StatelessWidget {
   final String razorpayOrderID;
   final int paymentMode;
   final String orderID;
+  final double totalAmount;
   final double amount;
   final String authID;
   final String deliveryAddressID;
@@ -28,6 +29,7 @@ class RazorPayWeb extends StatelessWidget {
 
   const RazorPayWeb({
     Key key,
+    this.totalAmount,
     this.razorpayOrderID,
     this.paymentMode,
     this.authID,
@@ -118,6 +120,7 @@ class RazorPayWeb extends StatelessWidget {
                 "razorpaySignature": "$razorpaySignature",
                 "razorpayOrderID": "$razorpayOrderIDWeb",
                 "paymentMode": paymentMode,
+                "razorpayAmount": totalAmount,
               },
               "cartKeys": cartKeys,
             };
@@ -136,11 +139,11 @@ class RazorPayWeb extends StatelessWidget {
                 "razorpaySignature": "$razorpaySignature",
                 "razorpayOrderID": "$razorpayOrderIDWeb",
                 "paymentMode": paymentMode,
+                "razorpayAmount": totalAmount,
               },
               "cartKeys": cartKeys,
             };
           }
-          print(couponCode);
 
           print(data);
           final response = await CloudFunctionConfig.post(
@@ -167,7 +170,7 @@ class RazorPayWeb extends StatelessWidget {
       console.log("Razor pay options");
        var options = {
          "key": "rzp_test_U8mKfCB97ZZlEj",
-          "amount": "${amount * 100}", "currency": "INR",
+          "amount": "${totalAmount * 100}", "currency": "INR",
           "name": "Living Desire",
           "description": "",
           "prefill": {

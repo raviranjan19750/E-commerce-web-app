@@ -21,6 +21,7 @@ class ProceedToPayButton extends StatelessWidget {
   final int paymentMode;
   final String deliveryAddressID;
   final List<String> cartKeys;
+  final double totalAmount;
   final String couponCode;
   final double couponAmount;
   final double deliveryCharges;
@@ -30,6 +31,7 @@ class ProceedToPayButton extends StatelessWidget {
     this.authID,
     this.amount,
     this.orderID,
+    this.totalAmount,
     this.paymentMode,
     this.razorpayOrderID,
     this.deliveryAddressID,
@@ -51,6 +53,7 @@ class ProceedToPayButton extends StatelessWidget {
             builder: (BuildContext context) {
               return RazorPayWeb(
                 paymentMode: paymentMode,
+                totalAmount: totalAmount,
                 amount: amount,
                 authID: authID,
                 orderID: orderID,
