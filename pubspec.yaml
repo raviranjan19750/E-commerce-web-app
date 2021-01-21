@@ -77,6 +77,7 @@ dependencies:
   convert: ^2.1.1
   get_it: ^5.0.3
   flutter_html: ^1.2.0
+  sentry_flutter: ^4.0.2
 
 
  

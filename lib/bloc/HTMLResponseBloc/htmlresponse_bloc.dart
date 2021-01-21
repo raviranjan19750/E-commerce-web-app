@@ -16,16 +16,14 @@ class HtmlResponseBloc extends Bloc<HtmlResponseEvent, HtmlResponseState> {
         super(HtmlResponseInitial());
 
   @override
-  Stream<HtmlResponseState> mapEventToState(
-    HtmlResponseEvent event,
+  Stream<HtmlResponseState> mapEventToState(HtmlResponseEvent event,
   ) async* {
     if (event is LoadHtmlResponse) {
       yield* loadHtmlResponseEvent(event);
     }
   }
 
-  Stream<HtmlResponseState> loadHtmlResponseEvent(
-      LoadHtmlResponse event) async* {
+  Stream<HtmlResponseState> loadHtmlResponseEvent(LoadHtmlResponse event) async* {
     yield HtmlResponseLoading();
 
     try {

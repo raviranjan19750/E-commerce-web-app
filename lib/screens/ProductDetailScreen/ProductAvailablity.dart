@@ -86,8 +86,7 @@ class ProductAvailabilitySection extends StatelessWidget {
               onTap: () {
                 if (textEditingController.text.length == 6) {
                   BlocProvider.of<ProductAvailabilityBloc>(context).add(
-                      CheckingProductAvailability(
-                          productID, variantID, pincode));
+                      CheckingProductAvailability(productID, variantID, pincode));
                 } else {
                   SnackBar snackBar = SnackBar(
                     content: Text(Strings.invalidPincode.toUpperCase(),

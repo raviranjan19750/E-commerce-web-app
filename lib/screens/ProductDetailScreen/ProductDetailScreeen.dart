@@ -25,8 +25,7 @@ class ProductDetailScreen extends StatelessWidget {
                 (productID == variantID)
                     ? BlocProvider(
                         create: (context) => ProductDetailBloc(
-                            productRepository: RepositoryProvider.of(context))
-                          ..add(LoadComboProductDetail(
+                            productRepository: RepositoryProvider.of(context))..add(LoadComboProductDetail(
                               productID: productID, authID: state.user.uid)),
                       )
                     : BlocProvider(

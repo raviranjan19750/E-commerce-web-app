@@ -23,6 +23,7 @@ import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:living_desire/service/sharedPreferences.dart';
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import './config/configs.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
 import 'bloc/cart_config/cart_config_bloc.dart';
@@ -41,7 +42,7 @@ const wishlistBox = 'wishlist_items';
 const cartlistBox = 'cart_items';
 const customCartlistBox = 'custom_cart_items';
 
-void main() async {
+Future<void> main() async {
   Hive.registerAdapter<Product>(ProductAdapter());
   Hive.registerAdapter<NormalCartLocal>(NormalCartLocalAdapter());
   Hive.registerAdapter<CustomCartLocal>(CustomCartLocalAdapter());
@@ -58,9 +59,12 @@ void main() async {
   setupLocator();
   var authRepo = AuthenticationRepository();
   // await authRepo.signInAnony();
-  runApp(MyApp(
-    authRepo: authRepo,
-  ));
+
+  await SentryFlutter.init(
+          (options) => options.dsn = 'https://ca6de53fe8f94dc98988539d7e5642cb@o508594.ingest.sentry.io/5601312',
+      appRunner: () => runApp(MyApp(authRepo: authRepo,)),);
+
+
 }
 
 class InitailizeAppService extends StatelessWidget {

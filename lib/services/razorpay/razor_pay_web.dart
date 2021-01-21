@@ -133,6 +133,7 @@ class RazorPayWeb extends StatelessWidget {
       });
       element.requestFullscreen();
       //element.src = 'assets/razorpay/payment.html';
+
       element.srcdoc = """
 <!DOCTYPE html><html>
 <meta name="viewport" content="width=device-width">
