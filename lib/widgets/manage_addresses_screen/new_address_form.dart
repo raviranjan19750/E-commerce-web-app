@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/manage_addresses/manage_addresses_bloc.dart';
 import 'package:living_desire/config/configs.dart';
@@ -96,6 +97,10 @@ class _NewAddressFormState extends State<NewAddressForm> {
                         initialValue:
                             widget.isAddAddress ? '' : widget.address.phone,
                         hintText: 'Mobile',
+                        maxLength: 10,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         validator: (String value) {
                           if (value.isEmpty) {
                             return 'Enter your Mobile Number';
@@ -136,6 +141,10 @@ class _NewAddressFormState extends State<NewAddressForm> {
                         initialValue:
                             widget.isAddAddress ? '' : widget.address.pincode,
                         hintText: 'Pincode',
+                        maxLength: 6,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         validator: (String value) {
                           if (value.isEmpty) {
                             return 'Enter valid Pincode';
@@ -185,15 +194,16 @@ class _NewAddressFormState extends State<NewAddressForm> {
                       Expanded(
                           child: InkWell(
                             onTap: () {
-                              print('Adding new Address');
-                              widget.onActionAddress(AddAddress(
-                                authID: widget.authID,
-                                address: address,
-                                name: name,
-                                phone: phone,
-                                pincode: pincode,
-                              ));
-                              Navigator.of(context).pop();
+                              if (_formKey.currentState.validate()) {
+                                widget.onActionAddress(AddAddress(
+                                  authID: widget.authID,
+                                  address: address,
+                                  name: name,
+                                  phone: phone,
+                                  pincode: pincode,
+                                ));
+                                Navigator.of(context).pop();
+                              }
                             },
                             child: Material(
                               elevation: 10.0,
@@ -218,18 +228,20 @@ class _NewAddressFormState extends State<NewAddressForm> {
                       Expanded(
                           child: InkWell(
                             onTap: () {
-                              var value = UpdateAddress(
-                                address: address,
-                                authID: widget.authID,
-                                name: name,
-                                phone: phone,
-                                pincode: pincode,
-                                key: widget.address.key,
-                              );
-                              LOG.i('Update Address Event ${value}');
-                              widget.onActionAddress(value);
+                              if (_formKey.currentState.validate()) {
+                                var value = UpdateAddress(
+                                  address: address,
+                                  authID: widget.authID,
+                                  name: name,
+                                  phone: phone,
+                                  pincode: pincode,
+                                  key: widget.address.key,
+                                );
+                                LOG.i('Update Address Event ${value}');
+                                widget.onActionAddress(value);
 
-                              Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              }
                             },
                             child: Material(
                               elevation: 10.0,

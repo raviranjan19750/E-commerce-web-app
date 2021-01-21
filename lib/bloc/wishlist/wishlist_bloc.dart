@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/wishlist_config/wishlist_bloc.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import '../../DBHandler/DBHandler.dart';
 import 'package:living_desire/models/models.dart';
 part 'wishlist_event.dart';
@@ -9,7 +10,8 @@ part 'wishlist_state.dart';
 class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   final WishlistRepository wishlistRepository;
   final WishlistConfigBloc configBloc;
-  WishlistBloc({this.wishlistRepository, this.configBloc}) : super(WishlistDetailInitial());
+  WishlistBloc({this.wishlistRepository, this.configBloc})
+      : super(WishlistDetailInitial());
 
   @override
   Stream<WishlistState> mapEventToState(
@@ -32,7 +34,9 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
           await wishlistRepository.getWishlistDetails(event.authID);
       configBloc.add(UpdateWishList(wishlist));
       yield WishlistDetailLoadingSuccessful(wishlist);
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield WishlistDetailLoadingFailure();
     }
   }
@@ -53,7 +57,9 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       );
 
       yield AddWishlistDetailLoadingSuccessful();
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield AddWishlistDetailLoadingFailure();
     }
   }
@@ -70,7 +76,9 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       );
 
       yield* loadWishlistDetail(LoadAllWishlist(event.authID));
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield DeleteWishlistDetailLoadingFailure();
     }
   }

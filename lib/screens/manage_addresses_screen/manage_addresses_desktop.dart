@@ -42,13 +42,19 @@ class ManageAddressesScreenDesktop extends StatelessWidget {
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MyProfileScreen(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MyProfileScreen(),
+                        MyWallet(),
+                      ],
+                    ),
                     ManageAddressesContainer(
                       authID: state.user.uid,
                     ),
                   ],
                 )),
-                MyWallet(),
               ],
             ),
           );

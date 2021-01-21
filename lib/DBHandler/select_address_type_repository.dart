@@ -4,6 +4,7 @@ import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class SelectAddressTypeRepository {
   // Get Address Details
@@ -28,9 +29,9 @@ class SelectAddressTypeRepository {
       if (response.statusCode == 200) {
         return BuyNowDetails.fromJson(jsonDecode(response.body));
       }
-    } catch (e) {
-      print(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -49,9 +50,9 @@ class SelectAddressTypeRepository {
       } else {
         LOG.i(response.statusCode);
       }
-    } catch (e) {
-      LOG.e(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -68,9 +69,9 @@ class SelectAddressTypeRepository {
       if (response.statusCode == 200) {
         return (jsonDecode(response.body));
       }
-    } catch (e) {
-      LOG.e(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 }

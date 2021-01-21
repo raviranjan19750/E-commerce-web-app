@@ -4,6 +4,7 @@ import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../logger.dart';
 
@@ -54,9 +55,9 @@ class CartRepository {
       } else {
         LOG.i(response.statusCode);
       }
-    } catch (e) {
-      LOG.e(e);
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -80,9 +81,9 @@ class CartRepository {
       } else {
         print('Http Request Failed');
       }
-    } catch (e) {
-      print(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -115,9 +116,9 @@ class CartRepository {
       } else {
         LOG.e(request.body);
       }
-    } catch (e) {
-      print(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -140,9 +141,9 @@ class CartRepository {
       } else {
         LOG.e(request.body);
       }
-    } catch (e) {
-      LOG.e(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 }

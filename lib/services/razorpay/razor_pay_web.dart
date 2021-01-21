@@ -7,6 +7,7 @@ import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/main.dart';
 import 'package:living_desire/service/navigation_service.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../routes.dart';
 import 'ui_fake.dart' if (dart.library.html) 'dart:ui' as ui;
@@ -44,12 +45,10 @@ class RazorPayWeb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('razor pay');
-    print(razorpayOrderID);
     var razorpayPaymentID = '';
     var razorpayOrderIDWeb = '';
     var razorpaySignature = '';
-    var blocConfig = {};
+
     String phoneNumber =
         BlocProvider.of<AuthenticationBloc>(context).state.user.phoneNumber;
     String name =
@@ -63,7 +62,6 @@ class RazorPayWeb extends StatelessWidget {
     if (emailId == null) {
       emailId = "";
     }
-    var prefill = {};
 
     String sequenceBloc = "";
     if (paymentMode == 101) {
@@ -97,64 +95,67 @@ class RazorPayWeb extends StatelessWidget {
 
       //Event Listener
       window.onMessage.forEach((element) async {
-        print('Event Received in callback: ${element.data}');
-        if (element.data == 'MODAL_CLOSED') {
-          Navigator.pop(context);
-        } else if (element.data.toString().contains('pay_id')) {
-          razorpayPaymentID = element.data.toString().substring(6);
-        } else if (element.data.toString().contains('order_id')) {
-          razorpayOrderIDWeb = element.data.toString().substring(8);
-        } else if (element.data.toString().contains('sign')) {
-          razorpaySignature = element.data.toString().substring(4);
-        } else if (element.data == 'SUCCESS') {
-          print('PAYMENT SUCCESSFULL!!!!!!!');
-          var data = {};
-          if (couponCode == null) {
-            data = {
-              "orderID": "$orderID",
-              "deliveryAddressID": "$deliveryAddressID",
-              "deliveryCharges": deliveryCharges,
-              "payingAmount": amount,
-              "razorpayData": {
-                "razorpayPaymentID": "$razorpayPaymentID",
-                "razorpaySignature": "$razorpaySignature",
-                "razorpayOrderID": "$razorpayOrderIDWeb",
-                "paymentMode": paymentMode,
-                "razorpayAmount": totalAmount,
-              },
-              "cartKeys": cartKeys,
-            };
-          } else {
-            data = {
-              "orderID": "$orderID",
-              "deliveryAddressID": "$deliveryAddressID",
-              "deliveryCharges": deliveryCharges,
-              "payingAmount": amount,
-              "couponData": {
-                "couponCode": couponCode,
-                "couponAmount": couponAmount
-              },
-              "razorpayData": {
-                "razorpayPaymentID": "$razorpayPaymentID",
-                "razorpaySignature": "$razorpaySignature",
-                "razorpayOrderID": "$razorpayOrderIDWeb",
-                "paymentMode": paymentMode,
-                "razorpayAmount": totalAmount,
-              },
-              "cartKeys": cartKeys,
-            };
-          }
+        try {
+          if (element.data == 'MODAL_CLOSED') {
+            Navigator.pop(context);
+          } else if (element.data.toString().contains('pay_id')) {
+            razorpayPaymentID = element.data.toString().substring(6);
+          } else if (element.data.toString().contains('order_id')) {
+            razorpayOrderIDWeb = element.data.toString().substring(8);
+          } else if (element.data.toString().contains('sign')) {
+            razorpaySignature = element.data.toString().substring(4);
+          } else if (element.data == 'SUCCESS') {
+            print('PAYMENT SUCCESSFULL!!!!!!!');
+            var data = {};
+            if (couponCode == null) {
+              data = {
+                "orderID": "$orderID",
+                "deliveryAddressID": "$deliveryAddressID",
+                "deliveryCharges": deliveryCharges,
+                "payingAmount": amount,
+                "razorpayData": {
+                  "razorpayPaymentID": "$razorpayPaymentID",
+                  "razorpaySignature": "$razorpaySignature",
+                  "razorpayOrderID": "$razorpayOrderIDWeb",
+                  "paymentMode": paymentMode,
+                  "razorpayAmount": totalAmount,
+                },
+                "cartKeys": cartKeys,
+              };
+            } else {
+              data = {
+                "orderID": "$orderID",
+                "deliveryAddressID": "$deliveryAddressID",
+                "deliveryCharges": deliveryCharges,
+                "payingAmount": amount,
+                "couponData": {
+                  "couponCode": couponCode,
+                  "couponAmount": couponAmount
+                },
+                "razorpayData": {
+                  "razorpayPaymentID": "$razorpayPaymentID",
+                  "razorpaySignature": "$razorpaySignature",
+                  "razorpayOrderID": "$razorpayOrderIDWeb",
+                  "paymentMode": paymentMode,
+                  "razorpayAmount": totalAmount,
+                },
+                "cartKeys": cartKeys,
+              };
+            }
 
-          print(data);
-          final response = await CloudFunctionConfig.post(
-              'managePayments/normal-payment-done/$authID', data);
-          if (response.statusCode == 200) {
-            String key = (jsonDecode(response.body))["key"];
-            locator<NavigationService>()
-                .navigateTo(RoutesConfiguration.ORDER_PLACED, queryParams: {
-              "key": key,
-            });
+            final response = await CloudFunctionConfig.post(
+                'managePayments/normal-payment-done/$authID', data);
+            if (response.statusCode == 200) {
+              String key = (jsonDecode(response.body))["key"];
+              locator<NavigationService>()
+                  .navigateTo(RoutesConfiguration.ORDER_PLACED, queryParams: {
+                "key": key,
+              });
+            }
           }
+        } catch (exception, stackTrace) {
+          await Sentry.captureException(exception, stackTrace: stackTrace);
+          return exception;
         }
       });
       element.requestFullscreen();

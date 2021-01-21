@@ -8,6 +8,7 @@ import 'package:living_desire/config/configs.dart';
 import 'package:http/http.dart' as http;
 import 'package:living_desire/service/navigation_service.dart';
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../main.dart';
 import '../../routes.dart';
@@ -51,8 +52,10 @@ class GetQuotationButton extends StatelessWidget {
             } else {
               LOG.i(response.statusCode);
             }
-          } catch (e) {
-            throw Exception(e.toString());
+          } catch (exception, stackTrace) {
+            await Sentry.captureException(exception, stackTrace: stackTrace);
+
+            return exception;
           }
         },
         child: Container(

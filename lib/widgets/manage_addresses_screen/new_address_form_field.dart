@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NewAddressFormField extends StatelessWidget {
   final String hintText;
@@ -6,13 +7,17 @@ class NewAddressFormField extends StatelessWidget {
   final Function onSaved;
   final Function onChanged;
   final String initialValue;
+  final int maxLength;
+  final List<TextInputFormatter> inputFormatters;
 
   NewAddressFormField({
     this.initialValue,
     this.hintText,
     this.validator,
+    this.maxLength,
     this.onSaved,
     this.onChanged,
+    this.inputFormatters,
   });
 
   // Form Field for new Addresses
@@ -33,6 +38,8 @@ class NewAddressFormField extends StatelessWidget {
         ),
         cursorColor: Colors.black,
         initialValue: initialValue,
+        inputFormatters: inputFormatters,
+        maxLength: maxLength,
         validator: validator,
         onSaved: onSaved,
         onChanged: onChanged,

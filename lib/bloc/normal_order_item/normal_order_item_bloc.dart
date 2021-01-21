@@ -1,5 +1,6 @@
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../models/models.dart';
 import 'dart:async';
@@ -63,7 +64,9 @@ class NormalOrderItemBloc
       normalOrderBloc.add(RefreshOrder());
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.SUCCESS);
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.FAILURE);
     }
@@ -86,7 +89,9 @@ class NormalOrderItemBloc
       normalOrderBloc.add(RefreshOrder());
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.SUCCESS);
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield NormalOrderItemUpdate(
           state.orderedProduct, NormalOrderItemStateType.FAILURE);
     }

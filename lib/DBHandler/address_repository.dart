@@ -6,6 +6,7 @@ import 'package:living_desire/config/function_config.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class AddressRepository {
   // Get Address Details
@@ -27,9 +28,9 @@ class AddressRepository {
             .toList();
         return _addresses;
       }
-    } catch (e) {
-      print(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -50,9 +51,9 @@ class AddressRepository {
       };
 
       await CloudFunctionConfig.post('manageAddress/add/${authID}', params);
-    } catch (e) {
-      LOG.e(e);
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -88,9 +89,9 @@ class AddressRepository {
         LOG.e(request.statusCode);
         LOG.e(request.body);
       }
-    } catch (e) {
-      print(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -112,28 +113,9 @@ class AddressRepository {
           }
         }).toList();
       }
-    } catch (e) {
-      print(e.toString());
-      throw Exception(e);
-    }
-  }
-
-  //Delete Address Details
-  Future<void> deleteAddressDetails(
-    String key,
-    String authID,
-  ) async {
-    try {
-      final request =
-          await CloudFunctionConfig.delete('manageAddress/delete/${key}');
-
-      if (request.statusCode == 200) {
-        _addresses.removeWhere((element) => element.key.compareTo(key) == 0);
-        LOG.i('Http Delete Request Sent');
-      } else {}
-    } catch (e) {
-      print(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 }

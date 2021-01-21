@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/DBHandler/select_address_type_repository.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 part 'select_address_type_event.dart';
 part 'select_address_type_state.dart';
 
@@ -47,7 +48,9 @@ class SelectAddressTypeBloc
         orderID: data["orderID"],
         razorpayOrderID: data["razorpayOrderID"],
       );
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield CreatePaymentOrderDetailLoadingFailure();
     }
   }
@@ -65,7 +68,9 @@ class SelectAddressTypeBloc
       );
 
       yield BuyNowDetailLoadingSucessfull(buyNowDetails: buyNowDetails);
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield BuyNowDetailLoadingFailure();
     }
   }
@@ -82,7 +87,9 @@ class SelectAddressTypeBloc
 
       yield NormalCartDetailLoadingSuccessfull(
           normalCartDetails: normalCartDetails);
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield NormalCartDetailLoadingFailure();
     }
   }
