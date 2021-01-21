@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:http/http.dart' as http;
 import 'package:living_desire/config/CloudFunctionConfig.dart';
-import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/logger.dart';
 import 'package:living_desire/models/CheckProductAvailability.dart';
 import 'package:living_desire/models/ProductDetail.dart';
 import 'package:living_desire/models/comboProduct.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class ProductRepository {
   var LOG = LogBuilder.getLogger();
@@ -20,14 +18,21 @@ class ProductRepository {
     Map<String, dynamic> data = {
       "authID": authID,
     };
-    final response = await CloudFunctionConfig.post(
-        "manageProductDetails/details/$productID/$variantID", data);
-    Map<String, dynamic> map = jsonDecode(response.body);
-    return ProductDetail.fromJson(map);
+    try{
+      final response = await CloudFunctionConfig.post("manageProductDetails/details/$productID/$variantID", data);
+      Map<String, dynamic> map = jsonDecode(response.body);
+      return ProductDetail.fromJson(map);
+
+    }catch(exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+    }
+
   }
 
-  Future<ComboProduct> getComboProductDescription({String productID, String authID}) async {
-    LOG.i('Fetching Combo Product Description for Product ID $productID and #$authID)');
+  Future<ComboProduct> getComboProductDescription(
+      {String productID, String authID}) async {
+    LOG.i(
+        'Fetching Combo Product Description for Product ID $productID and #$authID)');
 
     Map<String, dynamic> data = {
       "authID": authID,
@@ -61,11 +66,15 @@ class ProductRepository {
   }
 
   Future<CheckProductAvailability> checkProductAvailability({String pincode, String productID, String variantID}) async {
-    print("inside checkproduct availability");
-    final response = await CloudFunctionConfig.get("checkPincodeAvailability/$pincode/$variantID");
-    print(response.toString() + response.statusCode.toString());
-    Map<String, dynamic> map = jsonDecode(response.body);
-    return CheckProductAvailability.fromJson(map, response.statusCode);
+
+    try{
+
+      final response  = await CloudFunctionConfig.get("checkPincodeAvailability/$pincode/$variantID");
+      Map<String, dynamic> map = jsonDecode(response.body);
+      return CheckProductAvailability.fromJson(map, response.statusCode);
+    }catch(exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+    }
 
   }
 
@@ -74,8 +83,13 @@ class ProductRepository {
     LOG.i('Fetching size chart for type $type and #$subType)');
 
     Map<String, dynamic> data = {"type": type, "subType": subType};
+    var response;
+    try {
+      response = await CloudFunctionConfig.post("manageSizeChart/details", data);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+    }
 
-    final response = await CloudFunctionConfig.post("manageSizeChart/details", data);
     var result = jsonDecode(response.body);
     return result;
   }
