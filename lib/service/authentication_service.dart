@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/models/localCustomCart.dart';
 import 'package:living_desire/models/localNormalCart.dart';
+import 'package:living_desire/models/localwishlist.dart';
 
 class LogOutFailure implements Exception {}
 
@@ -19,7 +20,7 @@ class AuthenticationRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
   String phone;
   String uid;
-  final _wishlist = Hive.box<Map<String, String>>('wishlist_items');
+  final _wishlist = Hive.box<WishlistLocal>('wishlist_items');
   final _cartlist = Hive.box<NormalCartLocal>('cart_items');
   final _customcartlist = Hive.box<CustomCartLocal>('custom_cart_items');
 
@@ -96,17 +97,20 @@ class AuthenticationRepository {
 
   Future<void> sendWishlistData(String authID) async {
     try {
-      Map<dynamic, Map<String, String>> wsh = _wishlist.toMap();
+      Map<dynamic, WishlistLocal> wsh = _wishlist.toMap();
       Map<dynamic, NormalCartLocal> cart = _cartlist.toMap();
       Map<dynamic, CustomCartLocal> customCart = _customcartlist.toMap();
 
-      List<Map<String, String>> wshlist = [];
+      List<WishlistLocal> wshlist = [];
       List<NormalCartLocal> cartlist = [];
       List<CustomCartLocal> customcartlist = [];
 
+      // wsh.forEach((key, value) {
+      //   wshlist.add(value);
+      //   // json.encode(value);
+      // });
       wsh.forEach((key, value) {
         wshlist.add(value);
-        json.encode(value);
       });
       cart.forEach((key, value) {
         cartlist.add(value);

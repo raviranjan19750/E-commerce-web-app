@@ -1,10 +1,11 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
+part 'localwishlist.g.dart';
 
 @HiveType(typeId: 4)
 @JsonSerializable(nullable: false)
-class WishListLocal {
-  WishListLocal({
+class WishlistLocal {
+  WishlistLocal({
     this.key,
     this.productID,
     this.variantID,

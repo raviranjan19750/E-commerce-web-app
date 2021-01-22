@@ -3,6 +3,8 @@ import 'package:living_desire/models/cart.dart';
 import 'package:living_desire/models/localCustomCart.dart';
 import 'package:hive/hive.dart';
 import 'package:living_desire/models/localNormalCart.dart';
+import 'package:living_desire/models/localwishlist.dart';
+import 'package:living_desire/models/models.dart';
 
 class CustomCartLocalStorage {
   final BulkOrderCart itm;
@@ -65,6 +67,33 @@ class NormalLocalStorage {
 
   void deleteAll() {
     final _customcartlist = Hive.box<NormalCartLocal>('cart_items');
+    _customcartlist.deleteFromDisk();
+  }
+}
+
+class WishlistLocalStorage {
+  final Wishlist itm;
+
+  WishlistLocalStorage(this.itm);
+  void saveToLocalStorage() {
+    final _cartlist = Hive.box<WishlistLocal>('wishlist_items');
+
+    _cartlist.put(
+        itm.key,
+        WishlistLocal(
+          key: itm.key,
+          productID: itm.productID,
+          variantID: itm.variantID,
+        ));
+  }
+
+  void deleteFromLocalStorage(String key) {
+    final _customcartlist = Hive.box<WishlistLocal>('wishlist_items');
+    _customcartlist.delete(key);
+  }
+
+  void deleteAll() {
+    final _customcartlist = Hive.box<WishlistLocal>('wishlist_items');
     _customcartlist.deleteFromDisk();
   }
 }

@@ -19,7 +19,6 @@ import '../../routes.dart';
 
 import 'dart:js' as js;
 
-
 class ProductCard extends StatelessWidget {
   final Product product;
 
@@ -70,10 +69,7 @@ class ProductCardContent extends StatelessWidget {
                         "pid": product.productId,
                         "vid": product.varientId,
                       },
-
-
                     );
-
                   },
                   child: Image.network(
                     product.imageUrls[0],
@@ -94,9 +90,7 @@ class ProductCardContent extends StatelessWidget {
               Positioned(
                 bottom: 0,
                 child: _AddToCartButton(
-                  productId: product.productId,
-                  variantId: product.varientId
-                ),
+                    productId: product.productId, variantId: product.varientId),
               )
             ],
           ),
@@ -151,8 +145,7 @@ class ProductCardContent extends StatelessWidget {
 class ComboProductCard extends StatelessWidget {
   final ComboProduct comboProduct;
 
-  const ComboProductCard({Key key, this.comboProduct})
-      : super(key: key);
+  const ComboProductCard({Key key, this.comboProduct}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -197,9 +190,8 @@ class ComboProductCardContent extends StatelessWidget {
                       RoutesConfiguration.PRODUCT_DETAIL,
                       queryParams: {
                         "pid": comboProduct.productId,
-                        "vid" : comboProduct.productId,
+                        "vid": comboProduct.productId,
                       },
-
                     );
                     // Navigator.pushNamed(
                     //     context, path,
@@ -220,7 +212,10 @@ class ComboProductCardContent extends StatelessWidget {
               Positioned(
                 right: 0,
                 top: 0,
-                child: ProductWishlistButton(productId: comboProduct.productId, varientId: comboProduct.productId,),
+                child: ProductWishlistButton(
+                  productId: comboProduct.productId,
+                  varientId: comboProduct.productId,
+                ),
               ),
               Positioned(
                 bottom: 0,
@@ -432,7 +427,7 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
   final String v_id;
 
   // Box<String> wishlist = Hive.box('wishlist_items');
-  final _wishlist = Hive.box<Map<String, String>>('wishlist_items');
+  // final _wishlist = Hive.box<Map<String, String>>('wishlist_items');
 
   _ProductWishlistButtonState(this.p_id, this.v_id);
 
@@ -471,8 +466,8 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
                     onTap: () {
                       // wishlist.add(product.toJson().toString());
                       // _wishlist.put(product.varientId, product);
-                      _wishlist
-                          .put(p_id, {"productID": p_id, "variantID": v_id});
+                      // _wishlist
+                      //     .put(p_id, {"productID": p_id, "variantID": v_id});
                       BlocProvider.of<ProductCardBloc>(context)
                           .add(AddToWishListProductEvent());
                     },
@@ -487,7 +482,7 @@ class _ProductWishlistButtonState extends State<ProductWishlistButton> {
                 : GestureDetector(
                     onTap: () {
                       // wishlist.delete();
-                      _wishlist.delete(v_id);
+                      // _wishlist.delete(v_id);
                       BlocProvider.of<ProductCardBloc>(context)
                           .add(RemoveFromWishListProductEvent());
                     },
@@ -528,15 +523,15 @@ class _FilterDropDownState extends State<FilterDropDown> {
       padding: EdgeInsets.only(left: 10, top: 3, right: 3, bottom: 3),
       margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 1.0),
-        borderRadius: BorderRadius.circular(5.0)
-      ),
+          border: Border.all(
+              color: Colors.grey, style: BorderStyle.solid, width: 1.0),
+          borderRadius: BorderRadius.circular(5.0)),
       child: Row(
         children: [
           Text("Sort By  "),
           DropdownButtonHideUnderline(
             child: DropdownButton(
-              isDense: true,
+                isDense: true,
                 value: _value,
                 items: [
                   DropdownMenuItem(
@@ -571,11 +566,11 @@ class _FilterDropDownState extends State<FilterDropDown> {
 }
 
 class _AddToCartButton extends StatefulWidget {
-
   final String productId;
   final String variantId;
 
-  const _AddToCartButton({Key key, this.productId, this.variantId}) : super(key: key);
+  const _AddToCartButton({Key key, this.productId, this.variantId})
+      : super(key: key);
 
   @override
   __AddToCartButtonState createState() => __AddToCartButtonState();
@@ -583,7 +578,6 @@ class _AddToCartButton extends StatefulWidget {
 
 class __AddToCartButtonState extends State<_AddToCartButton> {
   bool _visible;
-
 
   void _showLoginDialog(BuildContext context) async {
     await showDialog(
@@ -597,13 +591,12 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
     if (_on) {
       return InkWell(
         onTap: () {
-          if (BlocProvider.of<AuthenticationBloc>(context).state.user?.uid != null) {
-            BlocProvider.of<ProductCardBloc>(context)
-                .add(AddToCartEvent());
+          if (BlocProvider.of<AuthenticationBloc>(context).state.user?.uid !=
+              null) {
+            BlocProvider.of<ProductCardBloc>(context).add(AddToCartEvent());
           } else {
             _showLoginDialog(context);
           }
-
         },
         child: AnimatedContainer(
           width: 400,
@@ -620,48 +613,45 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<ProductCardBloc, ProductCardState>(
-      builder: (context, state) {
+        builder: (context, state) {
+      if (_visible == null) {
+        _visible = state.isItemInCart;
+      }
 
-        if (_visible == null) {
-          _visible = state.isItemInCart;
-        }
-
-        if (state.isItemInCart) {
-          return InkWell(
-            onTap: () {
-              locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
-            },
-            child: AnimatedContainer(
-              width: 400,
-              color: Colors.white.withAlpha(180),
-              duration: Duration(milliseconds: 200),
-              padding: EdgeInsets.symmetric(vertical: 6),
-              child: Text(Strings.goToCart),
-            ),
-          );
-        }
-
-        return Container(
-          child: MouseRegion(
-              onEnter: (event) {
-                if (!state.isItemInCart) {
-                  setState(() {
-                    _visible = true;
-                  });
-                }
-              },
-              onExit: (event) {
-                if (!state.isItemInCart) {
-                  setState(() {
-                    _visible = false;
-                  });
-                }
-              },
-              child: _buildWidget(_visible, context)),
+      if (state.isItemInCart) {
+        return InkWell(
+          onTap: () {
+            locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
+          },
+          child: AnimatedContainer(
+            width: 400,
+            color: Colors.white.withAlpha(180),
+            duration: Duration(milliseconds: 200),
+            padding: EdgeInsets.symmetric(vertical: 6),
+            child: Text(Strings.goToCart),
+          ),
         );
       }
-    );
+
+      return Container(
+        child: MouseRegion(
+            onEnter: (event) {
+              if (!state.isItemInCart) {
+                setState(() {
+                  _visible = true;
+                });
+              }
+            },
+            onExit: (event) {
+              if (!state.isItemInCart) {
+                setState(() {
+                  _visible = false;
+                });
+              }
+            },
+            child: _buildWidget(_visible, context)),
+      );
+    });
   }
 }

@@ -203,8 +203,8 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                     locator<NavigationService>()
                                         .navigateTo(RoutesConfiguration.CART);
                                   } else {
-                                    final _cartlist =
-                                        Hive.box<NormalCartLocal>('cart_items');
+                                    // final _cartlist =
+                                    //     Hive.box<NormalCartLocal>('cart_items');
 
                                     // if (!_cartlist
                                     //     .containsKey(widget.variantID)) {
