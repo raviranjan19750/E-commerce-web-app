@@ -46,6 +46,7 @@ Future<void> main() async {
   Hive.registerAdapter<Product>(ProductAdapter());
   Hive.registerAdapter<NormalCartLocal>(NormalCartLocalAdapter());
   Hive.registerAdapter<CustomCartLocal>(CustomCartLocalAdapter());
+  // Hive.registerAdapter<CustomCartLocal>(WishListLocalAdapter());
 
   await Hive.openBox<Map<String, String>>(wishlistBox);
   // await Hive.openBox<Map<String, String>>(cartlistBox);

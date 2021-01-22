@@ -18,26 +18,23 @@ class NormalCartLocalAdapter extends TypeAdapter<NormalCartLocal> {
     };
     return NormalCartLocal(
       key: fields[0] as String,
-      dateAdded: fields[1] as DateTime,
-      productID: fields[3] as String,
-      variantID: fields[2] as String,
-      quantity: fields[4] as int,
+      productID: fields[2] as String,
+      variantID: fields[1] as String,
+      quantity: fields[3] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, NormalCartLocal obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.key)
       ..writeByte(1)
-      ..write(obj.dateAdded)
-      ..writeByte(2)
       ..write(obj.variantID)
-      ..writeByte(3)
+      ..writeByte(2)
       ..write(obj.productID)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.quantity);
   }
 
@@ -59,7 +56,6 @@ class NormalCartLocalAdapter extends TypeAdapter<NormalCartLocal> {
 NormalCartLocal _$NormalCartLocalFromJson(Map<String, dynamic> json) {
   return NormalCartLocal(
     key: json['key'] as String,
-    dateAdded: DateTime.parse(json['dateAdded'] as String),
     productID: json['productID'] as String,
     variantID: json['variantID'] as String,
     quantity: json['quantity'] as int,
@@ -69,7 +65,6 @@ NormalCartLocal _$NormalCartLocalFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$NormalCartLocalToJson(NormalCartLocal instance) =>
     <String, dynamic>{
       'key': instance.key,
-      'dateAdded': instance.dateAdded.toIso8601String(),
       'variantID': instance.variantID,
       'productID': instance.productID,
       'quantity': instance.quantity,
