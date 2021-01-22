@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 part 'manage_addresses_event.dart';
 part 'manage_addresses_state.dart';
 
@@ -21,8 +22,6 @@ class ManageAddressesBloc
       yield* addAddressDetails(event);
     } else if (event is LoadAddAddressDialogueEvent) {
       yield LaunchAddNewAddressDialogueState();
-    } else if (event is DeleteAddress) {
-      yield* deleteAddressDetails(event);
     } else if (event is DefaultAddress) {
       yield* defaultAddressDetails(event);
     } else if (event is UpdateAddress) {
@@ -43,8 +42,9 @@ class ManageAddressesBloc
           await addresssRepository.getAddressDetails(event.authID);
 
       yield AddressDetailLoadingSuccessful(addresses);
-    } catch (e) {
-      print(e.toString());
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield AddressDetailLoadingFailure();
     }
   }
@@ -62,7 +62,9 @@ class ManageAddressesBloc
       );
 
       yield* loadAddressDetail(LoadAllAddresses(event.authID));
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield AddAddressDetailLoadingFailure();
     }
   }
@@ -79,22 +81,10 @@ class ManageAddressesBloc
         event.name,
       );
       yield* loadAddressDetail(LoadAllAddresses(event.authID));
-    } catch (e) {
-      yield UpdateAddressDetailLoadingFailure();
-    }
-  }
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
 
-  // Delete an Address Detail
-  Stream<ManageAddresesState> deleteAddressDetails(DeleteAddress event) async* {
-    yield DeleteAddressDetailLoading();
-    try {
-      await addresssRepository.deleteAddressDetails(
-        event.key,
-        event.authID,
-      );
-      yield* loadAddressDetail(LoadAllAddresses(event.authID));
-    } catch (e) {
-      yield DeleteAddressDetailLoadingFailure();
+      yield UpdateAddressDetailLoadingFailure();
     }
   }
 
@@ -108,7 +98,9 @@ class ManageAddressesBloc
         event.authID,
       );
       yield* loadAddressDetail(LoadAllAddresses(event.authID));
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield DefaultAddressDetailLoadingFailure();
     }
   }

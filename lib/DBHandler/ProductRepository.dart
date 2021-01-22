@@ -83,12 +83,7 @@ class ProductRepository {
     LOG.i('Fetching size chart for type $type and #$subType)');
 
     Map<String, dynamic> data = {"type": type, "subType": subType};
-    var response;
-    try {
-      response = await CloudFunctionConfig.post("manageSizeChart/details", data);
-    } catch (exception, stackTrace) {
-      await Sentry.captureException(exception, stackTrace: stackTrace);
-    }
+    final response = await CloudFunctionConfig.post("manageSizeChart/details", data);
 
     var result = jsonDecode(response.body);
     return result;

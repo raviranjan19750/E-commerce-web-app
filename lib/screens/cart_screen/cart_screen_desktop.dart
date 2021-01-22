@@ -46,15 +46,26 @@ class CartScreenDesktop extends StatelessWidget {
             ),
           );
         case AuthenticationStatus.unauthenticated:
-          return EmptyStateScreen(
-              primaryText: Strings.cartLoginText,
-              actionButtonText: Strings.loginText,
-              secondaryText: "",
-              assetPath: 'assets/images/cart_empty_state.png',
-              onPressed: () {
-                _showLoginDialog(context);
-              }
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ButtonList(
+                isMyCartSelected: true,
+              ),
+              Expanded(
+                child: EmptyStateScreen(
+                    primaryText: Strings.cartLoginText,
+                    actionButtonText: Strings.loginText,
+                    secondaryText: "",
+                    assetPath: 'assets/images/cart_empty_state.png',
+                    onPressed: () {
+                      _showLoginDialog(context);
+                    }),
+              ),
+            ],
           );
+
         default:
           return Container();
       }

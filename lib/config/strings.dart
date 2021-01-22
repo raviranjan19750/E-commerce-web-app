@@ -7,10 +7,11 @@ class Strings {
   static const String contactUsEmail = "help@livingdesire.in";
 
   // footer function name strings
-
+  static const String remove = "REMOVE";
   static const String functionNameAboutUs = "about-us";
   static const String functionNameShippingPolicy = "shipping-policy";
-  static const String functionNameCancellationAndReturn = "cancellation-and-return";
+  static const String functionNameCancellationAndReturn =
+      "cancellation-and-return";
   static const String functionNamePrivacyPolicy = "privacy-policy";
   static const String functionNameTermsAnConditions = "terms-and-conditions";
 
@@ -35,7 +36,7 @@ class Strings {
   static const String orderPrimaryText = "You haven't placed any order yet!";
   static const String orderSecondaryText =
       "Order section is empty. After placing order, You can track them here!";
-  static const String apply = "Apply";
+  static const String apply = "APPLY";
   static const String tax = "Tax";
   static const String cashbackAmount = "Cashback Amount";
   static const String couponDiscount = "Coupon Discount";

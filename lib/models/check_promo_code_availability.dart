@@ -7,6 +7,7 @@ class CheckPromoCodeAvailability {
   final PaymentData paymentData;
   final int couponType;
   final double taxAmount;
+  final String promoCode;
 
   CheckPromoCodeAvailability({
     this.responseText,
@@ -15,9 +16,11 @@ class CheckPromoCodeAvailability {
     this.paymentData,
     this.couponType,
     this.taxAmount,
+    this.promoCode,
   });
 
-  factory CheckPromoCodeAvailability.fromJson(Map<String, dynamic> data) {
+  factory CheckPromoCodeAvailability.fromJson(
+      Map<String, dynamic> data, String promoCode) {
     if (data['couponType'] == 102) {
       return CheckPromoCodeAvailability(
         responseText: data['message'],
@@ -26,19 +29,21 @@ class CheckPromoCodeAvailability {
         paymentData: PaymentData.fromJson(data['paymentData']),
         couponType: data["couponType"],
         taxAmount: data["taxAmount"],
+        promoCode: promoCode,
       );
     }
     if (data["couponType"] == 103) {
       return CheckPromoCodeAvailability(
-        responseText: data['message'],
-        discount: data["couponDiscount"],
-        couponType: data["couponType"],
-      );
+          responseText: data['message'],
+          discount: data["couponDiscount"],
+          couponType: data["couponType"],
+          promoCode: promoCode);
     }
 
     return CheckPromoCodeAvailability(
       responseText: data['message'],
       couponType: data["couponType"],
+      promoCode: promoCode,
     );
   }
 }

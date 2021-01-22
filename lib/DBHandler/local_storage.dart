@@ -49,7 +49,7 @@ class NormalLocalStorage {
     final _cartlist = Hive.box<NormalCartLocal>('cart_items');
 
     _cartlist.put(
-        itm.variantID,
+        itm.key,
         NormalCartLocal(
           dateAdded: itm.dateAdded,
           key: itm.key,

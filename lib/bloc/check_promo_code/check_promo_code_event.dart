@@ -23,3 +23,5 @@ class CheckingPromoCodeAvailability extends PromoCodeAvailabilityEvent {
     this.deliveryCharges,
   });
 }
+
+class RemovePromoCode extends PromoCodeAvailabilityEvent {}

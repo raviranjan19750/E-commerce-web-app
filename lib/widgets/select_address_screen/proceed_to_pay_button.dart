@@ -21,6 +21,7 @@ class ProceedToPayButton extends StatelessWidget {
   final int paymentMode;
   final String deliveryAddressID;
   final List<String> cartKeys;
+  final double totalAmount;
   final String couponCode;
   final double couponAmount;
   final double deliveryCharges;
@@ -30,6 +31,7 @@ class ProceedToPayButton extends StatelessWidget {
     this.authID,
     this.amount,
     this.orderID,
+    this.totalAmount,
     this.paymentMode,
     this.razorpayOrderID,
     this.deliveryAddressID,
@@ -46,39 +48,12 @@ class ProceedToPayButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          // try {
-          //   var params = {"amount": 100};
-          //   print(params);
-          //   final response = await CloudFunctionConfig.post(
-          //       'managePayments/create-order/FtkJJ0IK1tYpC8ldkmlLVgNDlS12',
-          //       params);
-          //   // http.post(
-          //   //     FunctionConfig.host + 'managePayments/create-order/${authID}',
-          //   //     body: params);
-          //   //LOG.i("Http Post request create order manage payments");
-          //   if (response.statusCode == 200) {
-          //     orderID = (jsonDecode(response.body))["orderID"];
-          //     razorpayOrderID = (jsonDecode(response.body))["razorpayOrderID"];
-          //     print(orderID);
-          //     print(razorpayOrderID);
-
-          //     // return (jsonDecode(response.body));
-          //   } else {
-          //     print(response.statusCode);
-          //     print(response.body);
-          //   }
-
-          // } catch (e) {
-          //   print(e.toString());
-          //   throw Exception(e);
-          // }
-          print(deliveryAddressID);
-
           return showDialog(
             context: context,
             builder: (BuildContext context) {
               return RazorPayWeb(
                 paymentMode: paymentMode,
+                totalAmount: totalAmount,
                 amount: amount,
                 authID: authID,
                 orderID: orderID,

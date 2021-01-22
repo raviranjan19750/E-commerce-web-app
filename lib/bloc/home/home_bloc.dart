@@ -6,6 +6,7 @@ import 'package:elastic_client/elastic_client.dart';
 import 'package:equatable/equatable.dart';
 import 'package:living_desire/models/product.dart';
 import 'package:living_desire/service/searchapi.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../logger.dart';
 
@@ -49,7 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         SearchResult result =
             await searchApi.getFilteredProduct(itm, offset: 0, limit: 15);
         res[itm] = _createDataFromSearch(result);
-        print(res[itm]);
+        // print(res[itm]);
       }
 
       // List<FilterTag> tags = await searchApi.getAllCategoryTags();
@@ -63,8 +64,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         print(tag.description.toString());
       }*/
       yield SuccessfulLoadingHomeProducts(res);
-    } catch (e) {
-      print(e.toString());
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
     }
   }
 
