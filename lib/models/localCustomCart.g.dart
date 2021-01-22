@@ -17,6 +17,7 @@ class CustomCartLocalAdapter extends TypeAdapter<CustomCartLocal> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CustomCartLocal(
+      key: fields[10] as String,
       productId: fields[0] as String,
       variantId: fields[1] as String,
       quantity: fields[2] as int,
@@ -32,7 +33,7 @@ class CustomCartLocalAdapter extends TypeAdapter<CustomCartLocal> {
   @override
   void write(BinaryWriter writer, CustomCartLocal obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.productId)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class CustomCartLocalAdapter extends TypeAdapter<CustomCartLocal> {
       ..writeByte(7)
       ..write(obj.description)
       ..writeByte(9)
-      ..write(obj.images);
+      ..write(obj.images)
+      ..writeByte(10)
+      ..write(obj.key);
   }
 
   @override
@@ -70,8 +73,9 @@ class CustomCartLocalAdapter extends TypeAdapter<CustomCartLocal> {
 
 CustomCartLocal _$CustomCartLocalFromJson(Map<String, dynamic> json) {
   return CustomCartLocal(
+    key: json['key'] as String,
     productId: json['productID'] as String,
-    variantId: json['varientID'] as String,
+    variantId: json['variantId'] as String,
     quantity: json['quantity'] as int,
     productType: json['productType'] as String,
     productSubType: json['productSubType'] as String,
@@ -85,7 +89,7 @@ CustomCartLocal _$CustomCartLocalFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$CustomCartLocalToJson(CustomCartLocal instance) =>
     <String, dynamic>{
       'productID': instance.productId,
-      'varientID': instance.variantId,
+      'variantId': instance.variantId,
       'quantity': instance.quantity,
       'productType': instance.productType,
       'productSubType': instance.productSubType,
@@ -93,4 +97,5 @@ Map<String, dynamic> _$CustomCartLocalToJson(CustomCartLocal instance) =>
       'colour': instance.colour,
       'description': instance.description,
       'images': instance.images,
+      'key': instance.key,
     };

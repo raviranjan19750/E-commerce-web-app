@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/bloc/cart_config/cart_config_bloc.dart';
 import 'package:living_desire/bloc/wishlist_config/wishlist_bloc.dart';
+import 'package:living_desire/main.dart';
 import 'package:living_desire/models/user.dart';
 import 'package:living_desire/models/user_detail.dart';
 import 'package:living_desire/service/authentication_service.dart';
@@ -21,7 +22,8 @@ class AuthenticationBloc
 
   AuthenticationBloc(
       {@required AuthenticationRepository authenticationRepository,
-      this.wishlistConfigBloc, this.cartConfigBloc})
+      this.wishlistConfigBloc,
+      this.cartConfigBloc})
       : assert(authenticationRepository != null),
         assert(cartConfigBloc != null),
         _authenticationRepository = authenticationRepository,
@@ -39,6 +41,7 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is AuthenticationUserChanged) {
+      LOG.i(event.user);
       yield _mapAuthenticationUserChangedToState(event);
     } else if (event is AuthenticationLogoutRequested) {
       unawaited(_authenticationRepository.logout());

@@ -13,6 +13,7 @@ class UserdetailsRepository {
         await CloudFunctionConfig.post('manageCustomerInfo/$uid', data);
 
     var res = jsonDecode(response.body);
+    LOG.i("Sending user data" + res.toString());
     return res;
   }
 

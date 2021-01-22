@@ -9,6 +9,7 @@ import 'package:living_desire/service/sharedPreferences.dart';
 import 'package:living_desire/service/user_details.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 part 'sign_in_event.dart';
 part 'sign_in_state.dart';
@@ -175,6 +176,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       print("response : " + res['message']);
       switch (res['message']) {
         case "OK":
+          // print(event.uid);
+          // await authService.logout();
+          await authService.signInWithToken(token: res['customToken']);
+
           yield GetUserDetailSuccessful();
           break;
 

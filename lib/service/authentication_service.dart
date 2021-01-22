@@ -130,6 +130,7 @@ class AuthenticationRepository {
   }
 
   Future<void> signInWithToken({String token}) async {
+    LOG.i("token in sigin in with token: $token");
     assert(token != null);
     try {
       await _firebaseAuth.setPersistence(firebase_auth.Persistence.LOCAL);
@@ -140,6 +141,7 @@ class AuthenticationRepository {
       this.uid = user.user.uid;
       await sendWishlistData(user.user.uid);
     } on Exception {
+      print(Exception);
       throw LoginWithTokenFailure();
     }
   }

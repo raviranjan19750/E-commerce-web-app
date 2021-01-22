@@ -206,21 +206,21 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                     final _cartlist =
                                         Hive.box<NormalCartLocal>('cart_items');
 
-                                    if (!_cartlist
-                                        .containsKey(widget.variantID)) {
-                                      _cartlist.put(
-                                          widget.variantID,
-                                          NormalCartLocal(
-                                              productId: widget.productID,
-                                              variantId: widget.variantID,
-                                              quantity: 1));
-                                    } else {
-                                      NormalCartLocal itm =
-                                          _cartlist.get(widget.variantID);
-                                      itm.quantity += 1;
-                                      print("===> " + itm.quantity.toString());
-                                      // update the quantity field in the existing entry
-                                    }
+                                    // if (!_cartlist
+                                    //     .containsKey(widget.variantID)) {
+                                    //   _cartlist.put(
+                                    //       widget.variantID,
+                                    //       NormalCartLocal(
+                                    //           productId: widget.productID,
+                                    //           variantId: widget.variantID,
+                                    //           quantity: 1));
+                                    // } else {
+                                    //   NormalCartLocal itm =
+                                    //       _cartlist.get(widget.variantID);
+                                    //   itm.quantity += 1;
+                                    //   print("===> " + itm.quantity.toString());
+                                    //   // update the quantity field in the existing entry
+                                    // }
 
                                     BlocProvider.of<CartBloc>(context)
                                         .add(AddCart(
