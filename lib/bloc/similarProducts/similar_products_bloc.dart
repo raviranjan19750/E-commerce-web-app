@@ -7,6 +7,7 @@ import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/models/product.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:meta/meta.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../logger.dart';
 
@@ -40,12 +41,13 @@ class SimilarProductsBloc
           await searchApi.getSimilarProduct(event.type[0], event.subType[0]);
       SearchResult comboProductSearchResult =
           await searchApi.getComboProduct(event.type, event.subType);
-      var similarSearchResult = getSimilarProductData(similarProductSearchResult);
+      var similarSearchResult =
+          getSimilarProductData(similarProductSearchResult);
       var comboSearchResult = getComboProductData(comboProductSearchResult);
       yield SimilarProductsLoadingSuccessful(
           similarSearchResult, comboSearchResult);
-    } catch (e) {
-      print(e.toString());
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       yield SimilarProductsLoadingFailure();
     }
   }

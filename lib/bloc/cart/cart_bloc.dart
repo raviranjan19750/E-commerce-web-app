@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:bloc/bloc.dart';
 import 'package:living_desire/bloc/cart_item/bloc/cart_item_bloc.dart';
 import 'package:living_desire/service/CustomerDetailRepository.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import '../../DBHandler/DBHandler.dart';
 import 'package:living_desire/models/models.dart';
 
@@ -79,7 +80,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       );
 
       yield AddCartDetailLoadingSuccessful();
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield AddCartDetailLoadingFailure();
     }
   }
@@ -96,7 +99,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       );
 
       yield* loadCartDetail(LoadAllCart(event.authID));
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield DeleteCartDetailLoadingFailure();
     }
   }
@@ -123,7 +128,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             key: event.key,
             type: PrdouctCardViewType.SUCCESS);
       }
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield ChangeQuantityCartDetailLoadingFailure();
     }
   }

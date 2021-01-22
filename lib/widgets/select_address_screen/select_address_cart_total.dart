@@ -1719,7 +1719,9 @@ class _GetPromoCodeState extends State<GetPromoCode> {
                     ),
                   if (state.checkPromoCodeAvailability.couponType == 102)
                     ProceedToPayButton(
-                      amount: state.checkPromoCodeAvailability.newPayingAmount,
+                      amount: widget.payingAmount,
+                      totalAmount:
+                          state.checkPromoCodeAvailability.newPayingAmount,
                       authID: widget.authID,
                       orderID:
                           state.checkPromoCodeAvailability.paymentData.orderID,
@@ -1734,7 +1736,8 @@ class _GetPromoCodeState extends State<GetPromoCode> {
                     )
                   else if (state.checkPromoCodeAvailability.couponType == 103)
                     ProceedToPayButton(
-                      amount: widget.totalPayingAmount,
+                      amount: widget.payingAmount,
+                      totalAmount: widget.totalPayingAmount,
                       authID: widget.authID,
                       orderID: widget.orderID,
                       razorpayOrderID: widget.razorpayOrderID,
@@ -1747,7 +1750,8 @@ class _GetPromoCodeState extends State<GetPromoCode> {
                     )
                   else
                     ProceedToPayButton(
-                      amount: widget.totalPayingAmount,
+                      amount: widget.payingAmount,
+                      totalAmount: widget.totalPayingAmount,
                       authID: widget.authID,
                       orderID: widget.orderID,
                       razorpayOrderID: widget.razorpayOrderID,
@@ -1793,7 +1797,8 @@ class _GetPromoCodeState extends State<GetPromoCode> {
                     ),
                   ),
                   ProceedToPayButton(
-                    amount: widget.totalPayingAmount,
+                    amount: widget.payingAmount,
+                    totalAmount: widget.totalPayingAmount,
                     authID: widget.authID,
                     orderID: widget.orderID,
                     razorpayOrderID: widget.razorpayOrderID,

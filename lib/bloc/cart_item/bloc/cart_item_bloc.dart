@@ -5,6 +5,7 @@ import 'package:living_desire/DBHandler/DBHandler.dart';
 import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import 'package:living_desire/bloc/cart_total/cart_total_bloc.dart';
 import 'package:living_desire/models/models.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 part 'cart_item_event.dart';
 part 'cart_item_state.dart';
 
@@ -50,7 +51,9 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
       );
       yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
       cartBloc.add(RefreshCart());
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield CartItemUpdate(state.cart, CartItemStateType.FAILURE);
     }
   }
@@ -74,7 +77,9 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
         state.cart.quantity = event.quantity;
         yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
       }
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield CartItemUpdate(state.cart, CartItemStateType.FAILURE);
     }
   }

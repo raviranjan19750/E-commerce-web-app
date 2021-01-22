@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:living_desire/bloc/normal_order_item/normal_order_item_bloc.dart';
 import 'package:living_desire/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import '../../DBHandler/DBHandler.dart';
 import 'package:living_desire/models/models.dart';
 import '../bloc.dart';
@@ -40,7 +41,9 @@ class NormalOrderBloc extends Bloc<NormalOrderEvent, NormalOrderState> {
           await normalOrderRepository.getNormalOrderDetails(event.authID);
 
       yield NormalOrderDetailLoadingSuccessful(order);
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield NormalOrderDetailLoadingFailure();
     }
   }

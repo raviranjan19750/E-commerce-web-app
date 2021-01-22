@@ -4,6 +4,7 @@ import 'package:living_desire/models/models.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class WishlistRepository {
   // Get Wishlist Details
@@ -19,9 +20,9 @@ class WishlistRepository {
       } else {
         LOG.e('Http Request Failed');
       }
-    } catch (e) {
-      LOG.e(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -45,9 +46,9 @@ class WishlistRepository {
       } else {
         LOG.e('Http Request Failed');
       }
-    } catch (e) {
-      LOG.e(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -67,9 +68,9 @@ class WishlistRepository {
       } else {
         LOG.e(response.body);
       }
-    } catch (e) {
-      LOG.e(e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 }

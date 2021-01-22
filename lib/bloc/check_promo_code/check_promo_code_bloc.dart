@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:living_desire/models/check_promo_code_availability.dart';
 import 'package:bloc/bloc.dart';
 import 'package:living_desire/DBHandler/promo_code_repository.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 part 'check_promo_code_event.dart';
 part 'check_promo_code_state.dart';
 
@@ -40,8 +41,9 @@ class CheckPromoCodeBloc
       );
       yield PromoCodeDetailAvailabilityCheckingSuccessful(
           promoCodeAvailabilityResponse);
-    } catch (e) {
-      print(e.toString());
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+
       yield PromoCodeDetailAvailabilityCheckingFailure();
     }
   }

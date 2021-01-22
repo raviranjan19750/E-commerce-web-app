@@ -47,14 +47,26 @@ class OrderScreenDesktop extends StatelessWidget {
             ),
           );
         case AuthenticationStatus.unauthenticated:
-          return EmptyStateScreen(
-              primaryText: Strings.orderLoginText,
-              actionButtonText: Strings.loginText,
-              secondaryText: "",
-              assetPath: 'assets/images/order_empty_state.png',
-              onPressed: () {
-                _showLoginDialog(context);
-              });
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ButtonList(
+                isMyOrderSelected: true,
+              ),
+              Expanded(
+                child: EmptyStateScreen(
+                    primaryText: Strings.orderLoginText,
+                    actionButtonText: Strings.loginText,
+                    secondaryText: "",
+                    assetPath: 'assets/images/order_empty_state.png',
+                    onPressed: () {
+                      _showLoginDialog(context);
+                    }),
+              ),
+            ],
+          );
+
         default:
           return Container();
       }

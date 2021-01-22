@@ -17,7 +17,7 @@ class NormalCartLocal {
   String productId;
 
   @HiveField(1)
-  @JsonKey(name: 'varientId')
+  @JsonKey(name: 'variantId')
   String variantId;
 
   @HiveField(2)

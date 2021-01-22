@@ -4,6 +4,7 @@ import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class NormalOrderRepository {
   // Initialising Local Order List
@@ -28,9 +29,9 @@ class NormalOrderRepository {
       } else {
         print('Http Request Failed');
       }
-    } catch (e) {
-      print('Function Error:' + e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -68,9 +69,9 @@ class NormalOrderRepository {
       } else {
         LOG.i('Http Request Failed');
       }
-    } catch (e) {
-      print('Function Error:' + e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 
@@ -107,9 +108,9 @@ class NormalOrderRepository {
       } else {
         LOG.e(response.body);
       }
-    } catch (e) {
-      LOG.e('Function Error:' + e.toString());
-      throw Exception(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      return exception;
     }
   }
 }
