@@ -51,7 +51,6 @@ class NormalLocalStorage {
     _cartlist.put(
         itm.key,
         NormalCartLocal(
-          dateAdded: itm.dateAdded,
           key: itm.key,
           productID: itm.productID,
           variantID: itm.variantID,
