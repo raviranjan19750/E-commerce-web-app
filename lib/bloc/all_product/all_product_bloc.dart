@@ -8,6 +8,7 @@ import 'package:living_desire/models/sorting_criteria.dart';
 import 'package:living_desire/service/searchapi.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../logger.dart';
 
@@ -82,8 +83,8 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
           filter: filterCriteria,
           sort: Sorting.getCriteria(sortCriteria));
       yield _createDataFromSearch(result);
-    } catch (e) {
-      print(e);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
       yield FailureLoadingProduct();
     }
   }
