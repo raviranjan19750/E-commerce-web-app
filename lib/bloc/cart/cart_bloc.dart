@@ -139,14 +139,30 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         yield AddCartDetailLoadingSuccessful();
       } else {
+        final _cartlist = Hive.box<NormalCartLocal>('cart_items');
+        Map<dynamic, NormalCartLocal> cartMap = _cartlist.toMap();
         Cart itm = new Cart(
           key: _getAutoId(),
           productID: event.productID,
           variantID: event.variantID,
           quantity: event.quantity,
         );
-
-        NormalLocalStorage(itm).saveToLocalStorage();
+        bool isInCart = false;
+        String existingCartKey;
+        int newQuantity;
+        cartMap.forEach((key, value) {
+          if (value.variantID == itm.variantID) {
+            isInCart = true;
+            existingCartKey = key;
+            newQuantity = value.quantity + event.quantity;
+          }
+        });
+        if (isInCart == false) {
+          NormalLocalStorage(itm).saveToLocalStorage();
+        } else {
+          NormalLocalStorage(itm)
+              .changeQuantityFromLocalStorage(existingCartKey, newQuantity);
+        }
       }
     } catch (exception, stackTrace) {
       await Sentry.captureException(exception, stackTrace: stackTrace);
