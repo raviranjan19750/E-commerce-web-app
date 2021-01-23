@@ -58,6 +58,8 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
         });
   }
 
+  bool isInCart = false;
+
   @override
   Widget build(BuildContext context) {
     ScrollController imageListScrollController = new ScrollController();
@@ -199,42 +201,29 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                               height: double.infinity,
                               child: CustomWidgetButton(
                                 onPressed: () {
-                                  if (widget.isInCart) {
-                                    locator<NavigationService>()
-                                        .navigateTo(RoutesConfiguration.CART);
-                                  } else {
-                                    // final _cartlist =
-                                    //     Hive.box<NormalCartLocal>('cart_items');
 
-                                    // if (!_cartlist
-                                    //     .containsKey(widget.variantID)) {
-                                    //   _cartlist.put(
-                                    //       widget.variantID,
-                                    //       NormalCartLocal(
-                                    //           productId: widget.productID,
-                                    //           variantId: widget.variantID,
-                                    //           quantity: 1));
-                                    // } else {
-                                    //   NormalCartLocal itm =
-                                    //       _cartlist.get(widget.variantID);
-                                    //   itm.quantity += 1;
-                                    //   print("===> " + itm.quantity.toString());
-                                    //   // update the quantity field in the existing entry
-                                    // }
+                                  setState(() {
 
-                                    BlocProvider.of<CartBloc>(context)
-                                        .add(AddCart(
-                                      authID: state.user.uid,
-                                      productID: widget.productID,
-                                      variantID: widget.variantID,
-                                      quantity: widget.itemCount,
-                                    ));
+                                    if(isInCart || widget.isInCart) {
+                                      locator<NavigationService>()
+                                          .navigateTo(RoutesConfiguration.CART);
+                                    }
+                                   else {
 
-                                    locator<NavigationService>()
-                                        .navigateTo(RoutesConfiguration.CART);
-                                  }
+                                      BlocProvider.of<CartBloc>(context)
+                                          .add(AddCart(
+                                        authID: state.user.uid,
+                                        productID: widget.productID,
+                                        variantID: widget.variantID,
+                                        quantity: widget.itemCount,
+                                      ));
+
+
+                                    }
+                                    isInCart = true;
+                                  });
                                 },
-                                text: (widget.isInCart)
+                                text: (isInCart)
                                     ? Strings.goToCart
                                     : Strings.addToCart,
                               ),
@@ -250,15 +239,31 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                 height: double.infinity,
                                 child: CustomWidgetButton(
                                   onPressed: () {
-                                    BlocProvider.of<CartBloc>(context)
-                                        .add(AddCart(
-                                      authID: null,
-                                      productID: widget.productID,
-                                      variantID: widget.variantID,
-                                      quantity: widget.itemCount,
-                                    ));
+
+                                    setState(() {
+
+                                      if(isInCart || widget.isInCart) {
+                                        locator<NavigationService>()
+                                            .navigateTo(RoutesConfiguration.CART);
+                                      }else{
+                                        BlocProvider.of<CartBloc>(context)
+                                            .add(AddCart(
+                                          authID: null,
+                                          productID: widget.productID,
+                                          variantID: widget.variantID,
+                                          quantity: widget.itemCount,
+                                        ));
+                                      }
+
+                                      print("isInCart : " + isInCart.toString());
+                                      isInCart = true;
+                                      print("isInCart2 : " + isInCart.toString());
+
+                                    });
+
+
                                   },
-                                  text: (widget.isInCart)
+                                  text: (isInCart)
                                       ? Strings.goToCart
                                       : Strings.addToCart,
                                 ),
