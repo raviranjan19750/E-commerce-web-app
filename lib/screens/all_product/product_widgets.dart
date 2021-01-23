@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
@@ -11,7 +10,6 @@ import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/models/sorting_criteria.dart';
 import 'package:living_desire/screens/login/login_view.dart';
-import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/navigation_service.dart';
 
 import '../../main.dart';

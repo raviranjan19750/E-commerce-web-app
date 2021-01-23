@@ -60,7 +60,6 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
       if (auth.state.user != null && !auth.state.user.isAnonymous) {
         uid = auth.state.user.uid;
       }
-
       if (productDetail != null) {
         await customerRepo.addToWishList(
             productDetail.productID, productDetail.variantID,

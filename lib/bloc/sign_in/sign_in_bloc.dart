@@ -10,6 +10,7 @@ import 'package:living_desire/service/user_details.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'sign_in_event.dart';
 part 'sign_in_state.dart';
@@ -43,29 +44,14 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Future<int> newUserCreation() async {
     try {
       var res = await authService.createUser();
-      // HttpsCallableResult res = await authService.createUser();
-      // print("inside signinsucc" + res.data.toString());
-      // var map = jsonDecode(res.data);
-      // int code = res.data['responseCode'];
       int code = res.statusCode;
-      // int code = map['responseCode'];
-      // print("Create user code" + code.toString());
       switch (code) {
         case 200:
-          // print("new user created... signing in");
-          // print(res.data['token']);
           String customToken = jsonDecode(res.body)['token'];
           int usertype = jsonDecode(res.body)['userType'];
-          // TODO :
-          // add auth id to local storage
-          // push local changesd to firebase
-          // await authService.sendWishlistData();
           await authService.signInWithToken(token: customToken);
-          // UserPreferences().setAuthID(customToken);
           UserPreferences().AuthID;
           return usertype;
-          // print("user auth id is ${UserPreferences().AuthID}");
-          // print("user signed in....");
           break;
         case 401:
           break;
@@ -133,8 +119,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           yield VerificationFailure();
           break;
       }
-    } catch (e) {
-      print(e.toString());
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      // return exception;
+      print(exception.toString());
     }
   }
 

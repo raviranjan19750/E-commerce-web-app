@@ -1,14 +1,10 @@
-import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
-import 'package:living_desire/models/user.dart';
-import 'package:living_desire/widgets/app_bar/user_card.dart';
 import 'package:living_desire/widgets/promo/promo.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
-import 'dart:html' as html;
 import 'package:clipboard/clipboard.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -85,28 +81,14 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Container(
-        child: BlocConsumer<SignInBloc, SignInState>(
-            listener: (context, state) {
-              if (state is GetUserDetailSuccessful) {
-                Navigator.pop(context);
-              //html.window.location.reload();
-              // return Container(
-              //   child: Column(
-              //     children: [
-              //       Text("All set"),
-              //       RaisedButton(
-              //         onPressed: () {
-
-              //         },
-              //         child: Text("Continue Shopping"),
-              //       )
-              //     ],
-              //   ),
-              // );
-              }
-            },
-            builder: (context, state) {
+    return Center(
+        child: Container(
+            child: BlocConsumer<SignInBloc, SignInState>(
+                listener: (context, state) {
+      if (state is GetUserDetailSuccessful) {
+        Navigator.pop(context);
+      }
+    }, builder: (context, state) {
       if (state is SignInInitial) {
         return Column(
           children: [
@@ -251,55 +233,6 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
     })));
   }
 }
-
-// class LoginStatusWidget extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
-//       if (state is VerifyingOTP) {
-//         return CircularProgressIndicator();
-//       }
-//       if (state is VerificationFailure) {
-//         return Row(
-//           children: [
-//             Text(
-//               "Unable to verify your otp",
-//               style: TextStyle(
-//                 color: Colors.red,
-//               ),
-//             ),
-//           ],
-//         );
-//       }
-
-//       if (state is GetUserDetail) {
-//         return UserDataWidget();
-//       } else if (state is GetUserDetailSuccessful) {
-//         return Container(
-//           child: Text("Ho gaya panjikaran"),
-//         );
-//       }
-
-//       if (state is VerificationSuccess) {
-//         return Column(
-//           mainAxisAlignment: MainAxisAlignment.start,
-//           children: [
-//             Icon(
-//               Icons.check_circle_outline,
-//               size: 60,
-//               color: Colors.green,
-//             ),
-//             SizedBox(
-//               height: 30,
-//             ),
-//             UserDataWidget(),
-//           ],
-//         );
-//       }
-//       return Container();
-//     });
-//   }
-// }
 
 class OTPWidget extends StatelessWidget {
   @override
