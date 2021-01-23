@@ -126,11 +126,11 @@ class WishlistLocalStorage {
 
 class DeleteLocalStorage {
   static void deleteAll() {
-    final _wishlistlist = Hive.box<WishlistLocal>('wishlist_items');
+    final _wishlist = Hive.box<WishlistLocal>('wishlist_items');
     final _normalcartlist = Hive.box<NormalCartLocal>('cart_items');
     final _customcartlist = Hive.box<CustomCartLocal>('custom_cart_items');
-    _wishlistlist.deleteFromDisk();
-    _normalcartlist.deleteFromDisk();
-    _customcartlist.deleteFromDisk();
+    _wishlist.deleteAll(_wishlist.keys);
+    _normalcartlist.deleteAll(_normalcartlist.keys);
+    _customcartlist.deleteAll(_customcartlist.keys);
   }
 }
