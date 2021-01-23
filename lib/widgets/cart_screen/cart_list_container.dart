@@ -24,14 +24,16 @@ class CartListContainer extends StatelessWidget {
       if (state is CartDetailLoadingSuccessful) {
         // Bloc Provider to cart total bloc
         // No. of items in cart
-        if(state.cart.length == 0) {
+        if (state.cart.length == 0) {
           return EmptyStateScreen(
             primaryText: Strings.cartPrimaryText,
             secondaryText: "",
             actionButtonText: Strings.continueShopping,
             assetPath: 'assets/images/cart_empty_state.png',
             onPressed: () {
-              locator<NavigationService>().navigateTo(RoutesConfiguration.SEARCH_ALL_PRODUCT, queryParams: {"search": ""});
+              locator<NavigationService>().navigateTo(
+                  RoutesConfiguration.SEARCH_ALL_PRODUCT,
+                  queryParams: {"search": ""});
             },
           );
         }
