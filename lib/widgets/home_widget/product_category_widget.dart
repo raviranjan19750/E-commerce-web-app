@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/widgets/labeltag/label_tag.dart';
 
-
 import '../nextListHover.dart';
 
 class ProductCategoryCard extends StatelessWidget {
@@ -95,7 +94,9 @@ class ProductCategoryWidget extends StatelessWidget {
         LabelTag(Strings.bulkOrder),
         Container(
           margin: EdgeInsets.only(top: 16.0),
-          height: 350,
+          // height: 350,
+          height: MediaQuery.of(context).size.height / 2.5,
+          width: MediaQuery.of(context).size.width / 0.75,
           child: Stack(
             children: [
               ListView.builder(

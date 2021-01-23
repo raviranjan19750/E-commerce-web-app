@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:living_desire/models/product.dart';
@@ -10,12 +9,11 @@ import '../nextListHover.dart';
 
 class HomeWidget extends StatelessWidget {
   final List<Product> productlist;
-   String labelText;
+  String labelText;
 
   // final ScrollController controller = ScrollController();
 
-   HomeWidget({Key key, this.productlist, this.labelText})
-      : super(key: key);
+  HomeWidget({Key key, this.productlist, this.labelText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +47,14 @@ class HomeWidget extends StatelessWidget {
           ),
         ),
         Container(
-
-            child: LabelTag( labelText,)
-        ),
-
+            child: LabelTag(
+          labelText,
+        )),
         Container(
           margin: EdgeInsets.only(top: 16.0),
-          height: 350,
+          // height: 350,
+          height: MediaQuery.of(context).size.height / 2.5,
+          width: MediaQuery.of(context).size.width / 0.75,
           child: Stack(
             children: [
               ListView.builder(
@@ -68,7 +67,9 @@ class HomeWidget extends StatelessWidget {
                           padding: EdgeInsets.only(left: 5, right: 5),
                           width: MediaQuery.of(context).size.width * 0.15,
                           height: MediaQuery.of(context).size.width * 0.15,
-                          child: ViewAllCard(routeString: labelText,));
+                          child: ViewAllCard(
+                            routeString: labelText,
+                          ));
                     }
                     return Container(
                       padding: EdgeInsets.only(left: 5, right: 5),
