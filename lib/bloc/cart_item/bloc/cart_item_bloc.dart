@@ -44,24 +44,13 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
       DeleteCart event, CartItemState state) async* {
     yield CartItemUpdate(state.cart, CartItemStateType.LOADING);
     try {
-      if (event.authID != null) {
-        await cartRepository.deleteCartDetails(
-          key: event.key,
-          productID: event.productID,
-          authID: event.authID,
-        );
-        yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
-        cartBloc.add(RefreshCart());
-      } else {
-        Cart itm = new Cart(
-          key: event.key,
-          productID: event.productID,
-        );
-        NormalLocalStorage(itm).deleteFromLocalStorage(itm.key);
-        cartRepository.deleteCartLocalData(itm.key);
-        yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
-        cartBloc.add(RefreshCart());
-      }
+      await cartRepository.deleteCartDetails(
+        key: event.key,
+        productID: event.productID,
+        authID: event.authID,
+      );
+      yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
+      cartBloc.add(RefreshCart());
     } catch (exception, stackTrace) {
       await Sentry.captureException(exception, stackTrace: stackTrace);
 
@@ -73,43 +62,18 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
       ChangeQuantityCart event, CartItemState state) async* {
     yield CartItemUpdate(state.cart, CartItemStateType.LOADING);
     try {
-      if (event.authID != null) {
-        if (event.quantity == 0) {
-          await cartRepository.deleteCartDetails(
-            key: event.key,
-            productID: event.productID,
-            authID: event.authID,
-          );
-          cartBloc.add(RefreshCart());
-        } else {
-          await cartRepository.changeQuantityCartDetails(
-            event.key,
-            event.quantity,
-          );
-          state.cart.quantity = event.quantity;
-          yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
-        }
+      if (event.quantity == 0) {
+        await cartRepository.deleteCartDetails(
+          key: event.key,
+          productID: event.productID,
+          authID: event.authID,
+        );
+        cartBloc.add(RefreshCart());
       } else {
-        if (event.quantity == 0) {
-          Cart itm = new Cart(
-            key: event.key,
-            productID: event.productID,
-          );
-          NormalLocalStorage(itm).deleteFromLocalStorage(itm.key);
-          cartRepository.deleteCartLocalData(itm.key);
-          cartBloc.add(RefreshCart());
-        } else {
-          Cart itm = new Cart(
-            key: event.key,
-            productID: event.productID,
-            quantity: event.quantity,
-          );
-          NormalLocalStorage(itm)
-              .changeQuantityFromLocalStorage(itm.key, itm.quantity);
-          state.cart.quantity = event.quantity;
-          cartRepository.changeCartLocalData(itm.key, itm.quantity);
-          yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
-        }
+        await cartRepository.changeQuantityCartDetails(
+            event.key, event.quantity, event.authID, event.productID);
+        state.cart.quantity = event.quantity;
+        yield CartItemUpdate(state.cart, CartItemStateType.SUCCESS);
       }
     } catch (exception, stackTrace) {
       await Sentry.captureException(exception, stackTrace: stackTrace);
