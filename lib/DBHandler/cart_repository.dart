@@ -39,6 +39,25 @@ class CartRepository {
     return total;
   }
 
+  void addCartLocalData(List<Cart> cart) {
+    _cart = cart;
+  }
+
+  void changeCartLocalData(String key, int quantity) {
+    for (var c in _cart) {
+      if (c.key == key) {
+        c.quantity = quantity;
+        break;
+      }
+    }
+
+    _cart.removeWhere((element) => element.quantity == 0);
+  }
+
+  void deleteCartLocalData(String key) {
+    _cart.removeWhere((element) => element.key == key);
+  }
+
   Future<List<Cart>> getCartDetails(String authID) async {
     LOG.v('Requesting all cart details for ${authID}');
     try {

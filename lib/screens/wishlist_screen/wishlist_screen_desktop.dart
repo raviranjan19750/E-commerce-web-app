@@ -49,24 +49,42 @@ class WishlistScreenDesktop extends StatelessWidget {
             ),
           );
         case AuthenticationStatus.unauthenticated:
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ButtonList(
-                isWishlistSelected: true,
-              ),
-              Expanded(
-                child: EmptyStateScreen(
-                    primaryText: Strings.wishListLoginText,
-                    actionButtonText: Strings.loginText,
-                    secondaryText: "",
-                    assetPath: 'assets/images/wishlist_empty_state.png',
-                    onPressed: () {
-                      _showLoginDialog(context);
-                    }),
-              ),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (context) => WishlistBloc(
+                      wishlistRepository: RepositoryProvider.of(context),
+                      configBloc: BlocProvider.of(context))
+                    ..add(LoadAllWishlist(null))),
+              BlocProvider(
+                  create: (context) =>
+                      CartBloc(cartRepository: RepositoryProvider.of(context))),
             ],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ButtonList(
+                  isWishlistSelected: true,
+                ),
+                Expanded(
+                  child: WishlistContainer(
+                    authID: null,
+                  ),
+                ),
+
+                // Expanded(
+                //   child: EmptyStateScreen(
+                //       primaryText: Strings.wishListLoginText,
+                //       actionButtonText: Strings.loginText,
+                //       secondaryText: "",
+                //       assetPath: 'assets/images/wishlist_empty_state.png',
+                //       onPressed: () {
+                //         _showLoginDialog(context);
+                //       }),
+                // ),
+              ],
+            ),
           );
 
         default:

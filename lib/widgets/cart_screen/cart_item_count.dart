@@ -20,7 +20,13 @@ class CartItemCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String authID = BlocProvider.of<AuthenticationBloc>(context).state.user.uid;
+    var user = BlocProvider.of<AuthenticationBloc>(context).state.user;
+    String authID;
+    if (user != null) {
+      authID = user.uid;
+    } else {
+      authID = null;
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,

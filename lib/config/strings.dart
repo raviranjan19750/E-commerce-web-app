@@ -5,7 +5,7 @@ class Strings {
 
   static const String contactUsPhone = "9205528588";
   static const String contactUsEmail = "help@livingdesire.in";
-
+  static const String loginToContinue = "Login To Continue";
   // footer function name strings
   static const String remove = "REMOVE";
   static const String functionNameAboutUs = "about-us";

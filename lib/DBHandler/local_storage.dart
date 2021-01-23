@@ -60,9 +60,26 @@ class NormalLocalStorage {
         ));
   }
 
-  void deleteFromLocalStorage(String key) {
-    final _customcartlist = Hive.box<NormalCartLocal>('cart_items');
-    _customcartlist.delete(key);
+  void deleteFromLocalStorage(String itemKey) {
+    final _cartlist = Hive.box<NormalCartLocal>('cart_items');
+    var cart = _cartlist.toMap();
+    cart.forEach((key, value) {
+      if (key == itemKey) {
+        _cartlist.delete(key);
+      }
+    });
+  }
+
+  void changeQuantityFromLocalStorage(String itemKey, int quantity) {
+    final _cartlist = Hive.box<NormalCartLocal>('cart_items');
+    var cart = _cartlist.toMap();
+
+    cart.forEach((key, value) {
+      if (key == itemKey) {
+        NormalCartLocal item = _cartlist.get(key);
+        item.quantity = quantity;
+      }
+    });
   }
 
   void deleteAll() {

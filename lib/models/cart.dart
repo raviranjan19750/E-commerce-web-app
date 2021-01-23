@@ -91,4 +91,38 @@ class Cart {
       size: data['data']['size'] == null ? null : data['data']['size'],
     );
   }
+
+  factory Cart.fromJsonMap(dynamic data, String key) {
+    if (data == null) return null;
+
+    return Cart(
+      //pincode: data['pincode'],
+      key: key,
+      name: data['productName'] == null ? null : data['productName'],
+      // colour: data['data']['colour'],
+      // colour:
+      //     (data['data']['colour'] as List<dynamic>).map((e) {
+      //   return Colour.fromJson(e);
+      // }).toList(),
+      colour: data['colour'] == null
+          ? null
+          : GetColors.fromHex(
+              (data['colour'] as List).map((e) => (e as String)).toList()),
+      // //dateAdded: data['data']['dateAdded'],
+      manufacturingPrice: data['manufacturingPrice'] == null
+          ? null
+          : data['manufacturingPrice'],
+      imageUrl: data['images'] == null ? null : data['images'][0],
+      discountPrice:
+          data['discountPrice'] == null ? null : data['discountPrice'],
+      sellingPrice: data['sellingPrice'] == null ? null : data['sellingPrice'],
+      //isCombo: data['data']['isCombo'],
+      isAvailable: data['isAvailable'] == null ? null : data['isAvailable'],
+      productID: data['productID'] == null ? null : data['productID'],
+      variantID: data['variantID'] == null ? null : data['variantID'],
+      quantity: data['quantity'] == null ? null : data['quantity'],
+      productType: data['productType'] == null ? null : data['productType'],
+      size: data['size'] == null ? null : data['size'],
+    );
+  }
 }

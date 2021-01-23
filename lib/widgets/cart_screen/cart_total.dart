@@ -8,6 +8,7 @@ import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/main.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/routes.dart';
+import 'package:living_desire/screens/login/login_view.dart';
 import 'package:living_desire/service/navigation_service.dart';
 import 'package:provider/provider.dart';
 
@@ -225,7 +226,52 @@ class CartTotal extends StatelessWidget {
                       ),
                     );
                   case AuthenticationStatus.unauthenticated:
-                    return Container();
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          // BlocProvider.of<SelectAddressBloc>(context)
+                          //     .add(LoadNormalCartDetails(
+                          //   authID: state.user.uid,
+                          //   totalItems: cart.totalQuantity,
+                          // ));
+                          // locator<NavigationService>().navigateTo(
+                          //     RoutesConfiguration.SELECT_ADDRESS,
+                          //     queryParams: {
+                          //       "isNormalCart": "true",
+                          //     });
+
+                          void _showLoginDialog(BuildContext context) async {
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return LoginScreen();
+                                });
+                          }
+
+                          _showLoginDialog(context);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.22,
+
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Palette.secondaryColor,
+                          ),
+                          // Place Order Button
+
+                          child: Center(
+                            child: Text(
+                              Strings.loginToContinue,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
                   default:
                     return Container();
                 }

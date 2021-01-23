@@ -250,7 +250,13 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                 height: double.infinity,
                                 child: CustomWidgetButton(
                                   onPressed: () {
-                                    _showLoginDialog(context);
+                                    BlocProvider.of<CartBloc>(context)
+                                        .add(AddCart(
+                                      authID: null,
+                                      productID: widget.productID,
+                                      variantID: widget.variantID,
+                                      quantity: widget.itemCount,
+                                    ));
                                   },
                                   text: (widget.isInCart)
                                       ? Strings.goToCart

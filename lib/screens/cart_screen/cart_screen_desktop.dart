@@ -46,24 +46,38 @@ class CartScreenDesktop extends StatelessWidget {
             ),
           );
         case AuthenticationStatus.unauthenticated:
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ButtonList(
-                isMyCartSelected: true,
-              ),
-              Expanded(
-                child: EmptyStateScreen(
-                    primaryText: Strings.cartLoginText,
-                    actionButtonText: Strings.loginText,
-                    secondaryText: "",
-                    assetPath: 'assets/images/cart_empty_state.png',
-                    onPressed: () {
-                      _showLoginDialog(context);
-                    }),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (context) =>
+                      CartBloc(cartRepository: RepositoryProvider.of(context))
+                        ..add(LoadAllCart(null))),
+              BlocProvider(
+                create: (context) => CartTotalBloc(
+                    cartRepository: RepositoryProvider.of(context)),
               ),
             ],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ButtonList(
+                  isMyCartSelected: true,
+                ),
+                Expanded(child: CartContainer()),
+
+                // Expanded(
+                //   child: EmptyStateScreen(
+                //       primaryText: Strings.cartLoginText,
+                //       actionButtonText: Strings.loginText,
+                //       secondaryText: "",
+                //       assetPath: 'assets/images/cart_empty_state.png',
+                //       onPressed: () {
+                //         _showLoginDialog(context);
+                //       }),
+                // ),
+              ],
+            ),
           );
 
         default:

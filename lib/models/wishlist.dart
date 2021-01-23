@@ -31,4 +31,18 @@ class Wishlist {
       sellingPrice: data['data']['sellingPrice'],
     );
   }
+
+  factory Wishlist.fromJsonMap(Map<String, dynamic> data, String key) {
+    if (data == null) return null;
+
+    return Wishlist(
+      key: key,
+      productID: data['productID'],
+      variantID: data['variantID'],
+      imageUrl: data['imageURL'],
+      discountPrice: data['discountPrice'],
+      name: data['productName'],
+      sellingPrice: data['sellingPrice'],
+    );
+  }
 }
