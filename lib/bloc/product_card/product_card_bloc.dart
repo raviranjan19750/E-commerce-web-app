@@ -87,7 +87,6 @@ class ProductCardBloc extends Bloc<ProductCardEvent, ProductCardState> {
         await customerRepo.removeFromWishList(product.varientId);
         yield UpdatedProductCard(product, false, state.isItemInCart);
       }
-
     } else if (event is AddToCartEvent) {
       if (auth.state.user.uid != null) {
         if (productDetail != null) {

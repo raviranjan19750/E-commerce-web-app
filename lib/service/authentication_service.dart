@@ -101,22 +101,39 @@ class AuthenticationRepository {
       Map<dynamic, NormalCartLocal> cart = _cartlist.toMap();
       Map<dynamic, CustomCartLocal> customCart = _customcartlist.toMap();
 
-      List<WishlistLocal> wshlist = [];
-      List<NormalCartLocal> cartlist = [];
-      List<CustomCartLocal> customcartlist = [];
-
+      // List<WishlistLocal> wshlist = [];
+      // List<NormalCartLocal> cartlist = [];
+      // List<CustomCartLocal> customcartlist = [];
+      List<Map<String, dynamic>> wshlist = [];
+      List<Map<String, dynamic>> cartlist = [];
+      List<Map<String, dynamic>> customcartlist = [];
       // wsh.forEach((key, value) {
       //   wshlist.add(value);
       //   // json.encode(value);
       // });
       wsh.forEach((key, value) {
-        wshlist.add(value);
+        wshlist
+            .add({"productID": value.productID, "variantID": value.variantID});
       });
       cart.forEach((key, value) {
-        cartlist.add(value);
+        cartlist.add({
+          "productID": value.productID,
+          "variantID": value.variantID,
+          "quantity": value.quantity
+        });
       });
       customCart.forEach((key, value) {
-        customcartlist.add(value);
+        customcartlist.add({
+          "productID": value.productId,
+          "variantID": value.variantId,
+          "quantity": value.quantity,
+          "productType": value.productType,
+          "productSubType": value.productSubType,
+          "size": value.size,
+          "colour": value.colour,
+          "description": value.description,
+          "images": value.images
+        });
       });
       var data = {
         "authID": authID,
@@ -124,12 +141,13 @@ class AuthenticationRepository {
         "normalCartData": cartlist,
         "customCartData": customcartlist,
       };
-      print(data);
-      print(json.encode(data));
+      // print(data);
+      // print(json.encode(data));
+      LOG.i("send anonymous data to user : $data");
       final response = await CloudFunctionConfig.post(
           'sendAnonymousDataToUser/$authID', data);
     } catch (e) {
-      print(e.toString());
+      print("send anony error : " + e.toString());
     }
   }
 
