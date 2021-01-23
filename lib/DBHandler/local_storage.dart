@@ -78,6 +78,15 @@ class NormalLocalStorage {
       if (key == itemKey) {
         NormalCartLocal item = _cartlist.get(key);
         item.quantity = quantity;
+        _cartlist.delete(key);
+        _cartlist.put(
+            item.key,
+            NormalCartLocal(
+              key: item.key,
+              productID: item.productID,
+              variantID: item.variantID,
+              quantity: item.quantity,
+            ));
       }
     });
   }
