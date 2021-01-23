@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/sign_in/sign_in_bloc.dart';
-import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/widgets/app_bar/app_bar_wishlist.dart';
 import 'package:living_desire/widgets/app_bar/middle_app_bar.dart';
 
@@ -13,24 +12,19 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   bool visibleMiddleAppBar = true;
   bool visibleSubAppBar = true;
 
-  double setAppBarHeight(bool visibleMiddleAppBar,bool visibleSubAppBar){
-
+  double setAppBarHeight(bool visibleMiddleAppBar, bool visibleSubAppBar) {
     double size = 88;
 
-    if(visibleMiddleAppBar)
-      size = 136;
+    if (visibleMiddleAppBar) size = 136;
 
     return size;
-
   }
 
-  CustomAppBar(
-      {
-      this.visibleMiddleAppBar = true,
-      this.visibleSubAppBar = true});
+  CustomAppBar({this.visibleMiddleAppBar = true, this.visibleSubAppBar = true});
 
   // AppBar has a preferred Size, need to extend Preferred Size widget
-  Size get preferredSize => Size.fromHeight(setAppBarHeight(visibleMiddleAppBar, visibleSubAppBar));
+  Size get preferredSize =>
+      Size.fromHeight(setAppBarHeight(visibleMiddleAppBar, visibleSubAppBar));
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState(
@@ -41,8 +35,6 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   bool visibleMiddleAppBar;
   bool visibleSubAppBar;
-
-
 
   _CustomAppBarState({
     this.visibleMiddleAppBar,
@@ -102,7 +94,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
 }
 
 class MyAppBar extends StatelessWidget {
-
   var rng = new Random();
 
   @override

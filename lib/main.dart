@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ import 'package:living_desire/DBHandler/ProductRepository.dart';
 import 'package:living_desire/DBHandler/address_repository.dart';
 import 'package:living_desire/DBHandler/footerRepository.dart';
 import 'package:living_desire/DBHandler/promo_code_repository.dart';
+import 'package:living_desire/bloc/analytics/analytics_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
 import 'package:living_desire/bloc/bloc.dart';
 import 'package:living_desire/bloc/home/home_bloc.dart';
@@ -19,6 +21,7 @@ import 'package:living_desire/models/localNormalCart.dart';
 import 'package:living_desire/models/localwishlist.dart';
 import 'package:living_desire/models/models.dart';
 import 'package:living_desire/routes.dart';
+import 'package:living_desire/service/analytics_repo.dart';
 import 'package:living_desire/service/authentication_service.dart';
 import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/service/searchapi.dart';
@@ -80,6 +83,7 @@ Future<void> main() async {
 class InitailizeAppService extends StatelessWidget {
   final AuthenticationRepository authRepo;
   final Widget child;
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
 
   const InitailizeAppService({Key key, this.authRepo, this.child})
       : super(key: key);
@@ -88,6 +92,7 @@ class InitailizeAppService extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider(create: (context) => AnalyticsRepository()),
         RepositoryProvider(
           create: (context) => authRepo,
         ),
@@ -123,6 +128,9 @@ class InitailizeAppService extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(
+              create: (context) => AnalyticsBloc(
+                  analyticsRepository: RepositoryProvider.of(context))),
           BlocProvider(
               create: (context) => WishlistConfigBloc(
                   customerRepository: RepositoryProvider.of(context))),
@@ -168,7 +176,10 @@ class MyApp extends StatelessWidget {
         ),
         builder: (context, child) => child,
         navigatorKey: locator<NavigationService>().navigatorKey,
-        navigatorObservers: [CustomRouteObserver()],
+        navigatorObservers: [
+          CustomRouteObserver(),
+          AnalyticsRepository.observer
+        ],
         onGenerateRoute: RoutesConfiguration.onGenerateRoute,
       ),
     );
