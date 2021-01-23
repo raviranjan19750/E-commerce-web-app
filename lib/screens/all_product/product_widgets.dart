@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/all_product/all_product_bloc.dart';
 import 'package:living_desire/bloc/authentication/authentication_bloc.dart';
+import 'package:living_desire/bloc/cart/cart_bloc.dart';
 import 'package:living_desire/bloc/filter/filter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/config/configs.dart';
@@ -594,7 +595,12 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
               null) {
             BlocProvider.of<ProductCardBloc>(context).add(AddToCartEvent());
           } else {
-            _showLoginDialog(context);
+            // _showLoginDialog(context);
+            BlocProvider.of<CartBloc>(context).add(AddCart(
+                authID: null,
+                productID: widget.productId,
+                variantID: widget.variantId,
+                quantity: 1));
           }
         },
         child: AnimatedContainer(
@@ -612,45 +618,52 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductCardBloc, ProductCardState>(
-        builder: (context, state) {
-      if (_visible == null) {
-        _visible = state.isItemInCart;
-      }
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) =>
+                CartBloc(cartRepository: RepositoryProvider.of(context)))
+      ],
+      child: BlocBuilder<ProductCardBloc, ProductCardState>(
+          builder: (context, state) {
+        if (_visible == null) {
+          _visible = state.isItemInCart;
+        }
 
-      if (state.isItemInCart) {
-        return InkWell(
-          onTap: () {
-            locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
-          },
-          child: AnimatedContainer(
-            width: 400,
-            color: Colors.white.withAlpha(180),
-            duration: Duration(milliseconds: 200),
-            padding: EdgeInsets.symmetric(vertical: 6),
-            child: Text(Strings.goToCart),
-          ),
+        if (state.isItemInCart) {
+          return InkWell(
+            onTap: () {
+              locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
+            },
+            child: AnimatedContainer(
+              width: 400,
+              color: Colors.white.withAlpha(180),
+              duration: Duration(milliseconds: 200),
+              padding: EdgeInsets.symmetric(vertical: 6),
+              child: Text(Strings.goToCart),
+            ),
+          );
+        }
+
+        return Container(
+          child: MouseRegion(
+              onEnter: (event) {
+                if (!state.isItemInCart) {
+                  setState(() {
+                    _visible = true;
+                  });
+                }
+              },
+              onExit: (event) {
+                if (!state.isItemInCart) {
+                  setState(() {
+                    _visible = false;
+                  });
+                }
+              },
+              child: _buildWidget(_visible, context)),
         );
-      }
-
-      return Container(
-        child: MouseRegion(
-            onEnter: (event) {
-              if (!state.isItemInCart) {
-                setState(() {
-                  _visible = true;
-                });
-              }
-            },
-            onExit: (event) {
-              if (!state.isItemInCart) {
-                setState(() {
-                  _visible = false;
-                });
-              }
-            },
-            child: _buildWidget(_visible, context)),
-      );
-    });
+      }),
+    );
   }
 }

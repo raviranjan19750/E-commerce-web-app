@@ -5,10 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:hive/hive.dart';
+import 'package:living_desire/DBHandler/local_storage.dart';
 import 'package:living_desire/config/CloudFunctionConfig.dart';
 import 'package:living_desire/models/localCustomCart.dart';
 import 'package:living_desire/models/localNormalCart.dart';
 import 'package:living_desire/models/localwishlist.dart';
+import 'package:localstorage/localstorage.dart';
 
 class LogOutFailure implements Exception {}
 
@@ -136,7 +138,6 @@ class AuthenticationRepository {
         });
       });
       var data = {
-        "authID": authID,
         "wishlistData": wshlist,
         "normalCartData": cartlist,
         "customCartData": customcartlist,
@@ -146,6 +147,9 @@ class AuthenticationRepository {
       LOG.i("send anonymous data to user : $data");
       final response = await CloudFunctionConfig.post(
           'sendAnonymousDataToUser/$authID', data);
+      if (response.statusCode == 200) {
+        DeleteLocalStorage.deleteAll();
+      }
     } catch (e) {
       print("send anony error : " + e.toString());
     }
