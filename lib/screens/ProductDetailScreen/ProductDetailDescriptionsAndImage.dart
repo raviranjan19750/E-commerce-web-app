@@ -246,6 +246,7 @@ class _ProductDetailDescriptionAndImageState
                                                 "productSubType":
                                                     state.productDetail.subType,
                                                 "size": state.productDetail.size,
+                                                "color":'#${state.productDetail.colour.first.colorHexCode.value.toRadixString(16)}',
                                               });
                                         },
                                         text: Strings.customizeWithLogo,

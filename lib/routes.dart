@@ -159,6 +159,8 @@ class RoutesConfiguration {
         productType: data['productType'],
         productSubType: data['productSubType'],
         size: data['size'],
+        color: data['color'],
+
       ),
     ),
     Path(
