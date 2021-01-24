@@ -185,7 +185,7 @@ class _LoginWithPhoneWidgetState extends State<LoginWithPhoneWidget> {
               children: [
                 Container(
                   child: Text(
-                    "Congratulations !!! Your referalll code is : \n${state.referallcode}",
+                    "Congratulations !!! Your referall code is : \n${state.referallcode}",
                     style: TextStyle(fontSize: 20, color: Colors.green),
                   ),
                 ),

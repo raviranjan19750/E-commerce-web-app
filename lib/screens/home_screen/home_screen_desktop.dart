@@ -46,13 +46,15 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
 class MyDesktopView extends StatelessWidget {
   final Widget child;
   bool visibleMiddleAppBar = false;
-  bool visibleSubAppBar  = true;
+  bool visibleSubAppBar = true;
 
   ScrollController _scrollController = ScrollController();
 
-  MyDesktopView({Key key, this.child,this.visibleMiddleAppBar,this.visibleSubAppBar})
-      : assert(child != null),assert(visibleSubAppBar
-      != null),assert(visibleMiddleAppBar != null),
+  MyDesktopView(
+      {Key key, this.child, this.visibleMiddleAppBar, this.visibleSubAppBar})
+      : assert(child != null),
+        assert(visibleSubAppBar != null),
+        assert(visibleMiddleAppBar != null),
         super(key: key);
 
   @override
@@ -63,9 +65,8 @@ class MyDesktopView extends StatelessWidget {
         create: (context) => ScrollBloc(controller: _scrollController),
         child: Scaffold(
           appBar: CustomAppBar(
-            visibleMiddleAppBar: visibleMiddleAppBar,
-            visibleSubAppBar: visibleSubAppBar
-          ),
+              visibleMiddleAppBar: visibleMiddleAppBar,
+              visibleSubAppBar: visibleSubAppBar),
           // backgroundColor: Colors.blue,
           body: SingleChildScrollView(
             controller: _scrollController,
@@ -110,12 +111,18 @@ class HomeScreenvView extends StatelessWidget {
           builder: (context, state) {
             if (state is SuccessfulLoadingHomeProducts) {
               List<Widget> widgetList = [];
-              state.productList.forEach((key, value) {
+              // state.productList.forEach((key, value) {
+              //   widgetList.add(HomeWidget(
+              //     labelText: key,
+              //     productlist: value,
+              //   ));
+              // });
+              for (var list in state.productList) {
                 widgetList.add(HomeWidget(
-                  labelText: key,
-                  productlist: value,
+                  labelText: "Bean Bags",
+                  productlist: list,
                 ));
-              });
+              }
               return Column(
                 children: widgetList,
               );
