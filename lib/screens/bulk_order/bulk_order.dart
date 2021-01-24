@@ -94,7 +94,7 @@ class BulkOrder extends StatelessWidget {
                                       'Clear',
                                       style: TextStyle(
                                           color: Palette.secondaryColor,
-                                          fontSize: 24),
+                                          fontSize: 20),
                                     ),
                                   ),
                                 ),
@@ -125,7 +125,7 @@ class BulkOrder extends StatelessWidget {
                                       child: Text(
                                         value.buttonName,
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 24),
+                                            color: Colors.white, fontSize: 20),
                                       ),
                                     ),
                                   ),

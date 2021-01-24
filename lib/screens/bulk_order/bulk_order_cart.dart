@@ -84,7 +84,7 @@ class BulkOrderCart extends StatelessWidget {
               children: [
                 Text(
                   'Get Sample ?',
-                  style: TextStyle(color: Colors.redAccent, fontSize: 24),
+                  style: TextStyle(color: Colors.redAccent, fontSize: 20),
                 ),
                 Switch(
                   value: value.sampleRequested,
@@ -124,7 +124,7 @@ class BulkOrderCart extends StatelessWidget {
               color: Palette.secondaryColor,
               child: Text(
                 Strings.getQuotation,
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           ),

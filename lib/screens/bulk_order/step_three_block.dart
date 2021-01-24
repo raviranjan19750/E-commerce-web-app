@@ -39,7 +39,7 @@ class StepThreeBlock extends StatelessWidget{
 
           margin: EdgeInsets.only(top: 32),
 
-          child: Text('Upload Design',style: TextStyle(color: Colors.white,fontSize: 24),),
+          child: Text('Upload Design',style: TextStyle(color: Colors.white,fontSize: 20),),
 
         ),
 
