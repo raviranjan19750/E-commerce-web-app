@@ -36,7 +36,8 @@ class ManageAddressesContainer extends StatelessWidget {
               );
             },
           );
-        } else if (state is LaunchEditAddressDialogueState) {
+        }
+        else if (state is LaunchEditAddressDialogueState) {
           showDialog(
               barrierDismissible: false,
               context: context,
@@ -60,11 +61,10 @@ class ManageAddressesContainer extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AddressDetailLoading) {
-          return CircularProgressIndicator();
+          return Container();
         } else if (state is AddressDetailLoadingSuccessful) {
           return Padding(
             padding: const EdgeInsets.only(
-              top: 40.0,
               left: 16.0,
               right: 16.0,
               bottom: 16.0,

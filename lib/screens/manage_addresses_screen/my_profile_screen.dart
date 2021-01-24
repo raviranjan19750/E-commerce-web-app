@@ -218,6 +218,7 @@ class MyProfileScreen extends StatelessWidget{
 
                           child: IconButton(
 
+                            splashRadius: 24,
                             icon: Icon(Icons.copy_outlined),
                             onPressed: (){
 
@@ -232,7 +233,7 @@ class MyProfileScreen extends StatelessWidget{
                     ),
                   ),
 
-                  Container(margin:EdgeInsets.only(top: 32),child: Text('Manage Address',style: TextStyle(fontSize: 20,color: Palette.secondaryColor),)),
+                  Container(margin:EdgeInsets.only(top: 32),child: Text('Manage Address',style: TextStyle(fontSize: 24 ,color: Palette.secondaryColor,fontWeight: FontWeight.bold),)),
 
                 ],
 

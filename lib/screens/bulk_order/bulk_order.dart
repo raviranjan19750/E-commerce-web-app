@@ -51,12 +51,13 @@ class BulkOrder extends StatelessWidget {
                       padding: EdgeInsets.only(left: 32, right: 32),
                       child: SingleChildScrollView(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Order in Bulk',
                               style: TextStyle(
-                                  fontSize: 32, fontWeight: FontWeight.bold),
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             StepOneBlock(
                               productType: productType,
@@ -93,7 +94,7 @@ class BulkOrder extends StatelessWidget {
                                       'Clear',
                                       style: TextStyle(
                                           color: Palette.secondaryColor,
-                                          fontSize: 24),
+                                          fontSize: 20),
                                     ),
                                   ),
                                 ),
@@ -124,7 +125,7 @@ class BulkOrder extends StatelessWidget {
                                       child: Text(
                                         value.buttonName,
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 24),
+                                            color: Colors.white, fontSize: 20),
                                       ),
                                     ),
                                   ),

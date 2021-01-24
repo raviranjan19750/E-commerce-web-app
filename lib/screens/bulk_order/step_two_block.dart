@@ -120,7 +120,7 @@ class StepTwoBlock extends StatelessWidget{
             ),
 
 
-            child: Text('Select Customization',style: TextStyle(color: Colors.white,fontSize: 24),),
+            child: Text('Select Customization',style: TextStyle(color: Colors.white,fontSize: 20),),
 
           ),
         ),
@@ -165,7 +165,7 @@ class StepTwoBlock extends StatelessWidget{
 
                         children: [
 
-                          Text('Select Color : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 18),),
+                          Text('Select Color : ',style: TextStyle(color: Palette.secondaryColor,fontSize: 14),),
 
                           ColorPickerWidget(
 
@@ -372,7 +372,7 @@ class StepTwoBlock extends StatelessWidget{
 
                   color: Palette.secondaryColor,
 
-                  child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 24),),
+                  child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 20),),
 
                 ),
               ),
@@ -412,7 +412,7 @@ class StepTwoBlock extends StatelessWidget{
 
                 children: [
 
-                  Text('Color : ',style: TextStyle(color: Colors.white,fontSize: 18),),
+                  Text('Color : ',style: TextStyle(color: Colors.white,fontSize: 14),),
 
                   Container(
 

@@ -26,7 +26,7 @@ class BulkOrderItem extends StatelessWidget{
           elevation: value.elevation,
           color: (index == value.selectedType ) ? Palette.secondaryColor : Colors.grey[500],
 
-          child: Image.network(imageUrl,width: 150*value.size,height: 200*value.size,)
+          child: Image.network(imageUrl,width: 0.080 * MediaQuery.of(context).size.width,height:  0.16 * MediaQuery.of(context).size.height,)
 
         ),
         Container(

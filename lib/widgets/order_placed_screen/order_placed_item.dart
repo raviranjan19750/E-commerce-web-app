@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:living_desire/main.dart';
+import 'package:living_desire/service/navigation_service.dart';
 import 'package:living_desire/widgets/CustomContainer.dart';
 import '../../models/models.dart';
 import '../../data/data.dart';
 import '../../config/configs.dart';
+import '../../routes.dart';
 
 class OrderPlacedItem extends StatelessWidget {
   final OrderedProduct orderedProduct;
@@ -61,7 +64,21 @@ class OrderPlacedItem extends StatelessWidget {
 
                     children: [
 
-                      Container(child: Text(orderedProduct.productName,style: TextStyle(fontSize: 22,color: Colors.black,fontWeight: FontWeight.w100),),),
+                      InkWell(
+
+                         onTap: (){
+
+                           locator<NavigationService>().navigateTo(
+                               RoutesConfiguration.PRODUCT_DETAIL,
+                             queryParams: {
+                               "pid": orderedProduct.productID,
+                               "vid": orderedProduct.variantID,
+                             },newTab: true);
+
+                         },
+
+                          child: Container(child: Text(orderedProduct.productName,style: TextStyle(fontSize: 22,color: Colors.black,fontWeight: FontWeight.w100,),),)
+                      ),
 
 
 

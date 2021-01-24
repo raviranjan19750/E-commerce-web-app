@@ -55,9 +55,9 @@ class StepOneBlock extends StatelessWidget{
 
               Image.network((value.selectedType != -1) ?value.productTypeImages.elementAt(value.selectedType) : "",width: 80,height: 80,),
 
-              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productType,style: TextStyle(color: Colors.white,fontSize: 24),)),
+              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productType,style: TextStyle(color: Colors.white,fontSize: 20),)),
 
-              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productSubType,style: TextStyle(color: Colors.white,fontSize: 24),)),
+              Container( margin: EdgeInsets.only(left: 16),child: Text(value.bulkOrderCart.productSubType,style: TextStyle(color: Colors.white,fontSize: 20),)),
             ],
           ),
 
@@ -90,14 +90,14 @@ class StepOneBlock extends StatelessWidget{
 
             margin: EdgeInsets.only(top: 32),
 
-            child: Text('Select Item',style: TextStyle(color: Colors.white,fontSize: 24),),
+            child: Text('Select Item',style: TextStyle(color: Colors.white,fontSize: 20),),
 
           ),
 
           Container(
 
             width: double.infinity,
-            height: 280,
+            height: 0.25 * MediaQuery.of(context).size.height,
 
             padding: EdgeInsets.all(16),
 
@@ -179,7 +179,7 @@ class StepOneBlock extends StatelessWidget{
 
                       width:double.infinity ,
                       alignment: Alignment.centerLeft,
-                      child: Text('Select Sub Type',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),),
+                      child: Text('Select Sub Type',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),),
 
                     GridView.builder(
                       shrinkWrap: true,
@@ -218,7 +218,7 @@ class StepOneBlock extends StatelessWidget{
 
                             ),
 
-                            child: Text(value.subTypes.elementAt(index),style: TextStyle(fontSize: 16,color: (index == value.selectedSubType) ? Colors.white :Palette.secondaryColor),),
+                            child: Text(value.subTypes.elementAt(index),style: TextStyle(fontSize: 14 ,color: (index == value.selectedSubType) ? Colors.white :Palette.secondaryColor),),
 
                           ),
                         );
@@ -253,7 +253,7 @@ class StepOneBlock extends StatelessWidget{
 
                 color: Palette.secondaryColor,
 
-                child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 24),),
+                child: Text('Continue',style: TextStyle(color: Colors.white,fontSize: 20),),
 
               ),
             ),

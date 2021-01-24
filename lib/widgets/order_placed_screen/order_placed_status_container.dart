@@ -41,7 +41,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Text(
-                      'Go Bak',
+                      'Go Back',
                       style: TextStyle(color: Palette.secondaryColor),
                     ),
                   ))
@@ -104,7 +104,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      width: 320,
+                      width: 0.08 * MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(left: 24),
                       child: Text(
                         '${order.address} \nPincode : ${order.pincode}',
@@ -145,7 +145,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
                   showTrackingDialog(context, temp, "Order Tracking");
                 },
                 child: Container(
-                  width: 400,
+                  width: 0.16 * MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -174,7 +174,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
                     html.window.open(order.orderInvoiceUrl, '');
                   },
                   child: Container(
-                    width: 400,
+                    width: 0.16 * MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Palette.secondaryColor,
@@ -201,7 +201,7 @@ class OrderPlacedStatusContainer extends StatelessWidget {
                       .navigateTo(RoutesConfiguration.HOME_PAGE);
                 },
                 child: Container(
-                  width: 400,
+                  width: 0.16 * MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white,

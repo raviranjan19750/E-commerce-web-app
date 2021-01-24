@@ -17,7 +17,7 @@ class BulkOrderCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 32),
-      width: 400,
+      width: 0.23 * MediaQuery.of(context).size.width,
       height: double.infinity,
       decoration: BoxDecoration(boxShadow: const [
         BoxShadow(
@@ -84,7 +84,7 @@ class BulkOrderCart extends StatelessWidget {
               children: [
                 Text(
                   'Get Sample ?',
-                  style: TextStyle(color: Colors.redAccent, fontSize: 24),
+                  style: TextStyle(color: Colors.redAccent, fontSize: 20),
                 ),
                 Switch(
                   value: value.sampleRequested,
@@ -124,7 +124,7 @@ class BulkOrderCart extends StatelessWidget {
               color: Palette.secondaryColor,
               child: Text(
                 Strings.getQuotation,
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           ),
