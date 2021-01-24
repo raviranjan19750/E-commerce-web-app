@@ -179,7 +179,7 @@ class StepOneBlock extends StatelessWidget{
 
                       width:double.infinity ,
                       alignment: Alignment.centerLeft,
-                      child: Text('Select Sub Type',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),),
+                      child: Text('Select Sub Type',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),),
 
                     GridView.builder(
                       shrinkWrap: true,

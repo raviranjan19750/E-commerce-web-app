@@ -35,7 +35,7 @@ class BulkOrderProvider with ChangeNotifier {
   bool onDataLoaded = false;
 
   TextEditingController quantityController =
-      new TextEditingController(text: '50');
+      new TextEditingController(text: '1');
 
   bool productTypeSelected = false;
 
@@ -52,7 +52,7 @@ class BulkOrderProvider with ChangeNotifier {
 
   List<BulkOrderCart> customCartItems = new List();
 
-  int quantity = 50;
+  int quantity = 1;
 
   HashMap<String, List<String>> productTypeMap =
       new HashMap<String, List<String>>();
@@ -66,7 +66,7 @@ class BulkOrderProvider with ChangeNotifier {
       productSubType: "",
       variantID: "",
       size: "s",
-      quantity: 50);
+      quantity: 1);
 
   ArsProgressDialog progressDialog;
 
