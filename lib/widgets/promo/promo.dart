@@ -25,7 +25,7 @@ class _PromoCodeLabelState extends State<PromoCodeLabel> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            "Do You have a PROMO CODE ??",
+            "Do you have a referral code? ",
             style: TextStyle(fontSize: 20),
           ),
           SizedBox(

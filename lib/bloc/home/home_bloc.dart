@@ -38,18 +38,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       List<String> filteredText = [
         "Bean Bags",
-        "Blue Bean Bags",
-        "Red Bean Bags",
-        "yellow Bean Bags",
-        "green Bean Bags",
+        "Bean Bags",
+        "Bean Bags",
+        "Bean Bags",
+        "Bean Bags",
+        // "Blue Bean Bags",
+        // "Red Bean Bags",
+        // "yellow Bean Bags",
+        // "green Bean Bags",
       ];
 
-      Map<String, List<Product>> res = {};
+      // Map<String, List<Product>> res = {};
 
+      // for (var itm in filteredText) {
+      //   SearchResult result =
+      //       await searchApi.getFilteredProduct(itm, offset: 0, limit: 15);
+      //   res[itm] = _createDataFromSearch(result);
+      //   // print(res[itm]);
+      // }
+      List<List<Product>> res = [];
       for (var itm in filteredText) {
         SearchResult result =
             await searchApi.getFilteredProduct(itm, offset: 0, limit: 15);
-        res[itm] = _createDataFromSearch(result);
+        res.add(_createDataFromSearch(result));
         // print(res[itm]);
       }
 
