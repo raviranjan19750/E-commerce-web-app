@@ -360,6 +360,7 @@ class _OTPBoxState extends State<OTPBox> {
           ),
           Container(
             child: PinInputTextField(
+              // autoFocus: true,
               controller: _controller,
               pinLength: 6,
               decoration: BoxLooseDecoration(

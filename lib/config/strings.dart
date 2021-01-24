@@ -43,7 +43,7 @@ class Strings {
   static const String grandTotal = "Grand Total";
 
   static const String selectPaymentMethod = "Select Payment Method";
-  static const String websiteName = "Living Desire";
+  static const String websiteName = "LivingDesire";
   static const String loginText = "Login/SignUp";
   static const String whyUs = "Why Us?";
   static const String forOffices = "For Offices";
@@ -166,4 +166,5 @@ class Strings {
   static const String black = "Black";
   static const String violet = "Violet";
   static const String bearerToken = "37b947579b10b34b066d1b01eb2636da1cba6f25";
+  static const String customizedbulkorder = "Customised Bulk Order";
 }

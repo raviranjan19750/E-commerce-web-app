@@ -91,7 +91,7 @@ class ProductCategoryWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LabelTag(Strings.bulkOrder),
+        LabelTag(Strings.customizedbulkorder),
         Container(
           margin: EdgeInsets.only(top: 16.0),
           // height: 350,
