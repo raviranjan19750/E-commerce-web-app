@@ -42,8 +42,8 @@ class CheckPromoCodeAvailability {
 
     return CheckPromoCodeAvailability(
       responseText: data['message'],
-      couponType: data["couponType"],
       promoCode: promoCode,
+      couponType: null,
     );
   }
 }

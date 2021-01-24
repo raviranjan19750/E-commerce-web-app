@@ -30,10 +30,8 @@ class PromoCodeRepository {
       final response = await CloudFunctionConfig.post(
           'manageDiscountCoupons/check-validity/${authID}/${promoCode}',
           params);
-      if (response.statusCode == 200) {
-        return CheckPromoCodeAvailability.fromJson(
-            jsonDecode(response.body), promoCode);
-      }
+      return CheckPromoCodeAvailability.fromJson(
+          jsonDecode(response.body), promoCode);
     } catch (exception, stackTrace) {
       await Sentry.captureException(exception, stackTrace: stackTrace);
       return exception;

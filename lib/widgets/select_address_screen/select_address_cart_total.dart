@@ -387,7 +387,9 @@ class TotalView extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       else if (state
-                          is PromoCodeDetailAvailabilityCheckingSuccessful)
+                          is PromoCodeDetailAvailabilityCheckingSuccessful) {
+                        print('Coupon type:' +
+                            state.checkPromoCodeAvailability.toString());
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -465,7 +467,9 @@ class TotalView extends StatelessWidget {
                                   ),
                                 ),
                               )
-                            else
+                            else if (state
+                                    .checkPromoCodeAvailability.couponType ==
+                                null)
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 10,
@@ -498,7 +502,7 @@ class TotalView extends StatelessWidget {
                               ),
                           ],
                         );
-                      else {
+                      } else {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
