@@ -119,7 +119,8 @@ class _UserCardState extends State<UserCard> {
                       BlocProvider.of<AuthenticationBloc>(context)
                           .state
                           .user
-                          .phoneNumber,
+                          .phoneNumber
+                          .substring(3),
                       style: TextStyle(color: Palette.primaryColor),
                     ),
                   ],
