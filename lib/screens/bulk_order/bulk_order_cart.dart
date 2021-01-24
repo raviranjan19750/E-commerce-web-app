@@ -17,7 +17,7 @@ class BulkOrderCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 32),
-      width: 400,
+      width: 0.23 * MediaQuery.of(context).size.width,
       height: double.infinity,
       decoration: BoxDecoration(boxShadow: const [
         BoxShadow(

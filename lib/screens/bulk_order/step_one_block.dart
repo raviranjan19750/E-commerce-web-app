@@ -97,7 +97,7 @@ class StepOneBlock extends StatelessWidget{
           Container(
 
             width: double.infinity,
-            height: 280,
+            height: 0.25 * MediaQuery.of(context).size.height,
 
             padding: EdgeInsets.all(16),
 
@@ -218,7 +218,7 @@ class StepOneBlock extends StatelessWidget{
 
                             ),
 
-                            child: Text(value.subTypes.elementAt(index),style: TextStyle(fontSize: 16,color: (index == value.selectedSubType) ? Colors.white :Palette.secondaryColor),),
+                            child: Text(value.subTypes.elementAt(index),style: TextStyle(fontSize: 14 ,color: (index == value.selectedSubType) ? Colors.white :Palette.secondaryColor),),
 
                           ),
                         );

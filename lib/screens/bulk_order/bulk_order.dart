@@ -51,12 +51,13 @@ class BulkOrder extends StatelessWidget {
                       padding: EdgeInsets.only(left: 32, right: 32),
                       child: SingleChildScrollView(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Order in Bulk',
                               style: TextStyle(
-                                  fontSize: 32, fontWeight: FontWeight.bold),
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             StepOneBlock(
                               productType: productType,
