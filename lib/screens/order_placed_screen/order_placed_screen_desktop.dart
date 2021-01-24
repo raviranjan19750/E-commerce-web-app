@@ -49,14 +49,17 @@ class OrderPlacedScreenDesktop extends StatelessWidget {
 
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+
                         Expanded(
                           child: OrderPlacedContainer(
                             order: value.order,
                           ),
                         ),
+
                         OrderPlacedStatusContainer(
                           order: value.order,
                         ),
+
                       ],
                     ):Center(
                       child: CircularProgressIndicator(),

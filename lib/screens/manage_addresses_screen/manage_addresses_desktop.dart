@@ -10,6 +10,7 @@ import '../../widgets/widgets.dart';
 import '../../config/configs.dart';
 
 class ManageAddressesScreenDesktop extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     void _showLoginDialog(BuildContext context) async {
@@ -24,35 +25,50 @@ class ManageAddressesScreenDesktop extends StatelessWidget {
         builder: (context, state) {
       switch (state.status) {
         case AuthenticationStatus.authenticated:
+
           return MultiBlocProvider(
+
             providers: [
+
               BlocProvider(
                   create: (context) => ManageAddressesBloc(
                       addresssRepository: RepositoryProvider.of(context))
                     ..add(LoadAllAddresses(state.user.uid))),
             ],
+
             child: Row(
+
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
+
                 ButtonList(
                   isManageAddressesSelected: true,
                 ),
+
                 Expanded(
+
                     child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyProfileScreen(),
-                        MyWallet(),
-                      ],
-                    ),
-                    ManageAddressesContainer(
-                      authID: state.user.uid,
-                    ),
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+
+                          MyProfileScreen(),
+
+                          MyWallet(),
+
+                        ],
+                      ),
+
+                       ManageAddressesContainer(
+                        authID: state.user.uid,
+                      ),
                   ],
                 )),
               ],
