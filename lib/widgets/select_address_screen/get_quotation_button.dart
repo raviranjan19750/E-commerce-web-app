@@ -35,9 +35,10 @@ class GetQuotationButton extends StatelessWidget {
               "isSampleRequested": isSampleRequested,
               "deliveryAddressID": deliveryAddressID
             };
-
+            print(isSampleRequested);
+            print(deliveryAddressID);
             final response = await CloudFunctionConfig.post(
-                'manageCustomOrder/custom-request/$authID', jsonEncode(data));
+                'manageCustomOrder/custom-request/$authID', data);
 
             if (response.statusCode == 200) {
               LOG.i(response.body);
@@ -59,7 +60,7 @@ class GetQuotationButton extends StatelessWidget {
           }
         },
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.22,
+          width: MediaQuery.of(context).size.width * 0.25,
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Palette.secondaryColor,

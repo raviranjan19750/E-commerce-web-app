@@ -32,7 +32,8 @@ class CartListContainer extends StatelessWidget {
             assetPath: 'assets/images/cart_empty_state.png',
             onPressed: () {
               locator<NavigationService>().navigateTo(
-                  RoutesConfiguration.HOME_PAGE,);
+                RoutesConfiguration.HOME_PAGE,
+              );
             },
           );
         }
@@ -47,19 +48,6 @@ class CartListContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-
-                child: Text(
-                  Strings.deliveringTo,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14,
-                  ),
-                ),
-                //TODO: Get Pincode
-              ),
-
               Divider(
                 thickness: 0.5,
                 color: Colors.black54,

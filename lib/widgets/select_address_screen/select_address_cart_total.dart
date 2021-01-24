@@ -267,7 +267,7 @@ class TotalView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              totalItems.toString(),
+                              totalBulkItems.toString(),
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -928,9 +928,7 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
       code: 103,
       asset: 'assets/images/netbanking.png');
   Mode googlePayUPI = new Mode(
-      description: 'Google Pay',
-      code: 104,
-      asset: 'assets/images/google_pay.png');
+      description: 'GPay', code: 104, asset: 'assets/images/google_pay.png');
   Mode bhimUPI =
       new Mode(description: 'BHIM', code: 105, asset: 'assets/images/upi.png');
   Mode payTmUPI = new Mode(
