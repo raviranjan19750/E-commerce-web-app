@@ -103,13 +103,13 @@ class CartTotal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    Strings.subTotal + ' (${cart.totalQuantity} Items):',
+                    Strings.subTotal + ' ( ${cart.totalQuantity} Items):',
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    '${cart.retailTotal}',
+                    '\u{20B9} ${cart.retailTotal}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -168,7 +168,7 @@ class CartTotal extends StatelessWidget {
                     style: TextStyle(fontSize: 18),
                   ),
                   Text(
-                    '${cart.discountTotal}',
+                    '\u{20B9} ${cart.discountTotal}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
