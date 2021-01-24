@@ -90,7 +90,7 @@ class BulkOrderProvider with ChangeNotifier {
   }
 
   void initStepOne(String productID, String variantID, String size,
-      String productType, String productSubType) async {
+      String productType, String productSubType,String color) async {
     SearchApi searchApi = new SearchApi();
 
     List<FilterTag> list = await searchApi.getProductType();
@@ -137,6 +137,8 @@ class BulkOrderProvider with ChangeNotifier {
       bulkOrderCart.productSubType = productSubType;
       bulkOrderCart.size = size;
       itemSize = size;
+      hexColor = color;
+      selectedColor = HexColorConvert.fromHex(color);
 
       selectedType = -1;
 
