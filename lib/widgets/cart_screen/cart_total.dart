@@ -121,21 +121,6 @@ class CartTotal extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 10.0,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(Strings.deliveryCharges),
-                  Text('Delivery Charges'),
-                ],
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(
                 vertical: 10.0,
                 horizontal: 8.0,
               ),
@@ -143,9 +128,18 @@ class CartTotal extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(Strings.discount),
-                  Text('data'),
-                  //Text('-${cart.retailTotal - cart.discountTotal}'),
+                  Text(
+                    Strings.discount,
+                    style: TextStyle(
+                      color: Colors.green,
+                    ),
+                  ),
+                  Text(
+                    '${cart.retailTotal - cart.discountTotal}',
+                    style: TextStyle(
+                      color: Colors.green,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -262,7 +256,7 @@ class CartTotal extends StatelessWidget {
 
                           child: Center(
                             child: Text(
-                              Strings.loginToContinue,
+                              Strings.loginToPlaceOrder,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
