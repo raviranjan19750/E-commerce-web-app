@@ -59,13 +59,30 @@ class _UserCardState extends State<UserCard> {
               child: Text("My Account")),
         ),
         PopupMenuItem(
-          child: Text("My Orders"),
+          child: InkWell(
+            child: Text("My Orders"),
+            onTap: () {
+              locator<NavigationService>()
+                  .navigateTo(RoutesConfiguration.MY_ORDERS);
+            },
+          ),
         ),
         PopupMenuItem(
-          child: Text("My Cart"),
+          child: InkWell(
+            child: Text("My Cart"),
+            onTap: () {
+              locator<NavigationService>().navigateTo(RoutesConfiguration.CART);
+            },
+          ),
         ),
         PopupMenuItem(
-          child: Text("My Wishlist"),
+          child: InkWell(
+            child: Text("My Wishlist"),
+            onTap: () {
+              locator<NavigationService>()
+                  .navigateTo(RoutesConfiguration.WISHLIST);
+            },
+          ),
         ),
         PopupMenuItem(
           child: InkWell(
