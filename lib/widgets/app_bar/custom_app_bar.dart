@@ -51,6 +51,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
             Container(
               padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
               width: double.infinity,
+              height: 88,
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: const [

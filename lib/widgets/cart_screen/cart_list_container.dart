@@ -32,8 +32,7 @@ class CartListContainer extends StatelessWidget {
             assetPath: 'assets/images/cart_empty_state.png',
             onPressed: () {
               locator<NavigationService>().navigateTo(
-                  RoutesConfiguration.SEARCH_ALL_PRODUCT,
-                  queryParams: {"search": ""});
+                  RoutesConfiguration.HOME_PAGE,);
             },
           );
         }

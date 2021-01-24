@@ -109,30 +109,30 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/cart_empty_state.png
-    - assets/images/logo.jpeg
-    - assets/images/logo_old.jpeg
-    - assets/images/order_empty_state.png
-    - assets/images/search_result_not_match.png
-    - assets/images/something_went_wrong_empty_state.png
-    - assets/images/wishlist_empty_state.png
-    - assets/images/myaccount_emptystate.png
-    - assets/images/facebook.png
-    - assets/images/instagram.png
-    - assets/images/linkedin.png
-    - assets/images/twitter.png
-    - assets/images/upi.png
-    - assets/images/netbanking.png
-    - assets/images/google_pay.png
-    - assets/images/whatsapp.png
     - assets/images/amazon.png
     - assets/images/amazon_pay.png
+    - assets/images/cart_empty_state.png
+    - assets/images/cash_on_delivery.png
+    - assets/images/credit_card.png
+    - assets/images/debit_card.png
+    - assets/images/facebook.png
+    - assets/images/google_pay.png
+    - assets/images/instagram.png
+    - assets/images/linkedin.png
+    - assets/images/logo.jpeg
+    - assets/images/logo_old.jpeg
+    - assets/images/myaccount_emptystate.png
+    - assets/images/netbanking.png
+    - assets/images/order_empty_state.png
     - assets/images/paytm.png
     - assets/images/pone_pe.png
-    - assets/images/cash_on_delivery.png
+    - assets/images/search_result_not_match.png
+    - assets/images/something_went_wrong_empty_state.png
+    - assets/images/twitter.png
+    - assets/images/upi.png
     - assets/images/wallet.png
-    - assets/images/debit_card.png
-    - assets/images/credit_card.png
+    - assets/images/whatsapp.png
+    - assets/images/wishlist_empty_state.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

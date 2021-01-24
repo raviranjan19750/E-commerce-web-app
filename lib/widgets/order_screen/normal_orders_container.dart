@@ -29,8 +29,7 @@ class NormalOrdersContainer extends StatelessWidget {
               assetPath: 'assets/images/order_empty_state.png',
               onPressed: () {
                 locator<NavigationService>().navigateTo(
-                    RoutesConfiguration.SEARCH_ALL_PRODUCT,
-                    queryParams: {"search": ""});
+                    RoutesConfiguration.HOME_PAGE,);
               },
             );
           }

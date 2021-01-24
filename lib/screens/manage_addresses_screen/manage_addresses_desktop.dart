@@ -68,7 +68,7 @@ class ManageAddressesScreenDesktop extends StatelessWidget {
               ),
               Expanded(
                 child: EmptyStateScreen(
-                    primaryText: Strings.cartLoginText,
+                    primaryText: Strings.myAccountLoginText,
                     actionButtonText: Strings.loginText,
                     secondaryText: "",
                     assetPath: 'assets/images/myaccount_emptystate.png',

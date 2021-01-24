@@ -34,10 +34,7 @@ class HTMLResponseScreenContent extends StatelessWidget {
         if (state is HtmlResponseLoading) {
           return Padding(
               padding: EdgeInsets.only(top: 32.0),
-              child: LinearProgressIndicator(
-                backgroundColor: Color(0xFFB4B4B4),
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.black87),
-              ));
+              child: CircularProgressIndicator());
         } else if (state is HtmlResponseLoadingSuccessful) {
           return SingleChildScrollView(
             child: Html(

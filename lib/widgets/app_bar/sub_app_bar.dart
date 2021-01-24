@@ -21,9 +21,11 @@ class SubAppBar extends StatelessWidget {
             shadowColor: Colors.black54,
             child: Container(
               padding: EdgeInsets.only(
-                left: 24,
-                bottom: 4,
+                left: 32,
+                bottom: 8,
+                top: 8
               ),
+
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
@@ -34,14 +36,13 @@ class SubAppBar extends StatelessWidget {
                   SubAppBarButton(
                     buttonName: Strings.whyUs,
                     onPressed: () {
-                      locator<NavigationService>().navigateTo(
-                        RoutesConfiguration.SEARCH_ALL_PRODUCT,
-                        queryParams: {
-                          "tags": "",
-                        },
-                      );
+                      locator<NavigationService>()
+                          .navigateTo(RoutesConfiguration.ABOUT_US, newTab: true);
+
                     },
                   ),
+
+
                   const SizedBox(
                     width: 15.0,
                   ),
@@ -58,6 +59,8 @@ class SubAppBar extends StatelessWidget {
                       );
                     },
                   ),
+
+
                   const SizedBox(
                     width: 15.0,
                   ),
@@ -73,6 +76,8 @@ class SubAppBar extends StatelessWidget {
                       );
                     },
                   ),
+
+
                   const SizedBox(
                     width: 15.0,
                   ),
@@ -88,6 +93,8 @@ class SubAppBar extends StatelessWidget {
                       );
                     },
                   ),
+
+
                   const SizedBox(
                     width: 10.0,
                   ),

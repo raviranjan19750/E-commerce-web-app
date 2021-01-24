@@ -181,8 +181,11 @@ class FooterNew extends StatelessWidget {
                           SizedBox(
                             width: 24,
                           ),
-                          Text(
+                          SelectableText(
                             Strings.contactUsPhone,
+                            toolbarOptions: ToolbarOptions(
+                              copy: true
+                            ),
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
@@ -203,8 +206,11 @@ class FooterNew extends StatelessWidget {
                           SizedBox(
                             width: 24,
                           ),
-                          Text(
+                          SelectableText(
                             Strings.contactUsEmail,
+                            toolbarOptions: ToolbarOptions(
+                              copy: true
+                            ),
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,

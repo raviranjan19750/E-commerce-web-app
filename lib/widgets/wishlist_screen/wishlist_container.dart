@@ -39,7 +39,7 @@ class WishlistContainer extends StatelessWidget {
               actionButtonText: Strings.continueShopping,
               assetPath: 'assets/images/wishlist_empty_state.png',
               onPressed: () {
-                locator<NavigationService>().navigateTo(RoutesConfiguration.SEARCH_ALL_PRODUCT, queryParams: {"search": ""});
+                locator<NavigationService>().navigateTo(RoutesConfiguration.HOME_PAGE);
               },
             );
           }

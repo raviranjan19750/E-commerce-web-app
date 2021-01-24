@@ -91,20 +91,20 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
         //List of images
         Container(
           margin: EdgeInsets.only(left: 32.0),
+          color: Colors.transparent,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: imageListWidth,
-                height: 30,
-                color: Palette.lightGrey,
-                child: IconButton(
-                  onPressed: moveUP,
-                  alignment: Alignment.center,
-                  icon: Icon(Icons.keyboard_arrow_up),
-                  color: Colors.black,
-                ),
+              IconButton(
+                onPressed: moveUP,
+                alignment: Alignment.center,
+                icon: Icon(Icons.keyboard_arrow_up),
+                color: Colors.black,
+
               ),
+
+              SizedBox(height: 16,),
+
               Container(
                 width: imageListWidth,
                 //height: imageListHeight,
@@ -137,15 +137,15 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                   },
                 ),
               ),
-              Container(
-                width: imageListWidth,
-                height: 30,
-                color: Palette.lightGrey,
-                child: IconButton(
-                  onPressed: moveDown,
-                  icon: Icon(Icons.keyboard_arrow_down),
-                  color: Colors.black,
-                ),
+
+              SizedBox(height: 16,),
+
+              IconButton(
+
+                onPressed: moveDown,
+                icon: Icon(Icons.keyboard_arrow_down),
+                color: Colors.black,
+
               ),
             ],
           ),
@@ -223,7 +223,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                     isInCart = true;
                                   });
                                 },
-                                text: (isInCart)
+                                text: (isInCart|| widget.isInCart)
                                     ? Strings.goToCart
                                     : Strings.addToCart,
                               ),
@@ -263,7 +263,7 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
 
 
                                   },
-                                  text: (isInCart)
+                                  text: (isInCart || widget.isInCart)
                                       ? Strings.goToCart
                                       : Strings.addToCart,
                                 ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_desire/bloc/product_card/product_card_bloc.dart';
 import 'package:living_desire/bloc/product_detail/product_detail_bloc.dart';
+import 'package:living_desire/config/configs.dart';
 import 'package:living_desire/config/strings.dart';
 import 'package:living_desire/models/comboProduct.dart';
 import 'package:living_desire/routes.dart';
@@ -141,7 +142,7 @@ class _ProductDetailDescriptionAndImageState
                                               state.productDetail.discountPrice)
                                           .toString(),
                                   style: TextStyle(
-                                      color: Colors.grey[500],
+                                      color: Palette.green,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 18),
                                 )

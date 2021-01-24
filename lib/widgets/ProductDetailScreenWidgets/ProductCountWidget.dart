@@ -21,7 +21,7 @@ class _ProductQuantityCountState extends State<ProductQuantityCount> {
   int decrementItemQuantity(int count ) {
 
     if(count <=0) {
-      return 0;
+      return 1;
     }
 
     return --count;
@@ -32,24 +32,21 @@ class _ProductQuantityCountState extends State<ProductQuantityCount> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          child: IconButton(
-            onPressed: () {
-              setState(() {
-                itemQuantityCount = decrementItemQuantity(itemQuantityCount);
-                widget.onItemCountChanged(itemQuantityCount);
-              });
-            },
-            iconSize: 14,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            icon: Icon(Icons.remove),
-            color: Colors.grey,
-          ),
+        IconButton(
+          onPressed: () {
+            setState(() {
+              itemQuantityCount = decrementItemQuantity(itemQuantityCount);
+              widget.onItemCountChanged(itemQuantityCount);
+            });
+          },
+          iconSize: 14,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          icon: Icon(Icons.remove),
+          color: Colors.grey,
         ),
         Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: 8.0, vertical: 0.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
           child: Text(
             itemQuantityCount.toString(),
             style: TextStyle(
@@ -57,21 +54,19 @@ class _ProductQuantityCountState extends State<ProductQuantityCount> {
                 color: Colors.black),
           ),
         ),
-        Container(
-          child: IconButton(
-            onPressed: () {
-              setState(() {
-                itemQuantityCount = incrementItemQuantity(itemQuantityCount);
-                print(itemQuantityCount);
-                widget.onItemCountChanged(itemQuantityCount);
-              });
-            },
-            iconSize: 14,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            icon: Icon(Icons.add),
-            color: Colors.grey,
-          ),
+        IconButton(
+          onPressed: () {
+            setState(() {
+              itemQuantityCount = incrementItemQuantity(itemQuantityCount);
+              print(itemQuantityCount);
+              widget.onItemCountChanged(itemQuantityCount);
+            });
+          },
+          iconSize: 14,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          icon: Icon(Icons.add),
+          color: Colors.grey,
         ),
       ],
     );
