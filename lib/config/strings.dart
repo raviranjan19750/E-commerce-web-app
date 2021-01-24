@@ -127,6 +127,7 @@ class Strings {
   static const String currentlyProductNotAvailable =
       'Currently product not available';
   static const String aboutUs = "About Us";
+  static const String itemAddedInCart = "Item added in cart";
   static const String shippingPolicy = "Shipping Policy";
   static const String cancellationAndReturn = "Cancellation And Return";
   static const String privacyPolicy = "Privacy Policy";

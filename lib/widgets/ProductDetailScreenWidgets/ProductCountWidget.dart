@@ -20,7 +20,7 @@ class _ProductQuantityCountState extends State<ProductQuantityCount> {
 
   int decrementItemQuantity(int count ) {
 
-    if(count <=0) {
+    if(count <2) {
       return 1;
     }
 
@@ -32,19 +32,18 @@ class _ProductQuantityCountState extends State<ProductQuantityCount> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          onPressed: () {
+
+        InkWell(
+          onTap: () {
             setState(() {
               itemQuantityCount = decrementItemQuantity(itemQuantityCount);
               widget.onItemCountChanged(itemQuantityCount);
             });
           },
-          iconSize: 14,
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          icon: Icon(Icons.remove),
-          color: Colors.grey,
+
+          child: Icon(Icons.remove, color: Colors.grey, size: 14),
         ),
+
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
           child: Text(
@@ -54,20 +53,21 @@ class _ProductQuantityCountState extends State<ProductQuantityCount> {
                 color: Colors.black),
           ),
         ),
-        IconButton(
-          onPressed: () {
+
+        InkWell(
+
+          onTap: () {
             setState(() {
               itemQuantityCount = incrementItemQuantity(itemQuantityCount);
               print(itemQuantityCount);
               widget.onItemCountChanged(itemQuantityCount);
             });
           },
-          iconSize: 14,
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          icon: Icon(Icons.add),
-          color: Colors.grey,
+
+          child: Icon(Icons.add, color: Colors.grey, size: 14),
         ),
+
+
       ],
     );
   }

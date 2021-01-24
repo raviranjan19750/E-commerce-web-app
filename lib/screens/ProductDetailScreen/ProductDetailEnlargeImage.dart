@@ -218,9 +218,19 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                         quantity: widget.itemCount,
                                       ));
 
+                                      SnackBar snackBar = SnackBar(
+                                        content: Text(Strings.itemAddedInCart,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(color: Colors.white)),
+                                        backgroundColor: Palette.maroon,
+                                        duration: Duration(seconds: 2),
+                                      );
+                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
 
                                     }
                                     isInCart = true;
+
                                   });
                                 },
                                 text: (isInCart|| widget.isInCart)
@@ -253,11 +263,20 @@ class _ProductDetailEnlargeImageState extends State<ProductDetailEnlargeImage> {
                                           variantID: widget.variantID,
                                           quantity: widget.itemCount,
                                         ));
+
+                                        final snackBar = SnackBar(
+                                          content: Text(Strings.itemAddedInCart,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(color: Colors.white)),
+                                          backgroundColor: Palette.maroon,
+                                          duration: Duration(seconds: 2),
+                                        );
+                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
                                       }
 
-                                      print("isInCart : " + isInCart.toString());
                                       isInCart = true;
-                                      print("isInCart2 : " + isInCart.toString());
+
 
                                     });
 

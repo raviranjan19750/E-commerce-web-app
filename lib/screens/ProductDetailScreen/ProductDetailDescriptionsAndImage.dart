@@ -205,6 +205,10 @@ class _ProductDetailDescriptionAndImageState
                                 child: Row(
                                   children: [
                                     Container(
+                                      padding:  EdgeInsets.symmetric(
+                                        horizontal: 8.0,
+                                        vertical: 10.0,
+                                      ),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           border: Border.all(
