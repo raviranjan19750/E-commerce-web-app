@@ -129,9 +129,9 @@ class HomeScreenvView extends StatelessWidget {
             } else if (state is HomeInitial) {
               // print("initialising home.... ");
               BlocProvider.of<HomeBloc>(context).add(InitializeHome());
-              return LinearProgressIndicator();
+              return CircularProgressIndicator();
             } else {
-              return LinearProgressIndicator();
+              return CircularProgressIndicator();
             }
           },
         ),
