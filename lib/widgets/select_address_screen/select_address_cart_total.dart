@@ -289,7 +289,7 @@ class TotalView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              totalAmount.toString(),
+                              '\u{20B9} ' + totalAmount.toString(),
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -322,7 +322,7 @@ class TotalView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              discount.toString(),
+                              '\u{20B9} ' + discount.toString(),
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 14,
@@ -365,7 +365,7 @@ class TotalView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              payingAmount.toString(),
+                              '\u{20B9} ' + payingAmount.toString(),
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -415,9 +415,10 @@ class TotalView extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        state
-                                            .checkPromoCodeAvailability.discount
-                                            .toString(),
+                                        '\u{20B9} ' +
+                                            state.checkPromoCodeAvailability
+                                                .discount
+                                                .toString(),
                                         style: TextStyle(
                                           fontSize: 14,
                                         ),
@@ -451,9 +452,10 @@ class TotalView extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        state
-                                            .checkPromoCodeAvailability.discount
-                                            .toString(),
+                                        '\u{20B9} ' +
+                                            state.checkPromoCodeAvailability
+                                                .discount
+                                                .toString(),
                                         style: TextStyle(
                                           fontSize: 22,
                                           fontWeight: FontWeight.w600,
@@ -485,7 +487,7 @@ class TotalView extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        '0',
+                                        '\u{20B9} ' + '0',
                                         style: TextStyle(
                                           fontSize: 14,
                                         ),
@@ -515,7 +517,7 @@ class TotalView extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '0',
+                                  '\u{20B9} ' + '0',
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),
@@ -557,8 +559,10 @@ class TotalView extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    state.checkPromoCodeAvailability.taxAmount
-                                        .toString(),
+                                    '\u{20B9} ' +
+                                        state.checkPromoCodeAvailability
+                                            .taxAmount
+                                            .toString(),
                                     style: TextStyle(
                                       fontSize: 14,
                                     ),
@@ -581,7 +585,7 @@ class TotalView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    Strings.tax,
+                                    '\u{20B9} ' + Strings.tax,
                                     style: TextStyle(
                                       fontSize: 14,
                                     ),
@@ -616,7 +620,7 @@ class TotalView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                taxAmount.toString(),
+                                '\u{20B9} ' + taxAmount.toString(),
                                 style: TextStyle(
                                   fontSize: 14,
                                 ),
@@ -648,7 +652,7 @@ class TotalView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              deliveryCharges.toString(),
+                              '\u{20B9} ' + deliveryCharges.toString(),
                               style: TextStyle(
                                 fontSize: 14,
                               ),
@@ -679,7 +683,7 @@ class TotalView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              walletAmount.toString(),
+                              '\u{20B9} ' + walletAmount.toString(),
                               style: TextStyle(
                                 fontSize: 14,
                               ),
