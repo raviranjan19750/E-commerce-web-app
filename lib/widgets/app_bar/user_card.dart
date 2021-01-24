@@ -90,6 +90,7 @@ class _UserCardState extends State<UserCard> {
             onTap: () {
               RepositoryProvider.of<AuthenticationRepository>(context).logout();
               BlocProvider.of<SignInBloc>(context).add(SignOut());
+              Navigator.of(context).pop();
             },
           ),
         ),
