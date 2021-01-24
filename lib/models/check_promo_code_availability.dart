@@ -32,6 +32,7 @@ class CheckPromoCodeAvailability {
         promoCode: promoCode,
       );
     }
+
     if (data["couponType"] == 103) {
       return CheckPromoCodeAvailability(
           responseText: data['message'],
