@@ -46,17 +46,13 @@ class _ButtonListState extends State<ButtonList> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.18,
                 height: 60,
-                color: widget.isWishlistSelected ? Colors.black : Colors.white,
+                color: widget.isWishlistSelected
+                    ? Colors.black
+                    : Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    if (widget.wishlistAlreadySlected) {
-                    } else {
-                      locator<NavigationService>()
-                          .navigateTo(RoutesConfiguration.WISHLIST);
-                      setState(() {
-                        widget.wishlistAlreadySlected = true;
-                      });
-                    }
+                    locator<NavigationService>()
+                        .navigateTo(RoutesConfiguration.WISHLIST);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),

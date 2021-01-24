@@ -70,20 +70,20 @@ class CartItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // Match the Product according to the Product ID in cart
     //
-    return InkWell(
-      onTap: () {
-        locator<NavigationService>()
-            .navigateTo(RoutesConfiguration.PRODUCT_DETAIL, queryParams: {
-          "pid": cart.productID,
-          "vid": cart.variantID,
-        });
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12.0,
-            ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 12.0,
+          ),
+          child: InkWell(
+            onTap: () {
+              locator<NavigationService>()
+                  .navigateTo(RoutesConfiguration.PRODUCT_DETAIL, queryParams: {
+                "pid": cart.productID,
+                "vid": cart.variantID,
+              });
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,12 +348,12 @@ class CartItem extends StatelessWidget {
               ],
             ),
           ),
-          Divider(
-            thickness: 0.5,
-            color: Colors.black,
-          ),
-        ],
-      ),
+        ),
+        Divider(
+          thickness: 0.5,
+          color: Colors.black,
+        ),
+      ],
     );
   }
 }
