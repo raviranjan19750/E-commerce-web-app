@@ -45,7 +45,7 @@ class Strings {
 
   static const String selectPaymentMethod = "Select Payment Method";
   static const String websiteName = "LivingDesire";
-  static const String loginText = "Login/SignUp";
+  static const String loginText = "Login/Signup";
   static const String whyUs = "Why Us?";
   static const String forOffices = "For Offices";
   static const String forProperty = "For Property";
