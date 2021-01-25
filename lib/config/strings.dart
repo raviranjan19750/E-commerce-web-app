@@ -10,8 +10,7 @@ class Strings {
   static const String remove = "REMOVE";
   static const String functionNameAboutUs = "about-us";
   static const String functionNameShippingPolicy = "shipping-policy";
-  static const String functionNameCancellationAndReturn =
-      "cancellation-and-return";
+  static const String functionNameCancellationAndReturn = "cancellation-and-return";
   static const String functionNamePrivacyPolicy = "privacy-policy";
   static const String functionNameTermsAnConditions = "terms-and-conditions";
 
@@ -22,21 +21,16 @@ class Strings {
   static const String wallet = "Wallet Amount";
   static const String promoCode = "Promo Code";
   static const String searchPrimaryText = "We couldn't find any matches";
-  static const String searchSecondaryText =
-      "Please check the spelling or try searching something else";
-  static const String wishListLoginText =
-      "Login to view items in your wishlist";
+  static const String searchSecondaryText = "Please check the spelling or try searching something else";
+  static const String wishListLoginText = "Login to view items in your wishlist";
   static const String cartLoginText = "Login to view items in your cart";
   static const String orderLoginText = "Login to view your orders";
   static const String myAccountLoginText = "Login/Signup to view your account";
   static const String wishListPrimaryText = "Your wishlist is empty";
-  static const String wishListSecondaryText =
-      "Add items that you like to your wishlist. Review them anytime and easily move them to the bag";
-  static const String cartPrimaryText =
-      "There is nothing in your cart. Let's add some items";
+  static const String wishListSecondaryText = "Add items that you like to your wishlist. Review them anytime and easily move them to the bag";
+  static const String cartPrimaryText = "There is nothing in your cart. Let's add some items";
   static const String orderPrimaryText = "You haven't placed any order yet!";
-  static const String orderSecondaryText =
-      "Order section is empty. After placing order, You can track them here!";
+  static const String orderSecondaryText = "Order section is empty. After placing order, You can track them here!";
   static const String apply = "APPLY";
   static const String tax = "Tax";
   static const String cashbackAmount = "Cashback Amount";
@@ -130,8 +124,7 @@ class Strings {
   static const String bulkOrder = "Bulk Order";
   static const String sizeChart = "Size chart";
   static const String backToTop = "Back To Top";
-  static const String currentlyProductNotAvailable =
-      'Currently product not available';
+  static const String currentlyProductNotAvailable = 'Currently product not available';
   static const String aboutUs = "About Us";
   static const String itemAddedInCart = "Item added in cart";
   static const String shippingPolicy = "Shipping Policy";
@@ -144,8 +137,7 @@ class Strings {
   static const String getQuotation = "Get Quotation";
   static const String totalItems = "Total Items:";
 
-  static const String selectProductVariantColor =
-      "Select product variant color";
+  static const String selectProductVariantColor = "Select product variant color";
   static const String red = "Red";
   static const String pink = "Pink";
   static const String purple = "Purple";
