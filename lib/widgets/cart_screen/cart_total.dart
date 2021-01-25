@@ -47,52 +47,6 @@ class CartTotal extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 100% Purchase Protection Container
-            // Padding(
-            //   padding: const EdgeInsets.only(
-            //     bottom: 16.0,
-            //   ),
-            //   child: Card(
-            //     elevation: 3.0,
-            //     child: Container(
-            //       color: Colors.grey[200],
-            //       child: Padding(
-            //         padding: const EdgeInsets.all(8.0),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //           children: [
-            //             CircleAvatar(
-            //               backgroundColor: Colors.grey,
-            //             ),
-            //             Container(
-            //               color: Colors.grey[20],
-            //               child: Column(
-            //                 children: [
-            //                   Text(
-            //                     Strings.purchaseProtection,
-            //                     softWrap: true,
-            //                     style: TextStyle(
-            //                       fontSize: 16,
-            //                     ),
-            //                   ),
-            //                   Text(
-            //                     '${Strings.orignalProducts} | ${Strings.securePayments}',
-            //                     softWrap: true,
-            //                     style: TextStyle(
-            //                       fontSize: 10,
-            //                       color: Colors.green,
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 20,
@@ -103,13 +57,13 @@ class CartTotal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    Strings.subTotal + ' ( ${cart.totalQuantity} Items):',
+                    Strings.subTotal + '(${cart.totalQuantity} Items):',
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    '\u{20B9} ${cart.retailTotal}',
+                    '\u{20B9}${cart.retailTotal}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -118,7 +72,6 @@ class CartTotal extends StatelessWidget {
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 10.0,
@@ -135,7 +88,7 @@ class CartTotal extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${cart.retailTotal - cart.discountTotal}',
+                    '\u{20B9}${cart.retailTotal - cart.discountTotal}',
                     style: TextStyle(
                       color: Colors.green,
                     ),
@@ -143,7 +96,6 @@ class CartTotal extends StatelessWidget {
                 ],
               ),
             ),
-
             Divider(
               color: Colors.black,
               thickness: 0.3,
@@ -162,7 +114,7 @@ class CartTotal extends StatelessWidget {
                     style: TextStyle(fontSize: 18),
                   ),
                   Text(
-                    '\u{20B9} ${cart.discountTotal}',
+                    '\u{20B9}${cart.discountTotal}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -171,7 +123,6 @@ class CartTotal extends StatelessWidget {
                 ],
               ),
             ),
-
             SizedBox(
               height: 20,
             ),
@@ -271,7 +222,6 @@ class CartTotal extends StatelessWidget {
                 }
               }),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

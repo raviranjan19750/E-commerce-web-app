@@ -5,19 +5,32 @@ import 'package:living_desire/routes.dart';
 import 'package:living_desire/service/navigation_service.dart';
 import '../config/configs.dart';
 
-class ButtonList extends StatelessWidget {
+class ButtonList extends StatefulWidget {
   final bool isWishlistSelected;
   final bool isMyOrderSelected;
   final bool isMyCartSelected;
   final bool isManageAddressesSelected;
+  bool wishlistAlreadySlected = false;
 
-  const ButtonList({
+  bool cartAlreadySlected = false;
+
+  bool normalOrderlistAlreadySlected = false;
+
+  bool myAccountAlreadySlected = false;
+
+  ButtonList({
     Key key,
     this.isWishlistSelected = false,
     this.isMyOrderSelected = false,
     this.isMyCartSelected = false,
     this.isManageAddressesSelected = false,
   }) : super(key: key);
+
+  @override
+  _ButtonListState createState() => _ButtonListState();
+}
+
+class _ButtonListState extends State<ButtonList> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,7 +46,9 @@ class ButtonList extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width * 0.18,
                 height: 60,
-                color: isWishlistSelected ? Colors.black : Colors.white,
+                color: widget.isWishlistSelected
+                    ? Colors.black
+                    : Colors.transparent,
                 child: InkWell(
                   onTap: () {
                     locator<NavigationService>()
@@ -48,7 +63,7 @@ class ButtonList extends StatelessWidget {
                         Text(
                           Strings.myWishlist,
                           style: TextStyle(
-                            color: isWishlistSelected
+                            color: widget.isWishlistSelected
                                 ? Colors.white
                                 : Colors.black,
                             fontSize: 16,
@@ -69,7 +84,9 @@ class ButtonList extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width * 0.18,
                 height: 60,
-                color: isMyOrderSelected ? Colors.black : Colors.transparent,
+                color: widget.isMyOrderSelected
+                    ? Colors.black
+                    : Colors.transparent,
                 child: InkWell(
                   onTap: () {
                     locator<NavigationService>()
@@ -84,8 +101,9 @@ class ButtonList extends StatelessWidget {
                         Text(
                           Strings.myOrders,
                           style: TextStyle(
-                            color:
-                                isMyOrderSelected ? Colors.white : Colors.black,
+                            color: widget.isMyOrderSelected
+                                ? Colors.white
+                                : Colors.black,
                             fontSize: 16,
                           ),
                         ),
@@ -104,7 +122,8 @@ class ButtonList extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width * 0.18,
                 height: 60,
-                color: isMyCartSelected ? Colors.black : Colors.transparent,
+                color:
+                    widget.isMyCartSelected ? Colors.black : Colors.transparent,
                 child: InkWell(
                   onTap: () {
                     locator<NavigationService>()
@@ -119,8 +138,9 @@ class ButtonList extends StatelessWidget {
                         Text(
                           Strings.myCart,
                           style: TextStyle(
-                            color:
-                                isMyCartSelected ? Colors.white : Colors.black,
+                            color: widget.isMyCartSelected
+                                ? Colors.white
+                                : Colors.black,
                             fontSize: 16,
                           ),
                         ),
@@ -139,7 +159,7 @@ class ButtonList extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width * 0.18,
                 height: 60,
-                color: isManageAddressesSelected
+                color: widget.isManageAddressesSelected
                     ? Colors.black
                     : Colors.transparent,
                 child: InkWell(
@@ -156,7 +176,7 @@ class ButtonList extends StatelessWidget {
                         Text(
                           'My Account',
                           style: TextStyle(
-                            color: isManageAddressesSelected
+                            color: widget.isManageAddressesSelected
                                 ? Colors.white
                                 : Colors.black,
                             fontSize: 16,

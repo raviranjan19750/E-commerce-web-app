@@ -17,7 +17,7 @@ class NormalOrdersContainer extends StatelessWidget {
     return BlocBuilder<NormalOrderBloc, NormalOrderState>(
       builder: (context, state) {
         if (state is NormalOrderDetailLoading) {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         }
         // Orders acquired in state
         else if (state is NormalOrderDetailLoadingSuccessful) {
@@ -29,7 +29,8 @@ class NormalOrdersContainer extends StatelessWidget {
               assetPath: 'assets/images/order_empty_state.png',
               onPressed: () {
                 locator<NavigationService>().navigateTo(
-                    RoutesConfiguration.HOME_PAGE,);
+                  RoutesConfiguration.HOME_PAGE,
+                );
               },
             );
           }

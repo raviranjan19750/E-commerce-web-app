@@ -97,13 +97,14 @@ class _NewAddressFormState extends State<NewAddressForm> {
                         initialValue:
                             widget.isAddAddress ? '' : widget.address.phone,
                         hintText: 'Mobile',
-                        maxLength: 10,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         validator: (String value) {
                           if (value.isEmpty) {
                             return 'Enter your Mobile Number';
+                          } else if (value.length != 10) {
+                            return 'Enter Valid Mobile Number';
                           }
                           return null;
                         },
@@ -141,13 +142,14 @@ class _NewAddressFormState extends State<NewAddressForm> {
                         initialValue:
                             widget.isAddAddress ? '' : widget.address.pincode,
                         hintText: 'Pincode',
-                        maxLength: 6,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         validator: (String value) {
                           if (value.isEmpty) {
                             return 'Enter valid Pincode';
+                          } else if (value.length != 6) {
+                            return 'Enter Valid Pincode';
                           }
                           return null;
                         },

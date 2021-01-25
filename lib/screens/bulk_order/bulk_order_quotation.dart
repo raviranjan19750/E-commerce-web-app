@@ -11,209 +11,170 @@ import 'package:living_desire/widgets/footer/FooterNew.dart';
 import 'package:living_desire/widgets/footer/footer.dart';
 import 'package:provider/provider.dart';
 
-
-class BulkOrderQuotation extends StatelessWidget{
-
+class BulkOrderQuotation extends StatelessWidget {
   String id;
 
   bool init = false;
 
   BulkOrderQuotation({this.id});
 
-
-  Widget setPaymentColumn(BulkOrderQuotationProvider value){
-
-    if(value.samplePaymentPaid){
-
-      return  Column(
-
+  Widget setPaymentColumn(BulkOrderQuotationProvider value) {
+    if (value.samplePaymentPaid) {
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
-
-          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,orderTracking: value.bulkOrder.orderTracking,)),
-
           Visibility(
-
-            visible: value.samplePaymentUploaded && value.quotationPaymentUploaded,
-
+              visible: value.quotationPaymentUploaded,
+              child: BulkOrderQuotationPayment(
+                quotationPayment: value.quotationPayment,
+                isPaid: value.quotationPaymentPaid,
+                orderKey: id,
+                orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,
+                orderTracking: value.bulkOrder.orderTracking,
+              )),
+          Visibility(
+            visible:
+                value.samplePaymentUploaded && value.quotationPaymentUploaded,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 8,vertical: 16),
+              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               height: 1,
               color: Palette.secondaryColor,
             ),
           ),
-
-          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,trackingList: value.bulkOrder.sampleTracking,)),
-
-
-
-        ],
-
-      );
-
-    }
-    else{
-
-      return  Column(
-
-        crossAxisAlignment: CrossAxisAlignment.start,
-
-        children: [
-
-          Visibility(visible:value.samplePaymentUploaded , child: BulkOrderSamplePayment(samplePayment: value.samplePayment,isPaid: value.samplePaymentPaid,orderKey: id,sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,trackingList: value.bulkOrder.sampleTracking,)),
-
           Visibility(
-
-            visible: value.samplePaymentUploaded && value.quotationPaymentUploaded,
-
+              visible: value.samplePaymentUploaded,
+              child: BulkOrderSamplePayment(
+                samplePayment: value.samplePayment,
+                isPaid: value.samplePaymentPaid,
+                orderKey: id,
+                sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,
+                trackingList: value.bulkOrder.sampleTracking,
+              )),
+        ],
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: value.samplePaymentUploaded,
+              child: BulkOrderSamplePayment(
+                samplePayment: value.samplePayment,
+                isPaid: value.samplePaymentPaid,
+                orderKey: id,
+                sampleInvoiceURL: value.bulkOrder.sampleInvoiceUrl,
+                trackingList: value.bulkOrder.sampleTracking,
+              )),
+          Visibility(
+            visible:
+                value.samplePaymentUploaded && value.quotationPaymentUploaded,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 8,vertical: 16),
+              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               height: 1,
               color: Palette.secondaryColor,
             ),
           ),
-
-          Visibility(visible:value.quotationPaymentUploaded,child: BulkOrderQuotationPayment(quotationPayment: value.quotationPayment,isPaid: value.quotationPaymentPaid,orderKey: id,orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,orderTracking: value.bulkOrder.orderTracking,)),
-
-
+          Visibility(
+              visible: value.quotationPaymentUploaded,
+              child: BulkOrderQuotationPayment(
+                quotationPayment: value.quotationPayment,
+                isPaid: value.quotationPaymentPaid,
+                orderKey: id,
+                orderInvoiceUrl: value.bulkOrder.orderInvoiceUrl,
+                orderTracking: value.bulkOrder.orderTracking,
+              )),
         ],
-
       );
-
     }
-
   }
 
-  Widget setTables(BulkOrderQuotationProvider value){
-
-    if(value.samplePaymentPaid){
-
+  Widget setTables(BulkOrderQuotationProvider value) {
+    if (value.samplePaymentPaid) {
       return Column(
-
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
-
-          BulkOrderQuotationProducts(bulkOrder: value.bulkOrder,),
-
-          Visibility(
-
-              visible: (value.bulkOrder.samples.isNotEmpty),
-
-              child: BulkOrderSamples(sampleList: value.bulkOrder.samples,)
+          BulkOrderQuotationProducts(
+            bulkOrder: value.bulkOrder,
           ),
-
+          Visibility(
+              visible: (value.bulkOrder.samples.isNotEmpty),
+              child: BulkOrderSamples(
+                sampleList: value.bulkOrder.samples,
+              )),
           FooterNew(),
-
         ],
-
       );
-
-    }
-    else{
-
+    } else {
       return Column(
-
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
-
           Visibility(
-
               visible: (value.bulkOrder.samples.isNotEmpty),
-              child: BulkOrderSamples(sampleList: value.bulkOrder.samples,)
+              child: BulkOrderSamples(
+                sampleList: value.bulkOrder.samples,
+              )),
+          BulkOrderQuotationProducts(
+            bulkOrder: value.bulkOrder,
           ),
-
-          BulkOrderQuotationProducts(bulkOrder: value.bulkOrder,),
-
           Footer(),
-
         ],
-
       );
-
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(
         lazy: false,
         create: (context) => BulkOrderQuotationProvider(),
         child: Consumer<BulkOrderQuotationProvider>(
-          builder: (BuildContext context, BulkOrderQuotationProvider value, Widget child) {
-
+          builder: (BuildContext context, BulkOrderQuotationProvider value,
+              Widget child) {
             if (!init) {
-              Provider.of<BulkOrderQuotationProvider>(context, listen: false).initQuotation(id);
+              Provider.of<BulkOrderQuotationProvider>(context, listen: false)
+                  .initQuotation(id);
               init = true;
             }
 
             return Scaffold(
-
-              appBar: CustomAppBar(visibleSubAppBar: false,visibleMiddleAppBar: true,),
-
-              body: (value.isInitialized) ?Row(
-                children: [
-
-                  Expanded(
-
-                    child: SingleChildScrollView(
-
-                      child: setTables(value),
-
+              appBar: CustomAppBar(
+                visibleSubAppBar: false,
+                visibleMiddleAppBar: true,
+              ),
+              body: (value.isInitialized)
+                  ? Row(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: setTables(value),
+                          ),
+                        ),
+                        Visibility(
+                          visible: value.samplePaymentUploaded ||
+                              value.quotationPaymentUploaded,
+                          replacement: Container(),
+                          child: Container(
+                            width: 480,
+                            height: double.infinity,
+                            decoration: BoxDecoration(boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(0, -2),
+                                blurRadius: 4.0,
+                              )
+                            ], color: Colors.white),
+                            child: SingleChildScrollView(
+                              child: setPaymentColumn(value),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
                     ),
-                  ),
-
-                  Visibility(
-
-                    visible: value.samplePaymentUploaded || value.quotationPaymentUploaded,
-
-                    replacement: Container(),
-
-                    child: Container(
-
-                      width: 480,
-
-                      height: double.infinity,
-
-                      decoration: BoxDecoration(
-
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              offset: Offset(0, -2),
-                              blurRadius: 4.0,
-                            )],
-
-                          color: Colors.white
-
-                      ),
-
-                      child: SingleChildScrollView(
-
-                        child: setPaymentColumn(value),
-                      ),
-
-                    ),
-                  ),
-
-                ],
-              ) : Center(child: CircularProgressIndicator(),),
-
             );
-
           },
         ));
-
-
-
-
   }
-
-
-
-
 }

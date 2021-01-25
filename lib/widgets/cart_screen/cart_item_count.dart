@@ -27,60 +27,64 @@ class CartItemCount extends StatelessWidget {
     } else {
       authID = null;
     }
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 8.0,
-      ),
-      child: Row(
-        children: [
-          Container(
-            child: InkWell(
-              onTap: () {
-                // Bloc Provider to Change quantity cart
-                // Hits API request
-                BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
-                  authID: authID,
-                  key: documentID,
-                  quantity: quantity - 1,
-                  productID: productID,
-                ));
-              },
-              child: Icon(
-                Icons.remove,
-                color: Colors.grey,
-                size: 14,
-              ),
+    return Row(
+      children: [
+        InkWell(
+          onTap: () {
+            // Bloc Provider to Change quantity cart
+            // Hits API request
+            BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
+              authID: authID,
+              key: documentID,
+              quantity: quantity - 1,
+              productID: productID,
+            ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 8.0,
+              bottom: 8.0,
+              top: 8.0,
+            ),
+            child: Icon(
+              Icons.remove,
+              color: Colors.grey,
+              size: 14,
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
-            child: Text(
-              quantity.toString(),
-              style: TextStyle(fontSize: 14, color: Colors.black),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+          child: Text(
+            quantity.toString(),
+            style: TextStyle(fontSize: 14, color: Colors.black),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            // Bloc Provider to Change quantity cart
+            // Hits API request
+            BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
+              authID: authID,
+              key: documentID,
+              quantity: quantity + 1,
+              productID: productID,
+            ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(
+              right: 8.0,
+              bottom: 8.0,
+              top: 8.0,
+            ),
+            child: Icon(
+              Icons.add,
+              color: Colors.grey,
+              size: 14,
             ),
           ),
-          Container(
-            child: InkWell(
-              onTap: () {
-                // Bloc Provider to Change quantity cart
-                // Hits API request
-                BlocProvider.of<CartItemBloc>(context).add(ChangeQuantityCart(
-                  authID: authID,
-                  key: documentID,
-                  quantity: quantity + 1,
-                  productID: productID,
-                ));
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.grey,
-                size: 14,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -21,9 +21,7 @@ class CartRepository {
 
   int get totalCartItem {
     int count = 0;
-    for (var c in _cart) {
-      count += c.quantity;
-    }
+    count = _cart.length;
     return count;
   }
 

@@ -29,17 +29,17 @@ class WishlistContainer extends StatelessWidget {
     return BlocBuilder<WishlistBloc, WishlistState>(
       builder: (context, state) {
         if (state is WishlistDetailLoading) {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         } else if (state is WishlistDetailLoadingSuccessful) {
-
-          if(state.wishlist.length == 0) {
+          if (state.wishlist.length == 0) {
             return EmptyStateScreen(
               primaryText: Strings.wishListPrimaryText,
               secondaryText: Strings.wishListSecondaryText,
               actionButtonText: Strings.continueShopping,
               assetPath: 'assets/images/wishlist_empty_state.png',
               onPressed: () {
-                locator<NavigationService>().navigateTo(RoutesConfiguration.HOME_PAGE);
+                locator<NavigationService>()
+                    .navigateTo(RoutesConfiguration.HOME_PAGE);
               },
             );
           }

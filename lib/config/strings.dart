@@ -88,7 +88,7 @@ class Strings {
   static const String discount = "Discount";
   static const String total = "Total";
   static const String placeOrder = "Place Order";
-  static const String selectAddressNextStep = "Select Address on Next Step";
+  static const String selectAddressNextStep = "Select address on next step";
   static const String orderPlaced = "Order Placed";
   static const String addToCart = "Add to cart";
   static const String goToCart = "Go to cart";
@@ -102,12 +102,12 @@ class Strings {
   static const String qty = "Qty";
   static const String downloadInvoice = "Download Invoice";
   static const String continueShopping = "Continue shopping";
-  static const String addNewAddress = "ADD NEW ADDRESS";
+  static const String addNewAddress = "Add New Address";
   static const String add = "ADD";
   static const String cancel = "CANCEL";
   static const String changeAddress = "Change Address";
   static const String shipTo = "Ship to";
-  static const String proceedToPay = "Proceed To Pay";
+  static const String proceedToPay = "Proceed To pay";
   static const String deliveryStatus = "Delivery Status";
   static const String invoice = "Invoice";
   static const String buyAgain = "Buy Again";
@@ -115,7 +115,7 @@ class Strings {
   static const String youSaved = "You saved ";
   static const String youSave = "You save ";
   static const String removeCart = "Remove From Cart";
-  static const String updateAddress = "UPDATE ADDRERSS";
+  static const String updateAddress = "Update Address";
   static const String update = "UPDATE";
   static const String addAddress = "Add Address";
   static const String defaultText = "Default:";
@@ -142,7 +142,7 @@ class Strings {
   static const String hashTagLivingDesire = "#LivingDesire";
   static const String contactUs = "Contact Us";
   static const String getQuotation = "Get Quotation";
-  static const String totalItems = "Total Items";
+  static const String totalItems = "Total Items:";
 
   static const String selectProductVariantColor =
       "Select product variant color";
